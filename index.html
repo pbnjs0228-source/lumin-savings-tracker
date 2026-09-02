@@ -124,6 +124,34 @@
   .swatch:hover{transform:scale(1.1);}
   .swatch.active{border-color:var(--white);}
 
+  /* Rainbow theme: colourful accents, still a dark LUMIN dashboard. */
+  html[data-theme="rainbow"] body{
+    background:
+      radial-gradient(ellipse 720px 470px at 6% -4%,rgba(255,102,127,.14),transparent 60%),
+      radial-gradient(ellipse 680px 480px at 96% 8%,rgba(88,198,223,.13),transparent 58%),
+      radial-gradient(ellipse 680px 500px at 52% 105%,rgba(196,124,255,.12),transparent 58%),
+      linear-gradient(160deg,#11101c 0%,#161426 48%,#101820 100%);
+    background-attachment:fixed;
+  }
+  html[data-theme="rainbow"] h1.title span,
+  html[data-theme="rainbow"] .projection-time{
+    color:transparent;
+    background:linear-gradient(90deg,#ff7c85,#f0c868,#6ad8a4,#67cde2,#9a8dff,#df82dc);
+    -webkit-background-clip:text;background-clip:text;
+  }
+  html[data-theme="rainbow"] .panel-label .dash{
+    background:linear-gradient(90deg,#ff7c85,#f0c868,#6ad8a4,#67cde2,#9a8dff,#df82dc);
+  }
+  html[data-theme="rainbow"] .btn-primary,
+  html[data-theme="rainbow"] .segmented button.active{
+    background:linear-gradient(105deg,#ff868c,#efbd68 28%,#6bd6aa 54%,#6cc9e4 74%,#b08cff);
+    color:#17131f;
+    box-shadow:0 5px 18px rgba(123,133,255,.10);
+  }
+  html[data-theme="rainbow"] .swatch.active{
+    box-shadow:0 0 0 2px rgba(127,140,255,.16),0 0 14px rgba(196,124,255,.18);
+  }
+
   /* panel / card */
   .panel{
     background:var(--panel);
@@ -209,11 +237,37 @@
   }
   .item-actions button:hover{background:rgba(10,9,16,0.85);color:var(--accent-soft);}
   .item-actions .item-priority.is-priority{color:#f1c66d;background:rgba(18,14,10,.78);}
-  .item-card.priority:not(.purchased){box-shadow:0 0 0 1px color-mix(in srgb,#f1c66d 36%,transparent),0 10px 28px rgba(0,0,0,.12);}
+  .item-card.priority:not(.purchased){
+    border:1.5px solid transparent;
+    background:
+      linear-gradient(135deg,
+        rgba(255,91,115,.105) 0%,
+        rgba(255,190,86,.075) 20%,
+        rgba(97,214,152,.075) 42%,
+        rgba(79,181,224,.08) 62%,
+        rgba(128,116,255,.10) 80%,
+        rgba(232,102,214,.105) 100%
+      ) padding-box,
+      linear-gradient(115deg,#ff667f,#ffba55,#f3dc62,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f) border-box;
+    background-size:100% 100%,300% 300%;
+    background-position:0 0,0% 50%;
+    box-shadow:0 10px 28px rgba(0,0,0,.16),0 0 18px rgba(124,124,255,.08);
+    animation:luminPriorityRainbow 7s linear infinite;
+  }
+  .item-card.priority:not(.purchased):hover{
+    box-shadow:0 13px 34px rgba(0,0,0,.2),0 0 24px rgba(124,124,255,.12);
+  }
   .item-priority-badge{
-    display:inline-flex;align-items:center;gap:4px;width:fit-content;margin:-1px 0 6px;padding:3px 6px;border-radius:999px;
-    color:#f1c66d;background:rgba(241,198,109,.09);border:1px solid rgba(241,198,109,.22);
+    display:inline-flex;align-items:center;gap:4px;width:fit-content;margin:-1px 0 6px;padding:3px 7px;border-radius:999px;
+    color:#fff;
+    background:linear-gradient(100deg,rgba(255,102,127,.20),rgba(100,217,155,.16),rgba(127,140,255,.19),rgba(240,107,201,.18));
+    border:1px solid rgba(255,255,255,.18);
     font-size:9px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;
+    box-shadow:0 0 14px rgba(127,140,255,.08);
+  }
+  @keyframes luminPriorityRainbow{
+    0%{background-position:0 0,0% 50%;}
+    100%{background-position:0 0,300% 50%;}
   }
   .item-card.purchased{opacity:.76;border-color:var(--line-strong);filter:saturate(.72);}
   .item-purchased-banner{
@@ -880,6 +934,7 @@
   }
 
   @media(prefers-reduced-motion:reduce){
+    .item-card.priority:not(.purchased){animation:none !important;background-position:0 0,50% 50% !important;}
     *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.001ms !important;}
     body::before,body::after{display:none;}
   }
@@ -1399,9 +1454,11 @@
     ocean: { label:"Ocean", swatch:"linear-gradient(135deg,#5aa9a3,#3d7c99)",
       vars:{"--bg1":"#0e1a1f","--bg2":"#122228","--panel":"rgba(255,255,255,0.04)","--panel-solid":"#152a30","--panel-raised":"#1b333a","--accent":"#5aa9a3","--accent-soft":"#7fc2bc","--accent2":"#3d7c99","--positive":"#8fbf7a","--white":"#e6f1f0","--muted":"#7d9a9a","--line":"rgba(230,241,240,0.08)","--line-strong":"rgba(230,241,240,0.15)","--blade-a":"#193036","--blade-b":"#1f3b41","--housing":"#132428","--housing-inner":"#0f1c20"} },
     neon: { label:"Neon", swatch:"linear-gradient(135deg,#e14a5f,#d4a24e)",
-      vars:{"--bg1":"#0c0d14","--bg2":"#121420","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#181a26","--panel-raised":"#1e2130","--accent":"#e14a5f","--accent-soft":"#ef7c8c","--accent2":"#d4a24e","--positive":"#4fa88a","--white":"#eceef5","--muted":"#868da3","--line":"rgba(236,238,245,0.08)","--line-strong":"rgba(236,238,245,0.16)","--blade-a":"#1c2030","--blade-b":"#232840","--housing":"#171926","--housing-inner":"#12141e"} }
+      vars:{"--bg1":"#0c0d14","--bg2":"#121420","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#181a26","--panel-raised":"#1e2130","--accent":"#e14a5f","--accent-soft":"#ef7c8c","--accent2":"#d4a24e","--positive":"#4fa88a","--white":"#eceef5","--muted":"#868da3","--line":"rgba(236,238,245,0.08)","--line-strong":"rgba(236,238,245,0.16)","--blade-a":"#1c2030","--blade-b":"#232840","--housing":"#171926","--housing-inner":"#12141e"} },
+    rainbow: { label:"Rainbow", swatch:"conic-gradient(from 35deg,#ff667f,#ffbc58,#f0dc65,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f)",
+      vars:{"--bg1":"#11101c","--bg2":"#151526","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#1c1b2d","--panel-raised":"#242238","--accent":"#ff7b83","--accent-soft":"#76d9e8","--accent2":"#c28cff","--positive":"#69d7a4","--white":"#f3f1fa","--muted":"#9995b2","--line":"rgba(243,241,250,0.085)","--line-strong":"rgba(243,241,250,0.17)","--blade-a":"#2a2850","--blade-b":"#243d51","--housing":"#201e35","--housing-inner":"#171626"} }
   };
-  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon"];
+  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","rainbow"];
 
   let wallet = null;           // {balance, hourlyRate}; hourlyRate may be 0
   let items = [];              // [{id, name, goal, link, image}]
@@ -1566,6 +1623,7 @@
   function applyTheme(key){
     const theme = THEMES[key] || THEMES.midnight;
     currentTheme = THEMES[key] ? key : "midnight";
+    document.documentElement.dataset.theme = currentTheme;
     Object.entries(theme.vars).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
     document.querySelectorAll(".swatch").forEach(sw=>{
       sw.classList.toggle("active", sw.dataset.theme === currentTheme);
