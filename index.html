@@ -269,6 +269,18 @@
 
   .punch-card-form{display:flex;flex-direction:column;}
   .punch-preview{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--positive);text-align:right;}
+  .earnings-entry-header{align-items:flex-start;margin-bottom:10px;}
+  .earnings-entry-header .panel-label{margin-top:7px;}
+  .earnings-mode-toggle{flex-shrink:0;}
+  .earnings-mode-toggle button{padding:5px 9px;font-size:10.5px;}
+  .entry-mode-note{font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.4;min-height:15px;}
+  .entry-mode-note.warning{color:#dca49f;}
+  @media(max-width:620px){
+    .earnings-entry-header{align-items:stretch;}
+    .earnings-entry-header .panel-label{margin-top:0;}
+    .earnings-mode-toggle{display:flex;width:100%;}
+    .earnings-mode-toggle button{flex:1;}
+  }
 
   /* image upload */
   .upload-zone{
@@ -779,7 +791,46 @@
   .sync-banner{display:none;align-items:center;gap:9px;margin:0 auto 11px;max-width:1080px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:11.5px;color:var(--muted);}
   .sync-banner.show{display:flex;}
   .sync-banner.error{border-color:color-mix(in srgb,#df7066 35%,transparent);color:#dca49f;}
+
+  /* legacy device-save importer */
+  .legacy-import-modal{max-width:560px;}
+  .legacy-import-copy{font-size:12.5px;color:var(--muted);line-height:1.55;margin:0 0 14px;}
+  .legacy-import-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px;}
+  .legacy-import-found{
+    border:1px solid var(--line-strong);background:var(--panel-solid);border-radius:11px;
+    padding:12px 13px;margin:11px 0;
+  }
+  .legacy-import-found.hidden{display:none;}
+  .legacy-import-title{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px;}
+  .legacy-preview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+  .legacy-preview-stat{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;padding:8px;}
+  .legacy-preview-label{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:3px;}
+  .legacy-preview-value{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .legacy-import-source{font-size:10.5px;color:var(--muted);margin-top:8px;}
+  .legacy-import-warning{
+    font-size:11.5px;line-height:1.5;color:#e2b5ad;
+    border:1px solid color-mix(in srgb,#df7066 28%,transparent);
+    background:color-mix(in srgb,#df7066 7%,transparent);
+    border-radius:9px;padding:9px 10px;margin:10px 0;
+  }
+  .legacy-paste-label{display:block;font-size:11.5px;color:var(--muted);font-weight:600;margin:11px 0 6px;}
+  .legacy-paste{
+    width:100%;min-height:116px;resize:vertical;background:var(--panel-solid);color:var(--white);
+    border:1px solid var(--line-strong);border-radius:9px;padding:10px 11px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.45;
+  }
+  .legacy-paste:focus{outline:none;border-color:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);}
+  .legacy-console-help{font-size:10.5px;color:var(--muted);line-height:1.5;margin-top:7px;}
+  .legacy-console-code{
+    display:block;margin-top:5px;padding:7px 8px;border-radius:7px;background:#11101a;border:1px solid var(--line);
+    color:#c8c3da;font-family:'JetBrains Mono',monospace;font-size:10px;overflow-wrap:anywhere;
+  }
+  .legacy-import-message{min-height:18px;margin-top:8px;font-size:11.5px;color:var(--muted);}
+  .legacy-import-message.success{color:var(--positive);}
+  .legacy-import-message.error{color:#df8f86;}
+  .btn-import{border-color:color-mix(in srgb,var(--accent-soft) 45%,var(--line-strong));}
   @media(max-width:650px){
+    .legacy-preview-grid{grid-template-columns:1fr 1fr;}
     .auth-card{padding:19px;border-radius:15px;}
     .auth-title{font-size:21px;}
     .header-right{align-items:stretch;}
@@ -842,21 +893,22 @@
       <div class="theme-picker" id="themePickerSetup"></div>
     </div>
     <h1 class="title" style="font-size:22px;" id="setupTitle">Set up your <span>wallet</span></h1>
-    <p class="subtitle" style="margin-bottom:20px;">Enter your balance and hourly rate. You can add items to save for once you're set up.</p>
+    <p class="subtitle" style="margin-bottom:20px;">Enter your balance. Add an hourly rate if you want LUMIN to calculate earnings from hours, or leave it blank and log money earned directly.</p>
 
     <form id="setupForm" style="display:flex;flex-direction:column;gap:14px;">
       <div class="grid-2">
         <label class="field">Current balance
           <div class="input-prefix"><span>$</span><input type="number" step="0.01" min="0" placeholder="0.00" id="in-balance" required /></div>
         </label>
-        <label class="field">Hourly rate
-          <div class="input-prefix"><span>$</span><input type="number" step="0.01" min="0" placeholder="0.00" id="in-rate" required /></div>
+        <label class="field">Hourly rate <span style="font-weight:400;color:var(--muted);">(optional)</span>
+          <div class="input-prefix"><span>$</span><input type="number" step="0.01" min="0" placeholder="e.g. 16.00" id="in-rate" /></div>
         </label>
       </div>
       <div style="display:flex;gap:10px;margin-top:4px;">
         <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center;">Save wallet</button>
         <button type="button" id="setupCancelBtn" class="btn btn-ghost hidden">Cancel</button>
       </div>
+      <button type="button" class="btn btn-ghost btn-import" id="setupImportLegacyBtn" style="justify-content:center;margin-top:2px;">↥ Import old device save</button>
     </form>
   </div>
 
@@ -871,12 +923,13 @@
           <span class="brand-tag">Savings tracker</span>
         </div>
         <h1 class="title">Save up for what's <span>next</span></h1>
-        <p class="subtitle">Track your hours, grow your fund, and see how close you are to every item on your list.</p>
+        <p class="subtitle">Track your earnings, grow your fund, and see how close you are to every item on your list.</p>
       </div>
       <div class="header-right">
         <div class="theme-picker" id="themePickerMain"></div>
         <div class="header-controls">
           <span id="saveNote" class="save-note">Saved</span>
+          <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
           <button class="btn btn-ghost" id="editSetupBtn">Edit wallet</button>
         </div>
         <div class="cloud-status" id="cloudStatus">
@@ -948,18 +1001,32 @@
         </div>
       </div>
 
-      <!-- punch in -->
+      <!-- earnings entry -->
       <div class="panel punch-card-form">
-        <div class="panel-label"><span class="dash"></span>Log today's hours</div>
+        <div class="panel-header-row earnings-entry-header">
+          <div class="panel-label"><span class="dash"></span>Log today's earnings</div>
+          <div class="segmented earnings-mode-toggle" id="earningsModeToggle" aria-label="Earnings entry mode">
+            <button type="button" class="active" data-entry-mode="hours">Hours × rate</button>
+            <button type="button" data-entry-mode="amount">Money earned</button>
+          </div>
+        </div>
         <form id="entryForm" style="display:flex;flex-direction:column;gap:10px;flex:1;">
           <label class="field">Date
             <input type="date" id="in-date" required />
           </label>
-          <label class="field">Hours worked
-            <input type="number" min="0" step="0.25" placeholder="e.g. 7.5" id="in-hours" required />
-          </label>
+          <div id="hoursEntryFields">
+            <label class="field">Hours worked
+              <input type="number" min="0" step="0.25" placeholder="e.g. 7.5" id="in-hours" />
+            </label>
+            <div class="entry-mode-note" id="hourlyRateNote"></div>
+          </div>
+          <div id="amountEntryFields" class="hidden">
+            <label class="field">Money earned
+              <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 86.40" id="in-earned" /></div>
+            </label>
+          </div>
           <div class="punch-preview" id="punchPreview">= $0.00 earned</div>
-          <button type="submit" class="btn btn-primary" style="margin-top:auto;justify-content:center;">+ Add hours</button>
+          <button type="submit" class="btn btn-primary" id="entrySubmitBtn" style="margin-top:auto;justify-content:center;">+ Add earnings</button>
         </form>
       </div>
     </div>
@@ -1051,8 +1118,8 @@
 
     <!-- ledger -->
     <div class="section panel">
-      <div class="panel-label"><span class="dash"></span><span id="ledgerLabel">Hours logged</span></div>
-      <div id="ledgerEmpty" class="empty-state hidden">No hours logged yet — add today's hours above to get started.</div>
+      <div class="panel-label"><span class="dash"></span><span id="ledgerLabel">Earnings logged</span></div>
+      <div id="ledgerEmpty" class="empty-state hidden">No earnings logged yet — add today's earnings above to get started.</div>
       <div id="ledgerList" class="ledger-list"></div>
     </div>
   </div>
@@ -1095,6 +1162,51 @@
           <button type="button" class="btn btn-ghost" id="itemCancelBtn">Cancel</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- LEGACY SAVE IMPORT MODAL -->
+  <div id="legacyImportBackdrop" class="modal-backdrop hidden">
+    <div class="modal legacy-import-modal" role="dialog" aria-modal="true" aria-labelledby="legacyImportTitle">
+      <h2 class="modal-title" id="legacyImportTitle">Import old device save</h2>
+      <p class="legacy-import-copy">
+        Bring your old browser-only LUMIN data into this version. If you're signed in,
+        the imported save will be uploaded to your account and sync to your other devices.
+      </p>
+
+      <div class="legacy-import-actions">
+        <button type="button" class="btn btn-secondary" id="legacyScanBtn">Find old save on this browser</button>
+        <button type="button" class="btn btn-ghost" id="legacyImportCancelBtn">Cancel</button>
+      </div>
+
+      <div class="legacy-import-found hidden" id="legacyFoundBox">
+        <div class="legacy-import-title">Old LUMIN save found</div>
+        <div class="legacy-preview-grid">
+          <div class="legacy-preview-stat"><div class="legacy-preview-label">Balance</div><div class="legacy-preview-value" id="legacyPreviewBalance">—</div></div>
+          <div class="legacy-preview-stat"><div class="legacy-preview-label">Hourly rate</div><div class="legacy-preview-value" id="legacyPreviewRate">—</div></div>
+          <div class="legacy-preview-stat"><div class="legacy-preview-label">Goals</div><div class="legacy-preview-value" id="legacyPreviewItems">0</div></div>
+          <div class="legacy-preview-stat"><div class="legacy-preview-label">Work entries</div><div class="legacy-preview-value" id="legacyPreviewEntries">0</div></div>
+        </div>
+        <div class="legacy-import-source" id="legacyPreviewSource"></div>
+        <div class="legacy-import-warning">Importing replaces the save currently loaded in LUMIN. Your original old local save is left untouched.</div>
+        <button type="button" class="btn btn-primary" id="legacyUseFoundBtn">Import this save</button>
+      </div>
+
+      <div class="auth-divider">can't find it automatically?</div>
+
+      <label class="legacy-paste-label" for="legacyPaste">Paste the old save data</label>
+      <textarea class="legacy-paste" id="legacyPaste" spellcheck="false" placeholder='Paste the JSON beginning with {"wallet":... or {"settings":...'></textarea>
+      <div class="legacy-console-help">
+        If the old tracker was opened as a local HTML file, this public site may not be allowed to read its localStorage.
+        Open the old tracker, press F12 → Console, run:
+        <code class="legacy-console-code">copy(localStorage.getItem('tracker-data') || localStorage.getItem('tracker-data:local'))</code>
+        Then paste the copied text above.
+      </div>
+
+      <div class="legacy-import-actions">
+        <button type="button" class="btn btn-primary" id="legacyUsePasteBtn">Import pasted save</button>
+      </div>
+      <div class="legacy-import-message" id="legacyImportMessage" aria-live="polite"></div>
     </div>
   </div>
 
@@ -1210,12 +1322,13 @@
   };
   const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon"];
 
-  let wallet = null;           // {balance, hourlyRate}
+  let wallet = null;           // {balance, hourlyRate}; hourlyRate may be 0
   let items = [];              // [{id, name, goal, link, image}]
   let activeItemId = null;
-  let entries = [];            // [{id, date, hours}]
+  let entries = [];            // legacy hours entries + new earned/mixed entries
   let currentTheme = "midnight";
   let chartView = "month";
+  let entryMode = "hours"; // hours | amount
   let editingItemId = null;    // set when the item modal is editing rather than adding
   let pendingImageDataUrl = null;
   let celebratedItemIds = null; // Kept for backwards compatibility with older saves.
@@ -1420,6 +1533,8 @@
   let lastCloudPayload = null;
   let remoteApplyInFlight = false;
   let authCreateMode = false;
+  let legacyCandidatePayload = null;
+  let legacyCandidateSource = "";
 
   try{
     const testKey = "__lumin_storage_test__";
@@ -1479,6 +1594,149 @@
     if(cloudMode === "cloud" && cloudUser) return "cloud synced";
     if(localStorageOk) return "this device";
     return "this session";
+  }
+
+  function looksLikeLuminSave(parsed){
+    if(!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return false;
+    return !!(
+      parsed.wallet ||
+      parsed.settings ||
+      Array.isArray(parsed.items) ||
+      Array.isArray(parsed.entries)
+    );
+  }
+
+  function parseLegacyPayload(payload){
+    if(typeof payload !== "string" || !payload.trim()){
+      throw new Error("That save is empty.");
+    }
+    let parsed;
+    try{
+      parsed = JSON.parse(payload);
+    }catch{
+      throw new Error("That doesn't look like valid LUMIN save data.");
+    }
+    if(!looksLikeLuminSave(parsed)){
+      throw new Error("That JSON doesn't look like a LUMIN save.");
+    }
+    return parsed;
+  }
+
+  function previewLegacySave(payload, source){
+    const parsed = parseLegacyPayload(payload);
+    const oldSettings = parsed.settings && typeof parsed.settings === "object" ? parsed.settings : null;
+    const oldWallet = parsed.wallet && typeof parsed.wallet === "object" ? parsed.wallet : null;
+    const balance = oldWallet ? Number(oldWallet.balance)||0 : oldSettings ? Number(oldSettings.balance)||0 : 0;
+    const rate = oldWallet ? Number(oldWallet.hourlyRate)||0 : oldSettings ? Number(oldSettings.hourlyRate)||0 : 0;
+    let itemCount = Array.isArray(parsed.items) ? parsed.items.length : 0;
+    if(!itemCount && oldSettings && Number(oldSettings.goal)>0) itemCount = 1;
+    const entryCount = Array.isArray(parsed.entries) ? parsed.entries.length : 0;
+
+    legacyCandidatePayload = payload;
+    legacyCandidateSource = source || "Pasted save";
+
+    $("legacyPreviewBalance").textContent = fmtMoney(balance);
+    $("legacyPreviewRate").textContent = rate>0 ? fmtMoney(rate) + "/hr" : "Not set";
+    $("legacyPreviewItems").textContent = String(itemCount);
+    $("legacyPreviewEntries").textContent = String(entryCount);
+    $("legacyPreviewSource").textContent = "Source: " + legacyCandidateSource;
+    $("legacyFoundBox").classList.remove("hidden");
+    setLegacyImportMessage("Save looks valid. Review it above, then import.","success");
+  }
+
+  function setLegacyImportMessage(message,type=""){
+    const el = $("legacyImportMessage");
+    if(!el) return;
+    el.textContent = message || "";
+    el.className = "legacy-import-message" + (type ? " "+type : "");
+  }
+
+  function findLegacySaveOnThisOrigin(){
+    if(!localStorageOk) return null;
+    const keys = [STORAGE_KEY, `${STORAGE_KEY}:local`];
+    for(const key of keys){
+      try{
+        const payload = window.localStorage.getItem(key);
+        if(!payload) continue;
+        const parsed = JSON.parse(payload);
+        if(looksLikeLuminSave(parsed)){
+          return {payload, source:key};
+        }
+      }catch{}
+    }
+    return null;
+  }
+
+  function openLegacyImport(){
+    legacyCandidatePayload = null;
+    legacyCandidateSource = "";
+    $("legacyFoundBox").classList.add("hidden");
+    $("legacyPaste").value = "";
+    setLegacyImportMessage("");
+    $("legacyImportBackdrop").classList.remove("hidden");
+
+    const found = findLegacySaveOnThisOrigin();
+    if(found){
+      try{ previewLegacySave(found.payload, found.source); }
+      catch(error){ setLegacyImportMessage(error.message || "Couldn't inspect that save.","error"); }
+    }else{
+      setLegacyImportMessage("No old save was readable on this site origin. You can use the paste method below.");
+    }
+  }
+
+  function closeLegacyImport(){
+    $("legacyImportBackdrop").classList.add("hidden");
+    legacyCandidatePayload = null;
+    legacyCandidateSource = "";
+    setLegacyImportMessage("");
+  }
+
+  async function importLegacyPayload(payload, source){
+    let parsed;
+    try{
+      parsed = parseLegacyPayload(payload);
+    }catch(error){
+      setLegacyImportMessage(error.message || "Couldn't read that save.","error");
+      return;
+    }
+
+    const hasCurrentData = !!wallet || items.length>0 || entries.length>0;
+    const destination = cloudMode === "cloud" && cloudUser ? "your cloud account" : "this device";
+    const warning = hasCurrentData
+      ? `This will replace the LUMIN save currently loaded on ${destination}. Continue?`
+      : `Import this old LUMIN save into ${destination}?`;
+
+    if(!window.confirm(warning)) return;
+
+    try{
+      setLegacyImportMessage("Importing…");
+      await applySavePayload(JSON.stringify(parsed));
+      await persist();
+
+      // Mark only this public app's local cache as current. The original
+      // legacy key is intentionally left untouched as a backup.
+      setLegacyImportMessage("Imported successfully.","success");
+      setSyncBanner(
+        cloudMode === "cloud" && cloudUser
+          ? "Old device save imported and synced to your account."
+          : "Old device save imported into this device."
+      );
+      clearTimeout(importLegacyPayload._bannerTimer);
+      importLegacyPayload._bannerTimer = setTimeout(()=>setSyncBanner(""),3500);
+      setTimeout(closeLegacyImport,650);
+    }catch(error){
+      console.error("Legacy import failed", error);
+      setLegacyImportMessage(error && error.message ? error.message : "Import failed.","error");
+    }
+  }
+
+  function maybeSignalLegacySave(){
+    const found = findLegacySaveOnThisOrigin();
+    if(found){
+      setSyncBanner("Old device-only LUMIN save detected on this browser. Use “Import old save” if you want to bring it in.");
+      clearTimeout(maybeSignalLegacySave._timer);
+      maybeSignalLegacySave._timer = setTimeout(()=>setSyncBanner(""),6500);
+    }
   }
 
   const store = {
@@ -1549,6 +1807,7 @@
     entries = [];
     currentTheme = "midnight";
     chartView = "month";
+    entryMode = "hours";
     editingItemId = null;
     pendingImageDataUrl = null;
     celebratedItemIds = null;
@@ -1563,6 +1822,7 @@
     activeItemId = parsed.activeItemId || (items[0] && items[0].id) || null;
     if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
     if(parsed.chartView && ["day","week","month"].includes(parsed.chartView)) chartView = parsed.chartView;
+    if(parsed.entryMode && ["hours","amount"].includes(parsed.entryMode)) entryMode = parsed.entryMode;
     if(Array.isArray(parsed.celebratedItemIds)) celebratedItemIds = new Set(parsed.celebratedItemIds);
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
 
@@ -1635,6 +1895,7 @@
       entries,
       theme:currentTheme,
       chartView,
+      entryMode,
       celebratedItemIds:Array.from(celebratedItemIds||[]),
       celebratedMilestones:Array.from(celebratedMilestones||[])
     });
@@ -1737,6 +1998,7 @@
     hideAuthGate();
     updateAccountControls();
     await load();
+    maybeSignalLegacySave();
   }
 
   async function enterCloudMode(user){
@@ -1746,6 +2008,7 @@
     updateAccountControls();
     await load();
     await startCloudSubscription();
+    maybeSignalLegacySave();
   }
 
   async function initPublicApp(){
@@ -1753,6 +2016,44 @@
 
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
+
+    $("importLegacyBtn").addEventListener("click", openLegacyImport);
+    $("setupImportLegacyBtn").addEventListener("click", openLegacyImport);
+    $("legacyImportCancelBtn").addEventListener("click", closeLegacyImport);
+    $("legacyImportBackdrop").addEventListener("click", e=>{
+      if(e.target.id === "legacyImportBackdrop") closeLegacyImport();
+    });
+    $("legacyScanBtn").addEventListener("click", ()=>{
+      const found = findLegacySaveOnThisOrigin();
+      if(!found){
+        legacyCandidatePayload = null;
+        $("legacyFoundBox").classList.add("hidden");
+        setLegacyImportMessage("No readable old save was found on this site's browser storage. Use the paste method below.","error");
+        return;
+      }
+      try{ previewLegacySave(found.payload, found.source); }
+      catch(error){ setLegacyImportMessage(error.message || "Couldn't inspect that save.","error"); }
+    });
+    $("legacyUseFoundBtn").addEventListener("click", async ()=>{
+      if(!legacyCandidatePayload){
+        setLegacyImportMessage("Find or paste a save first.","error");
+        return;
+      }
+      await importLegacyPayload(legacyCandidatePayload, legacyCandidateSource);
+    });
+    $("legacyUsePasteBtn").addEventListener("click", async ()=>{
+      const payload = $("legacyPaste").value.trim();
+      if(!payload){
+        setLegacyImportMessage("Paste your old LUMIN save first.","error");
+        return;
+      }
+      try{
+        previewLegacySave(payload, "Pasted old save");
+        await importLegacyPayload(payload, "Pasted old save");
+      }catch(error){
+        setLegacyImportMessage(error.message || "Couldn't read that save.","error");
+      }
+    });
     $("cloudSignInBtn").addEventListener("click", ()=>{
       setAuthMode(false);
       showAuthGate();
@@ -1868,6 +2169,7 @@
       balance: parseFloat($("in-balance").value) || 0,
       hourlyRate: parseFloat($("in-rate").value) || 0,
     };
+    if(wallet.hourlyRate<=0 && entryMode==="hours") entryMode = "amount";
     $("setupScreen").classList.add("hidden");
     $("mainScreen").classList.remove("hidden");
     await persist();
@@ -2092,9 +2394,15 @@
   });
 
   document.addEventListener("keydown", (e)=>{
-    if(e.key === "Escape" && !$("cropModalBackdrop").classList.contains("hidden")){
+    if(e.key !== "Escape") return;
+    if(!$("cropModalBackdrop").classList.contains("hidden")){
       e.preventDefault();
       closeCropper(true);
+      return;
+    }
+    if(!$("legacyImportBackdrop").classList.contains("hidden")){
+      e.preventDefault();
+      closeLegacyImport();
     }
   });
 
@@ -2203,6 +2511,38 @@
   $("in-date").value = todayStr();
   $("in-date").max = todayStr();
   $("in-hours").addEventListener("input", updatePunchPreview);
+  $("in-earned").addEventListener("input", updatePunchPreview);
+
+  function setEntryMode(mode, shouldPersist=false){
+    entryMode = mode === "amount" ? "amount" : "hours";
+    $("earningsModeToggle").querySelectorAll("button").forEach(btn=>{
+      btn.classList.toggle("active", btn.dataset.entryMode === entryMode);
+    });
+    $("hoursEntryFields").classList.toggle("hidden", entryMode !== "hours");
+    $("amountEntryFields").classList.toggle("hidden", entryMode !== "amount");
+    $("in-hours").required = entryMode === "hours";
+    $("in-earned").required = entryMode === "amount";
+    $("entrySubmitBtn").textContent = entryMode === "hours" ? "+ Add earnings" : "+ Add money earned";
+
+    const rate = (wallet && Number(wallet.hourlyRate)) || 0;
+    const note = $("hourlyRateNote");
+    if(entryMode === "hours" && rate > 0){
+      note.textContent = "Using " + fmtMoney(rate) + "/hr from your wallet.";
+      note.classList.remove("warning");
+    }else if(entryMode === "hours"){
+      note.textContent = "Add an hourly rate in Edit wallet, or switch to Money earned.";
+      note.classList.add("warning");
+    }else{
+      note.textContent = "";
+      note.classList.remove("warning");
+    }
+    updatePunchPreview();
+    if(shouldPersist) persist();
+  }
+
+  $("earningsModeToggle").querySelectorAll("button").forEach(btn=>{
+    btn.addEventListener("click", ()=> setEntryMode(btn.dataset.entryMode, true));
+  });
 
   let lastKnownToday = todayStr();
   setInterval(()=>{
@@ -2217,24 +2557,90 @@
   }, 60000);
 
   function updatePunchPreview(){
+    const rate = (wallet && Number(wallet.hourlyRate)) || 0;
+    let earned = 0;
+    if(entryMode === "amount"){
+      earned = parseFloat($("in-earned").value) || 0;
+      $("punchPreview").textContent = "= " + fmtMoney(earned) + " earned";
+      return;
+    }
+
     const h = parseFloat($("in-hours").value) || 0;
-    const rate = (wallet && wallet.hourlyRate) || 0;
-    $("punchPreview").textContent = "= " + fmtMoney(h*rate) + " earned";
+    if(rate<=0){
+      $("punchPreview").textContent = "Set an hourly rate or use Money earned";
+      return;
+    }
+    earned = h * rate;
+    $("punchPreview").textContent = "= " + fmtMoney(earned) + " earned";
+  }
+
+  function entryEarned(en){
+    if(en && typeof en.earned === "number" && Number.isFinite(en.earned)){
+      return Math.max(0, en.earned);
+    }
+    const hours = en ? (parseFloat(en.hours) || 0) : 0;
+    const rate = (wallet && Number(wallet.hourlyRate)) || 0;
+    return Math.max(0, hours * rate);
   }
 
   $("entryForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
     const date = $("in-date").value;
-    const hours = parseFloat($("in-hours").value);
-    if(!hours || hours<=0 || !date) return;
+    if(!date) return;
+
+    const rate = (wallet && Number(wallet.hourlyRate)) || 0;
+    let addedHours = 0;
+    let addedEarned = 0;
+    let type = entryMode;
+
+    if(entryMode === "hours"){
+      addedHours = parseFloat($("in-hours").value) || 0;
+      if(addedHours<=0) return;
+      if(rate<=0){
+        $("hourlyRateNote").textContent = "Set an hourly rate in Edit wallet, or switch to Money earned.";
+        $("hourlyRateNote").classList.add("warning");
+        return;
+      }
+      addedEarned = addedHours * rate;
+    }else{
+      addedEarned = parseFloat($("in-earned").value) || 0;
+      if(addedEarned<=0) return;
+    }
+
     const idx = entries.findIndex(en=>en.date===date);
     if(idx>=0){
-      entries[idx] = {...entries[idx], hours: entries[idx].hours + hours};
+      const existing = entries[idx];
+      const oldEarned = entryEarned(existing);
+      const oldHours = parseFloat(existing.hours) || 0;
+      const oldDirect = parseFloat(existing.directEarned) || 0;
+      const hasOldHours = oldHours > 0;
+      const hasOldDirect = oldDirect > 0 || existing.entryType === "amount" || existing.entryType === "mixed";
+      const newHasHours = hasOldHours || entryMode === "hours";
+      const newHasDirect = hasOldDirect || entryMode === "amount";
+
+      entries[idx] = {
+        ...existing,
+        hours: oldHours + addedHours,
+        earned: oldEarned + addedEarned,
+        directEarned: oldDirect + (entryMode === "amount" ? addedEarned : 0),
+        entryType: newHasHours && newHasDirect ? "mixed" : newHasDirect ? "amount" : "hours",
+        rateAtEntry: entryMode === "hours" ? rate : (existing.rateAtEntry || null)
+      };
     }else{
-      entries.push({id: date+"-"+Date.now(), date, hours});
+      entries.push({
+        id: date+"-"+Date.now(),
+        date,
+        hours: addedHours,
+        earned: addedEarned,
+        directEarned: entryMode === "amount" ? addedEarned : 0,
+        entryType: type,
+        rateAtEntry: entryMode === "hours" ? rate : null
+      });
     }
+
     entries.sort((a,b)=> a.date < b.date ? 1 : -1);
     $("in-hours").value = "";
+    $("in-earned").value = "";
     updatePunchPreview();
     await persist();
     render();
@@ -2248,7 +2654,6 @@
 
   // ---- compute stats ----
   function computeGlobalStats(){
-    const rate = (wallet && wallet.hourlyRate) || 0;
     const balance = (wallet && wallet.balance) || 0;
     const now = new Date();
     const curYear = now.getFullYear();
@@ -2264,7 +2669,7 @@
 
     entries.forEach(en=>{
       const d = new Date(en.date+"T00:00:00");
-      const earned = en.hours*rate;
+      const earned = entryEarned(en);
       totalEarned += earned;
       if(en.date===today) todayEarned += earned;
       if(en.date>=weekStart) weekEarned += earned;
@@ -2293,7 +2698,7 @@
       const today = new Date(todayStr()+"T00:00:00");
       const daysElapsed = Math.max(1, Math.round((today-first)/DAY_MS)+1);
       // Use total earned (not per-item) since the wallet is shared across items.
-      const totalEarned = entries.reduce((s,en)=> s + en.hours*rate, 0);
+      const totalEarned = entries.reduce((s,en)=> s + entryEarned(en), 0);
       const avgPerDay = totalEarned/daysElapsed;
       if(avgPerDay>0) projectedDays = remaining/avgPerDay;
     }
@@ -2423,8 +2828,6 @@
   const WEEKDAY_LABELS = ["M","T","W","T","F","S","S"];
 
   function getBarSeries(){
-    const rate = (wallet && wallet.hourlyRate) || 0;
-
     if(chartView === "day"){
       const numDays = 14;
       const out = [];
@@ -2432,7 +2835,7 @@
         const d = new Date();
         d.setDate(d.getDate()-i);
         const key = dateStr(d);
-        const value = entries.filter(en=>en.date===key).reduce((s,en)=>s+en.hours*rate,0);
+        const value = entries.filter(en=>en.date===key).reduce((s,en)=>s+entryEarned(en),0);
         out.push({ label: WEEKDAY_LABELS[(d.getDay()+6)%7], value, isCurrent: i===0,
           title: d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})+": "+fmtMoney(value) });
       }
@@ -2450,7 +2853,7 @@
         const end = new Date(start);
         end.setDate(start.getDate()+6);
         const startStr = dateStr(start), endStr = dateStr(end);
-        const value = entries.filter(en=>en.date>=startStr && en.date<=endStr).reduce((s,en)=>s+en.hours*rate,0);
+        const value = entries.filter(en=>en.date>=startStr && en.date<=endStr).reduce((s,en)=>s+entryEarned(en),0);
         out.push({ label: "W"+(numWeeks-i), value, isCurrent: i===0,
           title: start.toLocaleDateString(undefined,{month:"short",day:"numeric"})+" \u2013 "+end.toLocaleDateString(undefined,{month:"short",day:"numeric"})+": "+fmtMoney(value) });
       }
@@ -2546,6 +2949,8 @@
     const stats = computeGlobalStats();
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
+    if((!wallet.hourlyRate || wallet.hourlyRate<=0) && entryMode==="hours") entryMode = "amount";
+    setEntryMode(entryMode, false);
     renderItemsShelf(stats.saved);
     updateDeadlineCountdown(false);
 
@@ -2604,7 +3009,7 @@
       if(projectedDays!==null){
         $("projectionText").innerHTML = '<span class="projection-lead">At this rate, you\u2019ll be able to get this in </span><span class="projection-time">'+formatDuration(projectedDays)+'</span><span class="projection-lead">.</span>'+hoursPart;
       }else{
-        $("projectionText").innerHTML = '<span class="projection-lead">Log a few days of hours to see a projected date.</span>'+hoursPart;
+        $("projectionText").innerHTML = '<span class="projection-lead">Log a few days of earnings to see a projected date.</span>'+hoursPart;
       }
     }else{
       $("projectionSection").classList.add("hidden");
@@ -2621,7 +3026,7 @@
     renderBars();
 
     // ledger
-    $("ledgerLabel").textContent = "Hours logged \u00B7 "+entries.length+" "+(entries.length===1?"entry":"entries");
+    $("ledgerLabel").textContent = "Earnings logged \u00B7 "+entries.length+" "+(entries.length===1?"entry":"entries");
     const list = $("ledgerList");
     list.innerHTML = "";
     if(entries.length===0){
@@ -2632,10 +3037,15 @@
         const row = document.createElement("div");
         row.className = "ledger-row";
         const dateLabel = new Date(en.date+"T00:00:00").toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric", year:"numeric"});
+        const earned = entryEarned(en);
+        const hours = parseFloat(en.hours) || 0;
+        let detail = "Money entered";
+        if(en.entryType === "mixed") detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs + money";
+        else if(hours > 0) detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs";
         row.innerHTML = `
           <div class="ledger-date">${dateLabel}</div>
-          <div class="ledger-hours">${en.hours} hrs</div>
-          <div class="ledger-amount">${fmtMoney(en.hours*((wallet&&wallet.hourlyRate)||0))}</div>
+          <div class="ledger-hours">${detail}</div>
+          <div class="ledger-amount">${fmtMoney(earned)}</div>
           <button class="ledger-del" aria-label="Delete entry">&#10005;</button>
         `;
         row.querySelector(".ledger-del").addEventListener("click", ()=> deleteEntry(en.id));
