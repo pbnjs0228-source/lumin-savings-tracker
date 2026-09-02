@@ -124,32 +124,106 @@
   .swatch:hover{transform:scale(1.1);}
   .swatch.active{border-color:var(--white);}
 
-  /* Rainbow theme: colourful accents, still a dark LUMIN dashboard. */
+  /* Rainbow theme: a live, seamless spectrum driven by JS hue variables. */
+  html[data-theme="rainbow"]{
+    --rainbow-a:hsl(0 86% 62%);
+    --rainbow-b:hsl(60 86% 62%);
+    --rainbow-c:hsl(120 82% 60%);
+    --rainbow-d:hsl(180 82% 60%);
+    --rainbow-e:hsl(240 84% 64%);
+    --rainbow-f:hsl(300 84% 64%);
+    --rainbow-ink:#17131f;
+    --rainbow-ink-soft:rgba(23,19,31,.72);
+  }
   html[data-theme="rainbow"] body{
     background:
-      radial-gradient(ellipse 720px 470px at 6% -4%,rgba(255,102,127,.14),transparent 60%),
-      radial-gradient(ellipse 680px 480px at 96% 8%,rgba(88,198,223,.13),transparent 58%),
-      radial-gradient(ellipse 680px 500px at 52% 105%,rgba(196,124,255,.12),transparent 58%),
-      linear-gradient(160deg,#11101c 0%,#161426 48%,#101820 100%);
+      radial-gradient(ellipse 760px 500px at 7% -5%,color-mix(in srgb,var(--rainbow-a) 17%,transparent),transparent 60%),
+      radial-gradient(ellipse 720px 520px at 103% 14%,color-mix(in srgb,var(--rainbow-d) 15%,transparent),transparent 58%),
+      radial-gradient(ellipse 720px 540px at 52% 108%,color-mix(in srgb,var(--rainbow-f) 14%,transparent),transparent 59%),
+      linear-gradient(155deg,color-mix(in srgb,var(--rainbow-e) 8%,#10101b),#151426 48%,color-mix(in srgb,var(--rainbow-c) 7%,#101820));
     background-attachment:fixed;
   }
+  html[data-theme="rainbow"] body::before{
+    background:color-mix(in srgb,var(--rainbow-b) 17%,transparent);
+  }
+  html[data-theme="rainbow"] body::after{
+    background:color-mix(in srgb,var(--rainbow-e) 15%,transparent);
+  }
+
+  /* Dark glass surfaces receive a moving rainbow tint without sacrificing readability. */
+  html[data-theme="rainbow"] .panel,
+  html[data-theme="rainbow"] .chip,
+  html[data-theme="rainbow"] .projection-banner,
+  html[data-theme="rainbow"] .deadline-panel,
+  html[data-theme="rainbow"] .record-card,
+  html[data-theme="rainbow"] .auth-card,
+  html[data-theme="rainbow"] .modal{
+    background:
+      linear-gradient(125deg,
+        color-mix(in srgb,var(--rainbow-a) 7%,var(--panel)),
+        color-mix(in srgb,var(--rainbow-c) 7%,var(--panel)) 35%,
+        color-mix(in srgb,var(--rainbow-e) 8%,var(--panel)) 68%,
+        color-mix(in srgb,var(--rainbow-f) 6%,var(--panel)));
+    border-color:color-mix(in srgb,var(--rainbow-d) 18%,var(--line));
+  }
+  html[data-theme="rainbow"] .item-card:not(.priority):not(.purchased){
+    background:linear-gradient(135deg,
+      color-mix(in srgb,var(--rainbow-a) 7%,var(--panel-raised)),
+      color-mix(in srgb,var(--rainbow-d) 8%,var(--panel-raised)) 52%,
+      color-mix(in srgb,var(--rainbow-f) 7%,var(--panel-raised)));
+    border-color:color-mix(in srgb,var(--rainbow-c) 20%,var(--line));
+  }
+
+  /* Accent text itself carries the moving spectrum. */
   html[data-theme="rainbow"] h1.title span,
-  html[data-theme="rainbow"] .projection-time{
+  html[data-theme="rainbow"] .projection-time,
+  html[data-theme="rainbow"] .figure-value,
+  html[data-theme="rainbow"] .chip-value,
+  html[data-theme="rainbow"] .punch-preview,
+  html[data-theme="rainbow"] .item-completed-text,
+  html[data-theme="rainbow"] .item-badge,
+  html[data-theme="rainbow"] .deadline-done{
     color:transparent;
-    background:linear-gradient(90deg,#ff7c85,#f0c868,#6ad8a4,#67cde2,#9a8dff,#df82dc);
+    background:linear-gradient(90deg,var(--rainbow-a),var(--rainbow-b),var(--rainbow-c),var(--rainbow-d),var(--rainbow-e),var(--rainbow-f),var(--rainbow-a));
     -webkit-background-clip:text;background-clip:text;
   }
   html[data-theme="rainbow"] .panel-label .dash{
-    background:linear-gradient(90deg,#ff7c85,#f0c868,#6ad8a4,#67cde2,#9a8dff,#df82dc);
+    background:linear-gradient(90deg,var(--rainbow-a),var(--rainbow-c),var(--rainbow-e),var(--rainbow-a));
   }
+
   html[data-theme="rainbow"] .btn-primary,
   html[data-theme="rainbow"] .segmented button.active{
-    background:linear-gradient(105deg,#ff868c,#efbd68 28%,#6bd6aa 54%,#6cc9e4 74%,#b08cff);
-    color:#17131f;
-    box-shadow:0 5px 18px rgba(123,133,255,.10);
+    background:linear-gradient(105deg,var(--rainbow-a),var(--rainbow-b),var(--rainbow-c),var(--rainbow-d),var(--rainbow-e),var(--rainbow-f));
+    color:var(--rainbow-ink);
+    text-shadow:0 1px 0 rgba(255,255,255,.12);
+    box-shadow:0 5px 18px color-mix(in srgb,var(--rainbow-e) 13%,transparent);
+  }
+  html[data-theme="rainbow"] .btn-secondary:hover,
+  html[data-theme="rainbow"] .btn-ghost:hover,
+  html[data-theme="rainbow"] .btn-icon:hover{
+    border-color:var(--rainbow-d);
+    color:var(--rainbow-d);
   }
   html[data-theme="rainbow"] .swatch.active{
-    box-shadow:0 0 0 2px rgba(127,140,255,.16),0 0 14px rgba(196,124,255,.18);
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--rainbow-e) 22%,transparent),0 0 14px color-mix(in srgb,var(--rainbow-f) 22%,transparent);
+  }
+  html[data-theme="rainbow"] .bar-fill,
+  html[data-theme="rainbow"] .item-bar-fill,
+  html[data-theme="rainbow"] .item-bar-fill.done,
+  html[data-theme="rainbow"] .item-bar-fill.progress-low,
+  html[data-theme="rainbow"] .item-bar-fill.progress-mid,
+  html[data-theme="rainbow"] .item-bar-fill.progress-high,
+  html[data-theme="rainbow"] .item-bar-fill.progress-near{
+    background:linear-gradient(90deg,var(--rainbow-a),var(--rainbow-b),var(--rainbow-c),var(--rainbow-d),var(--rainbow-e),var(--rainbow-f));
+    box-shadow:0 0 11px color-mix(in srgb,var(--rainbow-d) 25%,transparent);
+  }
+  html[data-theme="rainbow"] .item-complete-banner,
+  html[data-theme="rainbow"] .item-priority-badge{
+    border-color:color-mix(in srgb,var(--rainbow-d) 42%,transparent);
+    background:linear-gradient(110deg,
+      color-mix(in srgb,var(--rainbow-a) 20%,transparent),
+      color-mix(in srgb,var(--rainbow-c) 18%,transparent),
+      color-mix(in srgb,var(--rainbow-e) 20%,transparent));
   }
 
   /* panel / card */
@@ -240,22 +314,35 @@
   .item-card.priority:not(.purchased){
     border:1.5px solid transparent;
     background:
-      linear-gradient(135deg,
-        rgba(255,91,115,.105) 0%,
-        rgba(255,190,86,.075) 20%,
-        rgba(97,214,152,.075) 42%,
-        rgba(79,181,224,.08) 62%,
-        rgba(128,116,255,.10) 80%,
-        rgba(232,102,214,.105) 100%
-      ) padding-box,
-      linear-gradient(115deg,#ff667f,#ffba55,#f3dc62,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f) border-box;
-    background-size:100% 100%,300% 300%;
-    background-position:0 0,0% 50%;
-    box-shadow:0 10px 28px rgba(0,0,0,.16),0 0 18px rgba(124,124,255,.08);
-    animation:luminPriorityRainbow 7s linear infinite;
+      linear-gradient(125deg,var(--rainbow-a),var(--rainbow-b) 20%,var(--rainbow-c) 40%,var(--rainbow-d) 60%,var(--rainbow-e) 80%,var(--rainbow-f)) padding-box,
+      linear-gradient(125deg,var(--rainbow-f),var(--rainbow-a),var(--rainbow-c),var(--rainbow-e),var(--rainbow-f)) border-box;
+    color:var(--rainbow-ink);
+    box-shadow:0 12px 30px rgba(0,0,0,.20),0 0 20px color-mix(in srgb,var(--rainbow-e) 14%,transparent);
   }
   .item-card.priority:not(.purchased):hover{
-    box-shadow:0 13px 34px rgba(0,0,0,.2),0 0 24px rgba(124,124,255,.12);
+    box-shadow:0 15px 36px rgba(0,0,0,.24),0 0 27px color-mix(in srgb,var(--rainbow-d) 18%,transparent);
+  }
+  .item-card.priority:not(.purchased) .item-name,
+  .item-card.priority:not(.purchased) .item-goal,
+  .item-card.priority:not(.purchased) .item-deadline,
+  .item-card.priority:not(.purchased) .item-pct-row,
+  .item-card.priority:not(.purchased) .item-progress-number{
+    color:var(--rainbow-ink);
+    text-shadow:0 1px 2px color-mix(in srgb,var(--rainbow-ink) 20%,transparent);
+  }
+  .item-card.priority:not(.purchased) .item-goal{
+    font-weight:800;
+    letter-spacing:.1px;
+  }
+  .item-card.priority:not(.purchased) .item-bar-track{
+    background:color-mix(in srgb,var(--rainbow-ink) 15%,transparent);
+    border-color:color-mix(in srgb,var(--rainbow-ink) 18%,transparent);
+  }
+  .item-card.priority:not(.purchased) .item-priority-badge{
+    color:var(--rainbow-ink);
+    background:color-mix(in srgb,var(--rainbow-ink) 12%,transparent);
+    border-color:color-mix(in srgb,var(--rainbow-ink) 22%,transparent);
+    box-shadow:none;
   }
   .item-priority-badge{
     display:inline-flex;align-items:center;gap:4px;width:fit-content;margin:-1px 0 6px;padding:3px 7px;border-radius:999px;
@@ -264,10 +351,6 @@
     border:1px solid rgba(255,255,255,.18);
     font-size:9px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;
     box-shadow:0 0 14px rgba(127,140,255,.08);
-  }
-  @keyframes luminPriorityRainbow{
-    0%{background-position:0 0,0% 50%;}
-    100%{background-position:0 0,300% 50%;}
   }
   .item-card.purchased{opacity:.76;border-color:var(--line-strong);filter:saturate(.72);}
   .item-purchased-banner{
@@ -934,7 +1017,6 @@
   }
 
   @media(prefers-reduced-motion:reduce){
-    .item-card.priority:not(.purchased){animation:none !important;background-position:0 0,50% 50% !important;}
     *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.001ms !important;}
     body::before,body::after{display:none;}
   }
@@ -1620,15 +1702,84 @@
   }
 
   // ---- theme ----
+  let rainbowAnimationFrame = null;
+  let rainbowLastPaint = 0;
+
+  function hslRgb(h,s,l){
+    h=((h%360)+360)%360; s/=100; l/=100;
+    const c=(1-Math.abs(2*l-1))*s;
+    const x=c*(1-Math.abs((h/60)%2-1));
+    const m=l-c/2;
+    let r=0,g=0,b=0;
+    if(h<60){r=c;g=x;} else if(h<120){r=x;g=c;} else if(h<180){g=c;b=x;}
+    else if(h<240){g=x;b=c;} else if(h<300){r=x;b=c;} else {r=c;b=x;}
+    return [Math.round((r+m)*255),Math.round((g+m)*255),Math.round((b+m)*255)];
+  }
+
+  function contrastForHsl(h,s=86,l=62){
+    const [r8,g8,b8]=hslRgb(h,s,l);
+    const linear=v=>{v/=255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4);};
+    const lum=.2126*linear(r8)+.7152*linear(g8)+.0722*linear(b8);
+    return lum>.46 ? '#17131f' : '#fffafc';
+  }
+
+  function paintRainbowTheme(now=performance.now(),force=false){
+    if(currentTheme!=='rainbow') return;
+    if(!force && now-rainbowLastPaint<24){
+      rainbowAnimationFrame=requestAnimationFrame(paintRainbowTheme);
+      return;
+    }
+    rainbowLastPaint=now;
+
+    // 24-second loop. Hue 360 is visually identical to hue 0, so the loop has no jump.
+    const hue=((now%24000)/24000)*360;
+    const root=document.documentElement;
+    const hues=[hue,hue+60,hue+120,hue+180,hue+240,hue+300];
+    const names=['a','b','c','d','e','f'];
+    hues.forEach((v,i)=>root.style.setProperty(`--rainbow-${names[i]}`,`hsl(${v%360} 86% ${i===2||i===3?60:62}%)`));
+
+    // Existing LUMIN components that use these variables now move with the spectrum too.
+    root.style.setProperty('--accent',`hsl(${hue%360} 86% 62%)`);
+    root.style.setProperty('--accent-soft',`hsl(${(hue+55)%360} 86% 68%)`);
+    root.style.setProperty('--accent2',`hsl(${(hue+245)%360} 84% 66%)`);
+    root.style.setProperty('--positive',`hsl(${(hue+145)%360} 72% 62%)`);
+
+    // The priority card's foreground flips between dark and light according to the
+    // colour currently flowing behind the amount/name area.
+    const ink=contrastForHsl((hue+48)%360,86,62);
+    root.style.setProperty('--rainbow-ink',ink);
+    root.style.setProperty('--rainbow-ink-soft',ink==='#17131f'?'rgba(23,19,31,.72)':'rgba(255,250,252,.76)');
+
+    rainbowAnimationFrame=requestAnimationFrame(paintRainbowTheme);
+  }
+
+  function startRainbowTheme(){
+    if(rainbowAnimationFrame) cancelAnimationFrame(rainbowAnimationFrame);
+    rainbowLastPaint=0;
+    paintRainbowTheme(performance.now(),true);
+  }
+
+  function stopRainbowTheme(){
+    if(rainbowAnimationFrame){cancelAnimationFrame(rainbowAnimationFrame);rainbowAnimationFrame=null;}
+  }
+
   function applyTheme(key){
     const theme = THEMES[key] || THEMES.midnight;
     currentTheme = THEMES[key] ? key : "midnight";
     document.documentElement.dataset.theme = currentTheme;
     Object.entries(theme.vars).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
+    if(currentTheme === "rainbow") startRainbowTheme();
+    else stopRainbowTheme();
     document.querySelectorAll(".swatch").forEach(sw=>{
       sw.classList.toggle("active", sw.dataset.theme === currentTheme);
     });
   }
+  document.addEventListener("visibilitychange",()=>{
+    if(currentTheme!=="rainbow") return;
+    if(document.hidden) stopRainbowTheme();
+    else startRainbowTheme();
+  });
+
   function buildThemePicker(container){
     container.innerHTML = "";
     THEME_ORDER.forEach(key=>{
