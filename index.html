@@ -202,11 +202,25 @@
   }
   .item-actions{display:flex;gap:6px;position:absolute;top:8px;right:8px;opacity:0;transition:opacity 150ms ease;}
   .item-card:hover .item-actions{opacity:1;}
+  @media(hover:none),(pointer:coarse){.item-actions{opacity:1;}}
   .item-actions button{
     width:23px;height:23px;border-radius:6px;background:rgba(10,9,16,0.6);border:none;
     color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);
   }
   .item-actions button:hover{background:rgba(10,9,16,0.85);color:var(--accent-soft);}
+  .item-actions .item-priority.is-priority{color:#f1c66d;background:rgba(18,14,10,.78);}
+  .item-card.priority:not(.purchased){box-shadow:0 0 0 1px color-mix(in srgb,#f1c66d 36%,transparent),0 10px 28px rgba(0,0,0,.12);}
+  .item-priority-badge{
+    display:inline-flex;align-items:center;gap:4px;width:fit-content;margin:-1px 0 6px;padding:3px 6px;border-radius:999px;
+    color:#f1c66d;background:rgba(241,198,109,.09);border:1px solid rgba(241,198,109,.22);
+    font-size:9px;font-weight:800;letter-spacing:.45px;text-transform:uppercase;
+  }
+  .item-card.purchased{opacity:.76;border-color:var(--line-strong);filter:saturate(.72);}
+  .item-purchased-banner{
+    display:flex;align-items:center;justify-content:center;gap:5px;margin-top:7px;padding:7px 8px;border-radius:8px;
+    background:rgba(255,255,255,.045);border:1px solid var(--line-strong);color:var(--muted);
+    font-family:'Sora',sans-serif;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  }
   .item-add-card{
     flex:0 0 200px;border:1.5px dashed var(--line-strong);border-radius:13px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
@@ -228,6 +242,16 @@
   }
   .product-link:hover{text-decoration:underline;}
   .product-link.muted{color:var(--muted);}
+  .product-note{
+    margin-top:9px;padding:8px 9px;border-radius:8px;background:rgba(255,255,255,.025);border:1px solid var(--line);
+    color:var(--muted);font-size:11px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;
+  }
+  .purchase-btn{margin-top:10px;justify-content:center;width:100%;border-color:color-mix(in srgb,var(--positive) 46%,var(--line-strong));color:var(--positive);}
+  .purchase-btn:hover{background:color-mix(in srgb,var(--positive) 10%,transparent);}
+  .purchased-active-badge{
+    display:inline-flex;margin-top:9px;width:fit-content;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.04);
+    border:1px solid var(--line-strong);font-size:10.5px;font-weight:750;color:var(--muted);
+  }
 
   /* fan gauge */
   .dial-card{display:flex;flex-direction:column;align-items:center;gap:16px;}
@@ -252,6 +276,13 @@
   }
   .field input:focus{outline:none;border-color:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);}
   .field input::placeholder{color:#615e78;}
+  .field textarea{
+    font-family:'Inter',sans-serif;background:var(--panel-solid);border:1px solid var(--line-strong);
+    border-radius:9px;color:var(--white);padding:10px 12px;font-size:13px;width:100%;min-height:82px;
+    resize:vertical;line-height:1.45;
+  }
+  .field textarea:focus{outline:none;border-color:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);}
+  .field textarea::placeholder{color:#615e78;}
   .input-prefix{
     display:flex;align-items:center;gap:6px;padding-left:12px;
     font-family:'Inter',sans-serif;background:var(--panel-solid);
@@ -358,6 +389,14 @@
   .chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;}
   .chip-label{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--muted);margin-bottom:6px;}
   .chip-value{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;color:var(--accent-soft);}
+  .records-chip{cursor:pointer;text-align:left;font:inherit;transition:border-color .16s ease,transform .16s ease,background .16s ease;}
+  .records-chip:hover{border-color:var(--accent-soft);transform:translateY(-1px);background:color-mix(in srgb,var(--accent) 6%,var(--panel));}
+  .records-chip .chip-value{font-size:14px;display:flex;align-items:center;gap:6px;}
+  .records-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+  .record-card{background:var(--panel-solid);border:1px solid var(--line);border-radius:10px;padding:11px 12px;}
+  .record-label{font-size:10.5px;color:var(--muted);margin-bottom:5px;}
+  .record-value{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--accent-soft);overflow-wrap:anywhere;}
+  .record-sub{font-size:10px;color:var(--muted);margin-top:3px;}
 
   /* month bars */
   .bars-row{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;padding-top:8px;}
@@ -379,6 +418,8 @@
   .ledger-date{font-size:13px;color:var(--white);font-weight:500;}
   .ledger-hours{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);}
   .ledger-amount{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--positive);}
+  .ledger-amount.expense{color:#df8f86;}
+  .ledger-row.expense{border-color:color-mix(in srgb,#df7066 18%,var(--line));}
   .ledger-del{background:transparent;border:none;color:var(--muted);cursor:pointer;padding:5px;border-radius:7px;display:flex;}
   .ledger-del:hover{color:var(--accent-soft);background:color-mix(in srgb, var(--accent) 12%, transparent);}
 
@@ -729,6 +770,7 @@
     .top-grid>.punch-card-form{grid-column:1/-1;}
   }
   @media(max-width:620px){
+    .records-grid{grid-template-columns:1fr;}
     body{padding:16px 11px 32px;}
     .panel{padding:14px;}
     .section{margin-bottom:11px;}
@@ -923,7 +965,7 @@
           <span class="brand-tag">Savings tracker</span>
         </div>
         <h1 class="title">Save up for what's <span>next</span></h1>
-        <p class="subtitle">Track your earnings, grow your fund, and see how close you are to every item on your list.</p>
+        <p class="subtitle">Track earnings and expenses, grow your fund, and see how close you are to every item on your list.</p>
       </div>
       <div class="header-right">
         <div class="theme-picker" id="themePickerMain"></div>
@@ -953,13 +995,16 @@
     <div class="top-grid section" style="display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:16px;margin-bottom:18px;">
       <!-- active product -->
       <div class="panel product-card">
-        <div class="panel-label"><span class="dash"></span>Currently saving for</div>
+        <div class="panel-label"><span class="dash"></span><span id="activeGoalLabelText">Currently saving for</span></div>
         <div class="product-img-wrap">
           <img id="productImg" class="product-img hidden" alt="Item" />
           <div id="productImgPlaceholder" class="product-img placeholder">No item selected</div>
         </div>
         <div class="product-name" id="productName">—</div>
         <a id="productLink" class="product-link" href="#" target="_blank" rel="noopener noreferrer">View it &#8594;</a>
+        <div class="product-note hidden" id="productNote"></div>
+        <button type="button" class="btn btn-ghost purchase-btn hidden" id="purchaseBtn">✓ Mark as purchased</button>
+        <div class="purchased-active-badge hidden" id="purchasedActiveBadge">✓ Purchased</div>
       </div>
 
       <!-- fan gauge -->
@@ -1008,6 +1053,7 @@
           <div class="segmented earnings-mode-toggle" id="earningsModeToggle" aria-label="Earnings entry mode">
             <button type="button" class="active" data-entry-mode="hours">Hours × rate</button>
             <button type="button" data-entry-mode="amount">Money earned</button>
+            <button type="button" data-entry-mode="expense">Expense</button>
           </div>
         </div>
         <form id="entryForm" style="display:flex;flex-direction:column;gap:10px;flex:1;">
@@ -1023,6 +1069,14 @@
           <div id="amountEntryFields" class="hidden">
             <label class="field">Money earned
               <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 86.40" id="in-earned" /></div>
+            </label>
+          </div>
+          <div id="expenseEntryFields" class="hidden">
+            <label class="field">Expense amount
+              <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 24.50" id="in-expense" /></div>
+            </label>
+            <label class="field">What was it? <span style="font-weight:400;color:var(--muted);">(optional)</span>
+              <input type="text" maxlength="80" placeholder="e.g. Lunch, game, bus" id="in-expense-note" />
             </label>
           </div>
           <div class="punch-preview" id="punchPreview">= $0.00 earned</div>
@@ -1101,6 +1155,7 @@
       <div class="chip"><div class="chip-label">This month</div><div class="chip-value" id="statMonth">$0</div></div>
       <div class="chip"><div class="chip-label">This year</div><div class="chip-value" id="statYear">$0</div></div>
       <div class="chip"><div class="chip-label">All-time earned</div><div class="chip-value" id="statAll">$0</div></div>
+      <button type="button" class="chip records-chip" id="recordsBtn"><div class="chip-label">Personal records</div><div class="chip-value">🏆 View records</div></button>
     </div>
 
     <!-- month bars -->
@@ -1118,8 +1173,8 @@
 
     <!-- ledger -->
     <div class="section panel">
-      <div class="panel-label"><span class="dash"></span><span id="ledgerLabel">Earnings logged</span></div>
-      <div id="ledgerEmpty" class="empty-state hidden">No earnings logged yet — add today's earnings above to get started.</div>
+      <div class="panel-label"><span class="dash"></span><span id="ledgerLabel">Activity</span></div>
+      <div id="ledgerEmpty" class="empty-state hidden">No activity logged yet — add earnings or an expense above to get started.</div>
       <div id="ledgerList" class="ledger-list"></div>
     </div>
   </div>
@@ -1139,6 +1194,13 @@
 
         <label class="field">Target date (optional)
           <input type="date" id="item-deadline" />
+        </label>
+        <label class="field">Notes (optional)
+          <textarea id="item-notes" maxlength="500" placeholder="e.g. Wait for a sale, get the black version, check warranty..."></textarea>
+        </label>
+        <label style="display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;cursor:pointer;">
+          <input type="checkbox" id="item-priority" style="width:auto;accent-color:var(--accent);" />
+          Make this my priority goal
         </label>
         <label class="field">Link (optional)
           <input type="url" placeholder="https://..." id="item-link" />
@@ -1162,6 +1224,25 @@
           <button type="button" class="btn btn-ghost" id="itemCancelBtn">Cancel</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- PERSONAL RECORDS MODAL -->
+  <div id="recordsModalBackdrop" class="modal-backdrop hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="recordsModalTitle">
+      <h2 class="modal-title" id="recordsModalTitle">Personal records 🏆</h2>
+      <p class="modal-sub">Your best earning moments, calculated from your logged history.</p>
+      <div class="records-grid">
+        <div class="record-card"><div class="record-label">Best earning day</div><div class="record-value" id="recordBestDay">$0</div><div class="record-sub" id="recordBestDaySub">No data yet</div></div>
+        <div class="record-card"><div class="record-label">Best earning week</div><div class="record-value" id="recordBestWeek">$0</div><div class="record-sub" id="recordBestWeekSub">No data yet</div></div>
+        <div class="record-card"><div class="record-label">Biggest earning entry</div><div class="record-value" id="recordBiggestEntry">$0</div><div class="record-sub" id="recordBiggestEntrySub">No data yet</div></div>
+        <div class="record-card"><div class="record-label">Most hours in a day</div><div class="record-value" id="recordMostHours">0 hrs</div><div class="record-sub" id="recordMostHoursSub">No data yet</div></div>
+        <div class="record-card"><div class="record-label">Biggest expense</div><div class="record-value" id="recordBiggestExpense">$0</div><div class="record-sub" id="recordBiggestExpenseSub">No expenses yet</div></div>
+        <div class="record-card"><div class="record-label">Goals purchased</div><div class="record-value" id="recordPurchased">0</div><div class="record-sub">Finished and bought</div></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:15px;">
+        <button type="button" class="btn btn-ghost" id="recordsCloseBtn">Close</button>
+      </div>
     </div>
   </div>
 
@@ -1326,6 +1407,8 @@
   let items = [];              // [{id, name, goal, link, image}]
   let activeItemId = null;
   let entries = [];            // legacy hours entries + new earned/mixed entries
+  let expenses = [];           // [{id,date,amount,note,type,itemId}]
+  let priorityItemId = null;
   let currentTheme = "midnight";
   let chartView = "month";
   let entryMode = "hours"; // hours | amount
@@ -1457,7 +1540,7 @@
     const events = [];
 
     items.forEach(item=>{
-      if(!(item.goal>0)) return;
+      if(item.purchasedAt || !(item.goal>0)) return;
       const pct = Math.floor(Math.max(0, Math.min(1, saved/item.goal))*100);
       const newlyCrossed = MILESTONES.filter(m=>pct>=m && !celebratedMilestones.has(milestoneKey(item.id,m)));
       if(!newlyCrossed.length) return;
@@ -1805,6 +1888,8 @@
     items = [];
     activeItemId = null;
     entries = [];
+    expenses = [];
+    priorityItemId = null;
     currentTheme = "midnight";
     chartView = "month";
     entryMode = "hours";
@@ -1818,11 +1903,14 @@
     if(!parsed || typeof parsed !== "object") return;
     wallet = parsed.wallet || null;
     entries = Array.isArray(parsed.entries) ? parsed.entries : [];
+    expenses = Array.isArray(parsed.expenses) ? parsed.expenses : [];
     items = Array.isArray(parsed.items) ? parsed.items : [];
-    activeItemId = parsed.activeItemId || (items[0] && items[0].id) || null;
+    priorityItemId = parsed.priorityItemId || null;
+    if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
+    activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
     if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
     if(parsed.chartView && ["day","week","month"].includes(parsed.chartView)) chartView = parsed.chartView;
-    if(parsed.entryMode && ["hours","amount"].includes(parsed.entryMode)) entryMode = parsed.entryMode;
+    if(parsed.entryMode && ["hours","amount","expense"].includes(parsed.entryMode)) entryMode = parsed.entryMode;
     if(Array.isArray(parsed.celebratedItemIds)) celebratedItemIds = new Set(parsed.celebratedItemIds);
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
 
@@ -1836,7 +1924,9 @@
           goal: parsed.settings.goal || 0,
           link: parsed.settings.productLink || "",
           image: parsed.settings.productImage || "",
-          deadline: ""
+          deadline: "",
+          notes: "",
+          purchasedAt: ""
         };
         items = [migratedItem];
         activeItemId = migratedItem.id;
@@ -1856,7 +1946,7 @@
       const stats = computeGlobalStats();
       celebratedMilestones = new Set();
       items.forEach(item=>{
-        if(!(item.goal>0)) return;
+        if(item.purchasedAt || !(item.goal>0)) return;
         const pct = Math.floor(Math.max(0, Math.min(1, stats.saved/item.goal))*100);
         MILESTONES.forEach(m=>{ if(pct>=m) celebratedMilestones.add(milestoneKey(item.id,m)); });
       });
@@ -1892,7 +1982,9 @@
       wallet,
       items,
       activeItemId,
+      priorityItemId,
       entries,
+      expenses,
       theme:currentTheme,
       chartView,
       entryMode,
@@ -2400,6 +2492,11 @@
       closeCropper(true);
       return;
     }
+    if(!$("recordsModalBackdrop").classList.contains("hidden")){
+      e.preventDefault();
+      closeRecordsModal();
+      return;
+    }
     if(!$("legacyImportBackdrop").classList.contains("hidden")){
       e.preventDefault();
       closeLegacyImport();
@@ -2433,6 +2530,8 @@
     $("item-goal").value = item ? item.goal : "";
     $("item-link").value = item ? (item.link||"") : "";
     $("item-deadline").value = item ? (item.deadline||"") : "";
+    $("item-notes").value = item ? (item.notes||"") : "";
+    $("item-priority").checked = item ? item.id===priorityItemId : false;
     $("item-deadline").min = todayStr();
     if(item && item.image){
       setUploadPreview(item.image);
@@ -2476,16 +2575,27 @@
     const goal = parseFloat($("item-goal").value) || 0;
     const link = $("item-link").value.trim();
     const deadline = $("item-deadline").value || "";
+    const notes = $("item-notes").value.trim();
+    const makePriority = $("item-priority").checked;
     const image = pendingImageDataUrl !== null ? pendingImageDataUrl :
                   (editingItemId ? (items.find(i=>i.id===editingItemId)||{}).image || "" : "");
 
     if(editingItemId){
       const idx = items.findIndex(i=>i.id===editingItemId);
-      if(idx>=0) items[idx] = { ...items[idx], name, goal, link, image, deadline };
+      if(idx>=0){
+        items[idx] = { ...items[idx], name, goal, link, image, deadline, notes };
+        if(makePriority && !items[idx].purchasedAt){
+          priorityItemId = items[idx].id;
+          activeItemId = items[idx].id;
+        }else if(!makePriority && priorityItemId===items[idx].id){
+          priorityItemId = null;
+        }
+      }
     }else{
-      const newItem = { id: uid(), name, goal, link, image, deadline };
+      const newItem = { id: uid(), name, goal, link, image, deadline, notes, purchasedAt:"", purchasedPrice:0 };
       items.push(newItem);
-      if(!activeItemId) activeItemId = newItem.id;
+      if(makePriority){ priorityItemId = newItem.id; activeItemId = newItem.id; }
+      else if(!activeItemId) activeItemId = newItem.id;
     }
     closeItemModal();
     await persist();
@@ -2500,8 +2610,9 @@
   }
   async function deleteItem(id){
     items = items.filter(i=>i.id!==id);
+    if(priorityItemId===id) priorityItemId = null;
     if(activeItemId===id){
-      activeItemId = items[0] ? items[0].id : null;
+      activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] ? items[0].id : null);
     }
     await persist();
     render();
@@ -2512,17 +2623,20 @@
   $("in-date").max = todayStr();
   $("in-hours").addEventListener("input", updatePunchPreview);
   $("in-earned").addEventListener("input", updatePunchPreview);
+  $("in-expense").addEventListener("input", updatePunchPreview);
 
   function setEntryMode(mode, shouldPersist=false){
-    entryMode = mode === "amount" ? "amount" : "hours";
+    entryMode = ["hours","amount","expense"].includes(mode) ? mode : "hours";
     $("earningsModeToggle").querySelectorAll("button").forEach(btn=>{
       btn.classList.toggle("active", btn.dataset.entryMode === entryMode);
     });
     $("hoursEntryFields").classList.toggle("hidden", entryMode !== "hours");
     $("amountEntryFields").classList.toggle("hidden", entryMode !== "amount");
+    $("expenseEntryFields").classList.toggle("hidden", entryMode !== "expense");
     $("in-hours").required = entryMode === "hours";
     $("in-earned").required = entryMode === "amount";
-    $("entrySubmitBtn").textContent = entryMode === "hours" ? "+ Add earnings" : "+ Add money earned";
+    $("in-expense").required = entryMode === "expense";
+    $("entrySubmitBtn").textContent = entryMode === "expense" ? "− Add expense" : entryMode === "amount" ? "+ Add money earned" : "+ Add earnings";
 
     const rate = (wallet && Number(wallet.hourlyRate)) || 0;
     const note = $("hourlyRateNote");
@@ -2559,6 +2673,11 @@
   function updatePunchPreview(){
     const rate = (wallet && Number(wallet.hourlyRate)) || 0;
     let earned = 0;
+    if(entryMode === "expense"){
+      const amount = parseFloat($("in-expense").value) || 0;
+      $("punchPreview").textContent = "− " + fmtMoney(amount) + " from savings";
+      return;
+    }
     if(entryMode === "amount"){
       earned = parseFloat($("in-earned").value) || 0;
       $("punchPreview").textContent = "= " + fmtMoney(earned) + " earned";
@@ -2592,6 +2711,22 @@
     let addedHours = 0;
     let addedEarned = 0;
     let type = entryMode;
+
+    if(entryMode === "expense"){
+      const amount = parseFloat($("in-expense").value) || 0;
+      if(amount<=0) return;
+      expenses.push({
+        id:"expense-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
+        date, amount, note:$("in-expense-note").value.trim(), type:"expense", itemId:null
+      });
+      expenses.sort((a,b)=> a.date < b.date ? 1 : -1);
+      $("in-expense").value = "";
+      $("in-expense-note").value = "";
+      updatePunchPreview();
+      await persist();
+      render();
+      return;
+    }
 
     if(entryMode === "hours"){
       addedHours = parseFloat($("in-hours").value) || 0;
@@ -2641,6 +2776,8 @@
     entries.sort((a,b)=> a.date < b.date ? 1 : -1);
     $("in-hours").value = "";
     $("in-earned").value = "";
+    $("in-expense").value = "";
+    $("in-expense-note").value = "";
     updatePunchPreview();
     await persist();
     render();
@@ -2648,6 +2785,17 @@
 
   async function deleteEntry(id){
     entries = entries.filter(en=>en.id!==id);
+    await persist();
+    render();
+  }
+
+  async function deleteExpense(id){
+    const exp = expenses.find(x=>x.id===id);
+    if(exp && exp.type==="purchase" && exp.itemId){
+      const item = items.find(i=>i.id===exp.itemId);
+      if(item){ item.purchasedAt = ""; item.purchasedPrice = 0; }
+    }
+    expenses = expenses.filter(x=>x.id!==id);
     await persist();
     render();
   }
@@ -2665,6 +2813,7 @@
     const weekStart = dateStr(weekStartDate);
 
     let totalEarned=0, yearEarned=0, monthEarned=0, todayEarned=0, weekEarned=0;
+    let totalExpenses=0, todayExpenses=0, weekExpenses=0, monthExpenses=0, yearExpenses=0;
     const byMonth = new Array(12).fill(0);
 
     entries.forEach(en=>{
@@ -2680,8 +2829,20 @@
       }
     });
 
-    const saved = balance + totalEarned;
-    return {totalEarned, yearEarned, monthEarned, todayEarned, weekEarned, byMonth, saved, curYear};
+    expenses.forEach(exp=>{
+      const amount = Math.max(0, Number(exp.amount)||0);
+      const d = new Date((exp.date||today)+"T00:00:00");
+      totalExpenses += amount;
+      if(exp.date===today) todayExpenses += amount;
+      if(exp.date>=weekStart) weekExpenses += amount;
+      if(d.getFullYear()===curYear){
+        yearExpenses += amount;
+        if(d.getMonth()===curMonth) monthExpenses += amount;
+      }
+    });
+
+    const saved = Math.max(0, balance + totalEarned - totalExpenses);
+    return {totalEarned, yearEarned, monthEarned, todayEarned, weekEarned, byMonth, saved, curYear, totalExpenses, todayExpenses, weekExpenses, monthExpenses, yearExpenses};
   }
 
   function computeItemProgress(item, saved){
@@ -2784,7 +2945,7 @@
     const section = $("deadlineSection");
     if(!section) return;
 
-    if(!activeItem){
+    if(!activeItem || activeItem.purchasedAt){
       section.classList.add("hidden");
       return;
     }
@@ -2864,6 +3025,85 @@
     return stats.byMonth.map((value,i)=>({ label: MONTH_LABELS[i], value, isCurrent: i===curMonthIdx, title: fmtMoney(value) }));
   }
 
+  function startOfWeekKey(dateValue){
+    const d = new Date(dateValue+"T00:00:00");
+    const dow = (d.getDay()+6)%7;
+    d.setDate(d.getDate()-dow);
+    return dateStr(d);
+  }
+
+  function computePersonalRecords(){
+    const byDay = new Map();
+    const byWeek = new Map();
+    const hoursByDay = new Map();
+    let biggestEntry = null;
+
+    entries.forEach(en=>{
+      const earned = entryEarned(en);
+      byDay.set(en.date, (byDay.get(en.date)||0)+earned);
+      const wk = startOfWeekKey(en.date);
+      byWeek.set(wk, (byWeek.get(wk)||0)+earned);
+      const hrs = parseFloat(en.hours)||0;
+      hoursByDay.set(en.date, (hoursByDay.get(en.date)||0)+hrs);
+      if(!biggestEntry || earned>biggestEntry.value) biggestEntry = {value:earned,date:en.date};
+    });
+
+    const maxMap = map => {
+      let best = null;
+      for(const [key,value] of map){ if(!best || value>best.value) best={key,value}; }
+      return best;
+    };
+
+    const biggestExpense = expenses.reduce((best,exp)=>{
+      const value = Math.max(0,Number(exp.amount)||0);
+      return !best || value>best.value ? {value,date:exp.date,note:exp.note|| (exp.type==="purchase"?"Goal purchase":"Expense")} : best;
+    },null);
+
+    return {
+      bestDay:maxMap(byDay),
+      bestWeek:maxMap(byWeek),
+      biggestEntry,
+      mostHours:maxMap(hoursByDay),
+      biggestExpense,
+      purchased:items.filter(i=>i.purchasedAt).length
+    };
+  }
+
+  function formatRecordDate(value){
+    if(!value) return "No data yet";
+    const d = new Date(value+"T00:00:00");
+    return d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});
+  }
+
+  function renderPersonalRecords(){
+    const r = computePersonalRecords();
+    $("recordBestDay").textContent = fmtMoney(r.bestDay?.value||0);
+    $("recordBestDaySub").textContent = r.bestDay ? formatRecordDate(r.bestDay.key) : "No data yet";
+
+    $("recordBestWeek").textContent = fmtMoney(r.bestWeek?.value||0);
+    $("recordBestWeekSub").textContent = r.bestWeek ? "Week of "+formatRecordDate(r.bestWeek.key) : "No data yet";
+
+    $("recordBiggestEntry").textContent = fmtMoney(r.biggestEntry?.value||0);
+    $("recordBiggestEntrySub").textContent = r.biggestEntry ? formatRecordDate(r.biggestEntry.date) : "No data yet";
+
+    $("recordMostHours").textContent = r.mostHours ? (Number(r.mostHours.value).toFixed(r.mostHours.value%1?1:0)+" hrs") : "0 hrs";
+    $("recordMostHoursSub").textContent = r.mostHours ? formatRecordDate(r.mostHours.key) : "No data yet";
+
+    $("recordBiggestExpense").textContent = fmtMoney(r.biggestExpense?.value||0);
+    $("recordBiggestExpenseSub").textContent = r.biggestExpense ? ((r.biggestExpense.note||"Expense")+" · "+formatRecordDate(r.biggestExpense.date)) : "No expenses yet";
+    $("recordPurchased").textContent = String(r.purchased||0);
+  }
+
+  function openRecordsModal(){
+    renderPersonalRecords();
+    $("recordsModalBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+  function closeRecordsModal(){
+    $("recordsModalBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+
   function renderBars(){
     const data = getBarSeries();
     const maxVal = Math.max(1, ...data.map(d=>d.value));
@@ -2883,29 +3123,44 @@
   function renderItemsShelf(saved){
     const shelf = $("itemsShelf");
     shelf.innerHTML = "";
-    items.forEach(item=>{
+    const orderedItems = [...items].sort((a,b)=>{
+      if(!!a.purchasedAt !== !!b.purchasedAt) return a.purchasedAt ? 1 : -1;
+      if(a.id===priorityItemId) return -1;
+      if(b.id===priorityItemId) return 1;
+      return 0;
+    });
+
+    orderedItems.forEach(item=>{
+      const purchased = !!item.purchasedAt;
       const { progress, remaining } = computeItemProgress(item, saved);
-      const pct = Math.max(0, Math.min(1, progress));
-      const isComplete = remaining <= 0 && item.goal > 0;
-      const progressClass = isComplete ? "done" : pct >= 0.85 ? "progress-near" : pct >= 0.60 ? "progress-high" : pct >= 0.30 ? "progress-mid" : "progress-low";
+      const pct = purchased ? 1 : Math.max(0, Math.min(1, progress));
+      const isComplete = !purchased && remaining <= 0 && item.goal > 0;
+      const progressClass = purchased ? "done" : isComplete ? "done" : pct >= 0.85 ? "progress-near" : pct >= 0.60 ? "progress-high" : pct >= 0.30 ? "progress-mid" : "progress-low";
       const card = document.createElement("div");
-      card.className = "item-card" + (item.id===activeItemId ? " active" : "") + (isComplete ? " completed" : "");
+      card.className = "item-card" + (item.id===activeItemId ? " active" : "") + (isComplete ? " completed" : "") + (item.id===priorityItemId ? " priority" : "") + (purchased ? " purchased" : "");
       const thumbHtml = item.image
         ? `<img class="item-thumb" src="${item.image}" alt="${escapeHtml(item.name)}" />`
         : `<div class="item-thumb placeholder">No photo</div>`;
-      const progressText = isComplete
-        ? `<span class="item-completed-text">Completed</span><span class="item-progress-number">100%</span>`
-        : `<span class="item-progress-number">${Math.round(pct*100)}%</span>`;
-      const completedBanner = isComplete ? `<div class="item-complete-banner">✓ Goal completed</div>` : "";
+      const progressText = purchased
+        ? `<span class="item-completed-text">Purchased</span><span class="item-progress-number">✓</span>`
+        : isComplete
+          ? `<span class="item-completed-text">Completed</span><span class="item-progress-number">100%</span>`
+          : `<span class="item-progress-number">${Math.round(pct*100)}%</span>`;
+      const completedBanner = purchased
+        ? `<div class="item-purchased-banner">✓ Purchased ${formatRecordDate(item.purchasedAt)}</div>`
+        : isComplete ? `<div class="item-complete-banner">✓ Goal completed</div>` : "";
+      const priorityBadge = item.id===priorityItemId && !purchased ? `<div class="item-priority-badge">★ Priority</div>` : "";
       card.innerHTML = `
         ${thumbHtml}
+        ${priorityBadge}
         <div class="item-name">${escapeHtml(item.name || "Untitled")}</div>
         <div class="item-goal">${fmtMoney(item.goal,0)}</div>
-        ${item.deadline ? `<div class="item-deadline">Due ${formatDeadlineShort(item.deadline)}</div>` : ""}
-        <div class="item-bar-track"><div class="item-bar-fill ${progressClass}" style="width:${Math.round(pct*100)}%"></div></div>
+        ${item.deadline && !purchased ? `<div class="item-deadline">Due ${formatDeadlineShort(item.deadline)}</div>` : ""}
+        <div class="item-bar-track"><div class="item-bar-fill ${progressClass}" style="width:${purchased?100:Math.round(pct*100)}%"></div></div>
         <div class="item-pct-row">${progressText}</div>
         ${completedBanner}
         <div class="item-actions">
+          ${!purchased ? `<button class="item-priority ${item.id===priorityItemId?'is-priority':''}" title="${item.id===priorityItemId?'Remove priority':'Make priority'}" aria-label="${item.id===priorityItemId?'Remove priority':'Make priority'}">★</button>` : ""}
           <button class="item-edit" title="Edit" aria-label="Edit item">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
           </button>
@@ -2915,8 +3170,15 @@
         </div>
       `;
       card.addEventListener("click", (e)=>{
-        if(e.target.closest(".item-edit") || e.target.closest(".item-del")) return;
+        if(e.target.closest(".item-edit") || e.target.closest(".item-del") || e.target.closest(".item-priority")) return;
         setActiveItem(item.id);
+      });
+      const priorityBtn = card.querySelector(".item-priority");
+      if(priorityBtn) priorityBtn.addEventListener("click", async ()=>{
+        priorityItemId = priorityItemId===item.id ? null : item.id;
+        if(priorityItemId) activeItemId = priorityItemId;
+        await persist();
+        render();
       });
       card.querySelector(".item-edit").addEventListener("click", ()=> openItemModal(item.id));
       card.querySelector(".item-del").addEventListener("click", ()=>{
@@ -2938,6 +3200,36 @@
     return div.innerHTML;
   }
 
+  async function markActivePurchased(){
+    const item = items.find(i=>i.id===activeItemId);
+    if(!item || item.purchasedAt) return;
+    const stats = computeGlobalStats();
+    const remaining = Math.max(0,(Number(item.goal)||0)-stats.saved);
+    if(remaining>0){
+      alert("This goal isn't fully funded yet.");
+      return;
+    }
+    const price = Math.max(0,Number(item.goal)||0);
+    if(!confirm(`Mark "${item.name||"this goal"}" as purchased for ${fmtMoney(price)}? This will subtract it from your saved balance.`)) return;
+
+    item.purchasedAt = todayStr();
+    item.purchasedPrice = price;
+    expenses.push({
+      id:"purchase-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
+      date:todayStr(), amount:price, note:item.name||"Goal purchase", type:"purchase", itemId:item.id
+    });
+    if(priorityItemId===item.id) priorityItemId = null;
+    const next = items.find(i=>!i.purchasedAt && i.id!==item.id);
+    activeItemId = priorityItemId || (next ? next.id : item.id);
+    await persist();
+    render();
+  }
+
+  $("purchaseBtn").addEventListener("click", markActivePurchased);
+  $("recordsBtn").addEventListener("click", openRecordsModal);
+  $("recordsCloseBtn").addEventListener("click", closeRecordsModal);
+  $("recordsModalBackdrop").addEventListener("click", e=>{ if(e.target.id==="recordsModalBackdrop") closeRecordsModal(); });
+
   function render(){
     if(!wallet){
       showSetupScreen(false);
@@ -2947,6 +3239,7 @@
     $("mainScreen").classList.remove("hidden");
 
     const stats = computeGlobalStats();
+    if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
     if((!wallet.hourlyRate || wallet.hourlyRate<=0) && entryMode==="hours") entryMode = "amount";
@@ -2978,9 +3271,29 @@
       linkEl.style.pointerEvents = "none";
     }
 
+    const activeGoalLabel = $("activeGoalLabelText");
+    if(activeGoalLabel){
+      activeGoalLabel.textContent = !activeItem ? "Goal details" : activeItem.purchasedAt ? "Purchased goal" : activeItem.id===priorityItemId ? "Priority goal" : "Currently saving for";
+    }
+
+    const noteEl = $("productNote");
+    if(activeItem && activeItem.notes){
+      noteEl.textContent = activeItem.notes;
+      noteEl.classList.remove("hidden");
+    }else{ noteEl.classList.add("hidden"); noteEl.textContent = ""; }
+
+    const purchaseBtn = $("purchaseBtn");
+    const purchasedBadge = $("purchasedActiveBadge");
+    const activePurchased = !!(activeItem && activeItem.purchasedAt);
+    const activeFunded = !!(activeItem && !activePurchased && activeItem.goal>0 && stats.saved>=activeItem.goal);
+    purchaseBtn.classList.toggle("hidden", !activeFunded);
+    purchasedBadge.classList.toggle("hidden", !activePurchased);
+    if(activePurchased) purchasedBadge.textContent = "✓ Purchased " + formatRecordDate(activeItem.purchasedAt);
+
     // fan gauge (driven by active item)
     const { progress, remaining, hoursNeeded, projectedDays } = computeItemProgress(activeItem, stats.saved);
-    const pct = activeItem ? Math.max(0, Math.min(1, progress)) : 0;
+    const isActivePurchased = !!(activeItem && activeItem.purchasedAt);
+    const pct = activeItem ? (isActivePurchased ? 1 : Math.max(0, Math.min(1, progress))) : 0;
     const R = 122;
     const C = 2*Math.PI*R;
     const ring = $("progressRing");
@@ -2992,8 +3305,8 @@
     $("fanBlades").style.animationDuration = spinDuration+"s";
 
     $("figSaved").textContent = fmtMoney(stats.saved);
-    $("figRemaining").textContent = !activeItem ? "—" : (remaining<=0 ? "Goal reached" : fmtMoney(remaining));
-    if(activeItem && remaining>0 && wallet.hourlyRate>0){
+    $("figRemaining").textContent = !activeItem ? "—" : (isActivePurchased ? "Purchased" : remaining<=0 ? "Goal reached" : fmtMoney(remaining));
+    if(activeItem && !isActivePurchased && remaining>0 && wallet.hourlyRate>0){
       $("figHoursWrap").classList.remove("hidden");
       $("figHours").textContent = hoursNeeded.toFixed(1)+" hrs";
     }else{
@@ -3001,7 +3314,7 @@
     }
 
     // projection
-    if(activeItem && remaining>0){
+    if(activeItem && !isActivePurchased && remaining>0){
       $("projectionSection").classList.remove("hidden");
       const hoursPart = wallet.hourlyRate>0
         ? ' <span class="projection-lead">\u2014 that\u2019s</span> <span class="projection-time">'+hoursNeeded.toFixed(1)+' hrs</span> <span class="projection-lead">of work left at your current pace.</span>'
@@ -3025,30 +3338,49 @@
     // bars
     renderBars();
 
-    // ledger
-    $("ledgerLabel").textContent = "Earnings logged \u00B7 "+entries.length+" "+(entries.length===1?"entry":"entries");
+    // activity ledger: earnings + expenses
+    const activity = [
+      ...entries.map(en=>({kind:"earning",date:en.date,id:en.id,data:en})),
+      ...expenses.map(exp=>({kind:"expense",date:exp.date,id:exp.id,data:exp}))
+    ].sort((a,b)=> a.date===b.date ? String(b.id).localeCompare(String(a.id)) : (a.date<b.date?1:-1));
+    $("ledgerLabel").textContent = "Activity · "+activity.length+" "+(activity.length===1?"entry":"entries");
     const list = $("ledgerList");
     list.innerHTML = "";
-    if(entries.length===0){
+    if(activity.length===0){
       $("ledgerEmpty").classList.remove("hidden");
     }else{
       $("ledgerEmpty").classList.add("hidden");
-      entries.forEach(en=>{
+      activity.forEach(act=>{
         const row = document.createElement("div");
-        row.className = "ledger-row";
-        const dateLabel = new Date(en.date+"T00:00:00").toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric", year:"numeric"});
-        const earned = entryEarned(en);
-        const hours = parseFloat(en.hours) || 0;
-        let detail = "Money entered";
-        if(en.entryType === "mixed") detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs + money";
-        else if(hours > 0) detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs";
-        row.innerHTML = `
-          <div class="ledger-date">${dateLabel}</div>
-          <div class="ledger-hours">${detail}</div>
-          <div class="ledger-amount">${fmtMoney(earned)}</div>
-          <button class="ledger-del" aria-label="Delete entry">&#10005;</button>
-        `;
-        row.querySelector(".ledger-del").addEventListener("click", ()=> deleteEntry(en.id));
+        const dateLabel = new Date(act.date+"T00:00:00").toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric", year:"numeric"});
+        if(act.kind==="expense"){
+          const exp = act.data;
+          const amount = Math.max(0,Number(exp.amount)||0);
+          row.className = "ledger-row expense";
+          const detail = exp.type==="purchase" ? "Purchase · "+(exp.note||"Goal") : (exp.note || "Expense");
+          row.innerHTML = `
+            <div class="ledger-date">${dateLabel}</div>
+            <div class="ledger-hours">${escapeHtml(detail)}</div>
+            <div class="ledger-amount expense">−${fmtMoney(amount)}</div>
+            <button class="ledger-del" aria-label="Delete expense">&#10005;</button>
+          `;
+          row.querySelector(".ledger-del").addEventListener("click", ()=> deleteExpense(exp.id));
+        }else{
+          const en = act.data;
+          row.className = "ledger-row";
+          const earned = entryEarned(en);
+          const hours = parseFloat(en.hours) || 0;
+          let detail = "Money entered";
+          if(en.entryType === "mixed") detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs + money";
+          else if(hours > 0) detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs";
+          row.innerHTML = `
+            <div class="ledger-date">${dateLabel}</div>
+            <div class="ledger-hours">${detail}</div>
+            <div class="ledger-amount">${fmtMoney(earned)}</div>
+            <button class="ledger-del" aria-label="Delete entry">&#10005;</button>
+          `;
+          row.querySelector(".ledger-del").addEventListener("click", ()=> deleteEntry(en.id));
+        }
         list.appendChild(row);
       });
     }
