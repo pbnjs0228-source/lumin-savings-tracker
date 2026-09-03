@@ -39,7 +39,7 @@
     --priority-rainbow-d:hsl(180 82% 60%);
     --priority-rainbow-e:hsl(240 84% 64%);
     --priority-rainbow-f:hsl(300 84% 64%);
-    --priority-ink:#17131f;
+    --priority-ink:#000000;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -1785,10 +1785,8 @@
     const names=['a','b','c','d','e','f'];
     hues.forEach((v,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,`hsl(${v%360} 86% ${i===2||i===3?60:62}%)`));
 
-    // Pick a readable foreground for the colour flowing under the goal amount.
-    // CSS transitions the rendered text colour so the switch feels soft instead of abrupt.
-    const ink=contrastForHsl((hue+48)%360,86,62);
-    root.style.setProperty('--priority-ink',ink);
+    // Priority-card text stays black across the full rainbow cycle.
+    root.style.setProperty('--priority-ink','#000000');
 
     priorityRainbowAnimationFrame=requestAnimationFrame(paintPriorityRainbow);
   }
