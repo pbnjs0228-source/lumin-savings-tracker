@@ -318,6 +318,37 @@
   }
   .item-actions button:hover{background:rgba(10,9,16,0.85);color:var(--accent-soft);}
   .item-actions .item-priority.is-priority{color:#f1c66d;background:rgba(18,14,10,.78);}
+  .rainbow-star{
+    display:inline-block;
+    font-weight:900;
+    color:transparent !important;
+    background-image:linear-gradient(90deg,
+      #ff5f7a 0%,
+      #ffb85c 16.66%,
+      #f5e663 33.33%,
+      #63d99b 50%,
+      #59c9e8 66.66%,
+      #8b88ff 83.33%,
+      #f06bcc 100%);
+    background-size:250% 100%;
+    background-position:0% 50%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    animation:luminStarRainbow 4s linear infinite;
+    text-shadow:none !important;
+  }
+  @keyframes luminStarRainbow{
+    0%{background-position:0% 50%;}
+    100%{background-position:250% 50%;}
+  }
+  .item-actions .item-priority .rainbow-star{
+    font-size:13px;
+    line-height:1;
+  }
+  .item-priority-badge .rainbow-star{
+    font-size:10px;
+    margin-right:1px;
+  }
   .item-card.priority:not(.purchased){
     border:1.5px solid transparent;
     background:
@@ -1027,6 +1058,7 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:.001ms !important;}
     body::before,body::after{display:none;}
+    .rainbow-star{animation:none !important;background-position:50% 50% !important;}
   }
 
 </style>
@@ -3399,7 +3431,7 @@
       const completedBanner = purchased
         ? `<div class="item-purchased-banner">✓ Purchased ${formatRecordDate(item.purchasedAt)}</div>`
         : isComplete ? `<div class="item-complete-banner">✓ Goal completed</div>` : "";
-      const priorityBadge = item.id===priorityItemId && !purchased ? `<div class="item-priority-badge">★ Priority</div>` : "";
+      const priorityBadge = item.id===priorityItemId && !purchased ? `<div class="item-priority-badge"><span class="rainbow-star">★</span> Priority</div>` : "";
       card.innerHTML = `
         ${thumbHtml}
         ${priorityBadge}
@@ -3410,7 +3442,7 @@
         <div class="item-pct-row">${progressText}</div>
         ${completedBanner}
         <div class="item-actions">
-          ${!purchased ? `<button class="item-priority ${item.id===priorityItemId?'is-priority':''}" title="${item.id===priorityItemId?'Remove priority':'Make priority'}" aria-label="${item.id===priorityItemId?'Remove priority':'Make priority'}">★</button>` : ""}
+          ${!purchased ? `<button class="item-priority ${item.id===priorityItemId?'is-priority':''}" title="${item.id===priorityItemId?'Remove priority':'Make priority'}" aria-label="${item.id===priorityItemId?'Remove priority':'Make priority'}"><span class="rainbow-star">★</span></button>` : ""}
           <button class="item-edit" title="Edit" aria-label="Edit item">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
           </button>
