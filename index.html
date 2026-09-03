@@ -33,6 +33,13 @@
     --blade-b:#332f4d;
     --housing:#211f36;
     --housing-inner:#1a1830;
+    --priority-rainbow-a:hsl(0 86% 62%);
+    --priority-rainbow-b:hsl(60 86% 62%);
+    --priority-rainbow-c:hsl(120 82% 60%);
+    --priority-rainbow-d:hsl(180 82% 60%);
+    --priority-rainbow-e:hsl(240 84% 64%);
+    --priority-rainbow-f:hsl(300 84% 64%);
+    --priority-ink:#17131f;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -314,34 +321,35 @@
   .item-card.priority:not(.purchased){
     border:1.5px solid transparent;
     background:
-      linear-gradient(125deg,var(--rainbow-a),var(--rainbow-b) 20%,var(--rainbow-c) 40%,var(--rainbow-d) 60%,var(--rainbow-e) 80%,var(--rainbow-f)) padding-box,
-      linear-gradient(125deg,var(--rainbow-f),var(--rainbow-a),var(--rainbow-c),var(--rainbow-e),var(--rainbow-f)) border-box;
-    color:var(--rainbow-ink);
-    box-shadow:0 12px 30px rgba(0,0,0,.20),0 0 20px color-mix(in srgb,var(--rainbow-e) 14%,transparent);
+      linear-gradient(125deg,var(--priority-rainbow-a),var(--priority-rainbow-b) 20%,var(--priority-rainbow-c) 40%,var(--priority-rainbow-d) 60%,var(--priority-rainbow-e) 80%,var(--priority-rainbow-f)) padding-box,
+      linear-gradient(125deg,var(--priority-rainbow-f),var(--priority-rainbow-a),var(--priority-rainbow-c),var(--priority-rainbow-e),var(--priority-rainbow-f)) border-box;
+    color:var(--priority-ink);
+    box-shadow:0 12px 30px rgba(0,0,0,.20),0 0 20px color-mix(in srgb,var(--priority-rainbow-e) 14%,transparent);
   }
   .item-card.priority:not(.purchased):hover{
-    box-shadow:0 15px 36px rgba(0,0,0,.24),0 0 27px color-mix(in srgb,var(--rainbow-d) 18%,transparent);
+    box-shadow:0 15px 36px rgba(0,0,0,.24),0 0 27px color-mix(in srgb,var(--priority-rainbow-d) 18%,transparent);
   }
   .item-card.priority:not(.purchased) .item-name,
   .item-card.priority:not(.purchased) .item-goal,
   .item-card.priority:not(.purchased) .item-deadline,
   .item-card.priority:not(.purchased) .item-pct-row,
   .item-card.priority:not(.purchased) .item-progress-number{
-    color:var(--rainbow-ink);
-    text-shadow:0 1px 2px color-mix(in srgb,var(--rainbow-ink) 20%,transparent);
+    color:var(--priority-ink);
+    text-shadow:0 1px 2px color-mix(in srgb,var(--priority-ink) 20%,transparent);
+    transition:color .65s ease,text-shadow .65s ease;
   }
   .item-card.priority:not(.purchased) .item-goal{
     font-weight:800;
     letter-spacing:.1px;
   }
   .item-card.priority:not(.purchased) .item-bar-track{
-    background:color-mix(in srgb,var(--rainbow-ink) 15%,transparent);
-    border-color:color-mix(in srgb,var(--rainbow-ink) 18%,transparent);
+    background:color-mix(in srgb,var(--priority-ink) 15%,transparent);
+    border-color:color-mix(in srgb,var(--priority-ink) 18%,transparent);
   }
   .item-card.priority:not(.purchased) .item-priority-badge{
-    color:var(--rainbow-ink);
-    background:color-mix(in srgb,var(--rainbow-ink) 12%,transparent);
-    border-color:color-mix(in srgb,var(--rainbow-ink) 22%,transparent);
+    color:var(--priority-ink);
+    background:color-mix(in srgb,var(--priority-ink) 12%,transparent);
+    border-color:color-mix(in srgb,var(--priority-ink) 22%,transparent);
     box-shadow:none;
   }
   .item-priority-badge{
@@ -1731,8 +1739,8 @@
     }
     rainbowLastPaint=now;
 
-    // 24-second loop. Hue 360 is visually identical to hue 0, so the loop has no jump.
-    const hue=((now%24000)/24000)*360;
+    // 12-second loop. Hue 360 is visually identical to hue 0, so the loop stays seamless.
+    const hue=((now%12000)/12000)*360;
     const root=document.documentElement;
     const hues=[hue,hue+60,hue+120,hue+180,hue+240,hue+300];
     const names=['a','b','c','d','e','f'];
@@ -1744,11 +1752,8 @@
     root.style.setProperty('--accent2',`hsl(${(hue+245)%360} 84% 66%)`);
     root.style.setProperty('--positive',`hsl(${(hue+145)%360} 72% 62%)`);
 
-    // The priority card's foreground flips between dark and light according to the
-    // colour currently flowing behind the amount/name area.
-    const ink=contrastForHsl((hue+48)%360,86,62);
-    root.style.setProperty('--rainbow-ink',ink);
-    root.style.setProperty('--rainbow-ink-soft',ink==='#17131f'?'rgba(23,19,31,.72)':'rgba(255,250,252,.76)');
+    // Rainbow-theme-only accent colours are handled above. The priority tile
+    // has its own always-on rainbow engine so it keeps cycling in every theme.
 
     rainbowAnimationFrame=requestAnimationFrame(paintRainbowTheme);
   }
@@ -1761,6 +1766,42 @@
 
   function stopRainbowTheme(){
     if(rainbowAnimationFrame){cancelAnimationFrame(rainbowAnimationFrame);rainbowAnimationFrame=null;}
+  }
+
+  let priorityRainbowAnimationFrame = null;
+  let priorityRainbowLastPaint = 0;
+
+  function paintPriorityRainbow(now=performance.now(),force=false){
+    if(!force && now-priorityRainbowLastPaint<24){
+      priorityRainbowAnimationFrame=requestAnimationFrame(paintPriorityRainbow);
+      return;
+    }
+    priorityRainbowLastPaint=now;
+
+    // Always-on, seamless 12-second priority-card rainbow, independent of theme.
+    const hue=((now%12000)/12000)*360;
+    const root=document.documentElement;
+    const hues=[hue,hue+60,hue+120,hue+180,hue+240,hue+300];
+    const names=['a','b','c','d','e','f'];
+    hues.forEach((v,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,`hsl(${v%360} 86% ${i===2||i===3?60:62}%)`));
+
+    // Pick a readable foreground for the colour flowing under the goal amount.
+    // CSS transitions the rendered text colour so the switch feels soft instead of abrupt.
+    const ink=contrastForHsl((hue+48)%360,86,62);
+    root.style.setProperty('--priority-ink',ink);
+
+    priorityRainbowAnimationFrame=requestAnimationFrame(paintPriorityRainbow);
+  }
+
+  function startPriorityRainbow(){
+    if(priorityRainbowAnimationFrame) cancelAnimationFrame(priorityRainbowAnimationFrame);
+    priorityRainbowLastPaint=0;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      paintPriorityRainbow(0,true);
+      if(priorityRainbowAnimationFrame){cancelAnimationFrame(priorityRainbowAnimationFrame);priorityRainbowAnimationFrame=null;}
+      return;
+    }
+    paintPriorityRainbow(performance.now(),true);
   }
 
   function applyTheme(key){
@@ -1779,6 +1820,8 @@
     if(document.hidden) stopRainbowTheme();
     else startRainbowTheme();
   });
+
+  startPriorityRainbow();
 
   function buildThemePicker(container){
     container.innerHTML = "";
