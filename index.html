@@ -130,6 +130,49 @@
   }
   .swatch:hover{transform:scale(1.1);}
   .swatch.active{border-color:var(--white);}
+  .swatch[data-theme="custom"]::after{
+    content:"+";position:absolute;right:-5px;bottom:-5px;width:10px;height:10px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;background:var(--panel-raised);border:1px solid var(--line-strong);
+    color:var(--white);font:800 8px/1 'Inter',sans-serif;
+  }
+
+  /* Custom theme: user-picked solid colour or 2-8 colour gradient. */
+  html[data-theme="custom"] body{
+    background:
+      linear-gradient(rgba(7,7,13,.35),rgba(7,7,13,.48)),
+      var(--custom-background,linear-gradient(135deg,#6c8ef5,#c47cff));
+    background-attachment:fixed;
+    background-color:#11111b;
+  }
+  html[data-theme="custom"] body::before{
+    background:color-mix(in srgb,var(--custom-primary,#6c8ef5) 23%,transparent);
+  }
+  html[data-theme="custom"] body::after{
+    background:color-mix(in srgb,var(--custom-secondary,#c47cff) 20%,transparent);
+  }
+  html[data-theme="custom"] .panel,
+  html[data-theme="custom"] .chip,
+  html[data-theme="custom"] .projection-banner,
+  html[data-theme="custom"] .deadline-panel,
+  html[data-theme="custom"] .record-card,
+  html[data-theme="custom"] .auth-card,
+  html[data-theme="custom"] .modal{
+    background:
+      linear-gradient(135deg,
+        color-mix(in srgb,var(--custom-primary,#6c8ef5) 8%,rgba(18,18,29,.90)),
+        color-mix(in srgb,var(--custom-secondary,#c47cff) 7%,rgba(20,19,32,.92)));
+    border-color:color-mix(in srgb,var(--custom-primary,#6c8ef5) 19%,var(--line));
+  }
+  html[data-theme="custom"] .item-card:not(.priority):not(.purchased){
+    background:linear-gradient(135deg,
+      color-mix(in srgb,var(--custom-primary,#6c8ef5) 9%,#242238),
+      color-mix(in srgb,var(--custom-secondary,#c47cff) 8%,#242238));
+    border-color:color-mix(in srgb,var(--custom-secondary,#c47cff) 18%,var(--line));
+  }
+  html[data-theme="custom"] .btn-primary,
+  html[data-theme="custom"] .segmented button.active{
+    background:var(--custom-accent-background,var(--accent));
+  }
 
   /* Rainbow theme: a live, seamless spectrum driven by JS hue variables. */
   html[data-theme="rainbow"]{
@@ -542,6 +585,50 @@
   }
   .modal-title{font-family:'Sora',sans-serif;font-weight:700;font-size:19px;margin:0 0 4px;}
   .modal-sub{color:var(--muted);font-size:13px;margin:0 0 18px;}
+
+  /* custom theme editor */
+  .custom-theme-modal{max-width:520px;}
+  .custom-theme-preview{
+    min-height:105px;border-radius:13px;border:1px solid var(--line-strong);margin-bottom:15px;
+    position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:13px 15px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+  }
+  .custom-theme-preview::after{
+    content:"LUMIN";font-family:'Sora',sans-serif;font-weight:800;letter-spacing:2px;font-size:13px;
+    color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.65);background:rgba(8,8,14,.42);
+    border:1px solid rgba(255,255,255,.16);padding:6px 9px;border-radius:8px;backdrop-filter:blur(6px);
+  }
+  .custom-theme-mode{margin-bottom:14px;}
+  .custom-theme-section{display:flex;flex-direction:column;gap:11px;}
+  .custom-theme-color-row{
+    display:grid;grid-template-columns:46px minmax(0,1fr) auto;align-items:center;gap:10px;
+    padding:9px;border-radius:10px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .custom-color-input{
+    width:46px;height:38px;padding:0;border:0;background:transparent;cursor:pointer;border-radius:9px;overflow:hidden;
+  }
+  .custom-color-input::-webkit-color-swatch-wrapper{padding:0;}
+  .custom-color-input::-webkit-color-swatch{border:1px solid rgba(255,255,255,.22);border-radius:9px;}
+  .custom-color-input::-moz-color-swatch{border:1px solid rgba(255,255,255,.22);border-radius:9px;}
+  .custom-color-code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--white);}
+  .custom-remove-color{
+    width:31px;height:31px;border-radius:8px;border:1px solid var(--line-strong);background:transparent;
+    color:var(--muted);cursor:pointer;font-size:16px;line-height:1;
+  }
+  .custom-remove-color:hover{color:var(--white);border-color:var(--accent-soft);}
+  .custom-gradient-toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;}
+  .custom-angle-wrap{display:grid;grid-template-columns:1fr 58px;gap:10px;align-items:center;}
+  .custom-angle-wrap input[type="range"]{width:100%;accent-color:var(--accent);}
+  .custom-angle-value{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent-soft);
+    text-align:right;
+  }
+  .custom-colour-count{font-size:11.5px;color:var(--muted);}
+  .custom-theme-actions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:17px;}
+  @media(max-width:520px){
+    .custom-gradient-toolbar{grid-template-columns:1fr;}
+    .custom-theme-actions .btn{flex:1;justify-content:center;}
+  }
 
   /* projection banner */
   .projection-banner{
@@ -1356,6 +1443,49 @@
     </div>
   </div>
 
+  <!-- CUSTOM THEME MODAL -->
+  <div id="customThemeBackdrop" class="modal-backdrop hidden">
+    <div class="modal custom-theme-modal" role="dialog" aria-modal="true" aria-labelledby="customThemeTitle">
+      <h2 class="modal-title" id="customThemeTitle">Custom theme 🎨</h2>
+      <p class="modal-sub">Pick one solid colour, or build a gradient with 2 to 8 colours. Each colour button opens your device's colour picker.</p>
+
+      <div class="custom-theme-preview" id="customThemePreview" aria-label="Custom theme preview"></div>
+
+      <div class="segmented custom-theme-mode" id="customThemeModeToggle" aria-label="Custom theme type">
+        <button type="button" data-custom-mode="solid">Solid</button>
+        <button type="button" data-custom-mode="gradient">Gradient</button>
+      </div>
+
+      <div id="customSolidSection" class="custom-theme-section">
+        <div class="custom-theme-color-row">
+          <input class="custom-color-input" type="color" id="customSolidColor" value="#6c8ef5" aria-label="Solid theme colour" />
+          <span class="custom-color-code" id="customSolidCode">#6C8EF5</span>
+          <span></span>
+        </div>
+      </div>
+
+      <div id="customGradientSection" class="custom-theme-section hidden">
+        <div class="custom-gradient-toolbar">
+          <label class="field" style="gap:7px;">Gradient angle
+            <div class="custom-angle-wrap">
+              <input type="range" id="customGradientAngle" min="0" max="360" step="1" value="135" />
+              <span class="custom-angle-value" id="customGradientAngleValue">135°</span>
+            </div>
+          </label>
+          <button type="button" class="btn btn-secondary" id="customAddColorBtn">+ Add colour</button>
+        </div>
+        <div class="custom-colour-count" id="customColourCount">2 colours</div>
+        <div id="customGradientColors" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+
+      <div class="custom-theme-actions">
+        <button type="button" class="btn btn-ghost" id="customThemeResetBtn">Reset</button>
+        <button type="button" class="btn btn-ghost" id="customThemeCancelBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="customThemeApplyBtn">Apply custom theme</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ITEM MODAL -->
   <div id="itemModalBackdrop" class="modal-backdrop hidden">
     <div class="modal">
@@ -1578,9 +1708,11 @@
     neon: { label:"Neon", swatch:"linear-gradient(135deg,#e14a5f,#d4a24e)",
       vars:{"--bg1":"#0c0d14","--bg2":"#121420","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#181a26","--panel-raised":"#1e2130","--accent":"#e14a5f","--accent-soft":"#ef7c8c","--accent2":"#d4a24e","--positive":"#4fa88a","--white":"#eceef5","--muted":"#868da3","--line":"rgba(236,238,245,0.08)","--line-strong":"rgba(236,238,245,0.16)","--blade-a":"#1c2030","--blade-b":"#232840","--housing":"#171926","--housing-inner":"#12141e"} },
     rainbow: { label:"Rainbow", swatch:"conic-gradient(from 35deg,#ff667f,#ffbc58,#f0dc65,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f)",
-      vars:{"--bg1":"#11101c","--bg2":"#151526","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#1c1b2d","--panel-raised":"#242238","--accent":"#ff7b83","--accent-soft":"#76d9e8","--accent2":"#c28cff","--positive":"#69d7a4","--white":"#f3f1fa","--muted":"#9995b2","--line":"rgba(243,241,250,0.085)","--line-strong":"rgba(243,241,250,0.17)","--blade-a":"#2a2850","--blade-b":"#243d51","--housing":"#201e35","--housing-inner":"#171626"} }
+      vars:{"--bg1":"#11101c","--bg2":"#151526","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#1c1b2d","--panel-raised":"#242238","--accent":"#ff7b83","--accent-soft":"#76d9e8","--accent2":"#c28cff","--positive":"#69d7a4","--white":"#f3f1fa","--muted":"#9995b2","--line":"rgba(243,241,250,0.085)","--line-strong":"rgba(243,241,250,0.17)","--blade-a":"#2a2850","--blade-b":"#243d51","--housing":"#201e35","--housing-inner":"#171626"} },
+    custom: { label:"Custom", swatch:"linear-gradient(135deg,#6c8ef5,#c47cff)",
+      vars:{"--bg1":"#11111b","--bg2":"#171624","--panel":"rgba(15,15,25,0.76)","--panel-solid":"#1b1a29","--panel-raised":"#242238","--accent":"#6c8ef5","--accent-soft":"#9eb2ff","--accent2":"#c47cff","--positive":"#72d7a6","--white":"#f3f1fa","--muted":"#9995b2","--line":"rgba(243,241,250,0.09)","--line-strong":"rgba(243,241,250,0.17)","--blade-a":"#282642","--blade-b":"#302d4c","--housing":"#211f35","--housing-inner":"#181725"} }
   };
-  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","rainbow"];
+  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","rainbow","custom"];
 
   let wallet = null;           // {balance, hourlyRate}; hourlyRate may be 0
   let items = [];              // [{id, name, goal, link, image}]
@@ -1589,6 +1721,8 @@
   let expenses = [];           // [{id,date,amount,note,type,itemId}]
   let priorityItemId = null;
   let currentTheme = "midnight";
+  let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
+  let customThemeDraft = null;
   let chartView = "month";
   let entryMode = "hours"; // hours | amount
   let editingItemId = null;    // set when the item modal is editing rather than adding
@@ -1834,15 +1968,91 @@
     paintPriorityRainbow(performance.now(),true);
   }
 
+  function normalizeHex(value,fallback="#6c8ef5"){
+    const v=String(value||"").trim();
+    if(/^#[0-9a-f]{6}$/i.test(v)) return v.toLowerCase();
+    if(/^#[0-9a-f]{3}$/i.test(v)) return "#"+v.slice(1).split("").map(c=>c+c).join("").toLowerCase();
+    return fallback;
+  }
+
+  function hexRgb(hex){
+    const v=normalizeHex(hex).slice(1);
+    return [parseInt(v.slice(0,2),16),parseInt(v.slice(2,4),16),parseInt(v.slice(4,6),16)];
+  }
+
+  function rgbHex(r,g,b){
+    const h=n=>Math.max(0,Math.min(255,Math.round(n))).toString(16).padStart(2,"0");
+    return "#"+h(r)+h(g)+h(b);
+  }
+
+  function mixHex(a,b,amount){
+    const aa=hexRgb(a),bb=hexRgb(b),t=Math.max(0,Math.min(1,Number(amount)||0));
+    return rgbHex(aa[0]+(bb[0]-aa[0])*t,aa[1]+(bb[1]-aa[1])*t,aa[2]+(bb[2]-aa[2])*t);
+  }
+
+  function sanitizeCustomTheme(value){
+    const src=value&&typeof value==="object"?value:{};
+    const mode=src.mode==="solid"?"solid":"gradient";
+    let colors=Array.isArray(src.colors)?src.colors.map(c=>normalizeHex(c)).slice(0,8):[];
+    if(mode==="solid"){
+      colors=[colors[0]||"#6c8ef5"];
+    }else{
+      if(colors.length<2) colors=["#6c8ef5","#c47cff"];
+      colors=colors.slice(0,8);
+    }
+    let angle=Math.round(Number(src.angle));
+    if(!Number.isFinite(angle)) angle=135;
+    angle=((angle%361)+361)%361;
+    return {mode,colors,angle};
+  }
+
+  function customThemeBackground(theme=customTheme){
+    const t=sanitizeCustomTheme(theme);
+    if(t.mode==="solid"){
+      return `linear-gradient(${t.colors[0]},${t.colors[0]})`;
+    }
+    return `linear-gradient(${t.angle}deg,${t.colors.join(",")})`;
+  }
+
+  function customThemeSwatch(theme=customTheme){
+    const t=sanitizeCustomTheme(theme);
+    return t.mode==="solid" ? t.colors[0] : `linear-gradient(${t.angle}deg,${t.colors.join(",")})`;
+  }
+
+  function applyCustomThemeVars(){
+    customTheme=sanitizeCustomTheme(customTheme);
+    const colors=customTheme.colors;
+    const first=colors[0];
+    const last=colors[colors.length-1]||first;
+    const middle=colors[Math.floor((colors.length-1)/2)]||first;
+    const root=document.documentElement;
+    root.style.setProperty("--custom-background",customThemeBackground(customTheme));
+    root.style.setProperty("--custom-primary",first);
+    root.style.setProperty("--custom-secondary",last);
+    root.style.setProperty("--custom-accent-background",customTheme.mode==="solid"
+      ? first
+      : `linear-gradient(${customTheme.angle}deg,${colors.join(",")})`);
+    root.style.setProperty("--accent",first);
+    root.style.setProperty("--accent-soft",mixHex(first,"#ffffff",.30));
+    root.style.setProperty("--accent2",last);
+    root.style.setProperty("--positive",mixHex(middle,"#9ff0bd",.38));
+    root.style.setProperty("--blade-a",mixHex(first,"#222033",.74));
+    root.style.setProperty("--blade-b",mixHex(last,"#302d45",.72));
+    root.style.setProperty("--housing",mixHex(first,"#211f35",.82));
+    root.style.setProperty("--housing-inner",mixHex(last,"#181725",.88));
+  }
+
   function applyTheme(key){
     const theme = THEMES[key] || THEMES.midnight;
     currentTheme = THEMES[key] ? key : "midnight";
     document.documentElement.dataset.theme = currentTheme;
     Object.entries(theme.vars).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
+    if(currentTheme==="custom") applyCustomThemeVars();
     if(currentTheme === "rainbow") startRainbowTheme();
     else stopRainbowTheme();
     document.querySelectorAll(".swatch").forEach(sw=>{
       sw.classList.toggle("active", sw.dataset.theme === currentTheme);
+      if(sw.dataset.theme==="custom") sw.style.background=customThemeSwatch();
     });
   }
   document.addEventListener("visibilitychange",()=>{
@@ -1859,11 +2069,15 @@
       const theme = THEMES[key];
       const btn = document.createElement("button");
       btn.className = "swatch" + (key===currentTheme ? " active" : "");
-      btn.style.background = theme.swatch;
+      btn.style.background = key==="custom" ? customThemeSwatch() : theme.swatch;
       btn.dataset.theme = key;
-      btn.title = theme.label;
-      btn.setAttribute("aria-label", "Switch to "+theme.label+" theme");
+      btn.title = key==="custom" ? "Custom theme · click to edit" : theme.label;
+      btn.setAttribute("aria-label", key==="custom" ? "Open custom theme editor" : "Switch to "+theme.label+" theme");
       btn.addEventListener("click", async ()=>{
+        if(key==="custom"){
+          openCustomThemeModal();
+          return;
+        }
         applyTheme(key);
         buildBlades();
         await persist();
@@ -1871,6 +2085,134 @@
       container.appendChild(btn);
     });
   }
+
+  function renderCustomThemeEditor(){
+    customThemeDraft=sanitizeCustomTheme(customThemeDraft||customTheme);
+    const t=customThemeDraft;
+    const solid=t.mode==="solid";
+    document.querySelectorAll("#customThemeModeToggle button").forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.customMode===t.mode);
+    });
+    $("customSolidSection").classList.toggle("hidden",!solid);
+    $("customGradientSection").classList.toggle("hidden",solid);
+
+    if(solid){
+      $("customSolidColor").value=t.colors[0];
+      $("customSolidCode").textContent=t.colors[0].toUpperCase();
+    }else{
+      $("customGradientAngle").value=String(t.angle);
+      $("customGradientAngleValue").textContent=t.angle+"°";
+      $("customColourCount").textContent=t.colors.length+" "+(t.colors.length===1?"colour":"colours");
+      $("customAddColorBtn").disabled=t.colors.length>=8;
+      $("customAddColorBtn").style.opacity=t.colors.length>=8?".5":"1";
+
+      const host=$("customGradientColors");
+      host.innerHTML="";
+      t.colors.forEach((color,index)=>{
+        const row=document.createElement("div");
+        row.className="custom-theme-color-row";
+        row.innerHTML=`
+          <input class="custom-color-input" type="color" value="${color}" aria-label="Gradient colour ${index+1}" />
+          <span class="custom-color-code">${color.toUpperCase()}</span>
+          <button type="button" class="custom-remove-color" aria-label="Remove colour ${index+1}" ${t.colors.length<=2?"disabled":""}>×</button>
+        `;
+        const input=row.querySelector("input");
+        const code=row.querySelector(".custom-color-code");
+        const remove=row.querySelector("button");
+        input.addEventListener("input",()=>{
+          customThemeDraft.colors[index]=normalizeHex(input.value);
+          code.textContent=customThemeDraft.colors[index].toUpperCase();
+          updateCustomThemePreview();
+        });
+        remove.addEventListener("click",()=>{
+          if(customThemeDraft.colors.length<=2) return;
+          customThemeDraft.colors.splice(index,1);
+          renderCustomThemeEditor();
+        });
+        host.appendChild(row);
+      });
+    }
+    updateCustomThemePreview();
+  }
+
+  function updateCustomThemePreview(){
+    if(!customThemeDraft) return;
+    customThemeDraft=sanitizeCustomTheme(customThemeDraft);
+    $("customThemePreview").style.background=customThemeSwatch(customThemeDraft);
+  }
+
+  function openCustomThemeModal(){
+    customThemeDraft=JSON.parse(JSON.stringify(sanitizeCustomTheme(customTheme)));
+    renderCustomThemeEditor();
+    $("customThemeBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+
+  function closeCustomThemeModal(){
+    $("customThemeBackdrop").classList.add("hidden");
+    customThemeDraft=null;
+    unlockBodyScroll();
+  }
+
+  document.querySelectorAll("#customThemeModeToggle button").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const next=btn.dataset.customMode;
+      if(next==="solid"){
+        const source=(customThemeDraft&&customThemeDraft.colors&&customThemeDraft.colors[0])||"#6c8ef5";
+        customThemeDraft={mode:"solid",colors:[source],angle:(customThemeDraft&&customThemeDraft.angle)||135};
+      }else{
+        const source=(customThemeDraft&&customThemeDraft.colors&&customThemeDraft.colors[0])||"#6c8ef5";
+        const second=(customTheme.colors&&customTheme.colors.length>1?customTheme.colors[customTheme.colors.length-1]:"#c47cff");
+        customThemeDraft={mode:"gradient",colors:[source,second],angle:(customThemeDraft&&customThemeDraft.angle)||135};
+      }
+      renderCustomThemeEditor();
+    });
+  });
+
+  $("customSolidColor").addEventListener("input",()=>{
+    if(!customThemeDraft) return;
+    customThemeDraft.colors=[normalizeHex($("customSolidColor").value)];
+    $("customSolidCode").textContent=customThemeDraft.colors[0].toUpperCase();
+    updateCustomThemePreview();
+  });
+
+  $("customGradientAngle").addEventListener("input",()=>{
+    if(!customThemeDraft) return;
+    customThemeDraft.angle=Math.max(0,Math.min(360,Math.round(Number($("customGradientAngle").value)||0)));
+    $("customGradientAngleValue").textContent=customThemeDraft.angle+"°";
+    updateCustomThemePreview();
+  });
+
+  $("customAddColorBtn").addEventListener("click",()=>{
+    if(!customThemeDraft||customThemeDraft.mode!=="gradient"||customThemeDraft.colors.length>=8) return;
+    const colors=customThemeDraft.colors;
+    const a=colors[colors.length-1]||"#6c8ef5";
+    const b=colors[0]||"#c47cff";
+    colors.push(mixHex(a,b,.5));
+    renderCustomThemeEditor();
+  });
+
+  $("customThemeResetBtn").addEventListener("click",()=>{
+    customThemeDraft={mode:"gradient",colors:["#6c8ef5","#c47cff"],angle:135};
+    renderCustomThemeEditor();
+  });
+
+  $("customThemeCancelBtn").addEventListener("click",closeCustomThemeModal);
+  $("customThemeBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="customThemeBackdrop") closeCustomThemeModal();
+  });
+
+  $("customThemeApplyBtn").addEventListener("click",async ()=>{
+    customTheme=sanitizeCustomTheme(customThemeDraft);
+    applyTheme("custom");
+    buildThemePicker($("themePickerSetup"));
+    buildThemePicker($("themePickerMain"));
+    buildBlades();
+    $("customThemeBackdrop").classList.add("hidden");
+    customThemeDraft=null;
+    unlockBodyScroll();
+    await persist();
+  });
 
   function buildChartViewToggle(){
     const container = $("chartViewToggle");
@@ -2173,6 +2515,8 @@
     expenses = [];
     priorityItemId = null;
     currentTheme = "midnight";
+    customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
+    customThemeDraft = null;
     chartView = "month";
     entryMode = "hours";
     editingItemId = null;
@@ -2190,6 +2534,7 @@
     priorityItemId = parsed.priorityItemId || null;
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
+    if(parsed.customTheme) customTheme = sanitizeCustomTheme(parsed.customTheme);
     if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
     if(parsed.chartView && ["day","week","month"].includes(parsed.chartView)) chartView = parsed.chartView;
     if(parsed.entryMode && ["hours","amount","expense"].includes(parsed.entryMode)) entryMode = parsed.entryMode;
@@ -2268,6 +2613,7 @@
       entries,
       expenses,
       theme:currentTheme,
+      customTheme:sanitizeCustomTheme(customTheme),
       chartView,
       entryMode,
       celebratedItemIds:Array.from(celebratedItemIds||[]),
@@ -2772,6 +3118,11 @@
     if(!$("cropModalBackdrop").classList.contains("hidden")){
       e.preventDefault();
       closeCropper(true);
+      return;
+    }
+    if(!$("customThemeBackdrop").classList.contains("hidden")){
+      e.preventDefault();
+      closeCustomThemeModal();
       return;
     }
     if(!$("recordsModalBackdrop").classList.contains("hidden")){
