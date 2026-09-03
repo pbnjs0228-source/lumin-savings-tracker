@@ -1148,6 +1148,103 @@
     .rainbow-star{animation:none !important;background-position:50% 50% !important;}
   }
 
+
+  /* ---- regular pay / archive / achievements / date-range additions ---- */
+  .header-mini-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
+  .shelf-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .archive-count{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent-soft);}
+  .product-price-change{
+    margin-top:8px;padding:7px 9px;border-radius:8px;
+    background:color-mix(in srgb,var(--accent) 7%,transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));
+    color:var(--muted);font-size:11px;line-height:1.4;
+  }
+  .product-price-change strong{color:var(--white);}
+  .price-history-box{
+    padding:10px 11px;border-radius:10px;background:var(--panel-solid);
+    border:1px solid var(--line);display:flex;flex-direction:column;gap:7px;
+  }
+  .price-history-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.45px;}
+  .price-history-list{display:flex;flex-direction:column;gap:6px;}
+  .price-history-row{
+    display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+    font-size:11.5px;color:var(--muted);padding-top:6px;border-top:1px solid var(--line);
+  }
+  .price-history-row:first-child{border-top:0;padding-top:0;}
+  .price-history-delta.up{color:#e77e86;}
+  .price-history-delta.down{color:var(--positive);}
+  .range-toolbar{
+    display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 12px;
+    padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--panel-solid);
+  }
+  .range-toolbar select,
+  .range-toolbar input,
+  .regular-pay-modal select{
+    font-family:'Inter',sans-serif;background:var(--panel-raised);border:1px solid var(--line-strong);
+    border-radius:8px;color:var(--white);padding:8px 10px;font-size:12px;
+  }
+  .range-toolbar select:focus,
+  .range-toolbar input:focus,
+  .regular-pay-modal select:focus{
+    outline:none;border-color:var(--accent-soft);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent);
+  }
+  .custom-range-fields{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+  .range-summary{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:11px;
+  }
+  .range-summary-card{
+    padding:9px 10px;border-radius:9px;background:color-mix(in srgb,var(--panel-solid) 88%,transparent);
+    border:1px solid var(--line);
+  }
+  .range-summary-label{font-size:10px;color:var(--muted);margin-bottom:4px;}
+  .range-summary-value{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--white);}
+  .range-summary-value.negative{color:#e27a82;}
+  .range-summary-value.positive{color:var(--positive);}
+  .regular-pay-modal{max-width:470px;}
+  .regular-pay-status{
+    margin:0 0 14px;padding:10px 11px;border-radius:10px;background:var(--panel-solid);
+    border:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.45;
+  }
+  .regular-pay-status strong{color:var(--white);}
+  .modal-form-stack{display:flex;flex-direction:column;gap:12px;}
+  .archive-modal{max-width:610px;}
+  .archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .archive-card{
+    display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:11px;
+    background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .archive-card-title{font-family:'Sora',sans-serif;font-weight:700;font-size:13px;color:var(--white);}
+  .archive-card-meta{font-size:11px;color:var(--muted);line-height:1.45;}
+  .archive-card-price{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--accent-soft);}
+  .archive-empty{padding:18px;text-align:center;color:var(--muted);font-size:12.5px;}
+  .achievements-modal{max-width:620px;}
+  .achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+  .achievement-card{
+    display:grid;grid-template-columns:42px minmax(0,1fr);gap:10px;align-items:center;
+    padding:11px;border-radius:11px;background:var(--panel-solid);border:1px solid var(--line);
+    opacity:.48;filter:saturate(.5);
+  }
+  .achievement-card.unlocked{
+    opacity:1;filter:none;border-color:color-mix(in srgb,var(--accent) 28%,var(--line-strong));
+    background:color-mix(in srgb,var(--accent) 5%,var(--panel-solid));
+  }
+  .achievement-icon{
+    width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    font-size:20px;background:var(--panel-raised);border:1px solid var(--line);
+  }
+  .achievement-name{font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:var(--white);margin-bottom:3px;}
+  .achievement-desc{font-size:10.8px;color:var(--muted);line-height:1.4;}
+  .achievement-state{font-size:9.5px;margin-top:4px;color:var(--accent-soft);font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
+  .achievement-card:not(.unlocked) .achievement-state{color:var(--muted);}
+  .achievement-toast .milestone-badge{font-size:18px;}
+  .achievement-toast .milestone-title{color:var(--accent-soft);}
+  @media(max-width:620px){
+    .archive-grid,.achievement-grid{grid-template-columns:1fr;}
+    .range-summary{grid-template-columns:1fr;}
+    .header-mini-group{justify-content:flex-start;}
+  }
+
 </style>
 </head>
 <body>
@@ -1233,8 +1330,9 @@
       </div>
       <div class="header-right">
         <div class="theme-picker" id="themePickerMain"></div>
-        <div class="header-controls">
+        <div class="header-controls header-mini-group">
           <span id="saveNote" class="save-note">Saved</span>
+          <button class="btn btn-ghost" id="regularPayBtn">Regular pay</button>
           <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
           <button class="btn btn-ghost" id="editSetupBtn">Edit wallet</button>
         </div>
@@ -1251,7 +1349,10 @@
     <div class="section panel">
       <div class="panel-header-row">
         <div class="panel-label"><span class="dash"></span>Your items</div>
-        <button class="btn btn-secondary" id="addItemBtn">+ Add item</button>
+        <div class="shelf-actions">
+          <button class="btn btn-ghost" id="archiveBtn">Archive <span class="archive-count" id="archiveCount">0</span></button>
+          <button class="btn btn-secondary" id="addItemBtn">+ Add item</button>
+        </div>
       </div>
       <div class="items-shelf" id="itemsShelf"></div>
     </div>
@@ -1267,6 +1368,7 @@
         <div class="product-name" id="productName">—</div>
         <a id="productLink" class="product-link" href="#" target="_blank" rel="noopener noreferrer">View it &#8594;</a>
         <div class="product-note hidden" id="productNote"></div>
+        <div class="product-price-change hidden" id="productPriceChange"></div>
         <button type="button" class="btn btn-ghost purchase-btn hidden" id="purchaseBtn">✓ Mark as purchased</button>
         <div class="purchased-active-badge hidden" id="purchasedActiveBadge">✓ Purchased</div>
       </div>
@@ -1420,6 +1522,7 @@
       <div class="chip"><div class="chip-label">This year</div><div class="chip-value" id="statYear">$0</div></div>
       <div class="chip"><div class="chip-label">All-time earned</div><div class="chip-value" id="statAll">$0</div></div>
       <button type="button" class="chip records-chip" id="recordsBtn"><div class="chip-label">Personal records</div><div class="chip-value">🏆 View records</div></button>
+      <button type="button" class="chip records-chip" id="achievementsBtn"><div class="chip-label">Achievements</div><div class="chip-value" id="achievementChipValue">🏅 0 / 8</div></button>
     </div>
 
     <!-- month bars -->
@@ -1431,6 +1534,28 @@
           <button data-view="week">Week</button>
           <button data-view="month">Month</button>
         </div>
+      </div>
+      <div class="range-toolbar">
+        <label style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--muted);">Date range
+          <select id="statsRangeSelect" aria-label="Statistics date range">
+            <option value="7d">Last 7 days</option>
+            <option value="30d">Last 30 days</option>
+            <option value="90d">Last 90 days</option>
+            <option value="ytd">This year</option>
+            <option value="all">All time</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <div class="custom-range-fields hidden" id="customRangeFields">
+          <input type="date" id="statsRangeStart" aria-label="Custom range start date" />
+          <span style="color:var(--muted);font-size:11px;">to</span>
+          <input type="date" id="statsRangeEnd" aria-label="Custom range end date" />
+        </div>
+      </div>
+      <div class="range-summary">
+        <div class="range-summary-card"><div class="range-summary-label">Earned in range</div><div class="range-summary-value positive" id="rangeEarned">$0</div></div>
+        <div class="range-summary-card"><div class="range-summary-label">Spent in range</div><div class="range-summary-value negative" id="rangeSpent">$0</div></div>
+        <div class="range-summary-card"><div class="range-summary-label">Net change</div><div class="range-summary-value" id="rangeNet">$0</div></div>
       </div>
       <div class="bars-row" id="barsRow"></div>
     </div>
@@ -1499,6 +1624,10 @@
           <div class="input-prefix"><span>$</span><input type="number" step="0.01" min="0" placeholder="0.00" id="item-goal" required /></div>
         </label>
 
+        <div class="price-history-box hidden" id="itemPriceHistoryWrap">
+          <div class="price-history-title">Price history</div>
+          <div class="price-history-list" id="itemPriceHistoryList"></div>
+        </div>
         <label class="field">Target date (optional)
           <input type="date" id="item-deadline" />
         </label>
@@ -1531,6 +1660,65 @@
           <button type="button" class="btn btn-ghost" id="itemCancelBtn">Cancel</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- REGULAR PAY MODAL -->
+  <div id="regularPayBackdrop" class="modal-backdrop hidden">
+    <div class="modal regular-pay-modal" role="dialog" aria-modal="true" aria-labelledby="regularPayTitle">
+      <h2 class="modal-title" id="regularPayTitle">Regular pay 💸</h2>
+      <p class="modal-sub">LUMIN can automatically log a fixed payday when you open the app on or after the scheduled date.</p>
+      <div class="regular-pay-status" id="regularPayStatus">Regular pay is <strong>off</strong>.</div>
+      <form id="regularPayForm" class="modal-form-stack">
+        <label style="display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;cursor:pointer;">
+          <input type="checkbox" id="regularPayEnabled" style="width:auto;accent-color:var(--accent);" />
+          Enable automatic regular pay
+        </label>
+        <label class="field">Amount per payday
+          <div class="input-prefix"><span>$</span><input type="number" id="regularPayAmount" min="0" step="0.01" placeholder="0.00" /></div>
+        </label>
+        <label class="field">Label
+          <input type="text" id="regularPayLabel" maxlength="60" placeholder="e.g. Work pay" />
+        </label>
+        <label class="field">Frequency
+          <select id="regularPayFrequency">
+            <option value="weekly">Every week</option>
+            <option value="fortnightly">Every 2 weeks</option>
+            <option value="monthly">Every month</option>
+          </select>
+        </label>
+        <label class="field">Next payday
+          <input type="date" id="regularPayNextDate" />
+        </label>
+        <div style="display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:5px;">
+          <button type="button" class="btn btn-ghost" id="regularPayCancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save regular pay</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GOAL ARCHIVE MODAL -->
+  <div id="archiveBackdrop" class="modal-backdrop hidden">
+    <div class="modal archive-modal" role="dialog" aria-modal="true" aria-labelledby="archiveTitle">
+      <h2 class="modal-title" id="archiveTitle">Goal archive 🏆</h2>
+      <p class="modal-sub">Purchased goals live here so your active shelf stays clean.</p>
+      <div id="archiveGrid" class="archive-grid"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:15px;">
+        <button type="button" class="btn btn-ghost" id="archiveCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENTS MODAL -->
+  <div id="achievementsBackdrop" class="modal-backdrop hidden">
+    <div class="modal achievements-modal" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle">
+      <h2 class="modal-title" id="achievementsTitle">Achievements 🏅</h2>
+      <p class="modal-sub">Little milestones for building your savings habits. Unlocked achievements stay unlocked.</p>
+      <div id="achievementGrid" class="achievement-grid"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:15px;">
+        <button type="button" class="btn btn-ghost" id="achievementsCloseBtn">Close</button>
+      </div>
     </div>
   </div>
 
@@ -1720,6 +1908,9 @@
   let entries = [];            // legacy hours entries + new earned/mixed entries
   let expenses = [];           // [{id,date,amount,note,type,itemId}]
   let priorityItemId = null;
+  let regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
+  let achievementsUnlocked = null;
+  let statsRange = {preset:"30d", start:"", end:""};
   let currentTheme = "midnight";
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
@@ -1730,6 +1921,16 @@
   let celebratedItemIds = null; // Kept for backwards compatibility with older saves.
   let celebratedMilestones = null; // Set of "itemId:percent" milestone keys already celebrated.
   const MILESTONES = [25, 50, 75, 90, 100];
+  const ACHIEVEMENTS = [
+    {id:"first-log", icon:"✦", name:"First step", desc:"Log your first earnings.", test:s=>entries.length>=1},
+    {id:"saved-100", icon:"💯", name:"Triple digits", desc:"Have $100 saved.", test:s=>s.saved>=100},
+    {id:"saved-500", icon:"🌱", name:"Growing fund", desc:"Have $500 saved.", test:s=>s.saved>=500},
+    {id:"saved-1000", icon:"💎", name:"Four figures", desc:"Have $1,000 saved.", test:s=>s.saved>=1000},
+    {id:"earned-1000", icon:"⚡", name:"Money maker", desc:"Log $1,000 in total earnings.", test:s=>s.totalEarned>=1000},
+    {id:"first-purchase", icon:"🛍️", name:"Mission complete", desc:"Purchase your first goal.", test:s=>items.some(i=>i.purchasedAt)},
+    {id:"three-purchases", icon:"🏆", name:"Collector", desc:"Purchase three goals.", test:s=>items.filter(i=>i.purchasedAt).length>=3},
+    {id:"auto-pay", icon:"📆", name:"Clockwork", desc:"Have regular pay automatically logged.", test:s=>entries.some(e=>e.source==="regular-pay")}
+  ];
 
   const $ = (id) => document.getElementById(id);
   const dateStr = (d) => {
@@ -2514,6 +2715,9 @@
     entries = [];
     expenses = [];
     priorityItemId = null;
+    regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
+    achievementsUnlocked = null;
+    statsRange = {preset:"30d", start:"", end:""};
     currentTheme = "midnight";
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
@@ -2532,6 +2736,9 @@
     expenses = Array.isArray(parsed.expenses) ? parsed.expenses : [];
     items = Array.isArray(parsed.items) ? parsed.items : [];
     priorityItemId = parsed.priorityItemId || null;
+    regularPay = sanitizeRegularPay(parsed.regularPay);
+    statsRange = sanitizeStatsRange(parsed.statsRange);
+    if(Array.isArray(parsed.achievementsUnlocked)) achievementsUnlocked = new Set(parsed.achievementsUnlocked);
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
     if(parsed.customTheme) customTheme = sanitizeCustomTheme(parsed.customTheme);
@@ -2553,12 +2760,162 @@
           image: parsed.settings.productImage || "",
           deadline: "",
           notes: "",
-          purchasedAt: ""
+          purchasedAt: "",
+          priceHistory: []
         };
         items = [migratedItem];
         activeItemId = migratedItem.id;
       }
     }
+  }
+
+  function sanitizeRegularPay(value){
+    const src=value&&typeof value==="object"?value:{};
+    const frequency=["weekly","fortnightly","monthly"].includes(src.frequency)?src.frequency:"weekly";
+    return {
+      enabled:!!src.enabled,
+      amount:Math.max(0,Number(src.amount)||0),
+      frequency,
+      nextDate:/^\d{4}-\d{2}-\d{2}$/.test(src.nextDate||"")?src.nextDate:"",
+      label:String(src.label||"Regular pay").trim().slice(0,60)||"Regular pay"
+    };
+  }
+
+  function sanitizeStatsRange(value){
+    const src=value&&typeof value==="object"?value:{};
+    const preset=["7d","30d","90d","ytd","all","custom"].includes(src.preset)?src.preset:"30d";
+    const valid=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||"")?v:"";
+    return {preset,start:valid(src.start),end:valid(src.end)};
+  }
+
+  function addDaysKey(key,days){
+    const d=new Date(key+"T00:00:00");
+    d.setDate(d.getDate()+days);
+    return dateStr(d);
+  }
+
+  function addMonthKey(key){
+    const [y,m,d]=key.split("-").map(Number);
+    const next=new Date(y,m,1);
+    const maxDay=new Date(next.getFullYear(),next.getMonth()+1,0).getDate();
+    next.setDate(Math.min(d,maxDay));
+    return dateStr(next);
+  }
+
+  function advanceRegularPayDate(key,frequency){
+    if(frequency==="fortnightly") return addDaysKey(key,14);
+    if(frequency==="monthly") return addMonthKey(key);
+    return addDaysKey(key,7);
+  }
+
+  function processRegularPayDue(){
+    regularPay=sanitizeRegularPay(regularPay);
+    if(!regularPay.enabled || regularPay.amount<=0 || !regularPay.nextDate) return 0;
+    const today=todayStr();
+    let due=regularPay.nextDate;
+    let count=0;
+    while(due<=today && count<120){
+      const already=entries.some(en=>en.source==="regular-pay" && en.scheduledDate===due);
+      if(!already){
+        entries.push({
+          id:"regular-"+due+"-"+Math.random().toString(36).slice(2,7),
+          date:due,
+          hours:0,
+          earned:regularPay.amount,
+          directEarned:regularPay.amount,
+          entryType:"amount",
+          rateAtEntry:null,
+          source:"regular-pay",
+          scheduledDate:due,
+          label:regularPay.label
+        });
+        count++;
+      }
+      due=advanceRegularPayDate(due,regularPay.frequency);
+    }
+    regularPay.nextDate=due;
+    entries.sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0);
+    return count;
+  }
+
+  function achievementMetSet(){
+    const stats=computeGlobalStats();
+    return new Set(ACHIEVEMENTS.filter(a=>{
+      try{return !!a.test(stats);}catch(_){return false;}
+    }).map(a=>a.id));
+  }
+
+  function seedAchievementsAfterLoad(){
+    if(achievementsUnlocked===null) achievementsUnlocked=achievementMetSet();
+  }
+
+  function showAchievementToast(achievement){
+    const stack=ensureMilestoneToastStack();
+    const toast=document.createElement("div");
+    toast.className="milestone-toast achievement-toast";
+    const badge=document.createElement("div");
+    badge.className="milestone-badge";
+    badge.textContent=achievement.icon;
+    const copy=document.createElement("div");
+    const title=document.createElement("div");
+    title.className="milestone-title";
+    title.textContent="Achievement unlocked";
+    const detail=document.createElement("div");
+    detail.className="milestone-copy";
+    detail.textContent=achievement.name+" · "+achievement.desc;
+    copy.append(title,detail);
+    toast.append(badge,copy);
+    stack.appendChild(toast);
+    fireConfetti(55);
+    setTimeout(()=>toast.remove(),4300);
+    setTimeout(()=>{if(stack&&!stack.children.length)stack.remove();},4400);
+  }
+
+  function checkAchievements(announce=true){
+    if(achievementsUnlocked===null) return false;
+    const met=achievementMetSet();
+    const newly=ACHIEVEMENTS.filter(a=>met.has(a.id)&&!achievementsUnlocked.has(a.id));
+    if(!newly.length) return false;
+    newly.forEach(a=>achievementsUnlocked.add(a.id));
+    if(announce) newly.slice(0,2).forEach((a,i)=>setTimeout(()=>showAchievementToast(a),i*650));
+    persist();
+    return true;
+  }
+
+  function getStatsRangeBounds(){
+    statsRange=sanitizeStatsRange(statsRange);
+    const today=todayStr();
+    let start="",end=today;
+    if(statsRange.preset==="7d") start=addDaysKey(today,-6);
+    else if(statsRange.preset==="30d") start=addDaysKey(today,-29);
+    else if(statsRange.preset==="90d") start=addDaysKey(today,-89);
+    else if(statsRange.preset==="ytd") start=new Date().getFullYear()+"-01-01";
+    else if(statsRange.preset==="custom"){
+      start=statsRange.start||today;
+      end=statsRange.end||today;
+      if(start>end){const t=start;start=end;end=t;}
+    }
+    return {start,end};
+  }
+
+  function dateInStatsRange(value){
+    if(!value) return false;
+    const {start,end}=getStatsRangeBounds();
+    return (!start||value>=start)&&(!end||value<=end);
+  }
+
+  function statsRangeLabel(){
+    const labels={"7d":"Last 7 days","30d":"Last 30 days","90d":"Last 90 days","ytd":"This year","all":"All time"};
+    if(statsRange.preset!=="custom") return labels[statsRange.preset]||"Last 30 days";
+    const {start,end}=getStatsRangeBounds();
+    return formatRecordDate(start)+" – "+formatRecordDate(end);
+  }
+
+  function computeSelectedRangeStats(){
+    let earned=0,spent=0;
+    entries.forEach(en=>{if(dateInStatsRange(en.date)) earned+=entryEarned(en);});
+    expenses.forEach(exp=>{if(dateInStatsRange(exp.date)) spent+=Math.max(0,Number(exp.amount)||0);});
+    return {earned,spent,net:earned-spent};
   }
 
   function seedCelebrationsAfterLoad(){
@@ -2595,7 +2952,10 @@
       catch(error){ console.error("Save parse error", error); }
     }
     seedCelebrationsAfterLoad();
+    seedAchievementsAfterLoad();
+    const regularAdded = processRegularPayDue();
     finishLoadedState();
+    if(regularAdded>0) await persist();
   }
 
   async function load(){
@@ -2612,6 +2972,9 @@
       priorityItemId,
       entries,
       expenses,
+      regularPay:sanitizeRegularPay(regularPay),
+      achievementsUnlocked:Array.from(achievementsUnlocked||[]),
+      statsRange:sanitizeStatsRange(statsRange),
       theme:currentTheme,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
@@ -3125,6 +3488,15 @@
       closeCustomThemeModal();
       return;
     }
+    if(!$("regularPayBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeRegularPayModal(); return;
+    }
+    if(!$("archiveBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeArchive(); return;
+    }
+    if(!$("achievementsBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeAchievements(); return;
+    }
     if(!$("recordsModalBackdrop").classList.contains("hidden")){
       e.preventDefault();
       closeRecordsModal();
@@ -3165,6 +3537,7 @@
     $("item-deadline").value = item ? (item.deadline||"") : "";
     $("item-notes").value = item ? (item.notes||"") : "";
     $("item-priority").checked = item ? item.id===priorityItemId : false;
+    renderItemPriceHistory(item);
     $("item-deadline").min = todayStr();
     if(item && item.image){
       setUploadPreview(item.image);
@@ -3173,6 +3546,24 @@
     lockBodyScroll();
     $("item-name").focus();
   }
+  function renderItemPriceHistory(item){
+    const wrap=$("itemPriceHistoryWrap");
+    const list=$("itemPriceHistoryList");
+    const history=item&&Array.isArray(item.priceHistory)?item.priceHistory:[];
+    wrap.classList.toggle("hidden",history.length===0);
+    list.innerHTML="";
+    history.slice().reverse().slice(0,8).forEach(change=>{
+      const from=Math.max(0,Number(change.from)||0);
+      const to=Math.max(0,Number(change.to)||0);
+      const delta=to-from;
+      const row=document.createElement("div");
+      row.className="price-history-row";
+      row.innerHTML=`<span>${formatRecordDate(change.date)} · ${fmtMoney(from,0)} → ${fmtMoney(to,0)}</span>
+        <strong class="price-history-delta ${delta>0?"up":"down"}">${delta>0?"+":""}${fmtMoney(delta,0)}</strong>`;
+      list.appendChild(row);
+    });
+  }
+
   function closeItemModal(){
     $("itemModalBackdrop").classList.add("hidden");
     editingItemId = null;
@@ -3216,7 +3607,12 @@
     if(editingItemId){
       const idx = items.findIndex(i=>i.id===editingItemId);
       if(idx>=0){
-        items[idx] = { ...items[idx], name, goal, link, image, deadline, notes };
+        const oldGoal=Math.max(0,Number(items[idx].goal)||0);
+        const history=Array.isArray(items[idx].priceHistory)?[...items[idx].priceHistory]:[];
+        if(oldGoal>0 && goal>0 && Math.abs(oldGoal-goal)>=0.01){
+          history.push({date:todayStr(),from:oldGoal,to:goal});
+        }
+        items[idx] = { ...items[idx], name, goal, link, image, deadline, notes, priceHistory:history };
         if(makePriority && !items[idx].purchasedAt){
           priorityItemId = items[idx].id;
           activeItemId = items[idx].id;
@@ -3225,7 +3621,7 @@
         }
       }
     }else{
-      const newItem = { id: uid(), name, goal, link, image, deadline, notes, purchasedAt:"", purchasedPrice:0 };
+      const newItem = { id: uid(), name, goal, link, image, deadline, notes, purchasedAt:"", purchasedPrice:0, priceHistory:[] };
       items.push(newItem);
       if(makePriority){ priorityItemId = newItem.id; activeItemId = newItem.id; }
       else if(!activeItemId) activeItemId = newItem.id;
@@ -3375,7 +3771,7 @@
       if(addedEarned<=0) return;
     }
 
-    const idx = entries.findIndex(en=>en.date===date);
+    const idx = entries.findIndex(en=>en.date===date && en.source!=="regular-pay");
     if(idx>=0){
       const existing = entries[idx];
       const oldEarned = entryEarned(existing);
@@ -3622,40 +4018,86 @@
   const WEEKDAY_LABELS = ["M","T","W","T","F","S","S"];
 
   function getBarSeries(){
-    if(chartView === "day"){
-      const numDays = 14;
-      const out = [];
-      for(let i=numDays-1;i>=0;i--){
-        const d = new Date();
-        d.setDate(d.getDate()-i);
-        const key = dateStr(d);
-        const value = entries.filter(en=>en.date===key).reduce((s,en)=>s+entryEarned(en),0);
-        out.push({ label: WEEKDAY_LABELS[(d.getDay()+6)%7], value, isCurrent: i===0,
-          title: d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})+": "+fmtMoney(value) });
+    const bounds=getStatsRangeBounds();
+    const today=todayStr();
+    let startKey=bounds.start;
+    const endKey=bounds.end||today;
+
+    if(!startKey){
+      const dates=[
+        ...entries.map(e=>e.date),
+        ...expenses.map(e=>e.date)
+      ].filter(Boolean).sort();
+      startKey=dates[0]||addDaysKey(endKey,-29);
+    }
+
+    const sumBetween=(a,b)=>entries
+      .filter(en=>en.date>=a&&en.date<=b)
+      .reduce((s,en)=>s+entryEarned(en),0);
+
+    if(chartView==="day"){
+      const hardStart=addDaysKey(endKey,-30);
+      if(startKey<hardStart) startKey=hardStart;
+      const out=[];
+      let cursor=startKey;
+      while(cursor<=endKey && out.length<31){
+        const d=new Date(cursor+"T00:00:00");
+        const value=sumBetween(cursor,cursor);
+        out.push({
+          label:WEEKDAY_LABELS[(d.getDay()+6)%7],
+          value,
+          isCurrent:cursor===today,
+          title:d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"})+": "+fmtMoney(value)
+        });
+        cursor=addDaysKey(cursor,1);
       }
       return out;
     }
-    if(chartView === "week"){
-      const numWeeks = 8;
-      const now = new Date();
-      const dow = (now.getDay()+6)%7;
-      const thisWeekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()-dow);
-      const out = [];
-      for(let i=numWeeks-1;i>=0;i--){
-        const start = new Date(thisWeekStart);
-        start.setDate(thisWeekStart.getDate()-7*i);
-        const end = new Date(start);
-        end.setDate(start.getDate()+6);
-        const startStr = dateStr(start), endStr = dateStr(end);
-        const value = entries.filter(en=>en.date>=startStr && en.date<=endStr).reduce((s,en)=>s+entryEarned(en),0);
-        out.push({ label: "W"+(numWeeks-i), value, isCurrent: i===0,
-          title: start.toLocaleDateString(undefined,{month:"short",day:"numeric"})+" \u2013 "+end.toLocaleDateString(undefined,{month:"short",day:"numeric"})+": "+fmtMoney(value) });
+
+    if(chartView==="week"){
+      let endDate=new Date(endKey+"T00:00:00");
+      const endDow=(endDate.getDay()+6)%7;
+      endDate.setDate(endDate.getDate()-endDow+6);
+      let endWeek=dateStr(endDate);
+      let firstWeek=startOfWeekKey(startKey);
+      const maxFirst=addDaysKey(startOfWeekKey(endWeek),-7*15);
+      if(firstWeek<maxFirst) firstWeek=maxFirst;
+      const out=[];
+      let cursor=firstWeek;
+      let index=1;
+      while(cursor<=endWeek&&out.length<16){
+        const weekEnd=addDaysKey(cursor,6);
+        const value=sumBetween(cursor,weekEnd);
+        out.push({
+          label:"W"+index++,
+          value,
+          isCurrent:today>=cursor&&today<=weekEnd,
+          title:formatRecordDate(cursor)+" – "+formatRecordDate(weekEnd)+": "+fmtMoney(value)
+        });
+        cursor=addDaysKey(cursor,7);
       }
       return out;
     }
-    const stats = computeGlobalStats();
-    const curMonthIdx = new Date().getMonth();
-    return stats.byMonth.map((value,i)=>({ label: MONTH_LABELS[i], value, isCurrent: i===curMonthIdx, title: fmtMoney(value) }));
+
+    const startDate=new Date(startKey+"T00:00:00");
+    const endDate=new Date(endKey+"T00:00:00");
+    let months=(endDate.getFullYear()-startDate.getFullYear())*12+(endDate.getMonth()-startDate.getMonth())+1;
+    months=Math.max(1,Math.min(18,months));
+    const first=new Date(endDate.getFullYear(),endDate.getMonth()-(months-1),1);
+    const out=[];
+    for(let i=0;i<months;i++){
+      const d=new Date(first.getFullYear(),first.getMonth()+i,1);
+      const monthStart=dateStr(d);
+      const monthEnd=dateStr(new Date(d.getFullYear(),d.getMonth()+1,0));
+      const value=sumBetween(monthStart,monthEnd);
+      out.push({
+        label:MONTH_LABELS[d.getMonth()],
+        value,
+        isCurrent:d.getFullYear()===new Date().getFullYear()&&d.getMonth()===new Date().getMonth(),
+        title:d.toLocaleDateString(undefined,{month:"long",year:"numeric"})+": "+fmtMoney(value)
+      });
+    }
+    return out;
   }
 
   function startOfWeekKey(dateValue){
@@ -3749,15 +4191,14 @@
       col.innerHTML = `<div class="bar-track"><div class="bar-fill${item.isCurrent?" current":""}" style="height:${h}px" title="${item.title}"></div></div><div class="bar-label${item.isCurrent?" current":""}">${item.label}</div>`;
       barsRow.appendChild(col);
     });
-    const viewLabels = {day:"Last 14 days", week:"Last 8 weeks", month:"This year"};
-    $("barsLabel").textContent = "Earnings \u00B7 " + viewLabels[chartView];
+    const viewLabels = {day:"Daily", week:"Weekly", month:"Monthly"};
+    $("barsLabel").textContent = "Earnings · " + statsRangeLabel() + " · " + viewLabels[chartView];
   }
 
   function renderItemsShelf(saved){
     const shelf = $("itemsShelf");
     shelf.innerHTML = "";
-    const orderedItems = [...items].sort((a,b)=>{
-      if(!!a.purchasedAt !== !!b.purchasedAt) return a.purchasedAt ? 1 : -1;
+    const orderedItems = items.filter(i=>!i.purchasedAt).sort((a,b)=>{
       if(a.id===priorityItemId) return -1;
       if(b.id===priorityItemId) return 1;
       return 0;
@@ -3858,6 +4299,163 @@
     render();
   }
 
+  function renderRegularPayStatus(){
+    regularPay=sanitizeRegularPay(regularPay);
+    const status=$("regularPayStatus");
+    if(!regularPay.enabled){
+      status.innerHTML='Regular pay is <strong>off</strong>.';
+      return;
+    }
+    status.innerHTML=`<strong>${fmtMoney(regularPay.amount)}</strong> · ${escapeHtml(regularPay.label)} · ${regularPay.frequency==="weekly"?"weekly":regularPay.frequency==="fortnightly"?"every 2 weeks":"monthly"}<br>Next payday: <strong>${formatRecordDate(regularPay.nextDate)}</strong>`;
+  }
+
+  function openRegularPayModal(){
+    regularPay=sanitizeRegularPay(regularPay);
+    $("regularPayEnabled").checked=regularPay.enabled;
+    $("regularPayAmount").value=regularPay.amount||"";
+    $("regularPayLabel").value=regularPay.label||"Regular pay";
+    $("regularPayFrequency").value=regularPay.frequency;
+    $("regularPayNextDate").value=regularPay.nextDate||todayStr();
+    $("regularPayNextDate").min="2000-01-01";
+    renderRegularPayStatus();
+    $("regularPayBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+
+  function closeRegularPayModal(){
+    $("regularPayBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+
+  $("regularPayBtn").addEventListener("click",openRegularPayModal);
+  $("regularPayCancelBtn").addEventListener("click",closeRegularPayModal);
+  $("regularPayBackdrop").addEventListener("click",e=>{if(e.target.id==="regularPayBackdrop")closeRegularPayModal();});
+  $("regularPayForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    regularPay=sanitizeRegularPay({
+      enabled:$("regularPayEnabled").checked,
+      amount:parseFloat($("regularPayAmount").value)||0,
+      label:$("regularPayLabel").value.trim()||"Regular pay",
+      frequency:$("regularPayFrequency").value,
+      nextDate:$("regularPayNextDate").value
+    });
+    if(regularPay.enabled&&(regularPay.amount<=0||!regularPay.nextDate)){
+      $("regularPayStatus").innerHTML='<strong>Add an amount and next payday before enabling regular pay.</strong>';
+      return;
+    }
+    const added=processRegularPayDue();
+    closeRegularPayModal();
+    await persist();
+    render();
+    if(added>0) checkAchievements(true);
+  });
+
+  function renderArchive(){
+    const grid=$("archiveGrid");
+    const archived=items.filter(i=>i.purchasedAt).sort((a,b)=>String(b.purchasedAt).localeCompare(String(a.purchasedAt)));
+    grid.innerHTML="";
+    if(!archived.length){
+      grid.innerHTML='<div class="archive-empty" style="grid-column:1/-1;">No purchased goals yet. When you mark a completed goal as purchased, it will move here.</div>';
+      return;
+    }
+    archived.forEach(item=>{
+      const card=document.createElement("div");
+      card.className="archive-card";
+      const paid=Math.max(0,Number(item.purchasedPrice)||Number(item.goal)||0);
+      card.innerHTML=`
+        <div class="archive-card-title">${escapeHtml(item.name||"Untitled goal")}</div>
+        <div class="archive-card-price">${fmtMoney(paid)}</div>
+        <div class="archive-card-meta">Purchased ${formatRecordDate(item.purchasedAt)}${item.notes?"<br>"+escapeHtml(item.notes):""}</div>
+        <button type="button" class="btn btn-ghost archive-view-btn" style="justify-content:center;">View goal</button>`;
+      card.querySelector(".archive-view-btn").addEventListener("click",()=>{
+        activeItemId=item.id;
+        closeArchive();
+        render();
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  function openArchive(){
+    renderArchive();
+    $("archiveBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+  function closeArchive(){
+    $("archiveBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+  $("archiveBtn").addEventListener("click",openArchive);
+  $("archiveCloseBtn").addEventListener("click",closeArchive);
+  $("archiveBackdrop").addEventListener("click",e=>{if(e.target.id==="archiveBackdrop")closeArchive();});
+
+  function renderAchievements(){
+    const grid=$("achievementGrid");
+    grid.innerHTML="";
+    const unlocked=achievementsUnlocked||new Set();
+    ACHIEVEMENTS.forEach(a=>{
+      const card=document.createElement("div");
+      const isUnlocked=unlocked.has(a.id);
+      card.className="achievement-card"+(isUnlocked?" unlocked":"");
+      card.innerHTML=`
+        <div class="achievement-icon">${a.icon}</div>
+        <div>
+          <div class="achievement-name">${escapeHtml(a.name)}</div>
+          <div class="achievement-desc">${escapeHtml(a.desc)}</div>
+          <div class="achievement-state">${isUnlocked?"Unlocked":"Locked"}</div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  function openAchievements(){
+    renderAchievements();
+    $("achievementsBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+  function closeAchievements(){
+    $("achievementsBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+  $("achievementsBtn").addEventListener("click",openAchievements);
+  $("achievementsCloseBtn").addEventListener("click",closeAchievements);
+  $("achievementsBackdrop").addEventListener("click",e=>{if(e.target.id==="achievementsBackdrop")closeAchievements();});
+
+  function renderRangeControls(){
+    statsRange=sanitizeStatsRange(statsRange);
+    $("statsRangeSelect").value=statsRange.preset;
+    $("customRangeFields").classList.toggle("hidden",statsRange.preset!=="custom");
+    $("statsRangeStart").value=statsRange.start||"";
+    $("statsRangeEnd").value=statsRange.end||todayStr();
+    $("statsRangeStart").max=todayStr();
+    $("statsRangeEnd").max=todayStr();
+    const rs=computeSelectedRangeStats();
+    $("rangeEarned").textContent=fmtMoney(rs.earned);
+    $("rangeSpent").textContent="−"+fmtMoney(rs.spent);
+    $("rangeNet").textContent=(rs.net<0?"−":"")+fmtMoney(Math.abs(rs.net));
+    $("rangeNet").classList.toggle("positive",rs.net>=0);
+    $("rangeNet").classList.toggle("negative",rs.net<0);
+  }
+
+  $("statsRangeSelect").addEventListener("change",async e=>{
+    statsRange.preset=e.target.value;
+    if(statsRange.preset==="custom"){
+      const today=todayStr();
+      if(!statsRange.start) statsRange.start=addDaysKey(today,-29);
+      if(!statsRange.end) statsRange.end=today;
+    }
+    await persist();
+    render();
+  });
+  ["statsRangeStart","statsRangeEnd"].forEach(id=>{
+    $(id).addEventListener("change",async()=>{
+      statsRange.start=$("statsRangeStart").value;
+      statsRange.end=$("statsRangeEnd").value;
+      await persist();
+      render();
+    });
+  });
+
   $("purchaseBtn").addEventListener("click", markActivePurchased);
   $("recordsBtn").addEventListener("click", openRecordsModal);
   $("recordsCloseBtn").addEventListener("click", closeRecordsModal);
@@ -3872,6 +4470,11 @@
     $("mainScreen").classList.remove("hidden");
 
     const stats = computeGlobalStats();
+    $("archiveCount").textContent=String(items.filter(i=>i.purchasedAt).length);
+    $("regularPayBtn").textContent=regularPay&&regularPay.enabled ? "Regular pay · on" : "Regular pay";
+    const unlockedCount=achievementsUnlocked?achievementsUnlocked.size:0;
+    $("achievementChipValue").textContent="🏅 "+unlockedCount+" / "+ACHIEVEMENTS.length;
+    renderRangeControls();
     if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
@@ -3914,6 +4517,18 @@
       noteEl.textContent = activeItem.notes;
       noteEl.classList.remove("hidden");
     }else{ noteEl.classList.add("hidden"); noteEl.textContent = ""; }
+
+    const priceChangeEl=$("productPriceChange");
+    const priceHistory=activeItem&&Array.isArray(activeItem.priceHistory)?activeItem.priceHistory:[];
+    if(priceHistory.length){
+      const last=priceHistory[priceHistory.length-1];
+      const delta=(Number(last.to)||0)-(Number(last.from)||0);
+      priceChangeEl.innerHTML=`Price changed ${delta>0?"+":""}${fmtMoney(delta,0)} · <strong>${fmtMoney(last.to,0)}</strong> now`;
+      priceChangeEl.classList.remove("hidden");
+    }else{
+      priceChangeEl.classList.add("hidden");
+      priceChangeEl.textContent="";
+    }
 
     const purchaseBtn = $("purchaseBtn");
     const purchasedBadge = $("purchasedActiveBadge");
@@ -3971,12 +4586,13 @@
     // bars
     renderBars();
 
-    // activity ledger: earnings + expenses
+    // activity ledger: earnings + expenses, filtered by the selected date range
     const activity = [
       ...entries.map(en=>({kind:"earning",date:en.date,id:en.id,data:en})),
       ...expenses.map(exp=>({kind:"expense",date:exp.date,id:exp.id,data:exp}))
-    ].sort((a,b)=> a.date===b.date ? String(b.id).localeCompare(String(a.id)) : (a.date<b.date?1:-1));
-    $("ledgerLabel").textContent = "Activity · "+activity.length+" "+(activity.length===1?"entry":"entries");
+    ].filter(act=>dateInStatsRange(act.date))
+      .sort((a,b)=> a.date===b.date ? String(b.id).localeCompare(String(a.id)) : (a.date<b.date?1:-1));
+    $("ledgerLabel").textContent = "Activity · "+statsRangeLabel()+" · "+activity.length+" "+(activity.length===1?"entry":"entries");
     const list = $("ledgerList");
     list.innerHTML = "";
     if(activity.length===0){
@@ -4003,9 +4619,9 @@
           row.className = "ledger-row";
           const earned = entryEarned(en);
           const hours = parseFloat(en.hours) || 0;
-          let detail = "Money entered";
-          if(en.entryType === "mixed") detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs + money";
-          else if(hours > 0) detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs";
+          let detail = en.source==="regular-pay" ? (en.label||"Regular pay")+" · automatic" : "Money entered";
+          if(en.source!=="regular-pay" && en.entryType === "mixed") detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs + money";
+          else if(en.source!=="regular-pay" && hours > 0) detail = hours.toFixed(hours % 1 ? 2 : 0) + " hrs";
           row.innerHTML = `
             <div class="ledger-date">${dateLabel}</div>
             <div class="ledger-hours">${detail}</div>
@@ -4020,6 +4636,7 @@
 
     updatePunchPreview();
     checkGoalCelebrations(stats.saved);
+    checkAchievements(true);
   }
   $("deadlineDateInput").addEventListener("change", async (e)=>{
     const activeItem = items.find(i=>i.id===activeItemId);
