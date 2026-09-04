@@ -646,6 +646,48 @@
   .projection-note{margin-top:4px;color:var(--muted);font-size:11px;font-style:italic;}
   .projection-lead{font-size:14px;color:var(--white);line-height:1.5;}
   .projection-time{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;color:var(--accent-soft);}
+  .projection-range-controls{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;
+  }
+  .projection-range-label{
+    color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;
+  }
+  .projection-range-select,
+  .projection-range-date{
+    font-family:'Inter',sans-serif;font-size:11px;color:var(--white);
+    background:var(--panel-solid);border:1px solid var(--line-strong);border-radius:7px;
+    padding:6px 8px;
+  }
+  .projection-range-select:focus,
+  .projection-range-date:focus{
+    outline:none;border-color:var(--accent-soft);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent);
+  }
+  .projection-custom-range{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .projection-range-help{
+    margin-top:5px;color:var(--muted);font-size:10.5px;line-height:1.4;
+  }
+  @media(max-width:560px){
+    .projection-range-controls{align-items:flex-start;flex-direction:column;}
+    .projection-custom-range{width:100%;}
+    .projection-range-date{min-width:0;flex:1;}
+  }
+  .projection-window{
+    display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px;
+    color:var(--muted);font-size:11.5px;line-height:1.45;
+  }
+  .projection-window-label{
+    font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.42px;font-size:9.5px;
+  }
+  .projection-window-date{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--white);
+    padding:4px 7px;border-radius:7px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .projection-window-arrow{color:var(--accent-soft);font-weight:800;}
+  .projection-basis{margin-top:6px;color:var(--muted);font-size:10.5px;line-height:1.45;}
+  .projection-basis strong{color:var(--accent-soft);font-weight:700;}
 
   /* stat chips */
   .stat-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px;}
@@ -1043,6 +1085,92 @@
     .milestone-toast-stack{right:10px;top:10px;width:calc(100vw - 20px);}
   }
 
+  /* ---- login / cloud loading screen ---- */
+  .app-loading-screen{
+    position:fixed;inset:0;z-index:1300;display:grid;place-items:center;padding:24px;
+    background:
+      radial-gradient(circle 420px at 50% 37%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 68%),
+      radial-gradient(circle 360px at 22% 82%,color-mix(in srgb,var(--accent2) 8%,transparent),transparent 68%),
+      radial-gradient(circle 360px at 82% 18%,color-mix(in srgb,var(--positive) 7%,transparent),transparent 68%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    opacity:1;visibility:visible;
+    transition:opacity .28s ease,visibility .28s ease;
+  }
+  .app-loading-screen.hidden{
+    opacity:0;visibility:hidden;pointer-events:none;
+  }
+  .app-loading-card{
+    width:min(390px,100%);text-align:center;display:flex;flex-direction:column;align-items:center;
+    padding:28px 24px 25px;border-radius:20px;
+    background:color-mix(in srgb,var(--panel-solid) 72%,transparent);
+    border:1px solid var(--line-strong);
+    box-shadow:0 24px 80px rgba(0,0,0,.28);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  }
+  .app-loading-logo{
+    position:relative;width:82px;height:82px;margin-bottom:18px;
+    display:grid;place-items:center;
+  }
+  .app-loading-orbit{
+    position:absolute;inset:0;border-radius:50%;
+    border:1.5px solid color-mix(in srgb,var(--accent-soft) 16%,transparent);
+    border-top-color:var(--accent-soft);
+    border-right-color:color-mix(in srgb,var(--accent2) 72%,var(--accent-soft));
+    animation:luminLoadingOrbit 1.05s linear infinite;
+    box-shadow:0 0 24px color-mix(in srgb,var(--accent) 10%,transparent);
+  }
+  .app-loading-sun{
+    width:48px;height:48px;filter:drop-shadow(0 0 14px color-mix(in srgb,var(--accent) 24%,transparent));
+    animation:luminLoadingBreathe 1.8s ease-in-out infinite;
+  }
+  .app-loading-brand{
+    font-family:'Sora',sans-serif;font-size:18px;font-weight:800;letter-spacing:3px;color:var(--white);
+    margin-bottom:14px;
+  }
+  .app-loading-title{
+    font-family:'Sora',sans-serif;font-size:17px;font-weight:700;color:var(--white);
+    margin:0 0 6px;min-height:22px;
+  }
+  .app-loading-detail{
+    color:var(--muted);font-size:11.5px;line-height:1.5;min-height:18px;
+  }
+  .app-loading-progress{
+    width:min(260px,82%);height:3px;border-radius:999px;overflow:hidden;margin-top:18px;
+    background:rgba(255,255,255,.07);
+  }
+  .app-loading-progress::before{
+    content:"";display:block;width:44%;height:100%;border-radius:inherit;
+    background:linear-gradient(90deg,var(--accent),var(--accent-soft),var(--accent2));
+    animation:luminLoadingBar 1.15s cubic-bezier(.45,0,.55,1) infinite;
+  }
+  .app-loading-dots{display:inline-flex;gap:4px;margin-left:4px;vertical-align:middle;}
+  .app-loading-dots i{
+    display:block;width:3px;height:3px;border-radius:50%;background:currentColor;
+    animation:luminLoadingDot 1.2s ease-in-out infinite;
+  }
+  .app-loading-dots i:nth-child(2){animation-delay:.15s;}
+  .app-loading-dots i:nth-child(3){animation-delay:.30s;}
+  @keyframes luminLoadingOrbit{to{transform:rotate(360deg);}}
+  @keyframes luminLoadingBreathe{
+    0%,100%{transform:scale(.96);opacity:.86;}
+    50%{transform:scale(1.04);opacity:1;}
+  }
+  @keyframes luminLoadingBar{
+    0%{transform:translateX(-130%);}
+    55%{transform:translateX(95%);}
+    100%{transform:translateX(250%);}
+  }
+  @keyframes luminLoadingDot{
+    0%,65%,100%{opacity:.3;transform:translateY(0);}
+    30%{opacity:1;transform:translateY(-2px);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .app-loading-orbit,.app-loading-sun,.app-loading-progress::before,.app-loading-dots i{
+      animation:none !important;
+    }
+    .app-loading-progress::before{width:100%;opacity:.72;}
+  }
+
   /* ---- public app / account + cloud sync ---- */
   .auth-gate{
     position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;
@@ -1248,6 +1376,31 @@
 </style>
 </head>
 <body>
+<div class="app-loading-screen hidden" id="appLoadingScreen" aria-hidden="true" aria-live="polite" aria-busy="true">
+  <div class="app-loading-card">
+    <div class="app-loading-logo" aria-hidden="true">
+      <div class="app-loading-orbit"></div>
+      <svg class="app-loading-sun" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="4" fill="var(--accent)"/>
+        <g stroke="var(--accent-soft)" stroke-width="1.55" stroke-linecap="round">
+          <line x1="12" y1="1.5" x2="12" y2="4.5"/>
+          <line x1="12" y1="19.5" x2="12" y2="22.5"/>
+          <line x1="1.5" y1="12" x2="4.5" y2="12"/>
+          <line x1="19.5" y1="12" x2="22.5" y2="12"/>
+          <line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/>
+          <line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/>
+          <line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/>
+          <line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="app-loading-brand">LUMIN</div>
+    <div class="app-loading-title" id="appLoadingTitle">Signing you in<span class="app-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+    <div class="app-loading-detail" id="appLoadingDetail">Connecting securely to LUMIN Cloud.</div>
+    <div class="app-loading-progress" aria-hidden="true"></div>
+  </div>
+</div>
+
 <div class="auth-gate" id="authGate">
   <div class="auth-card">
     <div class="brand-row">
@@ -1508,7 +1661,24 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
         </div>
         <div class="projection-copy">
+          <div class="projection-range-controls">
+            <span class="projection-range-label">Calculate from</span>
+            <select id="projectionRangeSelect" class="projection-range-select" aria-label="Affordability calculation range">
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+              <option value="ytd">This year</option>
+              <option value="all">All time</option>
+              <option value="custom">Custom</option>
+            </select>
+            <div id="projectionCustomRange" class="projection-custom-range hidden">
+              <input type="date" id="projectionRangeStart" class="projection-range-date" aria-label="Affordability range start date" />
+              <span style="color:var(--muted);font-size:10px;">to</span>
+              <input type="date" id="projectionRangeEnd" class="projection-range-date" aria-label="Affordability range end date" />
+            </div>
+          </div>
           <div id="projectionText"></div>
+          <div class="projection-range-help" id="projectionRangeHelp"></div>
           <div class="projection-note">*Might not be 100% accurate.</div>
         </div>
       </div>
@@ -1911,6 +2081,7 @@
   let regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
   let achievementsUnlocked = null;
   let statsRange = {preset:"30d", start:"", end:""};
+  let projectionRange = {preset:"30d", start:"", end:""};
   let currentTheme = "midnight";
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
@@ -2718,6 +2889,7 @@
     regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
     achievementsUnlocked = null;
     statsRange = {preset:"30d", start:"", end:""};
+    projectionRange = {preset:"30d", start:"", end:""};
     currentTheme = "midnight";
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
@@ -2738,6 +2910,7 @@
     priorityItemId = parsed.priorityItemId || null;
     regularPay = sanitizeRegularPay(parsed.regularPay);
     statsRange = sanitizeStatsRange(parsed.statsRange);
+    projectionRange = sanitizeStatsRange(parsed.projectionRange);
     if(Array.isArray(parsed.achievementsUnlocked)) achievementsUnlocked = new Set(parsed.achievementsUnlocked);
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
@@ -2882,6 +3055,41 @@
     return true;
   }
 
+  function getProjectionRangeBounds(){
+    projectionRange=sanitizeStatsRange(projectionRange);
+    const today=todayStr();
+    let start="",end=today;
+
+    if(projectionRange.preset==="7d") start=addDaysKey(today,-6);
+    else if(projectionRange.preset==="30d") start=addDaysKey(today,-29);
+    else if(projectionRange.preset==="90d") start=addDaysKey(today,-89);
+    else if(projectionRange.preset==="ytd") start=new Date().getFullYear()+"-01-01";
+    else if(projectionRange.preset==="custom"){
+      start=projectionRange.start||today;
+      end=projectionRange.end||today;
+      if(start>end){
+        const temp=start;
+        start=end;
+        end=temp;
+      }
+    }
+
+    return {start,end};
+  }
+
+  function projectionRangeLabel(){
+    const labels={
+      "7d":"your last 7 days",
+      "30d":"your last 30 days",
+      "90d":"your last 90 days",
+      "ytd":"this year",
+      "all":"all logged earnings"
+    };
+    if(projectionRange.preset!=="custom") return labels[projectionRange.preset]||"your last 30 days";
+    const {start,end}=getProjectionRangeBounds();
+    return formatRecordDate(start)+" to "+formatRecordDate(end);
+  }
+
   function getStatsRangeBounds(){
     statsRange=sanitizeStatsRange(statsRange);
     const today=todayStr();
@@ -2975,6 +3183,7 @@
       regularPay:sanitizeRegularPay(regularPay),
       achievementsUnlocked:Array.from(achievementsUnlocked||[]),
       statsRange:sanitizeStatsRange(statsRange),
+      projectionRange:sanitizeStatsRange(projectionRange),
       theme:currentTheme,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
@@ -3025,6 +3234,46 @@
     $("authModeBtn").textContent = authCreateMode ? "Already have an account? Sign in" : "Create an account instead";
     $("authPassword").autocomplete = authCreateMode ? "new-password" : "current-password";
     setAuthMessage("");
+  }
+
+  let appLoadingShownAt = 0;
+  let appLoadingHideTimer = null;
+
+  function setAppLoading(title,detail){
+    const screen=$("appLoadingScreen");
+    if(!screen) return;
+
+    clearTimeout(appLoadingHideTimer);
+    appLoadingHideTimer=null;
+
+    if(screen.classList.contains("hidden")){
+      appLoadingShownAt=performance.now();
+    }
+
+    $("appLoadingTitle").innerHTML =
+      escapeHtml(title||"Loading LUMIN")+
+      '<span class="app-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>';
+    $("appLoadingDetail").textContent=detail||"Getting everything ready.";
+
+    screen.classList.remove("hidden");
+    screen.setAttribute("aria-hidden","false");
+    screen.setAttribute("aria-busy","true");
+  }
+
+  function hideAppLoading(minimumVisibleMs=520){
+    const screen=$("appLoadingScreen");
+    if(!screen || screen.classList.contains("hidden")) return;
+
+    const elapsed=performance.now()-appLoadingShownAt;
+    const wait=Math.max(0,minimumVisibleMs-elapsed);
+
+    clearTimeout(appLoadingHideTimer);
+    appLoadingHideTimer=setTimeout(()=>{
+      screen.classList.add("hidden");
+      screen.setAttribute("aria-hidden","true");
+      screen.setAttribute("aria-busy","false");
+      appLoadingHideTimer=null;
+    },wait);
   }
 
   function showAuthGate(){
@@ -3085,13 +3334,20 @@
   }
 
   async function enterCloudMode(user){
+    setAppLoading("Loading your savings","Syncing your wallet, goals and activity from LUMIN Cloud.");
     cloudMode = "cloud";
     cloudUser = user;
     hideAuthGate();
     updateAccountControls();
-    await load();
-    await startCloudSubscription();
-    maybeSignalLegacySave();
+
+    try{
+      await load();
+      setAppLoading("Almost ready","Finishing your dashboard and cloud sync.");
+      await startCloudSubscription();
+      maybeSignalLegacySave();
+    }finally{
+      hideAppLoading(650);
+    }
   }
 
   async function initPublicApp(){
@@ -3149,6 +3405,7 @@
       cloudUser = null;
       cloudMode = "pending";
       updateAccountControls();
+      hideAppLoading(0);
       setAuthMode(false);
       showAuthGate();
     });
@@ -3169,10 +3426,18 @@
       submit.disabled = true;
       submit.textContent = authCreateMode ? "Creating…" : "Signing in…";
       setAuthMessage("");
+
+      setAppLoading(
+        authCreateMode ? "Creating your LUMIN account" : "Signing you in",
+        authCreateMode ? "Setting up your private cloud save." : "Connecting securely to LUMIN Cloud."
+      );
+
       try{
         if(authCreateMode) await cloudApi.signUp(email,password);
         else await cloudApi.signIn(email,password);
+        setAppLoading("Loading your savings","Your account is ready. Fetching your LUMIN data.");
       }catch(error){
+        hideAppLoading(300);
         setAuthMessage(friendlyAuthError(error),"error");
       }finally{
         submit.disabled = false;
@@ -3208,8 +3473,10 @@
 
     cloudApi.onAuth(async user=>{
       if(user){
+        setAppLoading("Welcome back","Loading your LUMIN account and cloud save.");
         await enterCloudMode(user);
       }else if(cloudMode !== "local"){
+        hideAppLoading(0);
         cloudUser = null;
         cloudMode = "pending";
         updateAccountControls();
@@ -3874,26 +4141,65 @@
     return {totalEarned, yearEarned, monthEarned, todayEarned, weekEarned, byMonth, saved, curYear, totalExpenses, todayExpenses, weekExpenses, monthExpenses, yearExpenses};
   }
 
-  function computeItemProgress(item, saved){
-    const rate = (wallet && wallet.hourlyRate) || 0;
-    const goal = item ? item.goal : 0;
-    const progress = goal>0 ? saved/goal : 0;
-    const remaining = Math.max(0, goal-saved);
-    const hoursNeeded = rate>0 ? remaining/rate : 0;
+  function earningPaceForRange(startKey,endKey){
+    if(!entries.length) return 0;
 
-    let projectedDays = null;
-    if(remaining>0 && entries.length>0 && item){
-      const firstDate = entries.reduce((min,en)=> en.date<min ? en.date : min, entries[0].date);
-      const first = new Date(firstDate+"T00:00:00");
-      const today = new Date(todayStr()+"T00:00:00");
-      const daysElapsed = Math.max(1, Math.round((today-first)/DAY_MS)+1);
-      // Use total earned (not per-item) since the wallet is shared across items.
-      const totalEarned = entries.reduce((s,en)=> s + entryEarned(en), 0);
-      const avgPerDay = totalEarned/daysElapsed;
-      if(avgPerDay>0) projectedDays = remaining/avgPerDay;
+    let end=endKey||todayStr();
+    let start=startKey||"";
+
+    if(!start){
+      const validDates=entries.map(en=>en.date).filter(Boolean).sort();
+      start=validDates[0]||end;
     }
-    return {progress, remaining, hoursNeeded, projectedDays};
+
+    if(start>end){
+      const temp=start;
+      start=end;
+      end=temp;
+    }
+
+    const startDate=new Date(start+"T00:00:00");
+    const endDate=new Date(end+"T00:00:00");
+    const days=Math.max(1,Math.round((endDate-startDate)/DAY_MS)+1);
+
+    const earned=entries
+      .filter(en=>en.date>=start&&en.date<=end)
+      .reduce((sum,en)=>sum+entryEarned(en),0);
+
+    return earned/days;
   }
+
+  function computeItemProgress(item, saved){
+    const rate=(wallet&&wallet.hourlyRate)||0;
+    const goal=item?item.goal:0;
+    const progress=goal>0?saved/goal:0;
+    const remaining=Math.max(0,goal-saved);
+    const hoursNeeded=rate>0?remaining/rate:0;
+
+    let projectedDays=null;
+    let projectionPace=0;
+    let projectionBasis="";
+
+    if(remaining>0&&entries.length>0&&item){
+      const bounds=getProjectionRangeBounds();
+      projectionPace=earningPaceForRange(bounds.start,bounds.end);
+      projectionBasis=projectionRangeLabel();
+
+      if(projectionPace>0){
+        projectedDays=remaining/projectionPace;
+      }
+    }
+
+    return {
+      progress,
+      remaining,
+      hoursNeeded,
+      projectedDays,
+      projectionPace,
+      projectionBasis
+    };
+  }
+
   // ---- per-item goal deadline countdown ----
   const deadlineFlipState = {months:null, days:null, hours:null, minutes:null, seconds:null};
 
@@ -4421,6 +4727,21 @@
   $("achievementsCloseBtn").addEventListener("click",closeAchievements);
   $("achievementsBackdrop").addEventListener("click",e=>{if(e.target.id==="achievementsBackdrop")closeAchievements();});
 
+  function renderProjectionRangeControls(){
+    projectionRange=sanitizeStatsRange(projectionRange);
+
+    $("projectionRangeSelect").value=projectionRange.preset;
+    $("projectionCustomRange").classList.toggle("hidden",projectionRange.preset!=="custom");
+
+    const today=todayStr();
+    $("projectionRangeStart").value=projectionRange.start||"";
+    $("projectionRangeEnd").value=projectionRange.end||today;
+    $("projectionRangeStart").max=today;
+    $("projectionRangeEnd").max=today;
+
+    $("projectionRangeHelp").textContent="Using "+projectionRangeLabel()+" to estimate your average earnings per day.";
+  }
+
   function renderRangeControls(){
     statsRange=sanitizeStatsRange(statsRange);
     $("statsRangeSelect").value=statsRange.preset;
@@ -4436,6 +4757,29 @@
     $("rangeNet").classList.toggle("positive",rs.net>=0);
     $("rangeNet").classList.toggle("negative",rs.net<0);
   }
+
+  $("projectionRangeSelect").addEventListener("change",async e=>{
+    projectionRange.preset=e.target.value;
+
+    if(projectionRange.preset==="custom"){
+      const today=todayStr();
+      if(!projectionRange.start) projectionRange.start=addDaysKey(today,-29);
+      if(!projectionRange.end) projectionRange.end=today;
+    }
+
+    await persist();
+    render();
+  });
+
+  ["projectionRangeStart","projectionRangeEnd"].forEach(id=>{
+    $(id).addEventListener("change",async()=>{
+      projectionRange.start=$("projectionRangeStart").value;
+      projectionRange.end=$("projectionRangeEnd").value;
+      projectionRange.preset="custom";
+      await persist();
+      render();
+    });
+  });
 
   $("statsRangeSelect").addEventListener("change",async e=>{
     statsRange.preset=e.target.value;
@@ -4475,6 +4819,7 @@
     const unlockedCount=achievementsUnlocked?achievementsUnlocked.size:0;
     $("achievementChipValue").textContent="🏅 "+unlockedCount+" / "+ACHIEVEMENTS.length;
     renderRangeControls();
+    renderProjectionRangeControls();
     if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
@@ -4539,7 +4884,9 @@
     if(activePurchased) purchasedBadge.textContent = "✓ Purchased " + formatRecordDate(activeItem.purchasedAt);
 
     // fan gauge (driven by active item)
-    const { progress, remaining, hoursNeeded, projectedDays } = computeItemProgress(activeItem, stats.saved);
+    const {
+      progress, remaining, hoursNeeded, projectedDays, projectionPace, projectionBasis
+    } = computeItemProgress(activeItem, stats.saved);
     const isActivePurchased = !!(activeItem && activeItem.purchasedAt);
     const pct = activeItem ? (isActivePurchased ? 1 : Math.max(0, Math.min(1, progress))) : 0;
     const R = 122;
@@ -4568,9 +4915,14 @@
         ? ' <span class="projection-lead">\u2014 that\u2019s</span> <span class="projection-time">'+hoursNeeded.toFixed(1)+' hrs</span> <span class="projection-lead">of work left at your current pace.</span>'
         : '';
       if(projectedDays!==null){
-        $("projectionText").innerHTML = '<span class="projection-lead">At this rate, you\u2019ll be able to get this in </span><span class="projection-time">'+formatDuration(projectedDays)+'</span><span class="projection-lead">.</span>'+hoursPart;
+        $("projectionText").innerHTML =
+          '<span class="projection-lead">At this rate, you\u2019ll be able to get this in </span>'+
+          '<span class="projection-time">'+formatDuration(projectedDays)+'</span>'+
+          '<span class="projection-lead">.</span>'+hoursPart;
       }else{
-        $("projectionText").innerHTML = '<span class="projection-lead">Log a few days of earnings to see a projected date.</span>'+hoursPart;
+        $("projectionText").innerHTML =
+          '<span class="projection-lead">No earnings were logged in '+escapeHtml(projectionBasis)+
+          '. Pick a different calculation range or log some earnings to get an estimate.</span>'+hoursPart;
       }
     }else{
       $("projectionSection").classList.add("hidden");
