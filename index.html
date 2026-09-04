@@ -646,52 +646,6 @@
   .projection-note{margin-top:4px;color:var(--muted);font-size:11px;font-style:italic;}
   .projection-lead{font-size:14px;color:var(--white);line-height:1.5;}
   .projection-time{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;color:var(--accent-soft);}
-  .projection-range-controls{
-    display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;
-  }
-  .projection-range-label{
-    color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;
-  }
-  .projection-range-date{
-    font-family:'Inter',sans-serif;font-size:11px;color:var(--white);
-    background:var(--panel-solid);border:1px solid var(--line-strong);border-radius:7px;
-    padding:6px 8px;
-  }
-  .projection-range-date:focus{
-    outline:none;border-color:var(--accent-soft);
-    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent);
-  }
-  .projection-custom-range{
-    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
-  }
-  .projection-range-summary{
-    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent-soft);
-    padding:4px 7px;border-radius:7px;
-    background:color-mix(in srgb,var(--accent) 7%,transparent);
-    border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));
-  }
-  .projection-range-help{
-    margin-top:5px;color:var(--muted);font-size:10.5px;line-height:1.4;
-  }
-  @media(max-width:560px){
-    .projection-range-controls{align-items:flex-start;flex-direction:column;}
-    .projection-custom-range{width:100%;}
-    .projection-range-date{min-width:0;flex:1;}
-  }
-  .projection-window{
-    display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px;
-    color:var(--muted);font-size:11.5px;line-height:1.45;
-  }
-  .projection-window-label{
-    font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.42px;font-size:9.5px;
-  }
-  .projection-window-date{
-    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--white);
-    padding:4px 7px;border-radius:7px;background:var(--panel-solid);border:1px solid var(--line);
-  }
-  .projection-window-arrow{color:var(--accent-soft);font-weight:800;}
-  .projection-basis{margin-top:6px;color:var(--muted);font-size:10.5px;line-height:1.45;}
-  .projection-basis strong{color:var(--accent-soft);font-weight:700;}
 
   /* stat chips */
   .stat-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px;}
@@ -1281,6 +1235,60 @@
   }
 
 
+  /* ---- changelog / what's new ---- */
+  .changelog-modal{max-width:610px;}
+  .changelog-hero{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    margin:-2px 0 15px;padding:13px 14px;border-radius:12px;
+    background:
+      linear-gradient(135deg,color-mix(in srgb,var(--accent) 10%,var(--panel-solid)),
+      color-mix(in srgb,var(--accent2) 8%,var(--panel-solid)));
+    border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line));
+  }
+  .changelog-version{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent-soft);
+    padding:4px 7px;border-radius:999px;background:var(--panel-raised);border:1px solid var(--line-strong);
+    white-space:nowrap;
+  }
+  .changelog-release-title{
+    font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;
+  }
+  .changelog-release-date{font-size:10.5px;color:var(--muted);}
+  .changelog-list{
+    margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;
+  }
+  .changelog-list li{
+    position:relative;padding:9px 10px 9px 29px;border-radius:9px;
+    background:var(--panel-solid);border:1px solid var(--line);
+    color:var(--muted);font-size:12px;line-height:1.45;
+  }
+  .changelog-list li::before{
+    content:"✦";position:absolute;left:10px;top:9px;color:var(--accent-soft);font-size:10px;
+  }
+  .changelog-history{
+    display:flex;flex-direction:column;gap:10px;margin-top:14px;max-height:290px;overflow:auto;padding-right:3px;
+  }
+  .changelog-entry{
+    padding:11px 12px;border-radius:10px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .changelog-entry-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;
+  }
+  .changelog-entry-title{font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:var(--white);}
+  .changelog-entry-meta{font-size:10px;color:var(--muted);}
+  .changelog-entry ul{margin:0;padding-left:18px;color:var(--muted);font-size:11.5px;line-height:1.5;}
+  .changelog-entry li+li{margin-top:4px;}
+  .changelog-divider{height:1px;background:var(--line);margin:16px 0 13px;}
+  .changelog-all-label{
+    color:var(--muted);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;
+  }
+  .changelog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;}
+  .whats-new-badge{
+    display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;
+    margin-left:2px;border-radius:999px;background:var(--accent);color:#17131f;
+    font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:900;
+  }
+
   /* ---- regular pay / archive / achievements / date-range additions ---- */
   .header-mini-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
   .shelf-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
@@ -1490,6 +1498,7 @@
         <div class="header-controls header-mini-group">
           <span id="saveNote" class="save-note">Saved</span>
           <button class="btn btn-ghost" id="regularPayBtn">Regular pay</button>
+          <button class="btn btn-ghost" id="whatsNewBtn">What’s new <span class="whats-new-badge" id="whatsNewVersionBadge"></span></button>
           <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
           <button class="btn btn-ghost" id="editSetupBtn">Edit wallet</button>
         </div>
@@ -1665,17 +1674,7 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
         </div>
         <div class="projection-copy">
-          <div class="projection-range-controls">
-            <span class="projection-range-label">Earning range</span>
-            <div id="projectionCustomRange" class="projection-custom-range">
-              <input type="date" id="projectionRangeStart" class="projection-range-date" aria-label="Affordability range start date" />
-              <span style="color:var(--muted);font-size:10px;">to</span>
-              <input type="date" id="projectionRangeEnd" class="projection-range-date" aria-label="Affordability range end date" />
-            </div>
-            <span class="projection-range-summary" id="projectionRangeSummary">Loading range…</span>
-          </div>
           <div id="projectionText"></div>
-          <div class="projection-range-help" id="projectionRangeHelp"></div>
           <div class="projection-note">*Might not be 100% accurate.</div>
         </div>
       </div>
@@ -1889,6 +1888,32 @@
     </div>
   </div>
 
+  <!-- WHAT'S NEW / CHANGELOG MODAL -->
+  <div id="changelogBackdrop" class="modal-backdrop hidden">
+    <div class="modal changelog-modal" role="dialog" aria-modal="true" aria-labelledby="changelogModalTitle">
+      <h2 class="modal-title" id="changelogModalTitle">What’s new ✨</h2>
+      <p class="modal-sub">The latest changes to LUMIN.</p>
+
+      <div class="changelog-hero">
+        <div>
+          <div class="changelog-release-title" id="changelogLatestTitle">LUMIN update</div>
+          <div class="changelog-release-date" id="changelogLatestDate"></div>
+        </div>
+        <div class="changelog-version" id="changelogLatestVersion"></div>
+      </div>
+
+      <ul class="changelog-list" id="changelogLatestList"></ul>
+
+      <div class="changelog-divider"></div>
+      <div class="changelog-all-label">Previous updates</div>
+      <div class="changelog-history" id="changelogHistory"></div>
+
+      <div class="changelog-actions">
+        <button type="button" class="btn btn-primary" id="changelogCloseBtn">Got it</button>
+      </div>
+    </div>
+  </div>
+
   <!-- PERSONAL RECORDS MODAL -->
   <div id="recordsModalBackdrop" class="modal-backdrop hidden">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="recordsModalTitle">
@@ -2047,6 +2072,50 @@
 <script>
 (function(){
   const STORAGE_KEY = "tracker-data";
+
+  // ================================================================
+  // LUMIN CHANGELOG — EDIT THIS BLOCK FOR EACH UPDATE
+  // 1. Change APP_VERSION to a new value.
+  // 2. Put the newest release FIRST in CHANGELOG.
+  // 3. Edit title, date and bullet points however you want.
+  //
+  // When APP_VERSION changes, users will automatically see the
+  // What's New popup once on each device.
+  // ================================================================
+  const APP_VERSION = "2026.09.04.1";
+
+  const CHANGELOG = [
+    {
+      version: "2026.09.04.1",
+      title: "Projection cleanup",
+      date: "4 September 2026",
+      changes: [
+        "Removed the manual Earning Range controls from the affordability banner.",
+        "The “At this rate” estimate now automatically uses your full logged earning history again.",
+        "Kept the new loading screen and editable What’s New changelog."
+      ]
+    },
+    {
+      version: "2026.09.04",
+      title: "Smoother, smarter LUMIN",
+      date: "4 September 2026",
+      changes: [
+        "Added a full LUMIN loading screen while signing in and loading cloud saves.",
+        "Affordability estimates can now use an exact earning date range.",
+        "Added regular pay, a purchased-goal archive, price-change history and achievements.",
+        "Added flexible statistics date ranges and the Custom theme editor."
+      ]
+    }
+    // Add older releases underneath this one, for example:
+    // ,{
+    //   version: "2026.09.01",
+    //   title: "Previous update",
+    //   date: "1 September 2026",
+    //   changes: ["Added something cool.", "Fixed something else."]
+    // }
+  ];
+  // ================================================================
+
   const DAY_MS = 24*60*60*1000;
   const MAX_IMAGE_DIM = 480;
   const JPEG_QUALITY = 0.82;
@@ -2078,7 +2147,6 @@
   let regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
   let achievementsUnlocked = null;
   let statsRange = {preset:"30d", start:"", end:""};
-  let projectionRange = {start:"", end:""};
   let currentTheme = "midnight";
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
@@ -2886,7 +2954,6 @@
     regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
     achievementsUnlocked = null;
     statsRange = {preset:"30d", start:"", end:""};
-    projectionRange = {start:"", end:""};
     currentTheme = "midnight";
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
@@ -2907,7 +2974,6 @@
     priorityItemId = parsed.priorityItemId || null;
     regularPay = sanitizeRegularPay(parsed.regularPay);
     statsRange = sanitizeStatsRange(parsed.statsRange);
-    projectionRange = sanitizeProjectionRange(parsed.projectionRange);
     if(Array.isArray(parsed.achievementsUnlocked)) achievementsUnlocked = new Set(parsed.achievementsUnlocked);
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
@@ -2958,38 +3024,6 @@
     return {preset,start:valid(src.start),end:valid(src.end)};
   }
 
-  function sanitizeProjectionRange(value){
-    const src=value&&typeof value==="object"?value:{};
-    const valid=v=>/^\d{4}-\d{2}-\d{2}$/.test(v||"")?v:"";
-    const today=todayStr();
-
-    let start=valid(src.start);
-    let end=valid(src.end);
-
-    // Migrate older preset-style affordability ranges to exact dates.
-    if(!start || !end){
-      const preset=src.preset||"30d";
-      end=end||today;
-
-      if(preset==="7d") start=start||addDaysKey(end,-6);
-      else if(preset==="90d") start=start||addDaysKey(end,-89);
-      else if(preset==="ytd") start=start||new Date().getFullYear()+"-01-01";
-      else if(preset==="all"){
-        const dates=entries.map(en=>en.date).filter(Boolean).sort();
-        start=start||(dates[0]||addDaysKey(end,-29));
-      }else{
-        start=start||addDaysKey(end,-29);
-      }
-    }
-
-    if(start>end){
-      const temp=start;
-      start=end;
-      end=temp;
-    }
-
-    return {start,end};
-  }
 
   function addDaysKey(key,days){
     const d=new Date(key+"T00:00:00");
@@ -3085,24 +3119,6 @@
     return true;
   }
 
-  function getProjectionRangeBounds(){
-    projectionRange=sanitizeProjectionRange(projectionRange);
-    return {start:projectionRange.start,end:projectionRange.end};
-  }
-
-  function projectionDateLabel(value){
-    if(!value) return "";
-    const d=new Date(value+"T00:00:00");
-    return d.toLocaleDateString(undefined,{month:"long",day:"numeric"});
-  }
-
-  function projectionRangeLabel(){
-    const {start,end}=getProjectionRangeBounds();
-    if(!start||!end) return "No date range";
-    if(start===end) return projectionDateLabel(start);
-    return projectionDateLabel(start)+" – "+projectionDateLabel(end);
-  }
-
 
   function getStatsRangeBounds(){
     statsRange=sanitizeStatsRange(statsRange);
@@ -3165,6 +3181,8 @@
     buildThemePicker($("themePickerMain"));
     buildChartViewToggle();
     render();
+    renderChangelog();
+    maybeShowChangelog();
   }
 
   async function applySavePayload(payload){
@@ -3197,7 +3215,6 @@
       regularPay:sanitizeRegularPay(regularPay),
       achievementsUnlocked:Array.from(achievementsUnlocked||[]),
       statsRange:sanitizeStatsRange(statsRange),
-      projectionRange:sanitizeProjectionRange(projectionRange),
       theme:currentTheme,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
@@ -3769,6 +3786,9 @@
       closeCustomThemeModal();
       return;
     }
+    if(!$("changelogBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeChangelog(); return;
+    }
     if(!$("regularPayBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeRegularPayModal(); return;
     }
@@ -4155,63 +4175,25 @@
     return {totalEarned, yearEarned, monthEarned, todayEarned, weekEarned, byMonth, saved, curYear, totalExpenses, todayExpenses, weekExpenses, monthExpenses, yearExpenses};
   }
 
-  function earningPaceForRange(startKey,endKey){
-    if(!entries.length) return 0;
-
-    let end=endKey||todayStr();
-    let start=startKey||"";
-
-    if(!start){
-      const validDates=entries.map(en=>en.date).filter(Boolean).sort();
-      start=validDates[0]||end;
-    }
-
-    if(start>end){
-      const temp=start;
-      start=end;
-      end=temp;
-    }
-
-    const startDate=new Date(start+"T00:00:00");
-    const endDate=new Date(end+"T00:00:00");
-    const days=Math.max(1,Math.round((endDate-startDate)/DAY_MS)+1);
-
-    const earned=entries
-      .filter(en=>en.date>=start&&en.date<=end)
-      .reduce((sum,en)=>sum+entryEarned(en),0);
-
-    return earned/days;
-  }
-
   function computeItemProgress(item, saved){
-    const rate=(wallet&&wallet.hourlyRate)||0;
-    const goal=item?item.goal:0;
-    const progress=goal>0?saved/goal:0;
-    const remaining=Math.max(0,goal-saved);
-    const hoursNeeded=rate>0?remaining/rate:0;
+    const rate = (wallet && wallet.hourlyRate) || 0;
+    const goal = item ? item.goal : 0;
+    const progress = goal>0 ? saved/goal : 0;
+    const remaining = Math.max(0, goal-saved);
+    const hoursNeeded = rate>0 ? remaining/rate : 0;
 
-    let projectedDays=null;
-    let projectionPace=0;
-    let projectionBasis="";
-
-    if(remaining>0&&entries.length>0&&item){
-      const bounds=getProjectionRangeBounds();
-      projectionPace=earningPaceForRange(bounds.start,bounds.end);
-      projectionBasis=projectionRangeLabel();
-
-      if(projectionPace>0){
-        projectedDays=remaining/projectionPace;
-      }
+    let projectedDays = null;
+    if(remaining>0 && entries.length>0 && item){
+      const firstDate = entries.reduce((min,en)=> en.date<min ? en.date : min, entries[0].date);
+      const first = new Date(firstDate+"T00:00:00");
+      const today = new Date(todayStr()+"T00:00:00");
+      const daysElapsed = Math.max(1, Math.round((today-first)/DAY_MS)+1);
+      // Use total earned (not per-item) since the wallet is shared across items.
+      const totalEarned = entries.reduce((s,en)=> s + entryEarned(en), 0);
+      const avgPerDay = totalEarned/daysElapsed;
+      if(avgPerDay>0) projectedDays = remaining/avgPerDay;
     }
-
-    return {
-      progress,
-      remaining,
-      hoursNeeded,
-      projectedDays,
-      projectionPace,
-      projectionBasis
-    };
+    return {progress, remaining, hoursNeeded, projectedDays};
   }
 
   // ---- per-item goal deadline countdown ----
@@ -4619,6 +4601,139 @@
     render();
   }
 
+  const CHANGELOG_SEEN_KEY = "lumin-last-seen-version";
+  let changelogAutoTimer = null;
+
+  function safeChangelogEntries(){
+    return Array.isArray(CHANGELOG)
+      ? CHANGELOG.filter(entry=>entry&&typeof entry==="object")
+      : [];
+  }
+
+  function renderChangelog(){
+    const entries=safeChangelogEntries();
+    const latest=entries.find(entry=>String(entry.version||"")===String(APP_VERSION))||entries[0]||{
+      version:APP_VERSION,
+      title:"LUMIN update",
+      date:"",
+      changes:["A new version of LUMIN is available."]
+    };
+
+    $("changelogLatestTitle").textContent=latest.title||"LUMIN update";
+    $("changelogLatestDate").textContent=latest.date||"";
+    $("changelogLatestVersion").textContent="v"+String(latest.version||APP_VERSION);
+
+    const latestList=$("changelogLatestList");
+    latestList.innerHTML="";
+    const latestChanges=Array.isArray(latest.changes)?latest.changes:[];
+    latestChanges.forEach(change=>{
+      const li=document.createElement("li");
+      li.textContent=String(change);
+      latestList.appendChild(li);
+    });
+
+    if(!latestChanges.length){
+      const li=document.createElement("li");
+      li.textContent="This update does not have any release notes yet.";
+      latestList.appendChild(li);
+    }
+
+    const history=$("changelogHistory");
+    history.innerHTML="";
+    const older=entries.filter(entry=>entry!==latest);
+
+    if(!older.length){
+      history.innerHTML='<div style="color:var(--muted);font-size:11.5px;padding:3px 1px;">No older release notes have been added yet.</div>';
+    }else{
+      older.forEach(entry=>{
+        const card=document.createElement("div");
+        card.className="changelog-entry";
+
+        const head=document.createElement("div");
+        head.className="changelog-entry-head";
+
+        const title=document.createElement("div");
+        title.className="changelog-entry-title";
+        title.textContent=entry.title||"LUMIN update";
+
+        const meta=document.createElement("div");
+        meta.className="changelog-entry-meta";
+        meta.textContent="v"+String(entry.version||"")+" · "+String(entry.date||"");
+
+        head.append(title,meta);
+
+        const ul=document.createElement("ul");
+        (Array.isArray(entry.changes)?entry.changes:[]).forEach(change=>{
+          const li=document.createElement("li");
+          li.textContent=String(change);
+          ul.appendChild(li);
+        });
+
+        card.append(head,ul);
+        history.appendChild(card);
+      });
+    }
+
+    $("whatsNewVersionBadge").textContent=String(APP_VERSION).replace(/^20\d{2}\./,"");
+  }
+
+  function getLastSeenChangelogVersion(){
+    try{return localStorage.getItem(CHANGELOG_SEEN_KEY)||"";}
+    catch(_){return "";}
+  }
+
+  function markCurrentChangelogSeen(){
+    try{localStorage.setItem(CHANGELOG_SEEN_KEY,String(APP_VERSION));}
+    catch(_){}
+  }
+
+  function openChangelog(manual=false){
+    clearTimeout(changelogAutoTimer);
+    changelogAutoTimer=null;
+    renderChangelog();
+    $("changelogBackdrop").classList.remove("hidden");
+    $("changelogBackdrop").dataset.manual=manual?"1":"0";
+    lockBodyScroll();
+  }
+
+  function closeChangelog(){
+    $("changelogBackdrop").classList.add("hidden");
+    markCurrentChangelogSeen();
+    unlockBodyScroll();
+  }
+
+  function maybeShowChangelog(){
+    clearTimeout(changelogAutoTimer);
+
+    if(getLastSeenChangelogVersion()===String(APP_VERSION)){
+      renderChangelog();
+      return;
+    }
+
+    changelogAutoTimer=setTimeout(()=>{
+      const authGate=$("authGate");
+      const loading=$("appLoadingScreen");
+
+      // Wait until login/cloud loading has finished so the changelog
+      // appears on top of a fully ready LUMIN screen.
+      if(
+        (authGate&&!authGate.classList.contains("hidden")) ||
+        (loading&&!loading.classList.contains("hidden"))
+      ){
+        maybeShowChangelog();
+        return;
+      }
+
+      openChangelog(false);
+    },700);
+  }
+
+  $("whatsNewBtn").addEventListener("click",()=>openChangelog(true));
+  $("changelogCloseBtn").addEventListener("click",closeChangelog);
+  $("changelogBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="changelogBackdrop") closeChangelog();
+  });
+
   function renderRegularPayStatus(){
     regularPay=sanitizeRegularPay(regularPay);
     const status=$("regularPayStatus");
@@ -4741,18 +4856,6 @@
   $("achievementsCloseBtn").addEventListener("click",closeAchievements);
   $("achievementsBackdrop").addEventListener("click",e=>{if(e.target.id==="achievementsBackdrop")closeAchievements();});
 
-  function renderProjectionRangeControls(){
-    projectionRange=sanitizeProjectionRange(projectionRange);
-
-    const today=todayStr();
-    $("projectionRangeStart").value=projectionRange.start;
-    $("projectionRangeEnd").value=projectionRange.end;
-    $("projectionRangeStart").max=today;
-    $("projectionRangeEnd").max=today;
-
-    $("projectionRangeSummary").textContent="From "+projectionRangeLabel();
-    $("projectionRangeHelp").textContent="Only earnings logged from "+projectionRangeLabel()+" are used for the affordability estimate.";
-  }
 
   function renderRangeControls(){
     statsRange=sanitizeStatsRange(statsRange);
@@ -4770,21 +4873,6 @@
     $("rangeNet").classList.toggle("negative",rs.net<0);
   }
 
-  ["projectionRangeStart","projectionRangeEnd"].forEach(id=>{
-    $(id).addEventListener("change",async()=>{
-      const today=todayStr();
-      const start=$("projectionRangeStart").value;
-      const end=$("projectionRangeEnd").value;
-
-      projectionRange=sanitizeProjectionRange({
-        start:start||addDaysKey(end||today,-29),
-        end:end||today
-      });
-
-      await persist();
-      render();
-    });
-  });
 
 
   $("statsRangeSelect").addEventListener("change",async e=>{
@@ -4825,7 +4913,6 @@
     const unlockedCount=achievementsUnlocked?achievementsUnlocked.size:0;
     $("achievementChipValue").textContent="🏅 "+unlockedCount+" / "+ACHIEVEMENTS.length;
     renderRangeControls();
-    renderProjectionRangeControls();
     if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
@@ -4890,9 +4977,7 @@
     if(activePurchased) purchasedBadge.textContent = "✓ Purchased " + formatRecordDate(activeItem.purchasedAt);
 
     // fan gauge (driven by active item)
-    const {
-      progress, remaining, hoursNeeded, projectedDays, projectionPace, projectionBasis
-    } = computeItemProgress(activeItem, stats.saved);
+    const { progress, remaining, hoursNeeded, projectedDays } = computeItemProgress(activeItem, stats.saved);
     const isActivePurchased = !!(activeItem && activeItem.purchasedAt);
     const pct = activeItem ? (isActivePurchased ? 1 : Math.max(0, Math.min(1, progress))) : 0;
     const R = 122;
@@ -4927,8 +5012,7 @@
           '<span class="projection-lead">.</span>'+hoursPart;
       }else{
         $("projectionText").innerHTML =
-          '<span class="projection-lead">No earnings were logged in '+escapeHtml(projectionBasis)+
-          '. Pick a different calculation range or log some earnings to get an estimate.</span>'+hoursPart;
+          '<span class="projection-lead">Log a few days of earnings to see a projected date.</span>'+hoursPart;
       }
     }else{
       $("projectionSection").classList.add("hidden");
