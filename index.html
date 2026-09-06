@@ -647,6 +647,187 @@
   .projection-lead{font-size:14px;color:var(--white);line-height:1.5;}
   .projection-time{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;color:var(--accent-soft);}
 
+  /* ---- dashboard / settings navigation ---- */
+  .main-tabs{
+    display:inline-flex;align-items:center;gap:3px;padding:4px;border-radius:11px;
+    background:var(--panel-solid);border:1px solid var(--line-strong);
+  }
+  .main-tab-btn{
+    border:0;background:transparent;color:var(--muted);cursor:pointer;
+    font-family:'Inter',sans-serif;font-size:12px;font-weight:700;
+    padding:8px 13px;border-radius:8px;transition:background .16s ease,color .16s ease,transform .16s ease;
+  }
+  .main-tab-btn:hover{color:var(--white);}
+  .main-tab-btn.active{
+    background:var(--accent);color:#17131f;
+    box-shadow:0 5px 16px color-mix(in srgb,var(--accent) 13%,transparent);
+  }
+  .main-tab-btn:active{transform:scale(.98);}
+  .settings-page{padding-bottom:8px;}
+  .settings-head{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .settings-title{
+    margin:0;font-family:'Sora',sans-serif;font-size:20px;font-weight:750;color:var(--white);
+  }
+  .settings-subtitle{margin:5px 0 0;color:var(--muted);font-size:12.5px;line-height:1.5;}
+  .settings-grid{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+  }
+  .settings-card{
+    padding:17px;border-radius:14px;background:var(--panel);border:1px solid var(--line);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  }
+  .settings-card.wide{grid-column:1/-1;}
+  .settings-card-title{
+    display:flex;align-items:center;gap:8px;margin-bottom:5px;
+    font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;color:var(--white);
+  }
+  .settings-card-title .dash{width:13px;height:2px;border-radius:2px;background:var(--accent);}
+  .settings-card-desc{margin:0 0 13px;color:var(--muted);font-size:11.5px;line-height:1.5;}
+  .settings-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .settings-actions .btn{justify-content:center;}
+  .settings-theme-picker{
+    display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px;
+    border-radius:11px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .settings-theme-picker .swatch{width:28px;height:28px;}
+  .settings-cloud-wrap{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:10px 11px;border-radius:10px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .settings-cloud-wrap .cloud-status{margin:0;}
+  .dashboard-chart-first{margin-top:2px;}
+  @media(max-width:720px){
+    .settings-grid{grid-template-columns:1fr;}
+    .settings-card.wide{grid-column:auto;}
+    .main-tabs{width:100%;}
+    .main-tab-btn{flex:1;}
+  }
+
+  /* ---- LUMIN progression / gamification ---- */
+  .game-strip{
+    display:grid;grid-template-columns:auto minmax(180px,1fr) auto auto;gap:14px;align-items:center;
+    padding:14px 16px;border-radius:14px;
+    background:
+      linear-gradient(135deg,
+        color-mix(in srgb,var(--accent) 8%,var(--panel)),
+        color-mix(in srgb,var(--accent2) 6%,var(--panel)));
+    border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line));
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  }
+  .game-level-orb{
+    width:56px;height:56px;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:
+      linear-gradient(145deg,color-mix(in srgb,var(--accent) 24%,var(--panel-raised)),
+      color-mix(in srgb,var(--accent2) 18%,var(--panel-solid)));
+    border:1px solid color-mix(in srgb,var(--accent-soft) 28%,var(--line-strong));
+    box-shadow:0 8px 26px rgba(0,0,0,.16);
+  }
+  .game-level-small{
+    font-size:8px;font-weight:800;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;
+  }
+  .game-level-number{
+    font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:var(--accent-soft);line-height:1.05;
+  }
+  .game-progress-copy{min-width:0;}
+  .game-rank-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px;}
+  .game-rank{
+    font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--white);
+  }
+  .game-total-xp{
+    font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);
+  }
+  .game-xp-track{
+    width:100%;height:8px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.05);
+  }
+  .game-xp-fill{
+    height:100%;width:0;border-radius:inherit;
+    background:linear-gradient(90deg,var(--accent),var(--accent-soft),var(--accent2));
+    box-shadow:0 0 12px color-mix(in srgb,var(--accent) 25%,transparent);
+    transition:width .55s cubic-bezier(.2,.8,.2,1);
+  }
+  .game-xp-caption{margin-top:5px;font-size:9.5px;color:var(--muted);}
+  .game-streak{
+    min-width:92px;padding:9px 11px;border-radius:11px;background:var(--panel-solid);border:1px solid var(--line);
+    text-align:center;
+  }
+  .game-streak-value{
+    font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:var(--white);
+  }
+  .game-streak-label{font-size:9px;color:var(--muted);margin-top:2px;}
+  .game-missions-btn{
+    min-width:118px;justify-content:center;position:relative;
+  }
+  .game-mission-dot{
+    position:absolute;right:6px;top:6px;width:7px;height:7px;border-radius:50%;
+    background:var(--positive);box-shadow:0 0 9px color-mix(in srgb,var(--positive) 65%,transparent);
+  }
+  .missions-modal{max-width:640px;}
+  .missions-header-stats{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:13px;
+  }
+  .missions-mini{
+    padding:9px 10px;border-radius:10px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .missions-mini-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.45px;margin-bottom:4px;}
+  .missions-mini-value{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--accent-soft);}
+  .missions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+  .mission-card{
+    padding:12px;border-radius:11px;background:var(--panel-solid);border:1px solid var(--line);
+    display:flex;flex-direction:column;gap:8px;min-width:0;
+  }
+  .mission-card.complete{
+    border-color:color-mix(in srgb,var(--positive) 36%,var(--line-strong));
+    background:color-mix(in srgb,var(--positive) 5%,var(--panel-solid));
+  }
+  .mission-card.claimed{opacity:.72;}
+  .mission-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+  .mission-icon{
+    width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:16px;
+    background:var(--panel-raised);border:1px solid var(--line);
+  }
+  .mission-reward{
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--accent-soft);
+    padding:3px 6px;border-radius:999px;background:color-mix(in srgb,var(--accent) 7%,transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));
+  }
+  .mission-name{font-family:'Sora',sans-serif;font-weight:700;font-size:12.5px;color:var(--white);}
+  .mission-desc{font-size:10.5px;color:var(--muted);line-height:1.4;min-height:29px;}
+  .mission-progress-row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:9.5px;color:var(--muted);}
+  .mission-progress-track{height:6px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.07);}
+  .mission-progress-fill{
+    height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--positive));
+    transition:width .4s ease;
+  }
+  .mission-claim{width:100%;justify-content:center;margin-top:auto;}
+  .mission-claimed{
+    padding:7px;text-align:center;font-size:10px;font-weight:700;color:var(--positive);
+    border-radius:8px;background:color-mix(in srgb,var(--positive) 7%,transparent);
+  }
+  .level-up-toast{
+    min-width:min(330px,calc(100vw - 32px));
+    border-color:color-mix(in srgb,var(--accent) 36%,var(--line-strong)) !important;
+    background:
+      linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,var(--panel-raised)),
+      color-mix(in srgb,var(--accent2) 9%,var(--panel-raised))) !important;
+  }
+  .level-up-toast .milestone-badge{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#15121c;font-weight:900;
+  }
+  @media(max-width:720px){
+    .game-strip{grid-template-columns:auto 1fr;gap:11px;}
+    .game-streak,.game-missions-btn{min-width:0;width:100%;}
+    .game-streak{grid-column:1/2;}
+    .game-missions-btn{grid-column:2/3;}
+    .missions-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:430px){
+    .missions-header-stats{grid-template-columns:1fr;}
+  }
+
   /* stat chips */
   .stat-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px;}
   .chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;}
@@ -1494,22 +1675,50 @@
         <p class="subtitle">Track earnings and expenses, grow your fund, and see how close you are to every item on your list.</p>
       </div>
       <div class="header-right">
-        <div class="theme-picker" id="themePickerMain"></div>
-        <div class="header-controls header-mini-group">
-          <span id="saveNote" class="save-note">Saved</span>
-          <button class="btn btn-ghost" id="regularPayBtn">Regular pay</button>
-          <button class="btn btn-ghost" id="whatsNewBtn">What’s new <span class="whats-new-badge" id="whatsNewVersionBadge"></span></button>
-          <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
-          <button class="btn btn-ghost" id="editSetupBtn">Edit wallet</button>
+        <div class="main-tabs" role="tablist" aria-label="LUMIN pages">
+          <button type="button" class="main-tab-btn active" id="dashboardTabBtn" role="tab" aria-selected="true" aria-controls="dashboardTabPanel">Dashboard</button>
+          <button type="button" class="main-tab-btn" id="settingsTabBtn" role="tab" aria-selected="false" aria-controls="settingsTabPanel">Settings</button>
         </div>
-        <div class="cloud-status" id="cloudStatus">
-          <span class="cloud-dot"></span>
-          <span class="cloud-text" id="cloudStatusText">Connecting…</span>
-          <button type="button" class="cloud-action hidden" id="cloudSignInBtn">Sign in</button>
-          <button type="button" class="cloud-action hidden" id="cloudLogoutBtn">Log out</button>
-        </div>
+        <span id="saveNote" class="save-note">Saved</span>
       </div>
     </div>
+
+    <div id="dashboardTabPanel" role="tabpanel" aria-labelledby="dashboardTabBtn">
+    <!-- month bars -->
+    <div class="section panel dashboard-chart-first">
+      <div class="panel-header-row">
+        <div class="panel-label"><span class="dash"></span><span id="barsLabel">Earnings</span></div>
+        <div class="segmented" id="chartViewToggle">
+          <button data-view="day">Day</button>
+          <button data-view="week">Week</button>
+          <button data-view="month">Month</button>
+        </div>
+      </div>
+      <div class="range-toolbar">
+        <label style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--muted);">Date range
+          <select id="statsRangeSelect" aria-label="Statistics date range">
+            <option value="7d">Last 7 days</option>
+            <option value="30d">Last 30 days</option>
+            <option value="90d">Last 90 days</option>
+            <option value="ytd">This year</option>
+            <option value="all">All time</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <div class="custom-range-fields hidden" id="customRangeFields">
+          <input type="date" id="statsRangeStart" aria-label="Custom range start date" />
+          <span style="color:var(--muted);font-size:11px;">to</span>
+          <input type="date" id="statsRangeEnd" aria-label="Custom range end date" />
+        </div>
+      </div>
+      <div class="range-summary">
+        <div class="range-summary-card"><div class="range-summary-label">Earned in range</div><div class="range-summary-value positive" id="rangeEarned">$0</div></div>
+        <div class="range-summary-card"><div class="range-summary-label">Spent in range</div><div class="range-summary-value negative" id="rangeSpent">$0</div></div>
+        <div class="range-summary-card"><div class="range-summary-label">Net change</div><div class="range-summary-value" id="rangeNet">$0</div></div>
+      </div>
+      <div class="bars-row" id="barsRow"></div>
+    </div>
+
 
     <!-- items shelf -->
     <div class="section panel">
@@ -1680,6 +1889,32 @@
       </div>
     </div>
 
+    <!-- progression / game layer -->
+    <div class="section game-strip" id="gameStrip">
+      <div class="game-level-orb" aria-label="LUMIN level">
+        <div class="game-level-small">Level</div>
+        <div class="game-level-number" id="gameLevel">1</div>
+      </div>
+      <div class="game-progress-copy">
+        <div class="game-rank-row">
+          <span class="game-rank" id="gameRank">Starter</span>
+          <span class="game-total-xp" id="gameTotalXp">0 XP total</span>
+        </div>
+        <div class="game-xp-track" aria-label="XP progress to next level">
+          <div class="game-xp-fill" id="gameXpFill"></div>
+        </div>
+        <div class="game-xp-caption" id="gameXpCaption">0 / 250 XP to Level 2</div>
+      </div>
+      <div class="game-streak">
+        <div class="game-streak-value" id="gameStreak">🔥 0</div>
+        <div class="game-streak-label">day earning streak</div>
+      </div>
+      <button type="button" class="btn btn-secondary game-missions-btn" id="missionsBtn">
+        Missions <span id="missionsBtnCount">0 / 4</span>
+        <span class="game-mission-dot hidden" id="missionReadyDot"></span>
+      </button>
+    </div>
+
     <!-- stat chips -->
     <div class="section stat-chips">
       <div class="chip"><div class="chip-label">Today</div><div class="chip-value" id="statToday">$0</div></div>
@@ -1691,46 +1926,62 @@
       <button type="button" class="chip records-chip" id="achievementsBtn"><div class="chip-label">Achievements</div><div class="chip-value" id="achievementChipValue">🏅 0 / 8</div></button>
     </div>
 
-    <!-- month bars -->
-    <div class="section panel">
-      <div class="panel-header-row">
-        <div class="panel-label"><span class="dash"></span><span id="barsLabel">Earnings</span></div>
-        <div class="segmented" id="chartViewToggle">
-          <button data-view="day">Day</button>
-          <button data-view="week">Week</button>
-          <button data-view="month">Month</button>
-        </div>
-      </div>
-      <div class="range-toolbar">
-        <label style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--muted);">Date range
-          <select id="statsRangeSelect" aria-label="Statistics date range">
-            <option value="7d">Last 7 days</option>
-            <option value="30d">Last 30 days</option>
-            <option value="90d">Last 90 days</option>
-            <option value="ytd">This year</option>
-            <option value="all">All time</option>
-            <option value="custom">Custom</option>
-          </select>
-        </label>
-        <div class="custom-range-fields hidden" id="customRangeFields">
-          <input type="date" id="statsRangeStart" aria-label="Custom range start date" />
-          <span style="color:var(--muted);font-size:11px;">to</span>
-          <input type="date" id="statsRangeEnd" aria-label="Custom range end date" />
-        </div>
-      </div>
-      <div class="range-summary">
-        <div class="range-summary-card"><div class="range-summary-label">Earned in range</div><div class="range-summary-value positive" id="rangeEarned">$0</div></div>
-        <div class="range-summary-card"><div class="range-summary-label">Spent in range</div><div class="range-summary-value negative" id="rangeSpent">$0</div></div>
-        <div class="range-summary-card"><div class="range-summary-label">Net change</div><div class="range-summary-value" id="rangeNet">$0</div></div>
-      </div>
-      <div class="bars-row" id="barsRow"></div>
-    </div>
 
     <!-- ledger -->
     <div class="section panel">
       <div class="panel-label"><span class="dash"></span><span id="ledgerLabel">Activity</span></div>
       <div id="ledgerEmpty" class="empty-state hidden">No activity logged yet — add earnings or an expense above to get started.</div>
       <div id="ledgerList" class="ledger-list"></div>
+    </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="settingsTabPanel" class="settings-page hidden" role="tabpanel" aria-labelledby="settingsTabBtn">
+      <div class="section settings-head">
+        <div>
+          <h2 class="settings-title">Settings</h2>
+          <p class="settings-subtitle">Appearance, wallet setup, automation, cloud account and LUMIN maintenance live here.</p>
+        </div>
+      </div>
+
+      <div class="section settings-grid">
+        <section class="settings-card wide">
+          <div class="settings-card-title"><span class="dash"></span>Appearance</div>
+          <p class="settings-card-desc">Choose a LUMIN theme or open Custom to build your own solid colour or 2–8 colour gradient.</p>
+          <div class="theme-picker settings-theme-picker" id="themePickerMain"></div>
+        </section>
+
+        <section class="settings-card">
+          <div class="settings-card-title"><span class="dash"></span>Wallet & pay</div>
+          <p class="settings-card-desc">Change your current balance, hourly rate, or configure automatic regular pay.</p>
+          <div class="settings-actions">
+            <button class="btn btn-secondary" id="editSetupBtn">Edit wallet</button>
+            <button class="btn btn-ghost" id="regularPayBtn">Regular pay</button>
+          </div>
+        </section>
+
+        <section class="settings-card">
+          <div class="settings-card-title"><span class="dash"></span>Data & updates</div>
+          <p class="settings-card-desc">Import an older device save or reopen the latest LUMIN release notes.</p>
+          <div class="settings-actions">
+            <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
+            <button class="btn btn-ghost" id="whatsNewBtn">What’s new <span class="whats-new-badge" id="whatsNewVersionBadge"></span></button>
+          </div>
+        </section>
+
+        <section class="settings-card wide">
+          <div class="settings-card-title"><span class="dash"></span>Account & cloud</div>
+          <p class="settings-card-desc">Your cloud status and account controls. Cloud saves keep LUMIN synced between supported devices.</p>
+          <div class="settings-cloud-wrap">
+            <div class="cloud-status" id="cloudStatus">
+              <span class="cloud-dot"></span>
+              <span class="cloud-text" id="cloudStatusText">Connecting…</span>
+              <button type="button" class="cloud-action hidden" id="cloudSignInBtn">Sign in</button>
+              <button type="button" class="cloud-action hidden" id="cloudLogoutBtn">Log out</button>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
@@ -1872,6 +2123,26 @@
       <div id="archiveGrid" class="archive-grid"></div>
       <div style="display:flex;justify-content:flex-end;margin-top:15px;">
         <button type="button" class="btn btn-ghost" id="archiveCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSIONS MODAL -->
+  <div id="missionsBackdrop" class="modal-backdrop hidden">
+    <div class="modal missions-modal" role="dialog" aria-modal="true" aria-labelledby="missionsTitle">
+      <h2 class="modal-title" id="missionsTitle">Missions ⚡</h2>
+      <p class="modal-sub">Small goals that reward XP. Daily missions reset each day; weekly missions reset every Monday.</p>
+
+      <div class="missions-header-stats">
+        <div class="missions-mini"><div class="missions-mini-label">Level</div><div class="missions-mini-value" id="missionsLevel">1</div></div>
+        <div class="missions-mini"><div class="missions-mini-label">Total XP</div><div class="missions-mini-value" id="missionsXp">0 XP</div></div>
+        <div class="missions-mini"><div class="missions-mini-label">Streak</div><div class="missions-mini-value" id="missionsStreak">🔥 0 days</div></div>
+      </div>
+
+      <div class="missions-grid" id="missionsGrid"></div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:15px;">
+        <button type="button" class="btn btn-ghost" id="missionsCloseBtn">Close</button>
       </div>
     </div>
   </div>
@@ -2082,9 +2353,30 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.05";
+  const APP_VERSION = "2026.09.06.1";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.06.1",
+      title: "Dashboard cleanup",
+      date: "6 September 2026",
+      changes: [
+        "Moved themes, wallet editing, regular pay, importing, cloud controls and What’s New into a dedicated Settings tab.",
+        "The earnings graph is now the first section on the Dashboard.",
+        "Kept Missions, achievements and progression on the Dashboard so the gamified layer stays easy to reach."
+      ]
+    },
+    {
+      version: "2026.09.06",
+      title: "Level up your savings",
+      date: "6 September 2026",
+      changes: [
+        "Added XP, levels and rank progression driven by real savings activity.",
+        "Added daily and weekly Missions with claimable XP rewards.",
+        "Added an earning streak that tracks consecutive active days.",
+        "Added level-up celebrations while keeping the dashboard compact."
+      ]
+    },
     {
       version: "2026.09.05",
       title: "Future payments",
@@ -2156,6 +2448,9 @@
   let regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
   let achievementsUnlocked = null;
   let statsRange = {preset:"30d", start:"", end:""};
+  let gameBonusXp = 0;
+  let missionClaims = null;
+  let lastNotifiedLevel = null;
   let currentTheme = "midnight";
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
@@ -2176,6 +2471,9 @@
     {id:"three-purchases", icon:"🏆", name:"Collector", desc:"Purchase three goals.", test:s=>items.filter(i=>i.purchasedAt).length>=3},
     {id:"auto-pay", icon:"📆", name:"Clockwork", desc:"Have regular pay automatically logged.", test:s=>entries.some(e=>e.source==="regular-pay")}
   ];
+
+  const GAME_LEVEL_BASE_XP = 250;
+  const GAME_LEVEL_STEP_XP = 100;
 
   const $ = (id) => document.getElementById(id);
   const dateStr = (d) => {
@@ -2963,6 +3261,9 @@
     regularPay = {enabled:false, amount:0, frequency:"weekly", nextDate:"", label:"Regular pay"};
     achievementsUnlocked = null;
     statsRange = {preset:"30d", start:"", end:""};
+    gameBonusXp = 0;
+    missionClaims = null;
+    lastNotifiedLevel = null;
     currentTheme = "midnight";
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
@@ -2983,6 +3284,9 @@
     priorityItemId = parsed.priorityItemId || null;
     regularPay = sanitizeRegularPay(parsed.regularPay);
     statsRange = sanitizeStatsRange(parsed.statsRange);
+    gameBonusXp = Math.max(0,Number(parsed.gameBonusXp)||0);
+    missionClaims = new Set(Array.isArray(parsed.missionClaims)?parsed.missionClaims:[]);
+    lastNotifiedLevel = Number.isFinite(Number(parsed.lastNotifiedLevel)) ? Math.max(1,Math.floor(Number(parsed.lastNotifiedLevel))) : null;
     if(Array.isArray(parsed.achievementsUnlocked)) achievementsUnlocked = new Set(parsed.achievementsUnlocked);
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
@@ -3129,6 +3433,298 @@
   }
 
 
+  function gameRankForLevel(level){
+    if(level>=20) return "LUMIN Legend";
+    if(level>=15) return "Goal Master";
+    if(level>=11) return "Fund Hunter";
+    if(level>=8) return "Momentum";
+    if(level>=5) return "Grinder";
+    if(level>=3) return "Builder";
+    return "Starter";
+  }
+
+  function gameLevelInfo(totalXp){
+    let remaining=Math.max(0,Math.floor(Number(totalXp)||0));
+    let level=1;
+    let need=GAME_LEVEL_BASE_XP;
+
+    while(remaining>=need && level<100){
+      remaining-=need;
+      level++;
+      need=GAME_LEVEL_BASE_XP+(level-1)*GAME_LEVEL_STEP_XP;
+    }
+
+    return {
+      level,
+      xpInto:remaining,
+      xpNeeded:need,
+      progress:need>0?Math.max(0,Math.min(1,remaining/need)):1
+    };
+  }
+
+  function computeEarningStreak(){
+    const today=todayStr();
+    const dates=new Set(
+      entries
+        .filter(en=>en.date&&en.date<=today&&entryEarned(en)>0)
+        .map(en=>en.date)
+    );
+
+    let cursor=today;
+    if(!dates.has(cursor)){
+      const yesterday=addDaysKey(today,-1);
+      if(!dates.has(yesterday)) return 0;
+      cursor=yesterday;
+    }
+
+    let streak=0;
+    while(dates.has(cursor) && streak<5000){
+      streak++;
+      cursor=addDaysKey(cursor,-1);
+    }
+    return streak;
+  }
+
+  function computeGameProgress(){
+    const today=todayStr();
+    const eligible=entries.filter(en=>en.date&&en.date<=today&&entryEarned(en)>0);
+    const totalEarned=eligible.reduce((sum,en)=>sum+entryEarned(en),0);
+    const distinctDays=new Set(eligible.map(en=>en.date)).size;
+    const purchases=items.filter(item=>item.purchasedAt&&item.purchasedAt<=today).length;
+    const achievements=(achievementsUnlocked||new Set()).size;
+
+    // Real activity builds the base XP. Mission claims add permanent bonus XP.
+    const baseXp =
+      Math.floor(totalEarned*0.35) +
+      distinctDays*20 +
+      purchases*150 +
+      achievements*40;
+
+    const totalXp=Math.max(0,baseXp+Math.max(0,Number(gameBonusXp)||0));
+    const levelInfo=gameLevelInfo(totalXp);
+
+    return {
+      totalXp,
+      streak:computeEarningStreak(),
+      totalEarned,
+      distinctDays,
+      purchases,
+      achievements,
+      ...levelInfo,
+      rank:gameRankForLevel(levelInfo.level)
+    };
+  }
+
+  function currentGameMissions(){
+    const today=todayStr();
+    const weekStart=startOfWeekKey(today);
+    const weekEnd=addDaysKey(weekStart,6);
+
+    const todayEarned=entries
+      .filter(en=>en.date===today)
+      .reduce((sum,en)=>sum+entryEarned(en),0);
+
+    const weekEntries=entries.filter(en=>en.date>=weekStart&&en.date<=today&&entryEarned(en)>0);
+    const weekEarned=weekEntries.reduce((sum,en)=>sum+entryEarned(en),0);
+    const weekDays=new Set(weekEntries.map(en=>en.date)).size;
+
+    const clamp=(v,max)=>Math.max(0,Math.min(max,v));
+
+    return [
+      {
+        id:"daily:"+today+":log",
+        icon:"✦",
+        name:"Clock in",
+        desc:"Log any earnings today.",
+        reward:30,
+        value:todayEarned>0?1:0,
+        target:1,
+        progressText:todayEarned>0?"Done":"0 / 1",
+        complete:todayEarned>0
+      },
+      {
+        id:"daily:"+today+":50",
+        icon:"⚡",
+        name:"Quick stack",
+        desc:"Earn $50 today.",
+        reward:50,
+        value:clamp(todayEarned,50),
+        target:50,
+        progressText:fmtMoney(Math.min(todayEarned,50),0)+" / $50",
+        complete:todayEarned>=50
+      },
+      {
+        id:"week:"+weekStart+":200",
+        icon:"📈",
+        name:"Weekly push",
+        desc:"Earn $200 this week.",
+        reward:100,
+        value:clamp(weekEarned,200),
+        target:200,
+        progressText:fmtMoney(Math.min(weekEarned,200),0)+" / $200",
+        complete:weekEarned>=200
+      },
+      {
+        id:"week:"+weekStart+":3days",
+        icon:"🔥",
+        name:"Keep the chain",
+        desc:"Log earnings on 3 different days this week.",
+        reward:80,
+        value:clamp(weekDays,3),
+        target:3,
+        progressText:Math.min(weekDays,3)+" / 3 days",
+        complete:weekDays>=3
+      }
+    ];
+  }
+
+  function seedGameAfterLoad(){
+    if(missionClaims===null) missionClaims=new Set();
+    if(lastNotifiedLevel===null){
+      lastNotifiedLevel=computeGameProgress().level;
+    }
+  }
+
+  function showLevelUpToast(level){
+    const progress=computeGameProgress();
+    const stack=ensureMilestoneToastStack();
+    const toast=document.createElement("div");
+    toast.className="milestone-toast level-up-toast";
+
+    const badge=document.createElement("div");
+    badge.className="milestone-badge";
+    badge.textContent=String(level);
+
+    const copy=document.createElement("div");
+    const title=document.createElement("div");
+    title.className="milestone-title";
+    title.textContent="Level up!";
+
+    const detail=document.createElement("div");
+    detail.className="milestone-copy";
+    detail.textContent="Level "+level+" · "+progress.rank;
+
+    copy.append(title,detail);
+    toast.append(badge,copy);
+    stack.appendChild(toast);
+    fireConfetti(85);
+
+    setTimeout(()=>toast.remove(),4700);
+    setTimeout(()=>{if(stack&&!stack.children.length)stack.remove();},4800);
+  }
+
+  function checkGameLevelUp(announce=true){
+    const level=computeGameProgress().level;
+
+    if(lastNotifiedLevel===null){
+      lastNotifiedLevel=level;
+      return false;
+    }
+
+    if(level>lastNotifiedLevel){
+      lastNotifiedLevel=level;
+      if(announce) showLevelUpToast(level);
+      persist();
+      return true;
+    }
+    return false;
+  }
+
+  function renderGameStrip(){
+    const progress=computeGameProgress();
+    const missions=currentGameMissions();
+    const claims=missionClaims||new Set();
+    const claimable=missions.filter(m=>m.complete&&!claims.has(m.id)).length;
+    const completed=missions.filter(m=>m.complete||claims.has(m.id)).length;
+
+    $("gameLevel").textContent=String(progress.level);
+    $("gameRank").textContent=progress.rank;
+    $("gameTotalXp").textContent=progress.totalXp.toLocaleString()+" XP total";
+    $("gameXpFill").style.width=(progress.progress*100).toFixed(1)+"%";
+    $("gameXpCaption").textContent=
+      progress.xpInto.toLocaleString()+" / "+progress.xpNeeded.toLocaleString()+
+      " XP to Level "+(progress.level+1);
+    $("gameStreak").textContent="🔥 "+progress.streak;
+    $("missionsBtnCount").textContent=completed+" / "+missions.length;
+    $("missionReadyDot").classList.toggle("hidden",claimable===0);
+  }
+
+  function renderMissions(){
+    const progress=computeGameProgress();
+    const missions=currentGameMissions();
+    const claims=missionClaims||new Set();
+
+    $("missionsLevel").textContent=progress.level+" · "+progress.rank;
+    $("missionsXp").textContent=progress.totalXp.toLocaleString()+" XP";
+    $("missionsStreak").textContent="🔥 "+progress.streak+" "+(progress.streak===1?"day":"days");
+
+    const grid=$("missionsGrid");
+    grid.innerHTML="";
+
+    missions.forEach(mission=>{
+      const claimed=claims.has(mission.id);
+      const percent=mission.target>0?Math.max(0,Math.min(100,(mission.value/mission.target)*100)):0;
+
+      const card=document.createElement("div");
+      card.className="mission-card"+(mission.complete?" complete":"")+(claimed?" claimed":"");
+
+      card.innerHTML=`
+        <div class="mission-top">
+          <div class="mission-icon">${mission.icon}</div>
+          <div class="mission-reward">+${mission.reward} XP</div>
+        </div>
+        <div class="mission-name">${escapeHtml(mission.name)}</div>
+        <div class="mission-desc">${escapeHtml(mission.desc)}</div>
+        <div class="mission-progress-row"><span>Progress</span><strong>${escapeHtml(mission.progressText)}</strong></div>
+        <div class="mission-progress-track"><div class="mission-progress-fill" style="width:${percent.toFixed(1)}%"></div></div>
+      `;
+
+      if(claimed){
+        const done=document.createElement("div");
+        done.className="mission-claimed";
+        done.textContent="✓ XP claimed";
+        card.appendChild(done);
+      }else{
+        const claim=document.createElement("button");
+        claim.type="button";
+        claim.className="btn "+(mission.complete?"btn-primary":"btn-ghost")+" mission-claim";
+        claim.textContent=mission.complete?"Claim +"+mission.reward+" XP":"In progress";
+        claim.disabled=!mission.complete;
+        if(!mission.complete) claim.style.opacity=".55";
+
+        claim.addEventListener("click",async()=>{
+          if(!mission.complete||missionClaims.has(mission.id)) return;
+          missionClaims.add(mission.id);
+          gameBonusXp+=mission.reward;
+          await persist();
+          renderMissions();
+          renderGameStrip();
+          checkGameLevelUp(true);
+        });
+        card.appendChild(claim);
+      }
+
+      grid.appendChild(card);
+    });
+  }
+
+  function openMissions(){
+    renderMissions();
+    $("missionsBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+
+  function closeMissions(){
+    $("missionsBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+
+  $("missionsBtn").addEventListener("click",openMissions);
+  $("missionsCloseBtn").addEventListener("click",closeMissions);
+  $("missionsBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="missionsBackdrop") closeMissions();
+  });
+
   function getStatsRangeBounds(){
     statsRange=sanitizeStatsRange(statsRange);
     const today=todayStr();
@@ -3189,6 +3785,7 @@
     buildThemePicker($("themePickerSetup"));
     buildThemePicker($("themePickerMain"));
     buildChartViewToggle();
+    setMainTab("dashboard");
     render();
     renderChangelog();
     maybeShowChangelog();
@@ -3203,6 +3800,7 @@
     seedCelebrationsAfterLoad();
     seedAchievementsAfterLoad();
     const regularAdded = processRegularPayDue();
+    seedGameAfterLoad();
     finishLoadedState();
     if(regularAdded>0) await persist();
   }
@@ -3224,6 +3822,9 @@
       regularPay:sanitizeRegularPay(regularPay),
       achievementsUnlocked:Array.from(achievementsUnlocked||[]),
       statsRange:sanitizeStatsRange(statsRange),
+      gameBonusXp:Math.max(0,Number(gameBonusXp)||0),
+      missionClaims:Array.from(missionClaims||[]),
+      lastNotifiedLevel,
       theme:currentTheme,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
@@ -3803,6 +4404,9 @@
     }
     if(!$("archiveBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeArchive(); return;
+    }
+    if(!$("missionsBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeMissions(); return;
     }
     if(!$("achievementsBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeAchievements(); return;
@@ -4901,6 +5505,28 @@
     });
   });
 
+  let currentMainTab = "dashboard";
+
+  function setMainTab(tab, focus=false){
+    currentMainTab = tab==="settings" ? "settings" : "dashboard";
+    const dashboard = currentMainTab==="dashboard";
+
+    $("dashboardTabPanel").classList.toggle("hidden",!dashboard);
+    $("settingsTabPanel").classList.toggle("hidden",dashboard);
+
+    $("dashboardTabBtn").classList.toggle("active",dashboard);
+    $("settingsTabBtn").classList.toggle("active",!dashboard);
+    $("dashboardTabBtn").setAttribute("aria-selected",dashboard?"true":"false");
+    $("settingsTabBtn").setAttribute("aria-selected",dashboard?"false":"true");
+
+    if(focus){
+      (dashboard ? $("dashboardTabBtn") : $("settingsTabBtn")).focus();
+    }
+  }
+
+  $("dashboardTabBtn").addEventListener("click",()=>setMainTab("dashboard"));
+  $("settingsTabBtn").addEventListener("click",()=>setMainTab("settings"));
+
   $("purchaseBtn").addEventListener("click", markActivePurchased);
   $("recordsBtn").addEventListener("click", openRecordsModal);
   $("recordsCloseBtn").addEventListener("click", closeRecordsModal);
@@ -4920,6 +5546,7 @@
     const unlockedCount=achievementsUnlocked?achievementsUnlocked.size:0;
     $("achievementChipValue").textContent="🏅 "+unlockedCount+" / "+ACHIEVEMENTS.length;
     renderRangeControls();
+    renderGameStrip();
     if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
@@ -5086,6 +5713,8 @@
     updatePunchPreview();
     checkGoalCelebrations(stats.saved);
     checkAchievements(true);
+    renderGameStrip();
+    checkGameLevelUp(true);
   }
   $("deadlineDateInput").addEventListener("change", async (e)=>{
     const activeItem = items.find(i=>i.id===activeItemId);
