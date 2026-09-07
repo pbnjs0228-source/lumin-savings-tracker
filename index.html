@@ -3436,6 +3436,88 @@
     }
   }
 
+
+  /* ---- unreleased product + release trajectory ---- */
+  .unreleased-editor{
+    display:flex;flex-direction:column;gap:10px;padding:11px;border-radius:10px;
+    border:1px solid var(--line);background:color-mix(in srgb,var(--panel-solid) 74%,transparent);
+  }
+  .unreleased-check{display:flex;align-items:flex-start;gap:10px;cursor:pointer;color:var(--white);}
+  .unreleased-check input{position:absolute;opacity:0;pointer-events:none;}
+  .unreleased-check-box{
+    flex:0 0 auto;width:18px;height:18px;border-radius:5px;margin-top:1px;
+    border:1px solid var(--line-strong);background:var(--panel-raised);position:relative;
+    transition:background .15s ease,border-color .15s ease,box-shadow .15s ease;
+  }
+  .unreleased-check input:checked + .unreleased-check-box{
+    background:var(--accent);border-color:var(--accent);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent);
+  }
+  .unreleased-check input:checked + .unreleased-check-box::after{
+    content:"✓";position:absolute;inset:0;display:grid;place-items:center;
+    color:#17131f;font-size:11px;font-weight:900;
+  }
+  .unreleased-check strong{display:block;font-size:11.5px;font-weight:700;margin-bottom:2px;}
+  .unreleased-check small{display:block;color:var(--muted);font-size:9.5px;line-height:1.4;}
+  .unreleased-release-field{padding-top:2px;}
+
+  .item-release-badge{
+    display:inline-flex;align-items:center;gap:5px;margin:-1px 0 7px;padding:4px 6px;border-radius:7px;
+    color:var(--accent-soft);background:color-mix(in srgb,var(--accent) 7%,transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));
+    font-size:8.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+  }
+  .item-release-badge::before{content:"◌";font-size:10px;}
+
+  .trajectory-panel{
+    padding:13px 14px !important;border-radius:10px !important;
+    background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 4%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 72%,var(--panel))) !important;
+    overflow:hidden;
+  }
+  .trajectory-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;}
+  .trajectory-title{margin-top:4px;color:var(--muted);font-size:10.5px;line-height:1.4;}
+  .trajectory-status{
+    flex:0 0 auto;padding:5px 8px;border-radius:999px;border:1px solid var(--line);
+    background:var(--panel-raised);color:var(--accent-soft);font-size:9px;font-weight:800;
+  }
+  .trajectory-status.on-track{color:var(--positive);border-color:color-mix(in srgb,var(--positive) 30%,var(--line));background:color-mix(in srgb,var(--positive) 7%,var(--panel-raised));}
+  .trajectory-status.behind{color:#ef9a7b;border-color:color-mix(in srgb,#ef9a7b 30%,var(--line));background:color-mix(in srgb,#ef9a7b 7%,var(--panel-raised));}
+  .trajectory-status.funded{color:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--panel-raised));}
+
+  .trajectory-path-wrap{position:relative;height:128px;margin:1px 0 6px;}
+  .trajectory-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+  .trajectory-base{fill:none;stroke:var(--line-strong);stroke-width:8;stroke-linecap:round;opacity:.58;}
+  .trajectory-progress{fill:none;stroke:url(#trajectoryGradient);stroke-width:8;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000;transition:stroke-dashoffset .7s cubic-bezier(.2,.8,.2,1);}
+  .trajectory-node{position:absolute;top:82px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;min-width:98px;text-align:center;pointer-events:none;}
+  .trajectory-node-now{left:3%;transform:none;align-items:flex-start;text-align:left;}
+  .trajectory-node-project{left:50%;}
+  .trajectory-node-release{left:97%;transform:translateX(-100%);align-items:flex-end;text-align:right;}
+  .trajectory-dot{width:11px;height:11px;border-radius:50%;border:2px solid var(--panel-solid);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent);margin-bottom:5px;}
+  .trajectory-node-project .trajectory-dot{background:var(--accent);}
+  .trajectory-node-release .trajectory-dot{background:var(--accent2);}
+  .trajectory-node b{font-size:9.5px;color:var(--white);font-weight:700;line-height:1.2;}
+  .trajectory-node small{font-size:8.5px;color:var(--muted);line-height:1.25;margin-top:2px;max-width:115px;}
+
+  .trajectory-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
+  .trajectory-metric{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel-solid) 72%,transparent);}
+  .trajectory-metric span{font-size:8.5px;color:var(--muted);}
+  .trajectory-metric strong{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--white);text-align:right;}
+
+  @media(max-width:760px){
+    .trajectory-path-wrap{height:118px;}
+    .trajectory-metrics{grid-template-columns:1fr;gap:5px;}
+  }
+  @media(max-width:520px){
+    .trajectory-panel{padding:10px !important;}
+    .trajectory-head{align-items:center;}
+    .trajectory-title{font-size:9.5px;}
+    .trajectory-path-wrap{height:110px;margin-top:4px;}
+    .trajectory-node{top:72px;min-width:72px;}
+    .trajectory-node b{font-size:8.5px;}
+    .trajectory-node small{font-size:7.5px;max-width:88px;}
+    .trajectory-status{font-size:8px;padding:4px 6px;}
+  }
+
 </style>
 </head>
 <body>
@@ -3739,6 +3821,51 @@
       <!-- earnings entry -->
       
     </div>
+
+    <div class="section panel trajectory-panel hidden" id="trajectorySection">
+      <div class="trajectory-head">
+        <div>
+          <div class="panel-label"><span class="dash"></span>Release trajectory</div>
+          <div class="trajectory-title" id="trajectoryTitle">Tracking launch readiness</div>
+        </div>
+        <div class="trajectory-status" id="trajectoryStatus">On track</div>
+      </div>
+
+      <div class="trajectory-path-wrap" aria-label="Savings trajectory toward product release">
+        <svg class="trajectory-svg" viewBox="0 0 1000 150" preserveAspectRatio="none" role="img">
+          <defs>
+            <linearGradient id="trajectoryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--accent)"/>
+              <stop offset="100%" stop-color="var(--accent2)"/>
+            </linearGradient>
+          </defs>
+          <path class="trajectory-base" d="M 28 92 C 250 78, 470 42, 690 64 S 900 80, 972 54" />
+          <path class="trajectory-progress" id="trajectoryProgressPath" d="M 28 92 C 250 78, 470 42, 690 64 S 900 80, 972 54" />
+        </svg>
+        <div class="trajectory-node trajectory-node-now" id="trajectoryNowNode">
+          <span class="trajectory-dot"></span>
+          <b>Today</b>
+          <small id="trajectoryNowText">$0 saved</small>
+        </div>
+        <div class="trajectory-node trajectory-node-project" id="trajectoryProjectNode">
+          <span class="trajectory-dot"></span>
+          <b id="trajectoryProjectLabel">Projected</b>
+          <small id="trajectoryProjectText">—</small>
+        </div>
+        <div class="trajectory-node trajectory-node-release" id="trajectoryReleaseNode">
+          <span class="trajectory-dot"></span>
+          <b>Release</b>
+          <small id="trajectoryReleaseText">—</small>
+        </div>
+      </div>
+
+      <div class="trajectory-metrics">
+        <div class="trajectory-metric"><span>Needed by release</span><strong id="trajectoryNeeded">—</strong></div>
+        <div class="trajectory-metric"><span>Current pace</span><strong id="trajectoryPace">—</strong></div>
+        <div class="trajectory-metric"><span>Launch forecast</span><strong id="trajectoryForecast">—</strong></div>
+      </div>
+    </div>
+
 <div class="section panel deadline-panel hidden" id="deadlineSection">
       <div class="panel-header-row" style="margin-bottom:10px;">
         <div class="panel-label"><span class="dash"></span>Goal deadline</div>
@@ -3993,6 +4120,21 @@
         <label class="field">Target date (optional)
           <input type="date" id="item-deadline" />
         </label>
+
+        <div class="unreleased-editor">
+          <label class="unreleased-check">
+            <input type="checkbox" id="item-unreleased" />
+            <span class="unreleased-check-box" aria-hidden="true"></span>
+            <span>
+              <strong>Unreleased Product</strong>
+              <small>Track whether your savings trajectory will be ready by launch.</small>
+            </span>
+          </label>
+          <label class="field unreleased-release-field hidden" id="itemReleaseDateWrap">Release date
+            <input type="date" id="item-release-date" />
+          </label>
+        </div>
+
         <label class="field">Notes (optional)
           <textarea id="item-notes" maxlength="500" placeholder="e.g. Wait for a sale, get the black version, check warranty..."></textarea>
         </label>
@@ -4313,9 +4455,20 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.07.10";
+  const APP_VERSION = "2026.09.07.11";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.07.11",
+      title: "Release trajectories",
+      date: "7 September 2026",
+      changes: [
+        "Added an Unreleased Product option to goal creation and editing.",
+        "Unreleased products can now store a release date and show a launch-readiness trajectory.",
+        "The trajectory compares your current savings pace with the product release date and shows whether you are on track.",
+        "Release trajectories only appear for goals currently marked as unreleased."
+      ]
+    },
     {
       version: "2026.09.07.10",
       title: "Cleaner goal carousel",
@@ -5678,6 +5831,8 @@
           image: parsed.settings.productImage || "",
           deadline: "",
           notes: "",
+          unreleased: false,
+          releaseDate: "",
           purchasedAt: "",
           priceHistory: []
         };
@@ -7061,6 +7216,16 @@
   });
 
   // ---- item modal ----
+  function updateUnreleasedEditor(){
+    const checked=$("item-unreleased").checked;
+    $("itemReleaseDateWrap").classList.toggle("hidden",!checked);
+    $("item-release-date").required=checked;
+    $("item-release-date").min=todayStr();
+    if(!checked) $("item-release-date").value="";
+  }
+
+  $("item-unreleased").addEventListener("change",updateUnreleasedEditor);
+
   function openItemModal(itemId){
     editingItemId = itemId;
     resetUploadUI();
@@ -7071,6 +7236,10 @@
     $("item-goal").value = item ? item.goal : "";
     $("item-link").value = item ? (item.link||"") : "";
     $("item-deadline").value = item ? (item.deadline||"") : "";
+    $("item-unreleased").checked = !!(item && item.unreleased);
+    $("item-release-date").value = item ? (item.releaseDate||"") : "";
+    updateUnreleasedEditor();
+    if(item && item.unreleased) $("item-release-date").value = item.releaseDate||"";
     $("item-notes").value = item ? (item.notes||"") : "";
     $("item-priority").checked = item ? item.id===priorityItemId : false;
     renderItemPriceHistory(item);
@@ -7135,7 +7304,14 @@
     const goal = parseFloat($("item-goal").value) || 0;
     const link = $("item-link").value.trim();
     const deadline = $("item-deadline").value || "";
+    const unreleased = $("item-unreleased").checked;
+    const releaseDate = unreleased ? ($("item-release-date").value || "") : "";
     const notes = $("item-notes").value.trim();
+
+    if(unreleased && !releaseDate){
+      $("item-release-date").reportValidity();
+      return;
+    }
     const makePriority = $("item-priority").checked;
     const image = pendingImageDataUrl !== null ? pendingImageDataUrl :
                   (editingItemId ? (items.find(i=>i.id===editingItemId)||{}).image || "" : "");
@@ -7148,7 +7324,7 @@
         if(oldGoal>0 && goal>0 && Math.abs(oldGoal-goal)>=0.01){
           history.push({date:todayStr(),from:oldGoal,to:goal});
         }
-        items[idx] = { ...items[idx], name, goal, link, image, deadline, notes, priceHistory:history };
+        items[idx] = { ...items[idx], name, goal, link, image, deadline, notes, unreleased, releaseDate, priceHistory:history };
         if(makePriority && !items[idx].purchasedAt){
           priorityItemId = items[idx].id;
           activeItemId = items[idx].id;
@@ -7157,7 +7333,7 @@
         }
       }
     }else{
-      const newItem = { id: uid(), name, goal, link, image, deadline, notes, purchasedAt:"", purchasedPrice:0, priceHistory:[] };
+      const newItem = { id: uid(), name, goal, link, image, deadline, notes, unreleased, releaseDate, purchasedAt:"", purchasedPrice:0, priceHistory:[] };
       items.push(newItem);
       if(makePriority){ priorityItemId = newItem.id; activeItemId = newItem.id; }
       else if(!activeItemId) activeItemId = newItem.id;
@@ -7434,6 +7610,101 @@
       if(avgPerDay>0) projectedDays = remaining/avgPerDay;
     }
     return {progress, remaining, hoursNeeded, projectedDays};
+  }
+
+  function dateFromTodayOffset(days){
+    if(!Number.isFinite(days)) return null;
+    const d=new Date(todayStr()+"T12:00:00");
+    d.setDate(d.getDate()+Math.max(0,Math.ceil(days)));
+    return d;
+  }
+
+  function releaseTrajectoryData(item,saved){
+    if(!item || !item.unreleased || !/^\d{4}-\d{2}-\d{2}$/.test(item.releaseDate||"")) return null;
+
+    const todayKey=todayStr();
+    if(item.releaseDate<todayKey) return null;
+
+    const release=new Date(item.releaseDate+"T23:59:59");
+    const now=new Date(todayKey+"T00:00:00");
+    const daysToRelease=Math.max(0,Math.ceil((release-now)/DAY_MS));
+    const goal=Math.max(0,Number(item.goal)||0);
+    const remaining=Math.max(0,goal-saved);
+    const requiredDaily=daysToRelease>0?remaining/daysToRelease:remaining;
+
+    const progress=computeItemProgress(item,saved);
+    const projectedDays=progress.projectedDays;
+    const projectedDate=projectedDays!==null?dateFromTodayOffset(projectedDays):null;
+    const projectedKey=projectedDate?dateStr(projectedDate):"";
+
+    let status="No pace yet";
+    let statusClass="";
+    let forecast="Log earnings to forecast";
+    let position=52;
+
+    if(remaining<=0){
+      status="Ready for release";
+      statusClass="funded";
+      forecast="Fully funded before launch";
+      position=18;
+    }else if(projectedDays!==null){
+      const ratio=daysToRelease>0?projectedDays/Math.max(1,daysToRelease):1;
+      position=Math.max(18,Math.min(88,18+ratio*70));
+      if(projectedDays<=daysToRelease){
+        const early=Math.max(0,Math.round(daysToRelease-projectedDays));
+        status="On track";
+        statusClass="on-track";
+        forecast=early>0?`About ${early} day${early===1?"":"s"} early`:`Right around release`;
+      }else{
+        const late=Math.max(1,Math.round(projectedDays-daysToRelease));
+        status="Behind pace";
+        statusClass="behind";
+        forecast=`About ${late} day${late===1?"":"s"} after release`;
+      }
+    }
+
+    return {daysToRelease,requiredDaily,projectedDays,projectedDate,projectedKey,status,statusClass,forecast,position,remaining,goal};
+  }
+
+  function renderReleaseTrajectory(item,saved){
+    const panel=$("trajectorySection");
+    const data=releaseTrajectoryData(item,saved);
+    if(!data){
+      panel.classList.add("hidden");
+      return;
+    }
+
+    panel.classList.remove("hidden");
+    $("trajectoryTitle").textContent=`${item.name||"This product"} releases ${formatRecordDate(item.releaseDate)}.`;
+
+    const status=$("trajectoryStatus");
+    status.textContent=data.status;
+    status.className="trajectory-status"+(data.statusClass?" "+data.statusClass:"");
+
+    $("trajectoryNowText").textContent=fmtMoney(saved,0)+" saved";
+    $("trajectoryReleaseText").textContent=formatDeadlineShort(item.releaseDate);
+    $("trajectoryNeeded").textContent=data.remaining<=0?"Funded":fmtMoney(data.requiredDaily,0)+" / day";
+
+    if(data.projectedDays!==null && data.projectedDate){
+      $("trajectoryProjectLabel").textContent="Projected ready";
+      $("trajectoryProjectText").textContent=formatDeadlineShort(dateStr(data.projectedDate));
+      $("trajectoryPace").textContent=formatDuration(data.projectedDays);
+    }else{
+      $("trajectoryProjectLabel").textContent="Projected ready";
+      $("trajectoryProjectText").textContent="No pace yet";
+      $("trajectoryPace").textContent="Need earnings history";
+    }
+    $("trajectoryForecast").textContent=data.forecast;
+
+    const node=$("trajectoryProjectNode");
+    node.style.left=data.position+"%";
+    node.style.transform="translateX(-50%)";
+
+    const path=$("trajectoryProgressPath");
+    const pathLength=1000;
+    const progressRatio=Math.max(.08,Math.min(1,data.position/100));
+    path.style.strokeDasharray=String(pathLength);
+    path.style.strokeDashoffset=String(pathLength*(1-progressRatio));
   }
 
   // ---- per-item goal deadline countdown ----
@@ -7835,6 +8106,7 @@
         ${priorityBadge}
         <div class="item-name">${escapeHtml(item.name || "Untitled")}</div>
         <div class="item-goal">${fmtMoney(item.goal,0)}</div>
+        ${item.unreleased && item.releaseDate && item.releaseDate>=todayStr() && !purchased ? `<div class="item-release-badge">Releases ${formatDeadlineShort(item.releaseDate)}</div>` : ""}
         ${item.deadline && !purchased ? `<div class="item-deadline">Due ${formatDeadlineShort(item.deadline)}</div>` : ""}
         <div class="item-bar-track"><div class="item-bar-fill ${progressClass}" style="width:${purchased?100:Math.round(pct*100)}%"></div></div>
         <div class="item-pct-row">${progressText}</div>
@@ -8276,7 +8548,8 @@
 
     const activeGoalLabel = $("activeGoalLabelText");
     if(activeGoalLabel){
-      activeGoalLabel.textContent = !activeItem ? "Goal details" : activeItem.purchasedAt ? "Purchased goal" : activeItem.id===priorityItemId ? "Priority goal" : "Currently saving for";
+      const activeUnreleased=!!(activeItem && activeItem.unreleased && activeItem.releaseDate && activeItem.releaseDate>=todayStr());
+      activeGoalLabel.textContent = !activeItem ? "Goal details" : activeItem.purchasedAt ? "Purchased goal" : activeUnreleased ? "Unreleased product" : activeItem.id===priorityItemId ? "Priority goal" : "Currently saving for";
     }
 
     const noteEl = $("productNote");
@@ -8346,6 +8619,8 @@
     }else{
       $("projectionSection").classList.add("hidden");
     }
+
+    renderReleaseTrajectory(activeItem,stats.saved);
 
     // chips
     $("statToday").textContent = fmtMoney(stats.todayEarned);
