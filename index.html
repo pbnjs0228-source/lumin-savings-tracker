@@ -122,18 +122,207 @@
   .save-note.show{opacity:1;}
 
   /* theme picker */
-  .theme-picker{display:flex;align-items:center;gap:7px;}
-  .swatch{
-    width:20px;height:20px;border-radius:50%;cursor:pointer;
-    border:2px solid transparent;padding:0;position:relative;
-    transition:transform 150ms ease, border-color 150ms ease;
+  .theme-picker{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+
+  .swatch.theme-option{
+    appearance:none;
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    width:auto;
+    height:auto;
+    padding:8px;
+    border-radius:11px;
+    border:1px solid var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 78%,transparent);
+    color:var(--white);
+    cursor:pointer;
+    text-align:left;
+    transition:border-color .16s ease,background .16s ease,transform .16s ease,box-shadow .16s ease;
   }
-  .swatch:hover{transform:scale(1.1);}
-  .swatch.active{border-color:var(--white);}
-  .swatch[data-theme="custom"]::after{
-    content:"+";position:absolute;right:-5px;bottom:-5px;width:10px;height:10px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;background:var(--panel-raised);border:1px solid var(--line-strong);
-    color:var(--white);font:800 8px/1 'Inter',sans-serif;
+  .swatch.theme-option:hover{
+    transform:translateY(-1px);
+    border-color:color-mix(in srgb,var(--accent) 36%,var(--line-strong));
+    background:color-mix(in srgb,var(--panel-raised) 78%,transparent);
+    box-shadow:0 6px 16px rgba(0,0,0,.08);
+  }
+  .swatch.theme-option.active{
+    border-color:color-mix(in srgb,var(--accent) 68%,var(--line-strong));
+    background:color-mix(in srgb,var(--accent) 7%,var(--panel-solid));
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 8%,transparent);
+  }
+
+  .theme-preview{
+    flex:0 0 auto;
+    position:relative;
+    width:58px;
+    height:42px;
+    overflow:hidden;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .theme-preview::before{
+    content:"";
+    position:absolute;
+    inset:6px 6px auto;
+    height:12px;
+    border-radius:4px;
+    background:rgba(10,10,18,.44);
+    border:1px solid rgba(255,255,255,.13);
+  }
+  .theme-preview::after{
+    content:"";
+    position:absolute;
+    left:6px;right:19px;bottom:6px;
+    height:10px;
+    border-radius:4px;
+    background:rgba(10,10,18,.34);
+    border:1px solid rgba(255,255,255,.09);
+  }
+  .theme-preview-accent{
+    position:absolute;
+    right:6px;
+    bottom:6px;
+    width:9px;
+    height:10px;
+    border-radius:3px;
+    background:rgba(255,255,255,.76);
+    box-shadow:0 0 9px rgba(255,255,255,.16);
+  }
+
+  .theme-option-meta{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    min-width:0;
+    flex:1;
+  }
+  .theme-option-name{
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--white);
+    white-space:nowrap;
+  }
+  .theme-option-desc{
+    font-family:'Inter',sans-serif;
+    font-size:9.5px;
+    font-weight:500;
+    color:var(--muted);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .theme-option-check{
+    flex:0 0 auto;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--line-strong);
+    background:var(--panel-raised);
+    color:transparent;
+    font-size:10px;
+    font-weight:900;
+    transition:background .16s ease,color .16s ease,border-color .16s ease;
+  }
+  .theme-option.active .theme-option-check{
+    color:#17131f;
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+
+  .swatch.theme-option[data-theme="custom"] .theme-preview::after{
+    right:6px;
+  }
+  .swatch.theme-option[data-theme="custom"] .theme-preview-accent{
+    width:16px;height:16px;right:4px;bottom:4px;border-radius:50%;
+  }
+  .swatch.theme-option[data-theme="custom"] .theme-preview-accent::after{
+    content:"+";
+    position:absolute;inset:0;
+    display:grid;place-items:center;
+    color:#15131d;
+    font:900 11px/1 'Inter',sans-serif;
+  }
+
+  /* Full theme browser in Settings */
+  .settings-theme-picker{
+    display:grid !important;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    align-items:stretch;
+    gap:9px !important;
+    padding:0 !important;
+    border:0 !important;
+    background:transparent !important;
+  }
+  .settings-theme-picker .swatch.theme-option{
+    width:100% !important;
+    min-height:72px;
+    padding:9px;
+  }
+  .settings-theme-picker .theme-preview{
+    width:66px;
+    height:48px;
+  }
+
+  /* Compact theme chips on wallet setup */
+  #themePickerSetup{
+    justify-content:flex-end;
+    gap:5px;
+    max-width:100%;
+  }
+  #themePickerSetup .swatch.theme-option{
+    padding:5px 7px;
+    gap:6px;
+    border-radius:8px;
+  }
+  #themePickerSetup .theme-preview{
+    width:25px;
+    height:25px;
+    border-radius:6px;
+  }
+  #themePickerSetup .theme-preview::before,
+  #themePickerSetup .theme-preview::after,
+  #themePickerSetup .theme-preview-accent{
+    display:none;
+  }
+  #themePickerSetup .theme-option-name{
+    font-size:9.5px;
+  }
+  #themePickerSetup .theme-option-desc,
+  #themePickerSetup .theme-option-check{
+    display:none;
+  }
+
+  @media(max-width:900px){
+    .settings-theme-picker{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+  }
+  @media(max-width:520px){
+    .settings-theme-picker{
+      grid-template-columns:1fr;
+    }
+    .settings-theme-picker .swatch.theme-option{
+      min-height:64px;
+    }
+    .settings-theme-picker .theme-preview{
+      width:60px;height:42px;
+    }
+    #themePickerSetup .theme-option-meta{
+      display:none;
+    }
+    #themePickerSetup .swatch.theme-option{
+      padding:4px;
+    }
+    #themePickerSetup .theme-preview{
+      width:25px;height:25px;
+    }
   }
 
   /* Custom theme: user-picked solid colour or 2-8 colour gradient. */
@@ -689,10 +878,8 @@
   .settings-actions{display:flex;gap:8px;flex-wrap:wrap;}
   .settings-actions .btn{justify-content:center;}
   .settings-theme-picker{
-    display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px;
-    border-radius:11px;background:var(--panel-solid);border:1px solid var(--line);
+    display:grid;align-items:stretch;
   }
-  .settings-theme-picker .swatch{width:28px;height:28px;}
   .settings-cloud-wrap{
     display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
     padding:10px 11px;border-radius:10px;background:var(--panel-solid);border:1px solid var(--line);
@@ -3152,6 +3339,103 @@
     .mission-inline-status{width:100%;text-align:right;}
   }
 
+
+  /* ================================================================
+     GOAL CAROUSEL POLISH
+     Restores true 4:3 previews and replaces the native-looking slider.
+     ================================================================ */
+  .goal-cluster .items-shelf{
+    position:relative;
+    gap:10px;
+    padding:2px 2px 12px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:2px;
+    scroll-behavior:smooth;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:thin;
+    scrollbar-color:color-mix(in srgb,var(--accent) 58%,var(--line-strong)) color-mix(in srgb,var(--panel-solid) 84%,transparent);
+  }
+
+  /* Chromium / Edge / Safari */
+  .goal-cluster .items-shelf::-webkit-scrollbar{
+    height:9px;
+  }
+  .goal-cluster .items-shelf::-webkit-scrollbar-track{
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+    border:1px solid var(--line);
+    border-radius:999px;
+    margin-inline:2px;
+  }
+  .goal-cluster .items-shelf::-webkit-scrollbar-thumb{
+    min-width:68px;
+    border:2px solid transparent;
+    border-radius:999px;
+    background:
+      linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent2) 72%,var(--accent-soft))) padding-box;
+    box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--white) 10%,transparent);
+  }
+  .goal-cluster .items-shelf::-webkit-scrollbar-thumb:hover{
+    background:
+      linear-gradient(90deg,var(--accent-soft),color-mix(in srgb,var(--accent2) 84%,var(--accent))) padding-box;
+  }
+  .goal-cluster .items-shelf::-webkit-scrollbar-button{
+    display:none;
+    width:0;
+    height:0;
+  }
+
+  .goal-cluster .item-card{
+    scroll-snap-align:start;
+    scroll-snap-stop:normal;
+  }
+
+  /* Every goal preview goes back to the same 4:3 shape used by the cropper. */
+  .goal-cluster .item-thumb,
+  .goal-cluster img.item-thumb,
+  .goal-cluster .item-thumb.placeholder{
+    display:block;
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:4 / 3 !important;
+    object-fit:cover !important;
+    object-position:center;
+    border-radius:9px;
+    margin-bottom:8px;
+  }
+  .goal-cluster .item-thumb.placeholder{
+    display:flex;
+  }
+
+  /* Keep card proportions tidy now that the image is taller again. */
+  .goal-cluster .item-card{
+    flex-basis:170px;
+    min-width:170px;
+  }
+
+  @media(max-width:720px){
+    .goal-cluster .items-shelf{
+      gap:8px;
+      padding-bottom:10px;
+      scrollbar-width:thin;
+    }
+    .goal-cluster .item-card{
+      flex-basis:154px;
+      min-width:154px;
+    }
+    .goal-cluster .items-shelf::-webkit-scrollbar{
+      height:7px;
+    }
+  }
+
+  @media(max-width:430px){
+    .goal-cluster .item-card{
+      flex-basis:142px;
+      min-width:142px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -3587,7 +3871,7 @@
       <div class="section settings-grid">
         <section class="settings-card wide">
           <div class="settings-card-title"><span class="dash"></span>Appearance</div>
-          <p class="settings-card-desc">Choose a LUMIN theme or open Custom to build your own solid colour or 2–8 colour gradient.</p>
+          <p class="settings-card-desc">Choose a visual style for LUMIN. Each theme changes the full dashboard palette, or use Custom to build your own.</p>
           <div class="theme-picker settings-theme-picker" id="themePickerMain"></div>
         </section>
 
@@ -4029,9 +4313,30 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.07.8";
+  const APP_VERSION = "2026.09.07.10";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.07.10",
+      title: "Cleaner goal carousel",
+      date: "7 September 2026",
+      changes: [
+        "Restored goal-card image previews to the original 4:3 crop ratio.",
+        "Replaced the chunky native horizontal scrollbar with a slimmer LUMIN-styled slider.",
+        "Added smoother card snapping and mouse-wheel horizontal scrolling on desktop."
+      ]
+    },
+    {
+      version: "2026.09.07.9",
+      title: "Better-looking themes",
+      date: "7 September 2026",
+      changes: [
+        "Rebuilt the theme picker with proper mini dashboard previews, names and selected states.",
+        "Refined every built-in palette to feel more deliberate and visually distinct.",
+        "Neon now has its own purple-and-cyan identity, while Midnight, Sunset, Ocean and Graphite were cleaned up.",
+        "Improved the compact theme selector used during wallet setup and kept Custom and Rainbow fully functional."
+      ]
+    },
     {
       version: "2026.09.07.8",
       title: "Missions where they belong",
@@ -4205,20 +4510,90 @@
   const JPEG_QUALITY = 0.82;
 
   const THEMES = {
-    midnight: { label:"Midnight", swatch:"linear-gradient(135deg,#d97a5f,#c9a15a)",
-      vars:{"--bg1":"#15131f","--bg2":"#1c1a2c","--panel":"rgba(255,255,255,0.04)","--panel-solid":"#211f34","--panel-raised":"#282542","--accent":"#d97a5f","--accent-soft":"#e59c86","--accent2":"#c9a15a","--positive":"#7fc9b8","--white":"#eeecf5","--muted":"#8f8ca8","--line":"rgba(238,236,245,0.08)","--line-strong":"rgba(238,236,245,0.15)","--blade-a":"#2a2740","--blade-b":"#332f4d","--housing":"#211f36","--housing-inner":"#1a1830"} },
-    graphite: { label:"Graphite", swatch:"linear-gradient(135deg,#6c8ef5,#8f96a8)",
-      vars:{"--bg1":"#121316","--bg2":"#17181c","--panel":"rgba(255,255,255,0.035)","--panel-solid":"#1c1d22","--panel-raised":"#22242a","--accent":"#6c8ef5","--accent-soft":"#93aef8","--accent2":"#8f96a8","--positive":"#6bc79a","--white":"#e9eaee","--muted":"#84899a","--line":"rgba(233,234,238,0.07)","--line-strong":"rgba(233,234,238,0.14)","--blade-a":"#25262d","--blade-b":"#2c2d35","--housing":"#1c1d24","--housing-inner":"#16171c"} },
-    sunset: { label:"Sunset", swatch:"linear-gradient(135deg,#e08b4d,#c9694f)",
-      vars:{"--bg1":"#1d1512","--bg2":"#241a16","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#28201b","--panel-raised":"#302620","--accent":"#e08b4d","--accent-soft":"#eaa876","--accent2":"#c9694f","--positive":"#9ab97e","--white":"#f2ece4","--muted":"#a3937f","--line":"rgba(242,236,228,0.08)","--line-strong":"rgba(242,236,228,0.15)","--blade-a":"#33251d","--blade-b":"#3c2c22","--housing":"#291f19","--housing-inner":"#201712"} },
-    ocean: { label:"Ocean", swatch:"linear-gradient(135deg,#5aa9a3,#3d7c99)",
-      vars:{"--bg1":"#0e1a1f","--bg2":"#122228","--panel":"rgba(255,255,255,0.04)","--panel-solid":"#152a30","--panel-raised":"#1b333a","--accent":"#5aa9a3","--accent-soft":"#7fc2bc","--accent2":"#3d7c99","--positive":"#8fbf7a","--white":"#e6f1f0","--muted":"#7d9a9a","--line":"rgba(230,241,240,0.08)","--line-strong":"rgba(230,241,240,0.15)","--blade-a":"#193036","--blade-b":"#1f3b41","--housing":"#132428","--housing-inner":"#0f1c20"} },
-    neon: { label:"Neon", swatch:"linear-gradient(135deg,#e14a5f,#d4a24e)",
-      vars:{"--bg1":"#0c0d14","--bg2":"#121420","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#181a26","--panel-raised":"#1e2130","--accent":"#e14a5f","--accent-soft":"#ef7c8c","--accent2":"#d4a24e","--positive":"#4fa88a","--white":"#eceef5","--muted":"#868da3","--line":"rgba(236,238,245,0.08)","--line-strong":"rgba(236,238,245,0.16)","--blade-a":"#1c2030","--blade-b":"#232840","--housing":"#171926","--housing-inner":"#12141e"} },
-    rainbow: { label:"Rainbow", swatch:"conic-gradient(from 35deg,#ff667f,#ffbc58,#f0dc65,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f)",
-      vars:{"--bg1":"#11101c","--bg2":"#151526","--panel":"rgba(255,255,255,0.045)","--panel-solid":"#1c1b2d","--panel-raised":"#242238","--accent":"#ff7b83","--accent-soft":"#76d9e8","--accent2":"#c28cff","--positive":"#69d7a4","--white":"#f3f1fa","--muted":"#9995b2","--line":"rgba(243,241,250,0.085)","--line-strong":"rgba(243,241,250,0.17)","--blade-a":"#2a2850","--blade-b":"#243d51","--housing":"#201e35","--housing-inner":"#171626"} },
-    custom: { label:"Custom", swatch:"linear-gradient(135deg,#6c8ef5,#c47cff)",
-      vars:{"--bg1":"#11111b","--bg2":"#171624","--panel":"rgba(15,15,25,0.76)","--panel-solid":"#1b1a29","--panel-raised":"#242238","--accent":"#6c8ef5","--accent-soft":"#9eb2ff","--accent2":"#c47cff","--positive":"#72d7a6","--white":"#f3f1fa","--muted":"#9995b2","--line":"rgba(243,241,250,0.09)","--line-strong":"rgba(243,241,250,0.17)","--blade-a":"#282642","--blade-b":"#302d4c","--housing":"#211f35","--housing-inner":"#181725"} }
+    midnight: {
+      label:"Midnight",
+      swatch:"linear-gradient(145deg,#191725 0%,#242039 55%,#e2846b 56%,#d7b060 100%)",
+      vars:{
+        "--bg1":"#12111a","--bg2":"#191725",
+        "--panel":"rgba(255,255,255,0.038)","--panel-solid":"#1d1b2a","--panel-raised":"#252238",
+        "--accent":"#df8268","--accent-soft":"#efa08d","--accent2":"#d5ad62","--positive":"#75c9ad",
+        "--white":"#f2eff7","--muted":"#9893aa",
+        "--line":"rgba(242,239,247,0.075)","--line-strong":"rgba(242,239,247,0.14)",
+        "--blade-a":"#28243b","--blade-b":"#312c46","--housing":"#201d30","--housing-inner":"#171522"
+      }
+    },
+    graphite: {
+      label:"Graphite",
+      swatch:"linear-gradient(145deg,#111317 0%,#20232a 55%,#708cf1 56%,#9aa2b4 100%)",
+      vars:{
+        "--bg1":"#0f1114","--bg2":"#15171b",
+        "--panel":"rgba(255,255,255,0.032)","--panel-solid":"#1a1c21","--panel-raised":"#22252b",
+        "--accent":"#718cf0","--accent-soft":"#9eb0f8","--accent2":"#939baa","--positive":"#69c59a",
+        "--white":"#f0f1f3","--muted":"#8d929e",
+        "--line":"rgba(240,241,243,0.07)","--line-strong":"rgba(240,241,243,0.135)",
+        "--blade-a":"#23262c","--blade-b":"#2a2d34","--housing":"#1b1d22","--housing-inner":"#131519"
+      }
+    },
+    sunset: {
+      label:"Sunset",
+      swatch:"linear-gradient(145deg,#241714 0%,#35201b 55%,#ef9556 56%,#d76069 100%)",
+      vars:{
+        "--bg1":"#1b1210","--bg2":"#241714",
+        "--panel":"rgba(255,255,255,0.04)","--panel-solid":"#2a1d19","--panel-raised":"#34241f",
+        "--accent":"#ed9255","--accent-soft":"#f3b07d","--accent2":"#d96368","--positive":"#93bf78",
+        "--white":"#f6eee8","--muted":"#aa9385",
+        "--line":"rgba(246,238,232,0.08)","--line-strong":"rgba(246,238,232,0.15)",
+        "--blade-a":"#35231d","--blade-b":"#422b22","--housing":"#2b1e19","--housing-inner":"#201512"
+      }
+    },
+    ocean: {
+      label:"Ocean",
+      swatch:"linear-gradient(145deg,#0b171c 0%,#10272f 55%,#52b8ad 56%,#458bc0 100%)",
+      vars:{
+        "--bg1":"#0b1519","--bg2":"#0f2026",
+        "--panel":"rgba(255,255,255,0.036)","--panel-solid":"#14272d","--panel-raised":"#19333a",
+        "--accent":"#55b6ac","--accent-soft":"#82d0c8","--accent2":"#4a8db7","--positive":"#89c77e",
+        "--white":"#eaf4f3","--muted":"#82a0a1",
+        "--line":"rgba(234,244,243,0.075)","--line-strong":"rgba(234,244,243,0.145)",
+        "--blade-a":"#193138","--blade-b":"#1d3d45","--housing":"#12252a","--housing-inner":"#0d1b1f"
+      }
+    },
+    neon: {
+      label:"Neon",
+      swatch:"linear-gradient(145deg,#0b0c18 0%,#17172a 55%,#8b6cff 56%,#42d6d0 100%)",
+      vars:{
+        "--bg1":"#090a13","--bg2":"#101221",
+        "--panel":"rgba(255,255,255,0.04)","--panel-solid":"#171827","--panel-raised":"#1e2031",
+        "--accent":"#8b70f6","--accent-soft":"#ae9bff","--accent2":"#45cfc9","--positive":"#66d59d",
+        "--white":"#f0eff8","--muted":"#8f91aa",
+        "--line":"rgba(240,239,248,0.075)","--line-strong":"rgba(240,239,248,0.15)",
+        "--blade-a":"#20213a","--blade-b":"#252945","--housing":"#181a2a","--housing-inner":"#11121f"
+      }
+    },
+    rainbow: {
+      label:"Rainbow",
+      swatch:"conic-gradient(from 35deg,#ff667f,#ffbc58,#f0dc65,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f)",
+      vars:{
+        "--bg1":"#11101c","--bg2":"#151526",
+        "--panel":"rgba(255,255,255,0.042)","--panel-solid":"#1c1b2d","--panel-raised":"#242238",
+        "--accent":"#ff7b83","--accent-soft":"#76d9e8","--accent2":"#c28cff","--positive":"#69d7a4",
+        "--white":"#f3f1fa","--muted":"#9995b2",
+        "--line":"rgba(243,241,250,0.08)","--line-strong":"rgba(243,241,250,0.16)",
+        "--blade-a":"#2a2850","--blade-b":"#243d51","--housing":"#201e35","--housing-inner":"#171626"
+      }
+    },
+    custom: {
+      label:"Custom",
+      swatch:"linear-gradient(135deg,#6c8ef5,#c47cff)",
+      vars:{
+        "--bg1":"#11111b","--bg2":"#171624",
+        "--panel":"rgba(15,15,25,0.76)","--panel-solid":"#1b1a29","--panel-raised":"#242238",
+        "--accent":"#6c8ef5","--accent-soft":"#9eb2ff","--accent2":"#c47cff","--positive":"#72d7a6",
+        "--white":"#f3f1fa","--muted":"#9995b2",
+        "--line":"rgba(243,241,250,0.085)","--line-strong":"rgba(243,241,250,0.16)",
+        "--blade-a":"#282642","--blade-b":"#302d4c","--housing":"#211f35","--housing-inner":"#181725"
+      }
+    }
   };
   const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","rainbow","custom"];
 
@@ -4577,6 +4952,13 @@
     root.style.setProperty("--blade-b",mixHex(last,"#302d45",.72));
     root.style.setProperty("--housing",mixHex(first,"#211f35",.82));
     root.style.setProperty("--housing-inner",mixHex(last,"#181725",.88));
+    refreshCustomThemePickerPreviews();
+  }
+
+  function refreshCustomThemePickerPreviews(){
+    document.querySelectorAll('.swatch[data-theme="custom"] .theme-preview').forEach(preview=>{
+      preview.style.background=customThemeSwatch();
+    });
   }
 
   function applyTheme(key){
@@ -4589,7 +4971,10 @@
     else stopRainbowTheme();
     document.querySelectorAll(".swatch").forEach(sw=>{
       sw.classList.toggle("active", sw.dataset.theme === currentTheme);
-      if(sw.dataset.theme==="custom") sw.style.background=customThemeSwatch();
+      if(sw.dataset.theme==="custom"){
+        const preview=sw.querySelector(".theme-preview");
+        if(preview) preview.style.background=customThemeSwatch();
+      }
     });
   }
   document.addEventListener("visibilitychange",()=>{
@@ -4601,15 +4986,57 @@
   startPriorityRainbow();
 
   function buildThemePicker(container){
+    const descriptions={
+      midnight:"Warm & understated",
+      graphite:"Clean & neutral",
+      sunset:"Soft & warm",
+      ocean:"Cool & focused",
+      neon:"Purple & electric",
+      rainbow:"Living spectrum",
+      custom:"Design your own"
+    };
+
     container.innerHTML = "";
+
     THEME_ORDER.forEach(key=>{
       const theme = THEMES[key];
       const btn = document.createElement("button");
-      btn.className = "swatch" + (key===currentTheme ? " active" : "");
-      btn.style.background = key==="custom" ? customThemeSwatch() : theme.swatch;
+      btn.type="button";
+      btn.className = "swatch theme-option" + (key===currentTheme ? " active" : "");
       btn.dataset.theme = key;
       btn.title = key==="custom" ? "Custom theme · click to edit" : theme.label;
-      btn.setAttribute("aria-label", key==="custom" ? "Open custom theme editor" : "Switch to "+theme.label+" theme");
+      btn.setAttribute("aria-label", key==="custom"
+        ? "Open custom theme editor"
+        : "Switch to "+theme.label+" theme");
+
+      const preview=document.createElement("span");
+      preview.className="theme-preview";
+      preview.style.background = key==="custom" ? customThemeSwatch() : theme.swatch;
+
+      const accent=document.createElement("span");
+      accent.className="theme-preview-accent";
+      preview.appendChild(accent);
+
+      const meta=document.createElement("span");
+      meta.className="theme-option-meta";
+
+      const name=document.createElement("span");
+      name.className="theme-option-name";
+      name.textContent=theme.label;
+
+      const desc=document.createElement("span");
+      desc.className="theme-option-desc";
+      desc.textContent=descriptions[key]||"";
+
+      meta.append(name,desc);
+
+      const check=document.createElement("span");
+      check.className="theme-option-check";
+      check.setAttribute("aria-hidden","true");
+      check.textContent="✓";
+
+      btn.append(preview,meta,check);
+
       btn.addEventListener("click", async ()=>{
         if(key==="custom"){
           openCustomThemeModal();
@@ -4619,6 +5046,7 @@
         buildBlades();
         await persist();
       });
+
       container.appendChild(btn);
     });
   }
@@ -7359,6 +7787,20 @@
     $("barsLabel").textContent="Earnings · "+statsRangeLabel()+" · "+viewLabels[chartView]+" · "+typeLabels[chartType];
   }
 
+  function enableGoalShelfWheelScroll(){
+    const shelf=$("itemsShelf");
+    if(!shelf || shelf.dataset.wheelScrollBound==="1") return;
+    shelf.dataset.wheelScrollBound="1";
+
+    shelf.addEventListener("wheel",e=>{
+      if(shelf.scrollWidth<=shelf.clientWidth) return;
+      const primarilyVertical=Math.abs(e.deltaY)>Math.abs(e.deltaX);
+      if(!primarilyVertical) return;
+      e.preventDefault();
+      shelf.scrollBy({left:e.deltaY,behavior:"smooth"});
+    },{passive:false});
+  }
+
   function renderItemsShelf(saved){
     const shelf = $("itemsShelf");
     shelf.innerHTML = "";
@@ -7426,6 +7868,7 @@
     });
 
     shelf.classList.toggle("hidden", orderedItems.length===0);
+    enableGoalShelfWheelScroll();
   }
 
   function escapeHtml(str){
