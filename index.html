@@ -708,7 +708,7 @@
 
   /* ---- LUMIN progression / gamification ---- */
   .game-strip{
-    display:grid;grid-template-columns:auto minmax(180px,1fr) auto auto;gap:14px;align-items:center;
+    display:grid;grid-template-columns:auto minmax(180px,1fr) auto auto auto;gap:14px;align-items:center;
     padding:14px 16px;border-radius:14px;
     background:
       linear-gradient(135deg,
@@ -758,6 +758,78 @@
     font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:var(--white);
   }
   .game-streak-label{font-size:9px;color:var(--muted);margin-top:2px;}
+  .game-checkin-btn{
+    width:100%;margin-top:7px;padding:6px 8px;border-radius:8px;
+    border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));
+    background:color-mix(in srgb,var(--accent) 8%,var(--panel-raised));
+    color:var(--accent-soft);cursor:pointer;
+    font-family:'Inter',sans-serif;font-size:9.5px;font-weight:800;
+    transition:transform .15s ease,background .15s ease,border-color .15s ease,color .15s ease;
+  }
+  .game-checkin-btn:hover:not(:disabled){
+    background:color-mix(in srgb,var(--accent) 14%,var(--panel-raised));
+    border-color:color-mix(in srgb,var(--accent-soft) 42%,var(--line-strong));
+    color:var(--white);
+  }
+  .game-checkin-btn:active:not(:disabled){transform:scale(.98);}
+  .game-checkin-btn.checked{
+    color:var(--positive);
+    border-color:color-mix(in srgb,var(--positive) 30%,var(--line));
+    background:color-mix(in srgb,var(--positive) 8%,var(--panel-raised));
+    cursor:default;
+  }
+  .game-freeze-btn{
+    min-width:96px;padding:9px 11px;border-radius:11px;background:var(--panel-solid);
+    border:1px solid var(--line);color:var(--white);cursor:pointer;text-align:center;
+    transition:border-color .16s ease,transform .16s ease,background .16s ease;
+  }
+  .game-freeze-btn:hover{
+    border-color:color-mix(in srgb,var(--accent-soft) 45%,var(--line-strong));
+    background:color-mix(in srgb,var(--accent) 5%,var(--panel-solid));
+  }
+  .game-freeze-btn:active{transform:scale(.98);}
+  .game-freeze-value{
+    font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#b8d7ff;
+  }
+  .game-freeze-label{font-size:9px;color:var(--muted);margin-top:2px;}
+  .freeze-modal{max-width:470px;}
+  .freeze-hero{
+    display:grid;grid-template-columns:74px minmax(0,1fr);gap:14px;align-items:center;
+    padding:14px;border-radius:13px;background:
+      linear-gradient(135deg,color-mix(in srgb,#8fc5ff 9%,var(--panel-solid)),var(--panel-solid));
+    border:1px solid color-mix(in srgb,#8fc5ff 22%,var(--line));
+    margin-bottom:13px;
+  }
+  .freeze-orb{
+    width:74px;height:74px;border-radius:18px;display:grid;place-items:center;
+    font-size:34px;background:color-mix(in srgb,#8fc5ff 10%,var(--panel-raised));
+    border:1px solid color-mix(in srgb,#8fc5ff 22%,var(--line-strong));
+  }
+  .freeze-count-big{
+    font-family:'Sora',sans-serif;font-size:23px;font-weight:800;color:var(--white);margin-bottom:3px;
+  }
+  .freeze-meta{font-size:11px;color:var(--muted);line-height:1.5;}
+  .freeze-shop-row{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:12px;border-radius:11px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .freeze-price{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-soft);font-weight:700;
+  }
+  .freeze-history{
+    margin-top:12px;padding:10px 11px;border-radius:10px;background:var(--panel-solid);border:1px solid var(--line);
+  }
+  .freeze-history-title{
+    font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.45px;margin-bottom:7px;
+  }
+  .freeze-history-list{display:flex;gap:6px;flex-wrap:wrap;}
+  .freeze-date-chip{
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#b8d7ff;
+    padding:4px 6px;border-radius:7px;background:color-mix(in srgb,#8fc5ff 7%,transparent);
+    border:1px solid color-mix(in srgb,#8fc5ff 18%,var(--line));
+  }
+  .freeze-note{margin-top:10px;color:var(--muted);font-size:10.5px;line-height:1.5;}
+  .freeze-used-toast .milestone-badge{background:color-mix(in srgb,#8fc5ff 22%,var(--panel-raised));}
   .game-missions-btn{
     min-width:118px;justify-content:center;position:relative;
   }
@@ -819,9 +891,10 @@
   }
   @media(max-width:720px){
     .game-strip{grid-template-columns:auto 1fr;gap:11px;}
-    .game-streak,.game-missions-btn{min-width:0;width:100%;}
+    .game-streak,.game-freeze-btn,.game-missions-btn{min-width:0;width:100%;}
     .game-streak{grid-column:1/2;}
-    .game-missions-btn{grid-column:2/3;}
+    .game-freeze-btn{grid-column:2/3;}
+    .game-missions-btn{grid-column:1/3;}
     .missions-grid{grid-template-columns:1fr;}
   }
   @media(max-width:430px){
@@ -1907,8 +1980,13 @@
       </div>
       <div class="game-streak">
         <div class="game-streak-value" id="gameStreak">🔥 0</div>
-        <div class="game-streak-label">day earning streak</div>
+        <div class="game-streak-label">day check-in streak</div>
+        <button type="button" class="game-checkin-btn" id="dailyCheckInBtn">Check in</button>
       </div>
+      <button type="button" class="game-freeze-btn" id="freezeShopBtn" aria-label="Open streak freeze shop">
+        <div class="game-freeze-value" id="gameFreezeCount">❄ 2 / 2</div>
+        <div class="game-freeze-label">streak freezes</div>
+      </button>
       <button type="button" class="btn btn-secondary game-missions-btn" id="missionsBtn">
         Missions <span id="missionsBtnCount">0 / 4</span>
         <span class="game-mission-dot hidden" id="missionReadyDot"></span>
@@ -2123,6 +2201,41 @@
       <div id="archiveGrid" class="archive-grid"></div>
       <div style="display:flex;justify-content:flex-end;margin-top:15px;">
         <button type="button" class="btn btn-ghost" id="archiveCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STREAK FREEZE MODAL -->
+  <div id="freezeBackdrop" class="modal-backdrop hidden">
+    <div class="modal freeze-modal" role="dialog" aria-modal="true" aria-labelledby="freezeTitle">
+      <h2 class="modal-title" id="freezeTitle">Streak freezes ❄️</h2>
+      <p class="modal-sub">A freeze is automatically used when you miss a daily check-in while you have an active streak.</p>
+
+      <div class="freeze-hero">
+        <div class="freeze-orb">❄️</div>
+        <div>
+          <div class="freeze-count-big" id="freezeModalCount">2 / 2 freezes</div>
+          <div class="freeze-meta" id="freezeModalMeta">You’re fully stocked.</div>
+        </div>
+      </div>
+
+      <div class="freeze-shop-row">
+        <div>
+          <div style="font-family:'Sora',sans-serif;font-size:12.5px;font-weight:700;color:var(--white);margin-bottom:3px;">Buy 1 streak freeze</div>
+          <div class="freeze-price">50 XP · max 2</div>
+        </div>
+        <button type="button" class="btn btn-primary" id="buyFreezeBtn">Buy for 50 XP</button>
+      </div>
+
+      <div class="freeze-note" id="freezeXpNote">Available XP: 0</div>
+
+      <div class="freeze-history hidden" id="freezeHistoryWrap">
+        <div class="freeze-history-title">Protected days</div>
+        <div class="freeze-history-list" id="freezeHistoryList"></div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:15px;">
+        <button type="button" class="btn btn-ghost" id="freezeCloseBtn">Close</button>
       </div>
     </div>
   </div>
@@ -2353,9 +2466,31 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.06.1";
+  const APP_VERSION = "2026.09.07";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.07",
+      title: "Daily check-ins",
+      date: "7 September 2026",
+      changes: [
+        "Streaks now grow from daily check-ins instead of earnings logs.",
+        "Added a Check in button directly under your streak.",
+        "Streak freezes now protect missed check-ins.",
+        "Streak-related Missions now track check-ins instead of logged earnings."
+      ]
+    },
+    {
+      version: "2026.09.06.2",
+      title: "Streak insurance",
+      date: "6 September 2026",
+      changes: [
+        "Added streak freezes. Every account starts with 2 and 2 is the maximum.",
+        "A freeze is automatically consumed if you miss a day while an earning streak is active.",
+        "You can buy a replacement freeze for 50 available XP.",
+        "Buying freezes spends XP without reducing your level progression."
+      ]
+    },
     {
       version: "2026.09.06.1",
       title: "Dashboard cleanup",
@@ -2449,8 +2584,13 @@
   let achievementsUnlocked = null;
   let statsRange = {preset:"30d", start:"", end:""};
   let gameBonusXp = 0;
+  let gameXpSpent = 0;
   let missionClaims = null;
   let lastNotifiedLevel = null;
+  let streakFreezes = 2;
+  let checkInDates = null;
+  let streakFrozenDates = null;
+  let streakFreezeLastCheck = "";
   let currentTheme = "midnight";
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
@@ -3262,8 +3402,13 @@
     achievementsUnlocked = null;
     statsRange = {preset:"30d", start:"", end:""};
     gameBonusXp = 0;
+    gameXpSpent = 0;
     missionClaims = null;
     lastNotifiedLevel = null;
+    streakFreezes = 2;
+    checkInDates = null;
+    streakFrozenDates = null;
+    streakFreezeLastCheck = "";
     currentTheme = "midnight";
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
@@ -3285,8 +3430,13 @@
     regularPay = sanitizeRegularPay(parsed.regularPay);
     statsRange = sanitizeStatsRange(parsed.statsRange);
     gameBonusXp = Math.max(0,Number(parsed.gameBonusXp)||0);
+    gameXpSpent = Math.max(0,Number(parsed.gameXpSpent)||0);
     missionClaims = new Set(Array.isArray(parsed.missionClaims)?parsed.missionClaims:[]);
     lastNotifiedLevel = Number.isFinite(Number(parsed.lastNotifiedLevel)) ? Math.max(1,Math.floor(Number(parsed.lastNotifiedLevel))) : null;
+    streakFreezes = parsed.streakFreezes===undefined ? 2 : Math.max(0,Math.min(2,Math.floor(Number(parsed.streakFreezes)||0)));
+    checkInDates = new Set(Array.isArray(parsed.checkInDates)?parsed.checkInDates.filter(v=>/^\d{4}-\d{2}-\d{2}$/.test(v)):[]);
+    streakFrozenDates = new Set(Array.isArray(parsed.streakFrozenDates)?parsed.streakFrozenDates:[]);
+    streakFreezeLastCheck = /^\d{4}-\d{2}-\d{2}$/.test(parsed.streakFreezeLastCheck||"") ? parsed.streakFreezeLastCheck : todayStr();
     if(Array.isArray(parsed.achievementsUnlocked)) achievementsUnlocked = new Set(parsed.achievementsUnlocked);
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
@@ -3462,28 +3612,150 @@
     };
   }
 
-  function computeEarningStreak(){
-    const today=todayStr();
-    const dates=new Set(
-      entries
-        .filter(en=>en.date&&en.date<=today&&entryEarned(en)>0)
-        .map(en=>en.date)
+  function checkInDateSet(cutoff=todayStr()){
+    const set=checkInDates||new Set();
+    return new Set(
+      Array.from(set).filter(date=>date&&date<=cutoff)
     );
+  }
 
-    let cursor=today;
-    if(!dates.has(cursor)){
-      const yesterday=addDaysKey(today,-1);
-      if(!dates.has(yesterday)) return 0;
-      cursor=yesterday;
-    }
+  function computeStreakThroughDate(anchorDate){
+    if(!anchorDate) return 0;
+    const dates=checkInDateSet(anchorDate);
+    const frozen=streakFrozenDates||new Set();
+    let cursor=anchorDate;
 
-    let streak=0;
-    while(dates.has(cursor) && streak<5000){
-      streak++;
+    if(!dates.has(cursor)&&!frozen.has(cursor)) return 0;
+
+    let checkedDays=0;
+    let guard=0;
+    while(guard++<5000 && (dates.has(cursor)||frozen.has(cursor))){
+      if(dates.has(cursor)) checkedDays++;
       cursor=addDaysKey(cursor,-1);
     }
-    return streak;
+    return checkedDays;
   }
+
+  function computeCheckInStreak(){
+    const today=todayStr();
+    const dates=checkInDateSet(today);
+    const frozen=streakFrozenDates||new Set();
+
+    let cursor=today;
+    if(!dates.has(cursor)&&!frozen.has(cursor)){
+      cursor=addDaysKey(today,-1);
+      if(!dates.has(cursor)&&!frozen.has(cursor)) return 0;
+    }
+
+    let checkedDays=0;
+    let guard=0;
+    while(guard++<5000 && (dates.has(cursor)||frozen.has(cursor))){
+      if(dates.has(cursor)) checkedDays++;
+      cursor=addDaysKey(cursor,-1);
+    }
+    return checkedDays;
+  }
+
+  function reconcileUsedFreezes(){
+    if(!streakFrozenDates) streakFrozenDates=new Set();
+    const dates=checkInDateSet(todayStr());
+    let changed=false;
+
+    Array.from(streakFrozenDates).forEach(date=>{
+      if(dates.has(date)){
+        streakFrozenDates.delete(date);
+        if(streakFreezes<2) streakFreezes++;
+        changed=true;
+      }
+    });
+    return changed;
+  }
+
+  function processStreakFreezes(){
+    if(!streakFrozenDates) streakFrozenDates=new Set();
+    if(!checkInDates) checkInDates=new Set();
+
+    const today=todayStr();
+    let cursor=streakFreezeLastCheck||today;
+
+    if(cursor>today) cursor=today;
+
+    let used=0;
+    let changed=reconcileUsedFreezes();
+
+    let day=addDaysKey(cursor,1);
+    const yesterday=addDaysKey(today,-1);
+
+    while(day<=yesterday){
+      const dates=checkInDateSet(day);
+
+      if(!dates.has(day)){
+        const previousDay=addDaysKey(day,-1);
+        const hadActiveStreak=computeStreakThroughDate(previousDay)>0;
+
+        if(hadActiveStreak && streakFreezes>0 && !streakFrozenDates.has(day)){
+          streakFreezes--;
+          streakFrozenDates.add(day);
+          used++;
+          changed=true;
+        }
+      }
+
+      day=addDaysKey(day,1);
+    }
+
+    if(streakFreezeLastCheck!==today){
+      streakFreezeLastCheck=today;
+      changed=true;
+    }
+
+    return {used,changed};
+  }
+
+  async function dailyCheckIn(){
+    if(!checkInDates) checkInDates=new Set();
+
+    const today=todayStr();
+    if(checkInDates.has(today)) return;
+
+    checkInDates.add(today);
+
+    // Defensive refund if sync ever leaves a freeze on the same date.
+    if(streakFrozenDates&&streakFrozenDates.has(today)){
+      streakFrozenDates.delete(today);
+      streakFreezes=Math.min(2,streakFreezes+1);
+    }
+
+    await persist();
+    render();
+
+    const stack=ensureMilestoneToastStack();
+    const toast=document.createElement("div");
+    toast.className="milestone-toast";
+
+    const badge=document.createElement("div");
+    badge.className="milestone-badge";
+    badge.textContent="✓";
+
+    const copy=document.createElement("div");
+    const title=document.createElement("div");
+    title.className="milestone-title";
+    title.textContent="Checked in";
+
+    const detail=document.createElement("div");
+    detail.className="milestone-copy";
+    const streak=computeCheckInStreak();
+    detail.textContent=streak+" day"+(streak===1?"":"s")+" on your streak.";
+
+    copy.append(title,detail);
+    toast.append(badge,copy);
+    stack.appendChild(toast);
+
+    setTimeout(()=>toast.remove(),3000);
+    setTimeout(()=>{if(stack&&!stack.children.length)stack.remove();},3100);
+  }
+
+  $("dailyCheckInBtn").addEventListener("click",dailyCheckIn);
 
   function computeGameProgress(){
     const today=todayStr();
@@ -3501,11 +3773,13 @@
       achievements*40;
 
     const totalXp=Math.max(0,baseXp+Math.max(0,Number(gameBonusXp)||0));
+    const availableXp=Math.max(0,totalXp-Math.max(0,Number(gameXpSpent)||0));
     const levelInfo=gameLevelInfo(totalXp);
 
     return {
       totalXp,
-      streak:computeEarningStreak(),
+      availableXp,
+      streak:computeCheckInStreak(),
       totalEarned,
       distinctDays,
       purchases,
@@ -3526,21 +3800,22 @@
 
     const weekEntries=entries.filter(en=>en.date>=weekStart&&en.date<=today&&entryEarned(en)>0);
     const weekEarned=weekEntries.reduce((sum,en)=>sum+entryEarned(en),0);
-    const weekDays=new Set(weekEntries.map(en=>en.date)).size;
+    const weekCheckIns=Array.from(checkInDates||[]).filter(date=>date>=weekStart&&date<=today).length;
+    const checkedInToday=(checkInDates||new Set()).has(today);
 
     const clamp=(v,max)=>Math.max(0,Math.min(max,v));
 
     return [
       {
-        id:"daily:"+today+":log",
-        icon:"✦",
-        name:"Clock in",
-        desc:"Log any earnings today.",
+        id:"daily:"+today+":checkin",
+        icon:"✓",
+        name:"Check in",
+        desc:"Complete your daily LUMIN check-in.",
         reward:30,
-        value:todayEarned>0?1:0,
+        value:checkedInToday?1:0,
         target:1,
-        progressText:todayEarned>0?"Done":"0 / 1",
-        complete:todayEarned>0
+        progressText:checkedInToday?"Done":"0 / 1",
+        complete:checkedInToday
       },
       {
         id:"daily:"+today+":50",
@@ -3565,25 +3840,120 @@
         complete:weekEarned>=200
       },
       {
-        id:"week:"+weekStart+":3days",
+        id:"week:"+weekStart+":3checkins",
         icon:"🔥",
         name:"Keep the chain",
-        desc:"Log earnings on 3 different days this week.",
+        desc:"Check in on 3 different days this week.",
         reward:80,
-        value:clamp(weekDays,3),
+        value:clamp(weekCheckIns,3),
         target:3,
-        progressText:Math.min(weekDays,3)+" / 3 days",
-        complete:weekDays>=3
+        progressText:Math.min(weekCheckIns,3)+" / 3 days",
+        complete:weekCheckIns>=3
       }
     ];
   }
 
   function seedGameAfterLoad(){
     if(missionClaims===null) missionClaims=new Set();
+    if(checkInDates===null) checkInDates=new Set();
+    if(streakFrozenDates===null) streakFrozenDates=new Set();
+    streakFreezes=Math.max(0,Math.min(2,Math.floor(Number(streakFreezes)||0)));
+    if(!streakFreezeLastCheck) streakFreezeLastCheck=todayStr();
+
     if(lastNotifiedLevel===null){
       lastNotifiedLevel=computeGameProgress().level;
     }
   }
+
+  function showFreezeUsedToast(count){
+    const stack=ensureMilestoneToastStack();
+    const toast=document.createElement("div");
+    toast.className="milestone-toast freeze-used-toast";
+
+    const badge=document.createElement("div");
+    badge.className="milestone-badge";
+    badge.textContent="❄";
+
+    const copy=document.createElement("div");
+    const title=document.createElement("div");
+    title.className="milestone-title";
+    title.textContent=count===1?"Streak freeze used":"Streak freezes used";
+
+    const detail=document.createElement("div");
+    detail.className="milestone-copy";
+    detail.textContent=count===1
+      ? "Your streak survived a missed check-in."
+      : count+" freezes protected missed check-ins.";
+
+    copy.append(title,detail);
+    toast.append(badge,copy);
+    stack.appendChild(toast);
+
+    setTimeout(()=>toast.remove(),4300);
+    setTimeout(()=>{if(stack&&!stack.children.length)stack.remove();},4400);
+  }
+
+  function renderFreezeShop(){
+    const progress=computeGameProgress();
+    const count=Math.max(0,Math.min(2,Math.floor(Number(streakFreezes)||0)));
+
+    $("freezeModalCount").textContent=count+" / 2 "+(count===1?"freeze":"freezes");
+    $("freezeModalMeta").textContent=
+      count>=2 ? "You’re fully stocked." :
+      count===1 ? "One backup remains." :
+      "No freezes left. Your next missed check-in will break the chain.";
+
+    $("freezeXpNote").textContent=
+      "Available XP: "+progress.availableXp.toLocaleString()+
+      " · Lifetime XP: "+progress.totalXp.toLocaleString();
+
+    const buy=$("buyFreezeBtn");
+    const full=count>=2;
+    const enough=progress.availableXp>=50;
+    buy.disabled=full||!enough;
+    buy.style.opacity=buy.disabled?".55":"1";
+    buy.textContent=full ? "Freeze inventory full" : enough ? "Buy for 50 XP" : "Need 50 XP";
+
+    const history=Array.from(streakFrozenDates||[]).sort().reverse().slice(0,8);
+    $("freezeHistoryWrap").classList.toggle("hidden",history.length===0);
+    const list=$("freezeHistoryList");
+    list.innerHTML="";
+    history.forEach(date=>{
+      const chip=document.createElement("span");
+      chip.className="freeze-date-chip";
+      chip.textContent=formatRecordDate(date);
+      list.appendChild(chip);
+    });
+  }
+
+  function openFreezeShop(){
+    renderFreezeShop();
+    $("freezeBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+
+  function closeFreezeShop(){
+    $("freezeBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+
+  $("freezeShopBtn").addEventListener("click",openFreezeShop);
+  $("freezeCloseBtn").addEventListener("click",closeFreezeShop);
+  $("freezeBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="freezeBackdrop") closeFreezeShop();
+  });
+
+  $("buyFreezeBtn").addEventListener("click",async()=>{
+    const progress=computeGameProgress();
+    if(streakFreezes>=2 || progress.availableXp<50) return;
+
+    streakFreezes=Math.min(2,streakFreezes+1);
+    gameXpSpent+=50;
+
+    await persist();
+    renderFreezeShop();
+    renderGameStrip();
+  });
 
   function showLevelUpToast(level){
     const progress=computeGameProgress();
@@ -3639,12 +4009,21 @@
 
     $("gameLevel").textContent=String(progress.level);
     $("gameRank").textContent=progress.rank;
-    $("gameTotalXp").textContent=progress.totalXp.toLocaleString()+" XP total";
+    $("gameTotalXp").textContent=
+      progress.totalXp.toLocaleString()+" XP total · "+progress.availableXp.toLocaleString()+" available";
     $("gameXpFill").style.width=(progress.progress*100).toFixed(1)+"%";
     $("gameXpCaption").textContent=
       progress.xpInto.toLocaleString()+" / "+progress.xpNeeded.toLocaleString()+
       " XP to Level "+(progress.level+1);
     $("gameStreak").textContent="🔥 "+progress.streak;
+
+    const checkedIn=(checkInDates||new Set()).has(todayStr());
+    const checkInBtn=$("dailyCheckInBtn");
+    checkInBtn.textContent=checkedIn?"Checked in ✓":"Check in";
+    checkInBtn.disabled=checkedIn;
+    checkInBtn.classList.toggle("checked",checkedIn);
+
+    $("gameFreezeCount").textContent="❄ "+Math.max(0,Math.min(2,streakFreezes))+" / 2";
     $("missionsBtnCount").textContent=completed+" / "+missions.length;
     $("missionReadyDot").classList.toggle("hidden",claimable===0);
   }
@@ -3655,7 +4034,7 @@
     const claims=missionClaims||new Set();
 
     $("missionsLevel").textContent=progress.level+" · "+progress.rank;
-    $("missionsXp").textContent=progress.totalXp.toLocaleString()+" XP";
+    $("missionsXp").textContent=progress.totalXp.toLocaleString()+" XP · "+progress.availableXp.toLocaleString()+" available";
     $("missionsStreak").textContent="🔥 "+progress.streak+" "+(progress.streak===1?"day":"days");
 
     const grid=$("missionsGrid");
@@ -3801,8 +4180,14 @@
     seedAchievementsAfterLoad();
     const regularAdded = processRegularPayDue();
     seedGameAfterLoad();
+    const freezeResult = processStreakFreezes();
     finishLoadedState();
-    if(regularAdded>0) await persist();
+
+    if(freezeResult.used>0){
+      setTimeout(()=>showFreezeUsedToast(freezeResult.used),650);
+    }
+
+    if(regularAdded>0 || freezeResult.changed) await persist();
   }
 
   async function load(){
@@ -3823,8 +4208,13 @@
       achievementsUnlocked:Array.from(achievementsUnlocked||[]),
       statsRange:sanitizeStatsRange(statsRange),
       gameBonusXp:Math.max(0,Number(gameBonusXp)||0),
+      gameXpSpent:Math.max(0,Number(gameXpSpent)||0),
       missionClaims:Array.from(missionClaims||[]),
       lastNotifiedLevel,
+      streakFreezes:Math.max(0,Math.min(2,Math.floor(Number(streakFreezes)||0))),
+      checkInDates:Array.from(checkInDates||[]),
+      streakFrozenDates:Array.from(streakFrozenDates||[]),
+      streakFreezeLastCheck,
       theme:currentTheme,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
@@ -4405,6 +4795,9 @@
     if(!$("archiveBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeArchive(); return;
     }
+    if(!$("freezeBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeFreezeShop(); return;
+    }
     if(!$("missionsBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeMissions(); return;
     }
@@ -4601,13 +4994,20 @@
   });
 
   let lastKnownToday = todayStr();
-  setInterval(()=>{
+  setInterval(async()=>{
     const now = todayStr();
     if(now !== lastKnownToday){
       const dateInput = $("in-date");
       const wasOnToday = dateInput.value === lastKnownToday;
       if(wasOnToday) dateInput.value = now;
+
+      const freezeResult=processStreakFreezes();
       lastKnownToday = now;
+
+      if(freezeResult.used>0) showFreezeUsedToast(freezeResult.used);
+      if(freezeResult.changed) await persist();
+
+      render();
     }
   }, 60000);
 
