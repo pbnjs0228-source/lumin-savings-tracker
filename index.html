@@ -757,6 +757,741 @@
     .main-tab-btn{flex:1;}
   }
 
+  /* ---- more engaging dashboard layout ---- */
+  #dashboardTabPanel{
+    position:relative;
+  }
+  #dashboardTabPanel::before{
+    content:"";position:absolute;z-index:-1;pointer-events:none;
+    width:520px;height:520px;border-radius:50%;
+    left:-230px;top:120px;
+    background:radial-gradient(circle,color-mix(in srgb,var(--accent) 8%,transparent),transparent 68%);
+    filter:blur(6px);
+  }
+  #dashboardTabPanel::after{
+    content:"";position:absolute;z-index:-1;pointer-events:none;
+    width:420px;height:420px;border-radius:50%;
+    right:-180px;top:620px;
+    background:radial-gradient(circle,color-mix(in srgb,var(--accent2) 7%,transparent),transparent 70%);
+    filter:blur(8px);
+  }
+
+  .dashboard-hero-grid{
+    max-width:1080px;margin:0 auto 14px;
+    display:grid;grid-template-columns:minmax(0,1.75fr) minmax(270px,.72fr);gap:14px;align-items:stretch;
+  }
+  .dashboard-hero-grid .dashboard-chart-first{
+    margin:0;max-width:none;height:100%;
+    position:relative;overflow:hidden;
+    border-color:color-mix(in srgb,var(--accent) 18%,var(--line));
+    background:
+      linear-gradient(145deg,color-mix(in srgb,var(--accent) 6%,var(--panel)),var(--panel) 46%),
+      var(--panel);
+    box-shadow:0 18px 55px rgba(0,0,0,.13);
+  }
+  .dashboard-hero-grid .dashboard-chart-first::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(90deg,transparent 0 96%,color-mix(in srgb,var(--white) 2%,transparent) 96% 100%);
+    opacity:.4;
+  }
+
+  .dashboard-hero-grid .game-strip{
+    max-width:none;margin:0;min-height:100%;
+    grid-template-columns:72px minmax(0,1fr);
+    grid-template-rows:auto auto 1fr auto;
+    align-content:start;gap:11px;padding:16px;
+    border-radius:14px;
+    background:
+      radial-gradient(circle at 15% 5%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 38%),
+      linear-gradient(160deg,color-mix(in srgb,var(--accent2) 6%,var(--panel)),var(--panel));
+    border-color:color-mix(in srgb,var(--accent) 20%,var(--line));
+    box-shadow:0 18px 55px rgba(0,0,0,.13);
+  }
+  .dashboard-hero-grid .game-level-orb{grid-column:1;grid-row:1;}
+  .dashboard-hero-grid .game-progress-copy{grid-column:2;grid-row:1;align-self:center;}
+  .dashboard-hero-grid .game-streak{
+    grid-column:1/-1;grid-row:2;
+    display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px 10px;
+    text-align:left;padding:11px 12px;min-width:0;
+    background:color-mix(in srgb,var(--panel-solid) 86%,transparent);
+  }
+  .dashboard-hero-grid .game-streak-value{grid-column:1;font-size:18px;}
+  .dashboard-hero-grid .game-streak-label{grid-column:1;}
+  .dashboard-hero-grid .game-checkin-btn{
+    grid-column:2;grid-row:1/3;width:auto;min-width:90px;margin:0;
+  }
+  .dashboard-hero-grid .game-actions-row{
+    grid-column:1/-1;
+    grid-row:4;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:8px;
+    width:100%;
+  }
+  .dashboard-hero-grid .game-freeze-btn,
+  .dashboard-hero-grid .game-missions-btn{
+    min-width:0;
+    width:100%;
+  }
+
+  .dashboard-section-heading{
+    max-width:1080px;margin:24px auto 10px;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  }
+  .dashboard-section-eyebrow{
+    color:var(--accent-soft);font-size:9.5px;font-weight:850;text-transform:uppercase;letter-spacing:.7px;
+    margin-bottom:4px;
+  }
+  .dashboard-section-title{
+    margin:0;font-family:'Sora',sans-serif;font-size:18px;font-weight:760;color:var(--white);letter-spacing:-.25px;
+  }
+  .dashboard-section-copy{
+    color:var(--muted);font-size:11.5px;line-height:1.45;max-width:420px;
+  }
+
+  .goal-shelf-panel{
+    position:relative;overflow:hidden;
+    border-color:color-mix(in srgb,var(--accent) 14%,var(--line));
+  }
+  .goal-shelf-panel::after{
+    content:"";position:absolute;pointer-events:none;width:180px;height:180px;border-radius:50%;
+    right:-80px;bottom:-100px;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 8%,transparent),transparent 70%);
+  }
+
+  .items-shelf{
+    padding:3px 2px 10px;gap:12px;
+  }
+  .item-card{
+    flex-basis:205px;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.10);
+    transition:transform .2s cubic-bezier(.2,.8,.2,1),border-color .2s ease,box-shadow .2s ease;
+  }
+  .item-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 16px 38px rgba(0,0,0,.17);
+  }
+  .item-thumb{
+    border-radius:11px;
+  }
+
+  .goal-workspace{
+    max-width:1080px;margin:0 auto 14px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .goal-workspace .top-grid{
+    max-width:none;margin:0 !important;
+    grid-template-columns:minmax(0,.88fr) minmax(360px,1.25fr) !important;
+    gap:14px !important;
+  }
+  .goal-workspace .product-card,
+  .goal-workspace .dial-card{
+    min-height:100%;
+    box-shadow:0 14px 38px rgba(0,0,0,.11);
+  }
+  .goal-workspace .product-card{
+    background:
+      linear-gradient(160deg,color-mix(in srgb,var(--accent2) 5%,var(--panel)),var(--panel));
+  }
+  .goal-workspace .product-img-wrap{
+    min-height:180px;
+  }
+  .goal-workspace .product-img{
+    aspect-ratio:16/10;
+  }
+  .goal-workspace .dial-card{
+    background:
+      radial-gradient(circle at 50% 33%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 43%),
+      var(--panel);
+  }
+
+  .stats-ribbon{
+    max-width:1080px;margin:0 auto 18px;
+    display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) 1.18fr 1.18fr;
+    gap:8px;
+  }
+  .stats-ribbon .chip{
+    position:relative;overflow:hidden;min-width:0;
+    border-radius:12px;
+    transition:transform .18s ease,border-color .18s ease,background .18s ease;
+  }
+  .stats-ribbon .chip::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);
+    opacity:.55;
+  }
+  .stats-ribbon .chip:hover{
+    transform:translateY(-2px);
+    border-color:color-mix(in srgb,var(--accent) 24%,var(--line-strong));
+  }
+  .stats-ribbon .chip-value{font-size:15px;}
+  .stats-ribbon .records-chip{
+    background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 5%,var(--panel-raised)),var(--panel-raised));
+  }
+
+  .money-flow-grid{
+    max-width:1080px;margin:0 auto 18px;
+    display:grid;grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);gap:14px;align-items:stretch;
+  }
+  .money-flow-grid .punch-card-form,
+  .money-flow-grid .activity-panel{
+    margin:0;max-width:none;min-height:100%;
+    box-shadow:0 14px 38px rgba(0,0,0,.10);
+  }
+  .money-flow-grid .punch-card-form{
+    background:
+      linear-gradient(160deg,color-mix(in srgb,var(--positive) 4%,var(--panel)),var(--panel));
+  }
+  .money-flow-grid .activity-panel{
+    display:flex;flex-direction:column;
+    background:
+      linear-gradient(160deg,color-mix(in srgb,var(--accent) 4%,var(--panel)),var(--panel));
+  }
+  .money-flow-grid .ledger-list{
+    max-height:440px;flex:1;
+  }
+  .money-flow-grid .ledger-row{
+    border-radius:10px;
+  }
+
+  .panel{
+    transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+  }
+  @media(hover:hover){
+    .goal-workspace .panel:hover,
+    .money-flow-grid .panel:hover,
+    .goal-shelf-panel:hover{
+      border-color:color-mix(in srgb,var(--accent) 21%,var(--line-strong));
+    }
+  }
+
+  .header-row{
+    position:relative;
+  }
+  .header-row::after{
+    content:"";position:absolute;left:0;right:0;bottom:-9px;height:1px;
+    background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 22%,transparent),var(--line),transparent);
+  }
+
+
+  /* ---- cohesive dashboard clusters ---- */
+  .dashboard-cluster{
+    max-width:1080px;
+    margin:0 auto 12px;
+    padding:11px;
+    border:1px solid color-mix(in srgb,var(--accent) 12%,var(--line));
+    border-radius:15px;
+    background:
+      linear-gradient(145deg,
+        color-mix(in srgb,var(--accent) 3.5%,var(--panel)),
+        color-mix(in srgb,var(--accent2) 2%,var(--panel)));
+    box-shadow:0 12px 34px rgba(0,0,0,.075);
+  }
+  .dashboard-cluster .dashboard-section-heading{
+    max-width:none;
+    margin:0 0 9px;
+    padding:0 2px;
+  }
+  .dashboard-cluster .dashboard-subheading{
+    margin-top:9px;
+    padding-top:9px;
+    border-top:1px solid var(--line);
+  }
+  .dashboard-goal-actions{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    flex-wrap:wrap;
+  }
+  .dashboard-goal-actions .btn{
+    padding:8px 11px;
+    font-size:11px;
+  }
+
+  .goal-cluster .items-shelf{
+    margin:0;
+    padding:0 0 1px;
+    gap:8px;
+    overflow-x:auto;
+    scrollbar-width:thin;
+  }
+  .goal-cluster .items-shelf.hidden{display:none !important;}
+  .goal-cluster .item-card{
+    flex-basis:158px;
+    min-width:158px;
+    padding:8px;
+    border-radius:11px;
+  }
+  .goal-cluster .item-thumb{height:82px;object-fit:cover;}
+  .goal-cluster .item-name{font-size:11px;}
+
+  .goal-workspace{
+    max-width:none !important;
+    margin:0 !important;
+    gap:8px !important;
+  }
+  .goal-workspace .top-grid{
+    display:grid !important;
+    grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr) !important;
+    gap:8px !important;
+    margin:0 !important;
+    align-items:stretch;
+  }
+  .goal-workspace .product-card,
+  .goal-workspace .dial-card,
+  .goal-workspace .deadline-panel{
+    box-shadow:none !important;
+    border-color:color-mix(in srgb,var(--accent) 11%,var(--line));
+  }
+
+  .goal-workspace .deadline-panel{
+    width:100%;
+    max-width:none;
+    margin:0;
+    display:grid;
+    grid-template-columns:minmax(220px,.58fr) minmax(410px,1.42fr);
+    grid-template-areas:
+      "head flips"
+      "sub flips"
+      "done done";
+    column-gap:12px;
+    row-gap:3px;
+    align-items:center;
+    padding:10px 11px;
+  }
+  .goal-workspace .deadline-panel .panel-header-row{
+    grid-area:head;
+    margin:0 !important;
+    align-self:end;
+  }
+  .goal-workspace .deadline-sub{
+    grid-area:sub;
+    margin:0 !important;
+    align-self:start;
+  }
+  .goal-workspace .mini-flip-row{
+    grid-area:flips;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:4px;
+    width:100%;
+  }
+  .goal-workspace .deadline-done{grid-area:done;}
+  .goal-workspace .mini-flip-card{
+    transform:none !important;
+    height:54px;
+  }
+  .goal-workspace .mini-face,
+  .goal-workspace .mini-flap{font-size:20px;}
+  .goal-workspace .mini-flip-label{
+    margin-top:3px;
+    font-size:7px;
+  }
+
+  .money-cluster .money-flow-grid{
+    max-width:none;
+    margin:0;
+    grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);
+    gap:8px;
+  }
+  .money-cluster .punch-card-form,
+  .money-cluster .activity-panel{
+    box-shadow:none !important;
+    border-color:color-mix(in srgb,var(--accent) 10%,var(--line));
+    border-radius:11px;
+  }
+  .money-cluster .activity-panel{min-height:0;}
+  .money-cluster .ledger-list{max-height:320px;}
+
+  @media(max-width:900px){
+    .goal-workspace .top-grid{
+      grid-template-columns:minmax(0,1fr) minmax(270px,.86fr) !important;
+    }
+    .goal-workspace .deadline-panel{
+      grid-template-columns:minmax(195px,.52fr) minmax(350px,1.48fr);
+      column-gap:9px;
+    }
+    .money-cluster .money-flow-grid{
+      grid-template-columns:minmax(255px,.78fr) minmax(0,1.22fr);
+    }
+  }
+
+  @media(max-width:760px){
+    .dashboard-cluster{
+      padding:9px;
+      border-radius:13px;
+      margin-bottom:10px;
+    }
+    .dashboard-cluster .dashboard-section-copy{display:none;}
+    .goal-workspace .top-grid{grid-template-columns:1fr !important;}
+    .goal-workspace .deadline-panel{
+      grid-template-columns:1fr;
+      grid-template-areas:
+        "head"
+        "sub"
+        "flips"
+        "done";
+      row-gap:6px;
+    }
+    .money-cluster .money-flow-grid{grid-template-columns:1fr;}
+    .money-cluster .ledger-list{max-height:270px;}
+  }
+
+  @media(max-width:560px){
+    body{padding:11px 7px 26px;}
+    .dashboard-cluster{padding:8px;border-radius:12px;}
+    .dashboard-cluster .dashboard-section-heading{
+      gap:7px;
+      margin-bottom:7px;
+    }
+    .goals-heading{align-items:flex-start !important;}
+    .dashboard-goal-actions{
+      width:100%;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:5px;
+    }
+    .dashboard-goal-actions .btn{
+      width:100%;
+      justify-content:center;
+      padding:7px;
+      font-size:10px;
+    }
+    .goal-cluster .item-card{
+      flex-basis:142px;
+      min-width:142px;
+    }
+    .goal-cluster .item-thumb{height:72px;}
+
+    .goal-workspace .product-card{
+      grid-template-columns:90px minmax(0,1fr) !important;
+      padding:9px !important;
+      column-gap:8px !important;
+    }
+    .goal-workspace .product-img-wrap{
+      width:90px !important;
+      height:80px !important;
+    }
+    .goal-workspace .product-name{font-size:12px !important;}
+
+    .goal-workspace .dial-card{
+      grid-template-columns:90px minmax(0,1fr) !important;
+      padding:9px !important;
+      gap:6px !important;
+    }
+    .goal-workspace .fan-wrap,
+    .goal-workspace .fan-wrap>svg{
+      width:90px !important;
+      height:90px !important;
+    }
+    .goal-workspace .fan-center-overlay{transform:scale(.6) !important;}
+    .goal-workspace .figure{padding:5px 6px !important;}
+    .goal-workspace .figure-label{font-size:8px !important;}
+    .goal-workspace .figure-value{font-size:10px !important;}
+
+    .goal-workspace .deadline-panel{padding:8px;}
+    .goal-workspace .deadline-controls{width:100%;gap:4px;}
+    .goal-workspace .deadline-date-wrap{flex:1;min-width:0;}
+    .goal-workspace .deadline-date-label{display:none;}
+    .goal-workspace .deadline-date-input{
+      width:100%;
+      min-width:0;
+      padding:6px 7px;
+    }
+    .goal-workspace .mini-flip-row{
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:3px;
+    }
+    .goal-workspace .mini-flip-card{
+      height:44px;
+      border-radius:7px;
+    }
+    .goal-workspace .mini-face,
+    .goal-workspace .mini-flap{font-size:16px;}
+    .goal-workspace .mini-flip-label{
+      font-size:6px;
+      letter-spacing:0;
+    }
+
+    .money-cluster .punch-card-form,
+    .money-cluster .activity-panel{padding:10px;}
+    .money-cluster .earnings-mode-toggle{width:100%;}
+    .money-cluster .earnings-mode-toggle button{
+      flex:1;
+      padding-left:4px;
+      padding-right:4px;
+      font-size:9px;
+    }
+  }
+
+  @media(max-width:390px){
+    .stats-ribbon{grid-template-columns:1fr !important;}
+    .dashboard-goal-actions{grid-template-columns:1fr;}
+    .goal-workspace .product-card{
+      grid-template-columns:76px minmax(0,1fr) !important;
+    }
+    .goal-workspace .product-img-wrap{
+      width:76px !important;
+      height:68px !important;
+    }
+    .goal-workspace .dial-card{
+      grid-template-columns:78px minmax(0,1fr) !important;
+    }
+    .goal-workspace .fan-wrap,
+    .goal-workspace .fan-wrap>svg{
+      width:78px !important;
+      height:78px !important;
+    }
+  }
+
+  /* ---- compact active-goal cockpit ---- */
+  .goal-workspace{
+    gap:10px;
+  }
+  .goal-workspace .top-grid{
+    grid-template-columns:minmax(0,1.18fr) minmax(260px,.82fr) !important;
+    gap:10px !important;
+    align-items:stretch;
+  }
+
+  .goal-workspace .product-card{
+    display:grid;
+    grid-template-columns:180px minmax(0,1fr);
+    grid-template-rows:auto auto auto auto auto 1fr;
+    column-gap:14px;
+    row-gap:6px;
+    align-content:start;
+    min-height:0;
+    padding:14px;
+  }
+  .goal-workspace .product-card .panel-label{
+    grid-column:1/-1;
+    margin-bottom:3px;
+  }
+  .goal-workspace .product-img-wrap{
+    grid-column:1;
+    grid-row:2 / span 5;
+    width:180px;
+    height:138px;
+    min-height:0;
+    margin:0;
+    align-self:start;
+    border-radius:11px;
+    background:var(--panel-solid);
+  }
+  .goal-workspace .product-img{
+    width:100%;
+    height:100%;
+    aspect-ratio:auto;
+    object-fit:contain;
+  }
+  .goal-workspace .product-img.placeholder{
+    height:100%;
+    padding:12px;
+    text-align:center;
+  }
+  .goal-workspace .product-name{
+    grid-column:2;
+    grid-row:2;
+    margin:1px 0 1px;
+    font-size:15px;
+    line-height:1.25;
+  }
+  .goal-workspace .product-link{
+    grid-column:2;
+    grid-row:3;
+    font-size:11.5px;
+  }
+  .goal-workspace .product-note{
+    grid-column:2;
+    grid-row:4;
+    margin:2px 0 0;
+    max-height:54px;
+    overflow:auto;
+    padding:7px 8px;
+    font-size:10.5px;
+    line-height:1.35;
+  }
+  .goal-workspace .product-price-change{
+    grid-column:2;
+    grid-row:5;
+    margin-top:1px;
+  }
+  .goal-workspace .purchase-btn,
+  .goal-workspace .purchased-active-badge{
+    grid-column:2;
+    grid-row:6;
+    align-self:end;
+    margin-top:3px;
+  }
+  .goal-workspace .purchase-btn{
+    width:auto;
+    justify-self:start;
+    padding:7px 10px;
+    font-size:10.5px;
+  }
+
+  .goal-workspace .dial-card{
+    min-height:0;
+    padding:13px 14px;
+    gap:8px;
+    display:grid;
+    grid-template-columns:150px minmax(0,1fr);
+    grid-template-rows:1fr;
+    align-items:center;
+  }
+  .goal-workspace .fan-wrap{
+    width:150px;
+    height:150px;
+    margin:0;
+  }
+  .goal-workspace .fan-wrap>svg{
+    width:150px;
+    height:150px;
+  }
+  .goal-workspace .fan-center-overlay{
+    transform:scale(.83);
+  }
+  .goal-workspace .fan-pct{
+    font-size:22px;
+  }
+  .goal-workspace .fan-goal{
+    max-width:135px;
+    font-size:9.5px;
+  }
+  .goal-workspace .fan-figures{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:6px;
+    align-self:stretch;
+  }
+  .goal-workspace .figure{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    text-align:left;
+    padding:8px 9px;
+    border-radius:9px;
+    background:var(--panel-solid);
+    border:1px solid var(--line);
+  }
+  .goal-workspace .figure-label{
+    margin:0;
+    font-size:9.5px;
+  }
+  .goal-workspace .figure-value{
+    font-size:11.5px;
+    text-align:right;
+  }
+
+  .goal-workspace .deadline-panel{
+    padding:12px 14px;
+  }
+  .goal-workspace .deadline-panel .panel-header-row{
+    margin-bottom:7px !important;
+  }
+  .goal-workspace .deadline-sub{
+    font-size:10.5px;
+    margin-bottom:8px;
+  }
+  .goal-workspace .mini-flip-row{
+    gap:6px;
+  }
+  .goal-workspace .mini-flip-card{
+    transform:scale(.88);
+    transform-origin:top center;
+  }
+  .goal-workspace .mini-flip-label{
+    margin-top:-4px;
+    font-size:8px;
+  }
+
+  .dashboard-section-heading{
+    margin-top:20px;
+    margin-bottom:8px;
+  }
+  .dashboard-section-title{
+    font-size:17px;
+  }
+  .dashboard-section-copy{
+    font-size:10.5px;
+  }
+
+  @media(max-width:920px){
+    .dashboard-hero-grid{grid-template-columns:1fr;}
+    .dashboard-hero-grid .game-strip{
+      grid-template-columns:72px minmax(0,1fr) minmax(120px,.45fr);
+      grid-template-rows:auto auto;
+    }
+    .dashboard-hero-grid .game-level-orb{grid-column:1;grid-row:1;}
+    .dashboard-hero-grid .game-progress-copy{grid-column:2;grid-row:1;}
+    .dashboard-hero-grid .game-streak{grid-column:3;grid-row:1/3;display:block;text-align:center;}
+    .dashboard-hero-grid .game-checkin-btn{width:100%;margin-top:7px;}
+    .dashboard-hero-grid .game-actions-row{
+      grid-column:1/3;
+      grid-row:2;
+    }
+    .stats-ribbon{grid-template-columns:repeat(4,minmax(0,1fr));}
+    .goal-workspace .top-grid{grid-template-columns:minmax(0,1.08fr) minmax(240px,.92fr) !important;}
+    .goal-workspace .product-card{grid-template-columns:150px minmax(0,1fr);}
+    .goal-workspace .product-img-wrap{width:150px;height:120px;}
+    .goal-workspace .dial-card{grid-template-columns:130px minmax(0,1fr);}
+    .goal-workspace .fan-wrap,
+    .goal-workspace .fan-wrap>svg{width:130px;height:130px;}
+  }
+
+  @media(max-width:720px){
+    .dashboard-section-heading{margin-top:18px;}
+    .stats-ribbon{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .stats-ribbon .records-chip{grid-column:auto;}
+    .goal-workspace .top-grid{grid-template-columns:1fr !important;}
+    .goal-workspace .product-card{
+      grid-template-columns:132px minmax(0,1fr);
+      column-gap:11px;
+    }
+    .goal-workspace .product-img-wrap{width:132px;height:108px;}
+    .goal-workspace .dial-card{
+      grid-template-columns:120px minmax(0,1fr);
+    }
+    .goal-workspace .fan-wrap,
+    .goal-workspace .fan-wrap>svg{width:120px;height:120px;}
+    .money-flow-grid{grid-template-columns:1fr;}
+    .dashboard-hero-grid .game-strip{
+      grid-template-columns:72px 1fr;
+      grid-template-rows:auto auto auto;
+    }
+    .dashboard-hero-grid .game-streak{grid-column:1/-1;grid-row:2;display:grid;text-align:left;}
+    .dashboard-hero-grid .game-actions-row{
+      grid-column:1/-1;
+      grid-row:3;
+    }
+  }
+
+  @media(max-width:540px){
+    .goal-workspace .product-card{
+      grid-template-columns:108px minmax(0,1fr);
+      padding:12px;
+      column-gap:10px;
+    }
+    .goal-workspace .product-img-wrap{width:108px;height:92px;}
+    .goal-workspace .product-name{font-size:13px;}
+    .goal-workspace .product-note{max-height:44px;}
+    .goal-workspace .dial-card{
+      grid-template-columns:105px minmax(0,1fr);
+      padding:11px 12px;
+    }
+    .goal-workspace .fan-wrap,
+    .goal-workspace .fan-wrap>svg{width:105px;height:105px;}
+    .goal-workspace .fan-center-overlay{transform:scale(.7);}
+    .goal-workspace .figure{padding:6px 7px;}
+    .goal-workspace .deadline-controls{gap:5px;}
+  }
+
+  @media(max-width:430px){
+    .stats-ribbon{grid-template-columns:1fr 1fr;}
+    .dashboard-section-copy{display:none;}
+  }
+
   /* ---- LUMIN progression / gamification ---- */
   .game-strip{
     display:grid;grid-template-columns:auto minmax(180px,1fr) auto auto auto;gap:14px;align-items:center;
@@ -830,19 +1565,62 @@
     cursor:default;
   }
   .game-freeze-btn{
-    min-width:96px;padding:9px 11px;border-radius:11px;background:var(--panel-solid);
-    border:1px solid var(--line);color:var(--white);cursor:pointer;text-align:center;
+    min-width:0;
+    min-height:46px;
+    padding:9px 11px;
+    border-radius:11px;
+    background:var(--panel-solid);
+    border:1px solid var(--line);
+    color:var(--white);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    text-align:left;
+    white-space:nowrap;
+    overflow:hidden;
     transition:border-color .16s ease,transform .16s ease,background .16s ease;
   }
   .game-freeze-btn:hover{
-    border-color:color-mix(in srgb,var(--accent-soft) 45%,var(--line-strong));
-    background:color-mix(in srgb,var(--accent) 5%,var(--panel-solid));
+    border-color:color-mix(in srgb,#9ecbff 42%,var(--line-strong));
+    background:color-mix(in srgb,#8fc5ff 6%,var(--panel-solid));
   }
-  .game-freeze-btn:active{transform:scale(.98);}
-  .game-freeze-value{
-    font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#b8d7ff;
+  .game-freeze-btn:active{transform:scale(.985);}
+  .game-freeze-icon{
+    flex:0 0 auto;
+    font-size:15px;
+    line-height:1;
+    filter:drop-shadow(0 0 5px rgba(143,197,255,.22));
   }
-  .game-freeze-label{font-size:9px;color:var(--muted);margin-top:2px;}
+  .game-freeze-copy{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-family:'Inter',sans-serif;
+    font-size:10.5px;
+    font-weight:750;
+    color:var(--muted);
+  }
+  .game-freeze-count{
+    flex:0 0 auto;
+    margin-left:auto;
+    padding:4px 7px;
+    border-radius:7px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:800;
+    color:#b8d7ff;
+    background:color-mix(in srgb,#8fc5ff 8%,var(--panel-raised));
+    border:1px solid color-mix(in srgb,#8fc5ff 18%,var(--line));
+  }
+  .game-missions-btn{
+    min-height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    white-space:nowrap;
+  }
   .freeze-modal{max-width:470px;}
   .freeze-hero{
     display:grid;grid-template-columns:74px minmax(0,1fr);gap:14px;align-items:center;
@@ -944,12 +1722,25 @@
     .game-strip{grid-template-columns:auto 1fr;gap:11px;}
     .game-streak,.game-freeze-btn,.game-missions-btn{min-width:0;width:100%;}
     .game-streak{grid-column:1/2;}
-    .game-freeze-btn{grid-column:2/3;}
-    .game-missions-btn{grid-column:1/3;}
+    .game-actions-row{
+      grid-column:1/3;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:7px;
+    }
     .missions-grid{grid-template-columns:1fr;}
   }
   @media(max-width:430px){
     .missions-header-stats{grid-template-columns:1fr;}
+    .game-actions-row{gap:6px;}
+    .game-freeze-btn,.game-missions-btn{
+      min-height:43px;
+      padding-left:8px;
+      padding-right:8px;
+    }
+    .game-freeze-copy{font-size:9.5px;}
+    .game-freeze-count{font-size:10px;padding:3px 5px;}
+    .game-missions-btn{font-size:10px;}
   }
 
   /* stat chips */
@@ -1690,6 +2481,677 @@
     .header-mini-group{justify-content:flex-start;}
   }
 
+
+  /* ================================================================
+     PROFESSIONAL UI POLISH
+     Cleaner production-dashboard styling without changing features.
+     ================================================================ */
+
+  body{
+    padding:22px 16px 44px;
+    background:
+      radial-gradient(ellipse 680px 420px at 8% -10%,
+        color-mix(in srgb,var(--accent) 7%,transparent),transparent 64%),
+      linear-gradient(180deg,
+        color-mix(in srgb,var(--bg1) 96%,#0c0d12),
+        color-mix(in srgb,var(--bg2) 94%,#0c0d12));
+  }
+
+  .wrap{max-width:1120px;}
+
+  /* Header behaves more like a real app header than a marketing hero. */
+  .header-row{
+    max-width:1080px;
+    margin:0 auto 16px;
+    padding:0 2px 15px;
+    align-items:flex-end;
+    border-bottom:1px solid var(--line);
+  }
+  .header-row::after{display:none !important;}
+  .brand-row{margin-bottom:4px;}
+  .brand-mark{width:21px;height:21px;}
+  .brand-word{font-size:15px;letter-spacing:1.6px;}
+  .brand-tag{
+    font-size:10px;
+    letter-spacing:.25px;
+  }
+  h1.title{
+    font-size:clamp(20px,3vw,26px);
+    font-weight:700;
+    margin-top:7px;
+    letter-spacing:-.45px;
+  }
+  .subtitle{
+    max-width:610px;
+    font-size:11.5px;
+    line-height:1.55;
+    margin-top:5px;
+  }
+  .header-right{
+    gap:9px;
+    align-items:center;
+  }
+  .save-note{
+    min-width:auto;
+    padding:5px 8px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:color-mix(in srgb,var(--panel-solid) 76%,transparent);
+    font-size:9.5px;
+  }
+
+  /* Navigation */
+  .main-tabs{
+    padding:3px;
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 92%,transparent);
+    border-color:var(--line);
+    box-shadow:0 1px 2px rgba(0,0,0,.12);
+  }
+  .main-tab-btn{
+    min-height:32px;
+    padding:7px 12px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:600;
+  }
+  .main-tab-btn.active{
+    box-shadow:none;
+    background:var(--accent);
+  }
+
+  /* Base surfaces */
+  .panel,
+  .dashboard-cluster,
+  .game-strip,
+  .settings-card,
+  .chip{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+
+  .panel{
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 69%,var(--panel));
+    box-shadow:0 1px 2px rgba(0,0,0,.10),0 9px 24px rgba(0,0,0,.045);
+  }
+  .dashboard-cluster{
+    border-radius:13px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 42%,var(--panel));
+    box-shadow:0 1px 2px rgba(0,0,0,.08);
+  }
+  .dashboard-hero-grid .dashboard-chart-first,
+  .dashboard-hero-grid .game-strip{
+    box-shadow:0 1px 2px rgba(0,0,0,.12),0 12px 30px rgba(0,0,0,.055);
+    border-color:var(--line);
+  }
+  .dashboard-hero-grid .dashboard-chart-first{
+    background:color-mix(in srgb,var(--panel-solid) 62%,var(--panel));
+  }
+  .dashboard-hero-grid .dashboard-chart-first::before{display:none;}
+  .dashboard-hero-grid .game-strip{
+    background:color-mix(in srgb,var(--panel-solid) 56%,var(--panel));
+  }
+
+  .panel:hover,
+  .goal-workspace .panel:hover,
+  .money-flow-grid .panel:hover,
+  .goal-shelf-panel:hover{
+    transform:none !important;
+    box-shadow:0 1px 2px rgba(0,0,0,.10),0 10px 26px rgba(0,0,0,.055);
+  }
+
+  /* Section typography */
+  .panel-label{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.58px;
+  }
+  .panel-label .dash,
+  .settings-card-title .dash{
+    width:12px;
+  }
+  .dashboard-section-eyebrow{
+    font-size:8.5px;
+    letter-spacing:.85px;
+  }
+  .dashboard-section-title{
+    font-size:16px;
+    letter-spacing:-.2px;
+  }
+  .dashboard-section-copy{
+    font-size:10.5px;
+    line-height:1.5;
+  }
+
+  /* Buttons and controls */
+  .btn{
+    min-height:36px;
+    padding:8px 12px;
+    border-radius:9px;
+    font-size:11px;
+    font-weight:600;
+    box-shadow:none;
+  }
+  .btn-primary{
+    box-shadow:0 1px 2px color-mix(in srgb,var(--accent) 20%,transparent);
+  }
+  .btn:hover{
+    transform:none;
+  }
+  .btn:focus-visible,
+  .main-tab-btn:focus-visible,
+  .segmented button:focus-visible,
+  .game-checkin-btn:focus-visible,
+  .game-freeze-btn:focus-visible{
+    outline:2px solid color-mix(in srgb,var(--accent-soft) 74%,white);
+    outline-offset:2px;
+  }
+
+  .segmented{
+    padding:3px;
+    border-radius:9px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 93%,transparent);
+  }
+  .segmented button{
+    min-height:29px;
+    padding:5px 10px;
+    border-radius:6px;
+    font-size:10.5px;
+  }
+  .segmented button.active{
+    box-shadow:none;
+  }
+
+  input,
+  select,
+  textarea{
+    border-radius:9px !important;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus{
+    outline:none;
+    border-color:color-mix(in srgb,var(--accent) 54%,var(--line-strong)) !important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  }
+
+  /* Chart: calmer, cleaner analytics card */
+  .range-toolbar{
+    padding:8px 9px;
+    border-radius:9px;
+    background:color-mix(in srgb,var(--panel-solid) 72%,transparent);
+    border-color:var(--line);
+  }
+  .range-summary{
+    gap:7px;
+  }
+  .range-summary-card{
+    padding:8px 9px;
+    border-radius:9px;
+    background:color-mix(in srgb,var(--panel-solid) 78%,transparent);
+    border-color:var(--line);
+  }
+  .range-summary-label{font-size:8.5px;}
+  .range-summary-value{font-size:12.5px;}
+  .projection-banner{
+    border-radius:10px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 70%,transparent);
+  }
+
+  /* Progress HUD */
+  .game-level-orb{
+    border-radius:12px;
+    box-shadow:none;
+    background:color-mix(in srgb,var(--accent) 9%,var(--panel-raised));
+  }
+  .game-rank{font-size:14px;}
+  .game-total-xp{font-size:9.5px;}
+  .game-xp-track{
+    height:7px;
+    border:0;
+    background:color-mix(in srgb,var(--white) 7%,transparent);
+  }
+  .game-xp-fill{box-shadow:none;}
+  .game-streak{
+    border-radius:10px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+  }
+  .game-checkin-btn{
+    border-radius:8px;
+    min-height:34px;
+  }
+
+  /* Freeze control: FULL TEXT ALWAYS VISIBLE. */
+  .dashboard-hero-grid .game-actions-row{
+    grid-template-columns:minmax(168px,1.2fr) minmax(126px,.8fr);
+  }
+  .game-freeze-btn{
+    overflow:visible;
+    min-width:168px;
+    min-height:44px;
+    padding:8px 10px;
+    border-radius:9px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+  }
+  .game-freeze-copy{
+    flex:0 0 auto;
+    min-width:max-content;
+    overflow:visible;
+    text-overflow:clip;
+    white-space:nowrap;
+    font-size:10px;
+    font-weight:600;
+    color:var(--muted);
+  }
+  .game-freeze-count{
+    margin-left:auto;
+    border-radius:6px;
+    padding:3px 6px;
+    font-size:10.5px;
+  }
+  .game-missions-btn{
+    min-width:126px;
+    min-height:44px;
+    border-radius:9px;
+  }
+
+  /* Stats */
+  .stats-ribbon{
+    gap:7px;
+  }
+  .stats-ribbon .chip{
+    min-height:68px;
+    padding:10px 11px;
+    border-radius:10px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 60%,var(--panel));
+  }
+  .stats-ribbon .chip::before{
+    width:2px;
+    opacity:.38;
+  }
+  .stats-ribbon .chip:hover{
+    transform:none;
+    border-color:var(--line-strong);
+  }
+  .chip-label{font-size:8.5px;}
+  .stats-ribbon .chip-value{font-size:13px;}
+
+  /* Goals */
+  .goal-cluster .item-card{
+    border-width:1px;
+    border-radius:10px;
+    box-shadow:none;
+    background:color-mix(in srgb,var(--panel-solid) 72%,var(--panel-raised));
+  }
+  .goal-cluster .item-card:hover{
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(0,0,0,.07);
+  }
+  .item-card.active{
+    border-color:color-mix(in srgb,var(--accent) 68%,var(--line-strong));
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 7%,transparent);
+  }
+  .goal-workspace .product-card,
+  .goal-workspace .dial-card,
+  .goal-workspace .deadline-panel{
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 67%,var(--panel));
+  }
+  .goal-workspace .figure{
+    border-radius:8px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 80%,transparent);
+  }
+
+  /* Money flow */
+  .money-cluster .punch-card-form,
+  .money-cluster .activity-panel{
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 66%,var(--panel));
+  }
+  .ledger-row{
+    border-radius:8px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 78%,transparent);
+  }
+
+  /* Settings */
+  .settings-card{
+    border-radius:11px;
+    border-color:var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 58%,var(--panel));
+    box-shadow:0 1px 2px rgba(0,0,0,.08);
+  }
+  .settings-theme-picker,
+  .settings-cloud-wrap{
+    border-radius:9px;
+    border-color:var(--line);
+  }
+
+  /* Modals */
+  .modal{
+    border-radius:14px;
+    border-color:var(--line-strong);
+    box-shadow:0 28px 90px rgba(0,0,0,.42);
+  }
+
+  /* Responsive polish */
+  @media(max-width:900px){
+    .header-row{
+      align-items:flex-start;
+    }
+    .dashboard-hero-grid{
+      gap:10px;
+    }
+    .dashboard-hero-grid .game-actions-row{
+      grid-template-columns:minmax(168px,1fr) minmax(126px,1fr);
+    }
+  }
+
+  @media(max-width:720px){
+    body{padding:14px 10px 30px;}
+    .header-row{
+      margin-bottom:12px;
+      padding-bottom:12px;
+    }
+    .header-right{
+      width:100%;
+      justify-content:space-between;
+    }
+    .main-tabs{
+      width:auto;
+      flex:1;
+      max-width:300px;
+    }
+    .dashboard-hero-grid{
+      margin-bottom:10px;
+    }
+    .dashboard-hero-grid .game-strip{
+      padding:12px;
+    }
+    .dashboard-section-title{font-size:15px;}
+  }
+
+  @media(max-width:520px){
+    .brand-tag{display:none;}
+    h1.title{font-size:21px;}
+    .subtitle{font-size:10.5px;}
+    .main-tabs{max-width:none;}
+    .save-note{display:none;}
+
+    .dashboard-hero-grid .game-actions-row,
+    .game-actions-row{
+      grid-template-columns:1fr !important;
+      gap:6px;
+    }
+    .game-freeze-btn,
+    .game-missions-btn{
+      width:100%;
+      min-width:0;
+    }
+    .game-freeze-copy{
+      flex:0 0 auto;
+      min-width:auto;
+      font-size:10.5px;
+    }
+
+    .stats-ribbon{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    .settings-grid{gap:9px;}
+  }
+
+  @media(max-width:360px){
+    .stats-ribbon{grid-template-columns:1fr;}
+    .game-freeze-copy{font-size:10px;}
+  }
+
+
+  /* ================================================================
+     INLINE MISSIONS
+     Missions now live inside the progression card below the streak.
+     ================================================================ */
+  .dashboard-hero-grid .game-strip{
+    grid-template-columns:72px minmax(0,1fr) !important;
+    grid-template-rows:auto auto auto auto !important;
+    align-content:start !important;
+    gap:10px !important;
+  }
+  .dashboard-hero-grid .game-level-orb{
+    grid-column:1 !important;
+    grid-row:1 !important;
+  }
+  .dashboard-hero-grid .game-progress-copy{
+    grid-column:2 !important;
+    grid-row:1 !important;
+  }
+  .dashboard-hero-grid .game-streak{
+    grid-column:1/-1 !important;
+    grid-row:2 !important;
+  }
+  .dashboard-hero-grid .game-missions-inline{
+    grid-column:1/-1;
+    grid-row:3;
+  }
+  .dashboard-hero-grid .game-actions-row{
+    grid-column:1/-1 !important;
+    grid-row:4 !important;
+    display:block !important;
+    width:100%;
+  }
+  .dashboard-hero-grid .game-freeze-btn{
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  .game-missions-inline{
+    min-width:0;
+    padding:10px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+  }
+  .game-missions-inline-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:7px;
+  }
+  .game-missions-inline-title-row{
+    min-width:0;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .game-missions-inline-title{
+    font-family:'Sora',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    color:var(--white);
+  }
+  .game-missions-inline-count{
+    flex:0 0 auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;
+    font-weight:700;
+    color:var(--muted);
+    padding:2px 5px;
+    border-radius:6px;
+    background:var(--panel-raised);
+    border:1px solid var(--line);
+  }
+  .game-missions-ready{
+    flex:0 0 auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:8.5px;
+    font-weight:700;
+    color:var(--positive);
+    padding:2px 5px;
+    border-radius:999px;
+    background:color-mix(in srgb,var(--positive) 8%,transparent);
+    border:1px solid color-mix(in srgb,var(--positive) 18%,var(--line));
+  }
+
+  .inline-missions-grid{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .mission-inline-card{
+    display:grid;
+    grid-template-columns:26px minmax(0,1fr) auto;
+    grid-template-areas:
+      "icon copy side";
+    gap:8px;
+    align-items:center;
+    min-width:0;
+    padding:7px 8px;
+    border-radius:8px;
+    background:color-mix(in srgb,var(--panel-raised) 58%,transparent);
+    border:1px solid color-mix(in srgb,var(--line) 88%,transparent);
+    transition:border-color .16s ease,background .16s ease;
+  }
+  .mission-inline-card.complete{
+    border-color:color-mix(in srgb,var(--positive) 26%,var(--line));
+    background:color-mix(in srgb,var(--positive) 4%,var(--panel-raised));
+  }
+  .mission-inline-card.claimed{
+    opacity:.72;
+  }
+  .mission-inline-icon{
+    grid-area:icon;
+    width:26px;
+    height:26px;
+    display:grid;
+    place-items:center;
+    border-radius:7px;
+    background:var(--panel-solid);
+    border:1px solid var(--line);
+    font-size:12px;
+  }
+  .mission-inline-copy{
+    grid-area:copy;
+    min-width:0;
+  }
+  .mission-inline-name-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:7px;
+    min-width:0;
+    margin-bottom:4px;
+  }
+  .mission-inline-name{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-family:'Inter',sans-serif;
+    font-size:9.5px;
+    font-weight:700;
+    color:var(--white);
+  }
+  .mission-inline-reward{
+    flex:0 0 auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:7.5px;
+    color:var(--accent-soft);
+  }
+  .mission-inline-progress-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:6px;
+    align-items:center;
+  }
+  .mission-inline-progress-track{
+    height:4px;
+    border-radius:999px;
+    overflow:hidden;
+    background:color-mix(in srgb,var(--white) 7%,transparent);
+  }
+  .mission-inline-progress-fill{
+    height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,var(--accent),var(--positive));
+    transition:width .3s ease;
+  }
+  .mission-inline-progress-text{
+    font-family:'JetBrains Mono',monospace;
+    font-size:7.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .mission-inline-side{
+    grid-area:side;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+  }
+  .mission-inline-claim{
+    min-height:27px !important;
+    padding:5px 8px !important;
+    border-radius:7px !important;
+    font-size:8.5px !important;
+    white-space:nowrap;
+  }
+  .mission-inline-status{
+    font-size:8px;
+    font-weight:700;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .mission-inline-status.claimed{
+    color:var(--positive);
+  }
+
+  @media(max-width:520px){
+    .dashboard-hero-grid .game-strip{
+      grid-template-columns:62px minmax(0,1fr) !important;
+      padding:10px !important;
+      gap:8px !important;
+    }
+    .game-missions-inline{padding:8px;}
+    .mission-inline-card{
+      grid-template-columns:24px minmax(0,1fr) auto;
+      gap:6px;
+      padding:6px 7px;
+    }
+    .mission-inline-icon{width:24px;height:24px;font-size:11px;}
+    .mission-inline-name{font-size:9px;}
+    .mission-inline-reward,
+    .mission-inline-progress-text{font-size:7px;}
+    .mission-inline-claim{
+      padding:4px 6px !important;
+      font-size:8px !important;
+    }
+  }
+
+  @media(max-width:360px){
+    .mission-inline-card{
+      grid-template-columns:22px minmax(0,1fr);
+      grid-template-areas:
+        "icon copy"
+        "side side";
+    }
+    .mission-inline-side{
+      justify-content:stretch;
+    }
+    .mission-inline-claim{
+      width:100%;
+      justify-content:center;
+    }
+    .mission-inline-status{width:100%;text-align:right;}
+  }
+
 </style>
 </head>
 <body>
@@ -1808,8 +3270,8 @@
     </div>
 
     <div id="dashboardTabPanel" role="tabpanel" aria-labelledby="dashboardTabBtn">
-    <!-- month bars -->
-    <div class="section panel dashboard-chart-first">
+    <div class="dashboard-hero-grid">
+<div class="section panel dashboard-chart-first">
       <div class="panel-header-row">
         <div class="panel-label"><span class="dash"></span><span id="barsLabel">Earnings</span></div>
         <div class="chart-header-controls">
@@ -1861,21 +3323,81 @@
         </div>
       </div>
     </div>
+<div class="section game-strip" id="gameStrip">
+      <div class="game-level-orb" aria-label="LUMIN level">
+        <div class="game-level-small">Level</div>
+        <div class="game-level-number" id="gameLevel">1</div>
+      </div>
+      <div class="game-progress-copy">
+        <div class="game-rank-row">
+          <span class="game-rank" id="gameRank">Starter</span>
+          <span class="game-total-xp" id="gameTotalXp">0 XP total</span>
+        </div>
+        <div class="game-xp-track" aria-label="XP progress to next level">
+          <div class="game-xp-fill" id="gameXpFill"></div>
+        </div>
+        <div class="game-xp-caption" id="gameXpCaption">0 / 250 XP to Level 2</div>
+      </div>
+      <div class="game-streak">
+        <div class="game-streak-value" id="gameStreak">🔥 0</div>
+        <div class="game-streak-label">day check-in streak</div>
+        <button type="button" class="game-checkin-btn" id="dailyCheckInBtn">Check in</button>
+      </div>
+      <div class="game-missions-inline" id="missionsInline">
+        <div class="game-missions-inline-head">
+          <div class="game-missions-inline-title-row">
+            <span class="game-missions-inline-title">Missions</span>
+            <span class="game-missions-inline-count" id="missionsInlineCount">0 / 4</span>
+          </div>
+          <span class="game-missions-ready hidden" id="missionReadyText">1 ready</span>
+        </div>
+        <div class="inline-missions-grid" id="missionsGrid"></div>
+      </div>
 
+      <div class="game-actions-row game-freeze-row">
+        <button type="button" class="game-freeze-btn" id="freezeShopBtn" aria-label="Open streak freeze shop">
+          <span class="game-freeze-icon" aria-hidden="true">❄</span>
+          <span class="game-freeze-copy">Streak freezes</span>
+          <span class="game-freeze-count" id="gameFreezeCount">2 / 2</span>
+        </button>
+      </div>
+    </div>
+    </div>
 
-    <!-- items shelf -->
-    <div class="section panel">
-      <div class="panel-header-row">
-        <div class="panel-label"><span class="dash"></span>Your items</div>
-        <div class="shelf-actions">
+<div class="section stat-chips stats-ribbon">
+      <div class="chip"><div class="chip-label">Today</div><div class="chip-value" id="statToday">$0</div></div>
+      <div class="chip"><div class="chip-label">This week</div><div class="chip-value" id="statWeek">$0</div></div>
+      <div class="chip"><div class="chip-label">This month</div><div class="chip-value" id="statMonth">$0</div></div>
+      <div class="chip"><div class="chip-label">This year</div><div class="chip-value" id="statYear">$0</div></div>
+      <div class="chip"><div class="chip-label">All-time earned</div><div class="chip-value" id="statAll">$0</div></div>
+      <button type="button" class="chip records-chip" id="recordsBtn"><div class="chip-label">Personal records</div><div class="chip-value">🏆 View records</div></button>
+      <button type="button" class="chip records-chip" id="achievementsBtn"><div class="chip-label">Achievements</div><div class="chip-value" id="achievementChipValue">🏅 0 / 8</div></button>
+    </div>
+
+    <section class="dashboard-cluster goal-cluster">
+      <div class="dashboard-section-heading goals-heading">
+        <div>
+          <div class="dashboard-section-eyebrow">Goals</div>
+          <h2 class="dashboard-section-title">Your saving goals</h2>
+        </div>
+        <div class="shelf-actions dashboard-goal-actions">
           <button class="btn btn-ghost" id="archiveBtn">Archive <span class="archive-count" id="archiveCount">0</span></button>
           <button class="btn btn-secondary" id="addItemBtn">+ Add item</button>
         </div>
       </div>
-      <div class="items-shelf" id="itemsShelf"></div>
-    </div>
 
-    <div class="top-grid section" style="display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:16px;margin-bottom:18px;">
+      <div class="items-shelf" id="itemsShelf"></div>
+
+      <div class="dashboard-section-heading dashboard-subheading">
+        <div>
+          <div class="dashboard-section-eyebrow">Active target</div>
+          <h2 class="dashboard-section-title">Where your money is going</h2>
+        </div>
+        <div class="dashboard-section-copy">Goal details, progress and deadline in one compact workspace.</div>
+      </div>
+
+      <div class="goal-workspace">
+<div class="top-grid section">
       <!-- active product -->
       <div class="panel product-card">
         <div class="panel-label"><span class="dash"></span><span id="activeGoalLabelText">Currently saving for</span></div>
@@ -1931,48 +3453,9 @@
       </div>
 
       <!-- earnings entry -->
-      <div class="panel punch-card-form">
-        <div class="panel-header-row earnings-entry-header">
-          <div class="panel-label"><span class="dash"></span>Log today's earnings</div>
-          <div class="segmented earnings-mode-toggle" id="earningsModeToggle" aria-label="Earnings entry mode">
-            <button type="button" class="active" data-entry-mode="hours">Hours × rate</button>
-            <button type="button" data-entry-mode="amount">Money earned</button>
-            <button type="button" data-entry-mode="expense">Expense</button>
-          </div>
-        </div>
-        <form id="entryForm" style="display:flex;flex-direction:column;gap:10px;flex:1;">
-          <label class="field">Date
-            <input type="date" id="in-date" required />
-          </label>
-          <div id="hoursEntryFields">
-            <label class="field">Hours worked
-              <input type="number" min="0" step="0.25" placeholder="e.g. 7.5" id="in-hours" />
-            </label>
-            <div class="entry-mode-note" id="hourlyRateNote"></div>
-          </div>
-          <div id="amountEntryFields" class="hidden">
-            <label class="field">Money earned
-              <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 86.40" id="in-earned" /></div>
-            </label>
-          </div>
-          <div id="expenseEntryFields" class="hidden">
-            <label class="field">Expense amount
-              <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 24.50" id="in-expense" /></div>
-            </label>
-            <label class="field">What was it? <span style="font-weight:400;color:var(--muted);">(optional)</span>
-              <input type="text" maxlength="80" placeholder="e.g. Lunch, game, bus" id="in-expense-note" />
-            </label>
-          </div>
-          <div class="punch-preview" id="punchPreview">= $0.00 earned</div>
-          <button type="submit" class="btn btn-primary" id="entrySubmitBtn" style="margin-top:auto;justify-content:center;">+ Add earnings</button>
-        </form>
-      </div>
+      
     </div>
-
-
-
-    <!-- goal deadline countdown -->
-    <div class="section panel deadline-panel hidden" id="deadlineSection">
+<div class="section panel deadline-panel hidden" id="deadlineSection">
       <div class="panel-header-row" style="margin-bottom:10px;">
         <div class="panel-label"><span class="dash"></span>Goal deadline</div>
         <div class="deadline-controls">
@@ -2018,56 +3501,78 @@
       </div>
       <div class="deadline-done hidden" id="deadlineDone">Deadline reached.</div>
     </div>
-
-    <!-- progression / game layer -->
-    <div class="section game-strip" id="gameStrip">
-      <div class="game-level-orb" aria-label="LUMIN level">
-        <div class="game-level-small">Level</div>
-        <div class="game-level-number" id="gameLevel">1</div>
-      </div>
-      <div class="game-progress-copy">
-        <div class="game-rank-row">
-          <span class="game-rank" id="gameRank">Starter</span>
-          <span class="game-total-xp" id="gameTotalXp">0 XP total</span>
-        </div>
-        <div class="game-xp-track" aria-label="XP progress to next level">
-          <div class="game-xp-fill" id="gameXpFill"></div>
-        </div>
-        <div class="game-xp-caption" id="gameXpCaption">0 / 250 XP to Level 2</div>
-      </div>
-      <div class="game-streak">
-        <div class="game-streak-value" id="gameStreak">🔥 0</div>
-        <div class="game-streak-label">day check-in streak</div>
-        <button type="button" class="game-checkin-btn" id="dailyCheckInBtn">Check in</button>
-      </div>
-      <button type="button" class="game-freeze-btn" id="freezeShopBtn" aria-label="Open streak freeze shop">
-        <div class="game-freeze-value" id="gameFreezeCount">❄ 2 / 2</div>
-        <div class="game-freeze-label">streak freezes</div>
-      </button>
-      <button type="button" class="btn btn-secondary game-missions-btn" id="missionsBtn">
-        Missions <span id="missionsBtnCount">0 / 4</span>
-        <span class="game-mission-dot hidden" id="missionReadyDot"></span>
-      </button>
     </div>
+    </section>
 
-    <!-- stat chips -->
-    <div class="section stat-chips">
-      <div class="chip"><div class="chip-label">Today</div><div class="chip-value" id="statToday">$0</div></div>
-      <div class="chip"><div class="chip-label">This week</div><div class="chip-value" id="statWeek">$0</div></div>
-      <div class="chip"><div class="chip-label">This month</div><div class="chip-value" id="statMonth">$0</div></div>
-      <div class="chip"><div class="chip-label">This year</div><div class="chip-value" id="statYear">$0</div></div>
-      <div class="chip"><div class="chip-label">All-time earned</div><div class="chip-value" id="statAll">$0</div></div>
-      <button type="button" class="chip records-chip" id="recordsBtn"><div class="chip-label">Personal records</div><div class="chip-value">🏆 View records</div></button>
-      <button type="button" class="chip records-chip" id="achievementsBtn"><div class="chip-label">Achievements</div><div class="chip-value" id="achievementChipValue">🏅 0 / 8</div></button>
-    </div>
+    <section class="dashboard-cluster money-cluster">
+      <div class="dashboard-section-heading">
+        <div>
+          <div class="dashboard-section-eyebrow">Money flow</div>
+          <h2 class="dashboard-section-title">Log it, then see it move</h2>
+        </div>
+        <div class="dashboard-section-copy">Earnings and expenses sit beside the activity they create.</div>
+      </div>
 
-
-    <!-- ledger -->
-    <div class="section panel">
+      <div class="money-flow-grid">
+<div class="panel punch-card-form">
+        <div class="panel-header-row earnings-entry-header">
+          <div class="panel-label"><span class="dash"></span>Log today's earnings</div>
+          <div class="segmented earnings-mode-toggle" id="earningsModeToggle" aria-label="Earnings entry mode">
+            <button type="button" class="active" data-entry-mode="hours">Hours × rate</button>
+            <button type="button" data-entry-mode="amount">Money earned</button>
+            <button type="button" data-entry-mode="expense">Expense</button>
+          </div>
+        </div>
+        <form id="entryForm" style="display:flex;flex-direction:column;gap:10px;flex:1;">
+          <label class="field">Date
+            <input type="date" id="in-date" required />
+          </label>
+          <div id="hoursEntryFields">
+            <label class="field">Hours worked
+              <input type="number" min="0" step="0.25" placeholder="e.g. 7.5" id="in-hours" />
+            </label>
+            <div class="entry-mode-note" id="hourlyRateNote"></div>
+          </div>
+          <div id="amountEntryFields" class="hidden">
+            <label class="field">Money earned
+              <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 86.40" id="in-earned" /></div>
+            </label>
+          </div>
+          <div id="expenseEntryFields" class="hidden">
+            <label class="field">Expense amount
+              <div class="input-prefix"><span>$</span><input type="number" min="0" step="0.01" placeholder="e.g. 24.50" id="in-expense" /></div>
+            </label>
+            <label class="field">What was it? <span style="font-weight:400;color:var(--muted);">(optional)</span>
+              <input type="text" maxlength="80" placeholder="e.g. Lunch, game, bus" id="in-expense-note" />
+            </label>
+          </div>
+          <div class="punch-preview" id="punchPreview">= $0.00 earned</div>
+          <button type="submit" class="btn btn-primary" id="entrySubmitBtn" style="margin-top:auto;justify-content:center;">+ Add earnings</button>
+        </form>
+      </div>
+<div class="section panel activity-panel">
       <div class="panel-label"><span class="dash"></span><span id="ledgerLabel">Activity</span></div>
       <div id="ledgerEmpty" class="empty-state hidden">No activity logged yet — add earnings or an expense above to get started.</div>
       <div id="ledgerList" class="ledger-list"></div>
     </div>
+    </div>
+    </section>
+
+    <!-- month bars -->
+    
+
+
+    <!-- goal deadline countdown -->
+    
+
+    <!-- progression / game layer -->
+    
+
+    <!-- stat chips -->
+    
+
+
+
     </div>
 
     <!-- SETTINGS TAB -->
@@ -2318,26 +3823,6 @@
     </div>
   </div>
 
-  <!-- MISSIONS MODAL -->
-  <div id="missionsBackdrop" class="modal-backdrop hidden">
-    <div class="modal missions-modal" role="dialog" aria-modal="true" aria-labelledby="missionsTitle">
-      <h2 class="modal-title" id="missionsTitle">Missions ⚡</h2>
-      <p class="modal-sub">Small goals that reward XP. Daily missions reset each day; weekly missions reset every Monday.</p>
-
-      <div class="missions-header-stats">
-        <div class="missions-mini"><div class="missions-mini-label">Level</div><div class="missions-mini-value" id="missionsLevel">1</div></div>
-        <div class="missions-mini"><div class="missions-mini-label">Total XP</div><div class="missions-mini-value" id="missionsXp">0 XP</div></div>
-        <div class="missions-mini"><div class="missions-mini-label">Streak</div><div class="missions-mini-value" id="missionsStreak">🔥 0 days</div></div>
-      </div>
-
-      <div class="missions-grid" id="missionsGrid"></div>
-
-      <div style="display:flex;justify-content:flex-end;margin-top:15px;">
-        <button type="button" class="btn btn-ghost" id="missionsCloseBtn">Close</button>
-      </div>
-    </div>
-  </div>
-
   <!-- ACHIEVEMENTS MODAL -->
   <div id="achievementsBackdrop" class="modal-backdrop hidden">
     <div class="modal achievements-modal" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle">
@@ -2544,9 +4029,74 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.07.2";
+  const APP_VERSION = "2026.09.07.8";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.07.8",
+      title: "Missions where they belong",
+      date: "7 September 2026",
+      changes: [
+        "Moved Missions directly into the XP and streak card instead of a separate popup.",
+        "Each mission now shows its progress, XP reward and Claim action inline.",
+        "Used the previously empty middle space in the progression card and kept Streak freezes underneath."
+      ]
+    },
+    {
+      version: "2026.09.07.7",
+      title: "Professional polish",
+      date: "7 September 2026",
+      changes: [
+        "Streak freezes now always shows its full label instead of truncating.",
+        "Refined the interface with cleaner spacing, calmer surfaces, subtler shadows and more consistent controls.",
+        "Improved dashboard typography, navigation, cards, forms and focus states.",
+        "On narrow phones, Streak freezes and Missions stack so neither control gets squashed."
+      ]
+    },
+    {
+      version: "2026.09.07.6",
+      title: "Cleaner streak controls",
+      date: "7 September 2026",
+      changes: [
+        "Redesigned the Streak freezes control so its text stays on one clean line.",
+        "Streak freezes and Missions now share an equal-width action row.",
+        "Improved the progression card spacing on desktop and mobile."
+      ]
+    },
+    {
+      version: "2026.09.07.5",
+      title: "Dashboard tightened up",
+      date: "7 September 2026",
+      changes: [
+        "Removed the empty legacy Your Items container.",
+        "Moved Archive and Add item into the actual Goals header.",
+        "Fixed the active-goal cards so product and progress sit side-by-side on larger screens.",
+        "Made the deadline a compact horizontal dashboard row.",
+        "Grouped Goals and Money Flow into tighter dashboard clusters with much better mobile scaling."
+      ]
+    },
+    {
+      version: "2026.09.07.4",
+      title: "Compact goal cockpit",
+      date: "7 September 2026",
+      changes: [
+        "Made the active-goal area dramatically more compact.",
+        "Goal images now use a small contained preview instead of a huge full-width image.",
+        "Product details sit beside the image and the progress gauge is smaller with compact stats.",
+        "Deadline controls were tightened while keeping everything functional and responsive."
+      ]
+    },
+    {
+      version: "2026.09.07.3",
+      title: "A livelier Dashboard",
+      date: "7 September 2026",
+      changes: [
+        "Reworked the Dashboard into a more visual progress hub instead of a simple stack of panels.",
+        "The graph and forecast now share the top hero with XP, streaks, freezes and Missions.",
+        "Goals now have a dedicated workspace, while logging and activity sit together in a Money Flow section.",
+        "Added stronger hierarchy, hover depth, spacing and responsive card layouts without removing any features."
+      ]
+    },
     {
       version: "2026.09.07.2",
       title: "Charts & first-time tour",
@@ -4264,21 +5814,20 @@
     checkInBtn.disabled=checkedIn;
     checkInBtn.classList.toggle("checked",checkedIn);
 
-    $("gameFreezeCount").textContent="❄ "+Math.max(0,Math.min(2,streakFreezes))+" / 2";
-    $("missionsBtnCount").textContent=completed+" / "+missions.length;
-    $("missionReadyDot").classList.toggle("hidden",claimable===0);
+    $("gameFreezeCount").textContent=Math.max(0,Math.min(2,streakFreezes))+" / 2";
+    $("missionsInlineCount").textContent=completed+" / "+missions.length;
+    const readyText=$("missionReadyText");
+    readyText.textContent=claimable+" "+(claimable===1?"ready":"ready");
+    readyText.classList.toggle("hidden",claimable===0);
+    renderMissions();
   }
 
   function renderMissions(){
-    const progress=computeGameProgress();
     const missions=currentGameMissions();
     const claims=missionClaims||new Set();
-
-    $("missionsLevel").textContent=progress.level+" · "+progress.rank;
-    $("missionsXp").textContent=progress.totalXp.toLocaleString()+" XP · "+progress.availableXp.toLocaleString()+" available";
-    $("missionsStreak").textContent="🔥 "+progress.streak+" "+(progress.streak===1?"day":"days");
-
     const grid=$("missionsGrid");
+    if(!grid) return;
+
     grid.innerHTML="";
 
     missions.forEach(mission=>{
@@ -4286,64 +5835,59 @@
       const percent=mission.target>0?Math.max(0,Math.min(100,(mission.value/mission.target)*100)):0;
 
       const card=document.createElement("div");
-      card.className="mission-card"+(mission.complete?" complete":"")+(claimed?" claimed":"");
+      card.className="mission-inline-card"+(mission.complete?" complete":"")+(claimed?" claimed":"");
+      card.title=mission.desc||mission.name;
 
-      card.innerHTML=`
-        <div class="mission-top">
-          <div class="mission-icon">${mission.icon}</div>
-          <div class="mission-reward">+${mission.reward} XP</div>
+      const icon=document.createElement("div");
+      icon.className="mission-inline-icon";
+      icon.textContent=mission.icon;
+
+      const copy=document.createElement("div");
+      copy.className="mission-inline-copy";
+      copy.innerHTML=`
+        <div class="mission-inline-name-row">
+          <span class="mission-inline-name">${escapeHtml(mission.name)}</span>
+          <span class="mission-inline-reward">+${mission.reward} XP</span>
         </div>
-        <div class="mission-name">${escapeHtml(mission.name)}</div>
-        <div class="mission-desc">${escapeHtml(mission.desc)}</div>
-        <div class="mission-progress-row"><span>Progress</span><strong>${escapeHtml(mission.progressText)}</strong></div>
-        <div class="mission-progress-track"><div class="mission-progress-fill" style="width:${percent.toFixed(1)}%"></div></div>
-      `;
+        <div class="mission-inline-progress-row">
+          <div class="mission-inline-progress-track"><div class="mission-inline-progress-fill" style="width:${percent.toFixed(1)}%"></div></div>
+          <span class="mission-inline-progress-text">${escapeHtml(mission.progressText)}</span>
+        </div>`;
+
+      const side=document.createElement("div");
+      side.className="mission-inline-side";
 
       if(claimed){
-        const done=document.createElement("div");
-        done.className="mission-claimed";
-        done.textContent="✓ XP claimed";
-        card.appendChild(done);
-      }else{
+        const status=document.createElement("span");
+        status.className="mission-inline-status claimed";
+        status.textContent="✓ Claimed";
+        side.appendChild(status);
+      }else if(mission.complete){
         const claim=document.createElement("button");
         claim.type="button";
-        claim.className="btn "+(mission.complete?"btn-primary":"btn-ghost")+" mission-claim";
-        claim.textContent=mission.complete?"Claim +"+mission.reward+" XP":"In progress";
-        claim.disabled=!mission.complete;
-        if(!mission.complete) claim.style.opacity=".55";
-
+        claim.className="btn btn-primary mission-inline-claim";
+        claim.textContent="Claim";
+        claim.title="Claim +"+mission.reward+" XP";
         claim.addEventListener("click",async()=>{
-          if(!mission.complete||missionClaims.has(mission.id)) return;
+          if(missionClaims.has(mission.id)) return;
           missionClaims.add(mission.id);
           gameBonusXp+=mission.reward;
           await persist();
-          renderMissions();
           renderGameStrip();
           checkGameLevelUp(true);
         });
-        card.appendChild(claim);
+        side.appendChild(claim);
+      }else{
+        const status=document.createElement("span");
+        status.className="mission-inline-status";
+        status.textContent="In progress";
+        side.appendChild(status);
       }
 
+      card.append(icon,copy,side);
       grid.appendChild(card);
     });
   }
-
-  function openMissions(){
-    renderMissions();
-    $("missionsBackdrop").classList.remove("hidden");
-    lockBodyScroll();
-  }
-
-  function closeMissions(){
-    $("missionsBackdrop").classList.add("hidden");
-    unlockBodyScroll();
-  }
-
-  $("missionsBtn").addEventListener("click",openMissions);
-  $("missionsCloseBtn").addEventListener("click",closeMissions);
-  $("missionsBackdrop").addEventListener("click",e=>{
-    if(e.target.id==="missionsBackdrop") closeMissions();
-  });
 
   function getStatsRangeBounds(){
     statsRange=sanitizeStatsRange(statsRange);
@@ -5057,9 +6601,6 @@
     }
     if(!$("freezeBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeFreezeShop(); return;
-    }
-    if(!$("missionsBackdrop").classList.contains("hidden")){
-      e.preventDefault(); closeMissions(); return;
     }
     if(!$("achievementsBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeAchievements(); return;
@@ -5884,11 +7425,7 @@
       shelf.appendChild(card);
     });
 
-    const addCard = document.createElement("div");
-    addCard.className = "item-add-card";
-    addCard.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add item`;
-    addCard.addEventListener("click", ()=> openItemModal(null));
-    shelf.appendChild(addCard);
+    shelf.classList.toggle("hidden", orderedItems.length===0);
   }
 
   function escapeHtml(str){
