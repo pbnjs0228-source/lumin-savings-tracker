@@ -699,6 +699,13 @@
   }
   .settings-cloud-wrap .cloud-status{margin:0;}
   .dashboard-chart-first{margin-top:2px;}
+  .dashboard-chart-first .projection-top-wrap{
+    margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+  }
+  .dashboard-chart-first .projection-banner{
+    padding:13px 15px;
+    background:color-mix(in srgb,var(--accent) 8%,transparent);
+  }
   @media(max-width:720px){
     .settings-grid{grid-template-columns:1fr;}
     .settings-card.wide{grid-column:auto;}
@@ -1790,6 +1797,18 @@
         <div class="range-summary-card"><div class="range-summary-label">Net change</div><div class="range-summary-value" id="rangeNet">$0</div></div>
       </div>
       <div class="bars-row" id="barsRow"></div>
+
+      <div class="projection-top-wrap hidden" id="projectionSection">
+        <div class="projection-banner">
+          <div class="projection-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </div>
+          <div class="projection-copy">
+            <div id="projectionText"></div>
+            <div class="projection-note">*Might not be 100% accurate.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -1947,19 +1966,6 @@
         </div>
       </div>
       <div class="deadline-done hidden" id="deadlineDone">Deadline reached.</div>
-    </div>
-
-    <!-- projection -->
-    <div class="section hidden" id="projectionSection">
-      <div class="projection-banner">
-        <div class="projection-icon">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        </div>
-        <div class="projection-copy">
-          <div id="projectionText"></div>
-          <div class="projection-note">*Might not be 100% accurate.</div>
-        </div>
-      </div>
     </div>
 
     <!-- progression / game layer -->
@@ -2466,9 +2472,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.07";
+  const APP_VERSION = "2026.09.07.1";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.07.1",
+      title: "Forecast up front",
+      date: "7 September 2026",
+      changes: [
+        "Moved the “At this rate” affordability estimate into the graph card at the top of the Dashboard.",
+        "The graph and goal forecast now sit together as one quick financial overview.",
+        "Daily check-ins, streak freezes, Missions and Settings remain unchanged."
+      ]
+    },
     {
       version: "2026.09.07",
       title: "Daily check-ins",
