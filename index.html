@@ -699,6 +699,50 @@
   }
   .settings-cloud-wrap .cloud-status{margin:0;}
   .dashboard-chart-first{margin-top:2px;}
+  .chart-header-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
+  .chart-type-toggle button{min-width:48px;}
+  .bars-row.chart-svg-mode{display:block;height:126px;padding-top:8px;position:relative;}
+  .chart-svg{display:block;width:100%;height:126px;overflow:visible;}
+  .chart-grid-line{stroke:color-mix(in srgb,var(--line-strong) 55%,transparent);stroke-width:1;stroke-dasharray:3 5;}
+  .chart-line-path{
+    fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+    filter:drop-shadow(0 0 5px color-mix(in srgb,var(--accent) 24%,transparent));
+  }
+  .chart-area-fill{fill:url(#luminAreaGradient);}
+  .chart-point{fill:var(--panel-solid);stroke:var(--accent-soft);stroke-width:2;transition:r .14s ease,fill .14s ease;}
+  .chart-point.current{fill:var(--accent);}
+  .chart-point:hover{r:5.5;fill:var(--accent);}
+  .chart-x-label{fill:var(--muted);font-family:'Inter',sans-serif;font-size:8.5px;text-anchor:middle;}
+  .chart-zero-note{color:var(--muted);font-size:10.5px;text-align:center;margin-top:-7px;}
+
+  .tutorial-catcher{position:fixed;inset:0;z-index:1590;background:transparent;}
+  .tutorial-spotlight{
+    position:fixed;z-index:1591;border:2px solid var(--accent-soft);border-radius:14px;pointer-events:none;
+    box-shadow:0 0 0 9999px rgba(5,6,10,.73),0 0 0 5px color-mix(in srgb,var(--accent) 13%,transparent),0 0 28px color-mix(in srgb,var(--accent) 24%,transparent);
+    transition:left .25s ease,top .25s ease,width .25s ease,height .25s ease,border-radius .2s ease;
+  }
+  .tutorial-card{
+    position:fixed;z-index:1592;width:min(340px,calc(100vw - 28px));padding:16px;border-radius:15px;
+    background:color-mix(in srgb,var(--panel-raised) 94%,#10121a);
+    border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line-strong));
+    box-shadow:0 22px 70px rgba(0,0,0,.42);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    transition:left .22s ease,top .22s ease;
+  }
+  .tutorial-kicker{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;color:var(--accent-soft);font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.55px;}
+  .tutorial-step-count{font-family:'JetBrains Mono',monospace;color:var(--muted);font-weight:600;letter-spacing:0;text-transform:none;}
+  .tutorial-title{margin:0 0 6px;font-family:'Sora',sans-serif;font-size:16px;font-weight:750;color:var(--white);}
+  .tutorial-copy{margin:0;color:var(--muted);font-size:11.5px;line-height:1.55;}
+  .tutorial-progress{display:flex;gap:4px;margin:13px 0 12px;}
+  .tutorial-progress i{display:block;height:3px;flex:1;border-radius:999px;background:var(--line-strong);}
+  .tutorial-progress i.done{background:var(--accent);}
+  .tutorial-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .tutorial-nav-group{display:flex;gap:7px;}
+  .tutorial-skip{border:0;background:transparent;color:var(--muted);cursor:pointer;font:700 10.5px 'Inter',sans-serif;padding:7px 3px;}
+  .tutorial-skip:hover{color:var(--white);}
+  @media(max-width:720px){
+    .chart-header-controls{width:100%;justify-content:space-between;}
+    .tutorial-card{left:14px !important;right:14px;bottom:14px;top:auto !important;width:auto;}
+  }
   .dashboard-chart-first .projection-top-wrap{
     margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
   }
@@ -1768,10 +1812,17 @@
     <div class="section panel dashboard-chart-first">
       <div class="panel-header-row">
         <div class="panel-label"><span class="dash"></span><span id="barsLabel">Earnings</span></div>
-        <div class="segmented" id="chartViewToggle">
-          <button data-view="day">Day</button>
-          <button data-view="week">Week</button>
-          <button data-view="month">Month</button>
+        <div class="chart-header-controls">
+          <div class="segmented chart-type-toggle" id="chartTypeToggle" aria-label="Graph type">
+            <button data-chart-type="bar">Bar</button>
+            <button data-chart-type="line">Line</button>
+            <button data-chart-type="area">Area</button>
+          </div>
+          <div class="segmented" id="chartViewToggle" aria-label="Graph grouping">
+            <button data-view="day">Day</button>
+            <button data-view="week">Week</button>
+            <button data-view="month">Month</button>
+          </div>
         </div>
       </div>
       <div class="range-toolbar">
@@ -2065,6 +2116,27 @@
             </div>
           </div>
         </section>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FIRST-SIGNUP INTERACTIVE TUTORIAL -->
+  <div class="tutorial-catcher hidden" id="tutorialCatcher"></div>
+  <div class="tutorial-spotlight hidden" id="tutorialSpotlight" aria-hidden="true"></div>
+  <div class="tutorial-card hidden" id="tutorialCard" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+    <div class="tutorial-kicker">
+      <span>LUMIN quick tour</span>
+      <span class="tutorial-step-count" id="tutorialStepCount">1 / 6</span>
+    </div>
+    <h2 class="tutorial-title" id="tutorialTitle">Welcome to LUMIN</h2>
+    <p class="tutorial-copy" id="tutorialCopy"></p>
+    <div class="tutorial-progress" id="tutorialProgress" aria-hidden="true"></div>
+    <div class="tutorial-actions">
+      <button type="button" class="tutorial-skip" id="tutorialSkipBtn">Skip tour</button>
+      <div class="tutorial-nav-group">
+        <button type="button" class="btn btn-ghost" id="tutorialBackBtn">Back</button>
+        <button type="button" class="btn btn-primary" id="tutorialNextBtn">Next</button>
       </div>
     </div>
   </div>
@@ -2472,9 +2544,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.07.1";
+  const APP_VERSION = "2026.09.07.2";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.07.2",
+      title: "Charts & first-time tour",
+      date: "7 September 2026",
+      changes: [
+        "Added Bar, Line and Area graph types with a saved graph preference.",
+        "Added a small interactive tutorial for brand-new account signups.",
+        "The tutorial highlights the graph, goals, logging, check-ins and Settings, then stays out of the way."
+      ]
+    },
     {
       version: "2026.09.07.1",
       title: "Forecast up front",
@@ -2611,6 +2693,11 @@
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
   let chartView = "month";
+  let chartType = "bar";
+  let tutorialCompleted = true;
+  let pendingTutorialAfterSignup = false;
+  let tutorialActive = false;
+  let tutorialStepIndex = 0;
   let entryMode = "hours"; // hours | amount
   let editingItemId = null;    // set when the item modal is editing rather than adding
   let pendingImageDataUrl = null;
@@ -3114,6 +3201,21 @@
     await persist();
   });
 
+  function buildChartTypeToggle(){
+    const container=$("chartTypeToggle");
+    container.querySelectorAll("button").forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.chartType===chartType);
+      if(btn.dataset.luminBound==="1") return;
+      btn.dataset.luminBound="1";
+      btn.addEventListener("click",async()=>{
+        chartType=btn.dataset.chartType;
+        container.querySelectorAll("button").forEach(b=>b.classList.toggle("active",b===btn));
+        renderBars();
+        await persist();
+      });
+    });
+  }
+
   function buildChartViewToggle(){
     const container = $("chartViewToggle");
     container.querySelectorAll("button").forEach(btn=>{
@@ -3128,6 +3230,123 @@
       });
     });
   }
+
+  // ---- first-signup tutorial ----
+  const TUTORIAL_STEPS = [
+    {target:".dashboard-chart-first",title:"Your money at a glance",copy:"The Dashboard starts with your earnings graph. Your range totals and “At this rate” goal forecast live here too.",tab:"dashboard"},
+    {target:"#chartTypeToggle",title:"Pick your graph style",copy:"Switch between Bar, Line and Area whenever you want. Day, Week and Month change how the same range is grouped.",tab:"dashboard"},
+    {target:"#addItemBtn",title:"Add something worth saving for",copy:"Goals turn your wallet into something tangible. Add the price, image, deadline, priority and even a product link.",tab:"dashboard"},
+    {target:"#entryForm",title:"Log money",copy:"Add hours, direct earnings or expenses here. LUMIN uses those entries for stats, XP and affordability estimates.",tab:"dashboard"},
+    {target:"#gameStrip",title:"Check in and level up",copy:"Check in once per day to grow your streak. Missions earn XP, and streak freezes protect the occasional missed day.",tab:"dashboard"},
+    {target:"#themePickerMain",title:"Make LUMIN yours",copy:"Settings keeps themes, wallet options, regular pay, cloud controls and updates out of your main Dashboard.",tab:"settings"}
+  ];
+
+  function tutorialTargetForStep(step){ return document.querySelector(step.target); }
+
+  function positionTutorial(){
+    if(!tutorialActive) return;
+    const step=TUTORIAL_STEPS[tutorialStepIndex];
+    const target=tutorialTargetForStep(step);
+    if(!target) return;
+
+    const rect=target.getBoundingClientRect();
+    const pad=7;
+    const spotlight=$("tutorialSpotlight");
+    spotlight.style.left=Math.max(6,rect.left-pad)+"px";
+    spotlight.style.top=Math.max(6,rect.top-pad)+"px";
+    spotlight.style.width=Math.max(20,Math.min(window.innerWidth-12,rect.width+pad*2))+"px";
+    spotlight.style.height=Math.max(20,Math.min(window.innerHeight-12,rect.height+pad*2))+"px";
+    spotlight.style.borderRadius=((parseFloat(getComputedStyle(target).borderRadius)||10)+pad)+"px";
+
+    if(window.innerWidth<=720) return;
+
+    const card=$("tutorialCard");
+    const cardW=Math.min(340,window.innerWidth-28);
+    const cardH=card.offsetHeight||220;
+    let left=Math.min(window.innerWidth-cardW-14,Math.max(14,rect.left));
+    let top=rect.bottom+14;
+    if(top+cardH>window.innerHeight-14) top=Math.max(14,rect.top-cardH-14);
+    if(rect.right>window.innerWidth*.68) left=Math.max(14,rect.right-cardW);
+    card.style.left=left+"px";
+    card.style.top=top+"px";
+  }
+
+  function renderTutorialStep(){
+    if(!tutorialActive) return;
+    const step=TUTORIAL_STEPS[tutorialStepIndex];
+    setMainTab(step.tab||"dashboard");
+
+    requestAnimationFrame(()=>{
+      const target=tutorialTargetForStep(step);
+      if(!target){
+        if(tutorialStepIndex<TUTORIAL_STEPS.length-1){ tutorialStepIndex++; renderTutorialStep(); }
+        else finishTutorial();
+        return;
+      }
+
+      target.scrollIntoView({behavior:"smooth",block:"center",inline:"nearest"});
+      $("tutorialStepCount").textContent=(tutorialStepIndex+1)+" / "+TUTORIAL_STEPS.length;
+      $("tutorialTitle").textContent=step.title;
+      $("tutorialCopy").textContent=step.copy;
+      $("tutorialBackBtn").disabled=tutorialStepIndex===0;
+      $("tutorialBackBtn").style.opacity=tutorialStepIndex===0?".45":"1";
+      $("tutorialNextBtn").textContent=tutorialStepIndex===TUTORIAL_STEPS.length-1?"Finish":"Next";
+
+      const progress=$("tutorialProgress");
+      progress.innerHTML="";
+      TUTORIAL_STEPS.forEach((_,i)=>{
+        const dot=document.createElement("i");
+        dot.classList.toggle("done",i<=tutorialStepIndex);
+        progress.appendChild(dot);
+      });
+      setTimeout(positionTutorial,320);
+    });
+  }
+
+  function startTutorial(){
+    if(tutorialActive||tutorialCompleted) return;
+    tutorialActive=true;
+    tutorialStepIndex=0;
+    markCurrentChangelogSeen();
+    $("tutorialCatcher").classList.remove("hidden");
+    $("tutorialSpotlight").classList.remove("hidden");
+    $("tutorialCard").classList.remove("hidden");
+    renderTutorialStep();
+  }
+
+  async function finishTutorial(){
+    if(!tutorialActive && tutorialCompleted) return;
+    tutorialActive=false;
+    tutorialCompleted=true;
+    pendingTutorialAfterSignup=false;
+    $("tutorialCatcher").classList.add("hidden");
+    $("tutorialSpotlight").classList.add("hidden");
+    $("tutorialCard").classList.add("hidden");
+    setMainTab("dashboard");
+    await persist();
+    if(items.length===0) setTimeout(()=>openItemModal(null),260);
+  }
+
+  function maybeStartSignupTutorial(){
+    if(!pendingTutorialAfterSignup||tutorialCompleted||tutorialActive||!wallet) return;
+    if($("mainScreen").classList.contains("hidden")) return;
+    pendingTutorialAfterSignup=false;
+    setTimeout(startTutorial,500);
+  }
+
+  $("tutorialNextBtn").addEventListener("click",()=>{
+    if(tutorialStepIndex>=TUTORIAL_STEPS.length-1){ finishTutorial(); return; }
+    tutorialStepIndex++;
+    renderTutorialStep();
+  });
+  $("tutorialBackBtn").addEventListener("click",()=>{
+    if(tutorialStepIndex<=0) return;
+    tutorialStepIndex--;
+    renderTutorialStep();
+  });
+  $("tutorialSkipBtn").addEventListener("click",finishTutorial);
+  window.addEventListener("resize",()=>{if(tutorialActive)positionTutorial();});
+  window.addEventListener("scroll",()=>{if(tutorialActive)positionTutorial();},{passive:true});
 
   // ---- storage + account/cloud sync ----
   let memoryStore = null;
@@ -3429,6 +3648,10 @@
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
     chartView = "month";
+    chartType = "bar";
+    tutorialCompleted = true;
+    tutorialActive = false;
+    tutorialStepIndex = 0;
     entryMode = "hours";
     editingItemId = null;
     pendingImageDataUrl = null;
@@ -3459,6 +3682,8 @@
     if(parsed.customTheme) customTheme = sanitizeCustomTheme(parsed.customTheme);
     if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
     if(parsed.chartView && ["day","week","month"].includes(parsed.chartView)) chartView = parsed.chartView;
+    if(parsed.chartType && ["bar","line","area"].includes(parsed.chartType)) chartType = parsed.chartType;
+    tutorialCompleted = parsed.tutorialCompleted === false ? false : true;
     if(parsed.entryMode && ["hours","amount","expense"].includes(parsed.entryMode)) entryMode = parsed.entryMode;
     if(Array.isArray(parsed.celebratedItemIds)) celebratedItemIds = new Set(parsed.celebratedItemIds);
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
@@ -4179,6 +4404,7 @@
     applyTheme(currentTheme);
     buildThemePicker($("themePickerSetup"));
     buildThemePicker($("themePickerMain"));
+    buildChartTypeToggle();
     buildChartViewToggle();
     setMainTab("dashboard");
     render();
@@ -4234,6 +4460,8 @@
       theme:currentTheme,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
+      chartType,
+      tutorialCompleted,
       entryMode,
       celebratedItemIds:Array.from(celebratedItemIds||[]),
       celebratedMilestones:Array.from(celebratedMilestones||[])
@@ -4389,11 +4617,16 @@
 
     try{
       await load();
+      if(pendingTutorialAfterSignup){
+        tutorialCompleted=false;
+        await persist();
+      }
       setAppLoading("Almost ready","Finishing your dashboard and cloud sync.");
       await startCloudSubscription();
       maybeSignalLegacySave();
     }finally{
       hideAppLoading(650);
+      setTimeout(maybeStartSignupTutorial,900);
     }
   }
 
@@ -4480,10 +4713,12 @@
       );
 
       try{
+        pendingTutorialAfterSignup=authCreateMode;
         if(authCreateMode) await cloudApi.signUp(email,password);
         else await cloudApi.signIn(email,password);
         setAppLoading("Loading your savings","Your account is ready. Fetching your LUMIN data.");
       }catch(error){
+        pendingTutorialAfterSignup=false;
         hideAppLoading(300);
         setAuthMessage(friendlyAuthError(error),"error");
       }finally{
@@ -4571,7 +4806,11 @@
     $("mainScreen").classList.remove("hidden");
     await persist();
     render();
-    if(items.length===0) openItemModal(null);
+    if(pendingTutorialAfterSignup && !tutorialCompleted){
+      maybeStartSignupTutorial();
+    }else if(items.length===0){
+      openItemModal(null);
+    }
   });
   $("setupCancelBtn").addEventListener("click", ()=>{
     $("setupScreen").classList.add("hidden");
@@ -4792,6 +5031,11 @@
 
   document.addEventListener("keydown", (e)=>{
     if(e.key !== "Escape") return;
+    if(tutorialActive){
+      e.preventDefault();
+      finishTutorial();
+      return;
+    }
     if(!$("cropModalBackdrop").classList.contains("hidden")){
       e.preventDefault();
       closeCropper(true);
@@ -5509,19 +5753,69 @@
   }
 
   function renderBars(){
-    const data = getBarSeries();
-    const maxVal = Math.max(1, ...data.map(d=>d.value));
-    const barsRow = $("barsRow");
-    barsRow.innerHTML = "";
-    data.forEach(item=>{
-      const h = Math.max(3, (item.value/maxVal)*90);
-      const col = document.createElement("div");
-      col.className = "bar-col";
-      col.innerHTML = `<div class="bar-track"><div class="bar-fill${item.isCurrent?" current":""}" style="height:${h}px" title="${item.title}"></div></div><div class="bar-label${item.isCurrent?" current":""}">${item.label}</div>`;
-      barsRow.appendChild(col);
-    });
-    const viewLabels = {day:"Daily", week:"Weekly", month:"Monthly"};
-    $("barsLabel").textContent = "Earnings · " + statsRangeLabel() + " · " + viewLabels[chartView];
+    const data=getBarSeries();
+    const maxVal=Math.max(1,...data.map(d=>d.value));
+    const barsRow=$("barsRow");
+    barsRow.innerHTML="";
+    barsRow.classList.toggle("chart-svg-mode",chartType!=="bar");
+
+    if(chartType==="bar"){
+      data.forEach(item=>{
+        const h=Math.max(3,(item.value/maxVal)*90);
+        const col=document.createElement("div");
+        col.className="bar-col";
+        col.innerHTML=`<div class="bar-track"><div class="bar-fill${item.isCurrent?" current":""}" style="height:${h}px" title="${escapeHtml(item.title)}"></div></div><div class="bar-label${item.isCurrent?" current":""}">${escapeHtml(item.label)}</div>`;
+        barsRow.appendChild(col);
+      });
+    }else{
+      const width=1000, height=126, top=8, bottom=24;
+      const plotH=height-top-bottom;
+      const count=Math.max(1,data.length);
+      const xFor=i=>count===1?width/2:24+(i/(count-1))*(width-48);
+      const yFor=v=>top+plotH-(Math.max(0,v)/maxVal)*plotH;
+      const points=data.map((d,i)=>[xFor(i),yFor(d.value)]);
+      const pathD=points.map((p,i)=>(i?"L":"M")+p[0].toFixed(2)+","+p[1].toFixed(2)).join(" ");
+      const areaD=points.length ? pathD+" L "+points[points.length-1][0].toFixed(2)+","+(top+plotH)+" L "+points[0][0].toFixed(2)+","+(top+plotH)+" Z" : "";
+      const every=Math.max(1,Math.ceil(data.length/12));
+
+      const labels=data.map((d,i)=>{
+        if(i%every!==0 && i!==data.length-1) return "";
+        return `<text class="chart-x-label" x="${xFor(i)}" y="${height-4}">${escapeHtml(d.label)}</text>`;
+      }).join("");
+
+      const circles=data.map((d,i)=>`
+        <circle class="chart-point${d.isCurrent?" current":""}" cx="${xFor(i)}" cy="${yFor(d.value)}" r="4">
+          <title>${escapeHtml(d.title)}</title>
+        </circle>`).join("");
+
+      const zeroLine=top+plotH;
+      barsRow.innerHTML=`
+        <svg class="chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" role="img" aria-label="${chartType==="area"?"Area":"Line"} chart of earnings">
+          <defs>
+            <linearGradient id="luminAreaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity=".34"></stop>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity=".025"></stop>
+            </linearGradient>
+          </defs>
+          <line class="chart-grid-line" x1="24" x2="${width-24}" y1="${top+plotH*.5}" y2="${top+plotH*.5}"></line>
+          <line class="chart-grid-line" x1="24" x2="${width-24}" y1="${zeroLine}" y2="${zeroLine}"></line>
+          ${chartType==="area" && areaD ? `<path class="chart-area-fill" d="${areaD}"></path>` : ""}
+          ${pathD ? `<path class="chart-line-path" d="${pathD}"></path>` : ""}
+          ${circles}
+          ${labels}
+        </svg>`;
+
+      if(data.every(d=>d.value<=0)){
+        const note=document.createElement("div");
+        note.className="chart-zero-note";
+        note.textContent="No earnings in this range yet.";
+        barsRow.appendChild(note);
+      }
+    }
+
+    const viewLabels={day:"Daily",week:"Weekly",month:"Monthly"};
+    const typeLabels={bar:"Bar",line:"Line",area:"Area"};
+    $("barsLabel").textContent="Earnings · "+statsRangeLabel()+" · "+viewLabels[chartView]+" · "+typeLabels[chartType];
   }
 
   function renderItemsShelf(saved){
@@ -5731,6 +6025,11 @@
 
   function maybeShowChangelog(){
     clearTimeout(changelogAutoTimer);
+
+    if(pendingTutorialAfterSignup||tutorialActive){
+      changelogAutoTimer=setTimeout(maybeShowChangelog,900);
+      return;
+    }
 
     if(getLastSeenChangelogVersion()===String(APP_VERSION)){
       renderChangelog();
