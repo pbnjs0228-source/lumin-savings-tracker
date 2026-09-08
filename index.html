@@ -895,7 +895,7 @@
   .chart-header-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;}
   .chart-type-toggle button{min-width:48px;}
   .bars-row.chart-svg-mode{display:block;height:126px;padding-top:8px;position:relative;}
-  .chart-svg{display:block;width:100%;height:126px;overflow:visible;}
+  .chart-svg{display:block;width:100%;height:126px;overflow:visible;shape-rendering:geometricPrecision;}
   .chart-grid-line{stroke:color-mix(in srgb,var(--line-strong) 55%,transparent);stroke-width:1;stroke-dasharray:3 5;}
   .chart-line-path{
     fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
@@ -3854,6 +3854,325 @@
     .app-network-pill span:last-child{max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   }
 
+
+  /* ---- first-signup passkey prompt ---- */
+  .signup-passkey-modal{
+    width:min(440px,calc(100vw - 28px));
+    padding:22px;
+    text-align:left;
+  }
+  .signup-passkey-hero{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:13px;
+  }
+  .signup-passkey-icon{
+    flex:0 0 auto;
+    width:44px;
+    height:44px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));
+    background:linear-gradient(145deg,
+      color-mix(in srgb,var(--accent) 13%,var(--panel-raised)),
+      color-mix(in srgb,var(--accent2) 8%,var(--panel-solid)));
+    color:var(--accent-soft);
+  }
+  .signup-passkey-icon svg{width:22px;height:22px;}
+  .signup-passkey-heading{min-width:0;}
+  .signup-passkey-kicker{
+    color:var(--accent-soft);
+    font-size:8.5px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin-bottom:3px;
+  }
+  .signup-passkey-modal .modal-title{margin:0;font-size:18px;}
+  .signup-passkey-modal .modal-sub{margin:0 0 14px;line-height:1.55;}
+  .signup-passkey-benefits{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin:0 0 16px;
+  }
+  .signup-passkey-benefit{
+    display:flex;
+    align-items:flex-start;
+    gap:7px;
+    padding:9px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 78%,transparent);
+    color:var(--muted);
+    font-size:9.5px;
+    line-height:1.4;
+  }
+  .signup-passkey-benefit strong{display:block;color:var(--white);font-size:9.8px;margin-bottom:1px;}
+  .signup-passkey-benefit-mark{
+    flex:0 0 auto;
+    width:18px;height:18px;
+    display:grid;place-items:center;
+    border-radius:6px;
+    background:color-mix(in srgb,var(--accent) 11%,var(--panel-raised));
+    color:var(--accent-soft);
+    font-size:10px;font-weight:900;
+  }
+  .signup-passkey-message{
+    min-height:14px;
+    margin:-5px 0 10px;
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.4;
+  }
+  .signup-passkey-message.error{color:#e29a8d;}
+  .signup-passkey-actions{display:flex;gap:8px;justify-content:flex-end;}
+  .signup-passkey-actions .btn{justify-content:center;}
+  #signupPasskeySetupBtn{min-width:150px;}
+
+  @media(max-width:520px){
+    .signup-passkey-modal{padding:17px;}
+    .signup-passkey-benefits{grid-template-columns:1fr;}
+    .signup-passkey-actions{flex-direction:column-reverse;}
+    .signup-passkey-actions .btn{width:100%;}
+    #signupPasskeySetupBtn{min-width:0;}
+  }
+
+
+  /* ================================================================
+     SETTINGS 2.0 · PROFESSIONAL APP PREFERENCES
+     ================================================================ */
+  #settingsTabPanel{
+    max-width:1040px;
+    margin:0 auto;
+  }
+  .settings-head-pro{
+    margin-bottom:18px;
+    padding:0 2px 15px;
+    border:0;
+    border-bottom:1px solid var(--line);
+    background:transparent;
+  }
+  .settings-head-copy{min-width:0;}
+  .settings-eyebrow,
+  .settings-group-kicker{
+    display:block;
+    margin-bottom:5px;
+    color:var(--accent-soft);
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .settings-head-pro .settings-title{
+    font-size:22px;
+    letter-spacing:-.35px;
+  }
+  .settings-head-pro .settings-subtitle{
+    max-width:590px;
+    margin-top:4px;
+    font-size:11px;
+  }
+  .settings-head-meta{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+  .settings-meta-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    min-height:27px;
+    padding:5px 8px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+    color:var(--muted);
+    font:650 8.5px/1 'Inter',sans-serif;
+  }
+  .settings-meta-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--positive);
+  }
+
+  .settings-stack{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .settings-group{
+    padding-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .settings-group-last{
+    padding-bottom:5px;
+    border-bottom:0;
+  }
+  .settings-group-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:18px;
+    margin:0 2px 9px;
+  }
+  .settings-group-heading h3{
+    margin:0;
+    color:var(--white);
+    font-family:'Sora',sans-serif;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:-.1px;
+  }
+  .settings-group-heading p{
+    max-width:430px;
+    margin:0;
+    color:var(--muted);
+    font-size:9.5px;
+    line-height:1.45;
+    text-align:right;
+  }
+  .settings-group-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+  .settings-group-grid.one-col{grid-template-columns:1fr;}
+
+  #settingsTabPanel .settings-card{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    padding:13px;
+    border-radius:11px;
+    border:1px solid var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 72%,var(--panel));
+    box-shadow:none;
+  }
+  #settingsTabPanel .settings-card-featured{
+    background:color-mix(in srgb,var(--panel-solid) 80%,var(--panel));
+  }
+  #settingsTabPanel .settings-card-header{
+    display:grid;
+    grid-template-columns:31px minmax(0,1fr);
+    gap:10px;
+    align-items:start;
+    margin-bottom:11px;
+  }
+  #settingsTabPanel .settings-card-icon{
+    width:31px;height:31px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    border:1px solid color-mix(in srgb,var(--accent) 15%,var(--line));
+    background:color-mix(in srgb,var(--accent) 7%,var(--panel-raised));
+    color:var(--accent-soft);
+    font:750 12px/1 'Inter',sans-serif;
+  }
+  #settingsTabPanel .settings-card-title{
+    margin:1px 0 2px;
+    font-size:11.5px;
+    font-weight:700;
+  }
+  #settingsTabPanel .settings-card-title .dash{display:none;}
+  #settingsTabPanel .settings-card-desc{
+    margin:0;
+    max-width:650px;
+    color:var(--muted);
+    font-size:9.5px;
+    line-height:1.45;
+  }
+  #settingsTabPanel .settings-actions{
+    margin-top:auto;
+    padding-top:10px;
+    border-top:1px solid color-mix(in srgb,var(--line) 78%,transparent);
+  }
+  #settingsTabPanel .settings-actions .btn{
+    min-height:33px;
+    padding:7px 10px;
+    font-size:9.5px;
+  }
+
+  #settingsTabPanel .settings-theme-picker{
+    margin-top:0;
+    padding-top:1px !important;
+  }
+  #settingsTabPanel .settings-theme-picker .swatch.theme-option{
+    min-height:66px;
+  }
+
+  #settingsTabPanel .settings-status-list,
+  #settingsTabPanel .settings-cloud-wrap{
+    border:1px solid var(--line);
+    background:color-mix(in srgb,var(--panel-solid) 88%,transparent);
+    box-shadow:none;
+  }
+  #settingsTabPanel .app-status-box{
+    gap:0;
+    padding:0;
+    overflow:hidden;
+  }
+  #settingsTabPanel .app-status-line{
+    min-height:34px;
+    padding:7px 9px;
+    border-bottom:1px solid var(--line);
+  }
+  #settingsTabPanel .app-status-line:last-child{border-bottom:0;}
+  #settingsTabPanel .app-status-line span{font-size:9px;}
+  #settingsTabPanel .app-status-line strong{font-size:9px;}
+
+  #settingsTabPanel .security-status-box{
+    padding:9px;
+    min-height:54px;
+    justify-content:center;
+  }
+  #settingsTabPanel .passkey-status{
+    align-items:center;
+  }
+  #settingsTabPanel .passkey-status-icon{
+    width:28px;height:28px;
+    border-radius:8px;
+  }
+  #settingsTabPanel .passkey-status strong{font-size:9.8px;}
+  #settingsTabPanel .passkey-status span span{font-size:9px;line-height:1.4;}
+
+  #settingsTabPanel .settings-account-card{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(240px,.65fr);
+    align-items:center;
+    gap:16px;
+  }
+  #settingsTabPanel .settings-account-card .settings-card-header{margin:0;}
+  #settingsTabPanel .settings-cloud-wrap{
+    justify-content:flex-end;
+    padding:9px;
+  }
+  #settingsTabPanel .settings-cloud-wrap .cloud-status{
+    width:100%;
+    justify-content:flex-start;
+  }
+  #settingsTabPanel .settings-cloud-wrap .cloud-action{margin-left:auto;}
+
+  @media(max-width:760px){
+    .settings-group-heading{
+      align-items:flex-start;
+      flex-direction:column;
+      gap:3px;
+    }
+    .settings-group-heading p{text-align:left;}
+    .settings-group-grid{grid-template-columns:1fr;}
+    #settingsTabPanel .settings-account-card{grid-template-columns:1fr;gap:10px;}
+    #settingsTabPanel .settings-cloud-wrap{justify-content:flex-start;}
+  }
+  @media(max-width:520px){
+    .settings-head-meta{width:100%;}
+    .settings-meta-pill{min-height:25px;}
+    #settingsTabPanel .settings-card{padding:11px;}
+    #settingsTabPanel .settings-theme-picker .swatch.theme-option{min-height:60px;}
+  }
+
 </style>
 </head>
 <body>
@@ -4376,77 +4695,124 @@
 
     <!-- SETTINGS -->
     <div id="settingsTabPanel" class="settings-page app-view hidden" role="region" aria-label="Settings">
-      <div class="section settings-head">
-        <div>
+      <div class="section settings-head settings-head-pro">
+        <div class="settings-head-copy">
+          <div class="settings-eyebrow">Preferences</div>
           <h2 class="settings-title">Settings</h2>
-          <p class="settings-subtitle">Appearance, wallet setup, automation, cloud account and LUMIN maintenance live here.</p>
+          <p class="settings-subtitle">Manage how LUMIN looks, saves, syncs and secures your account.</p>
+        </div>
+        <div class="settings-head-meta">
+          <span class="settings-meta-pill"><span class="settings-meta-dot"></span>Cloud connected</span>
+          <span class="settings-meta-pill">v<span id="settingsVersionLabel">—</span></span>
         </div>
       </div>
 
-      <div class="section settings-grid">
-        <section class="settings-card wide">
-          <div class="settings-card-title"><span class="dash"></span>Appearance</div>
-          <p class="settings-card-desc">Choose a visual style for LUMIN. Each theme changes the full dashboard palette, or use Custom to build your own.</p>
-          <div class="theme-picker settings-theme-picker" id="themePickerMain"></div>
-        </section>
-
-        <section class="settings-card">
-          <div class="settings-card-title"><span class="dash"></span>Wallet & pay</div>
-          <p class="settings-card-desc">Change your current balance, hourly rate, or configure automatic regular pay.</p>
-          <div class="settings-actions">
-            <button class="btn btn-secondary" id="editSetupBtn">Edit wallet</button>
-            <button class="btn btn-ghost" id="regularPayBtn">Regular pay</button>
+      <div class="settings-stack">
+        <section class="settings-group">
+          <div class="settings-group-heading">
+            <div><span class="settings-group-kicker">Personalisation</span><h3>Make LUMIN yours</h3></div>
+            <p>Theme and appearance preferences stay with your LUMIN setup.</p>
+          </div>
+          <div class="settings-group-grid one-col">
+            <section class="settings-card settings-card-featured">
+              <div class="settings-card-header">
+                <span class="settings-card-icon" aria-hidden="true">◐</span>
+                <div><div class="settings-card-title">Appearance</div><p class="settings-card-desc">Choose a visual style for the entire app, or build your own custom palette.</p></div>
+              </div>
+              <div class="theme-picker settings-theme-picker" id="themePickerMain"></div>
+            </section>
           </div>
         </section>
 
-        <section class="settings-card">
-          <div class="settings-card-title"><span class="dash"></span>Data & updates</div>
-          <p class="settings-card-desc">Import an older device save or reopen the latest LUMIN release notes.</p>
-          <div class="settings-actions">
-            <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
-            <button class="btn btn-ghost" id="whatsNewBtn">What’s new <span class="whats-new-badge" id="whatsNewVersionBadge"></span></button>
+        <section class="settings-group">
+          <div class="settings-group-heading">
+            <div><span class="settings-group-kicker">Money</span><h3>Wallet & automation</h3></div>
+            <p>Control the numbers and automatic entries that power your forecasts.</p>
+          </div>
+          <div class="settings-group-grid">
+            <section class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-icon" aria-hidden="true">$</span>
+                <div><div class="settings-card-title">Wallet & pay</div><p class="settings-card-desc">Update your balance, hourly rate, or automatic regular pay schedule.</p></div>
+              </div>
+              <div class="settings-actions">
+                <button class="btn btn-secondary" id="editSetupBtn">Edit wallet</button>
+                <button class="btn btn-ghost" id="regularPayBtn">Regular pay</button>
+              </div>
+            </section>
+
+            <section class="settings-card">
+              <div class="settings-card-header">
+                <span class="settings-card-icon" aria-hidden="true">↻</span>
+                <div><div class="settings-card-title">Data & updates</div><p class="settings-card-desc">Bring in an older save or review what changed in the latest release.</p></div>
+              </div>
+              <div class="settings-actions">
+                <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
+                <button class="btn btn-ghost" id="whatsNewBtn">What’s new <span class="whats-new-badge" id="whatsNewVersionBadge"></span></button>
+              </div>
+            </section>
           </div>
         </section>
 
-        <section class="settings-card settings-card-app">
-          <div class="settings-card-title"><span class="dash"></span>App & offline</div>
-          <p class="settings-card-desc">LUMIN caches the app shell and your latest local save so it can keep working when the network disappears.</p>
-          <div class="app-status-box">
-            <div class="app-status-line"><span>Connection</span><strong id="offlineSettingsNetwork">Online</strong></div>
-            <div class="app-status-line"><span>Offline cache</span><strong id="offlineCacheStatus">Checking…</strong></div>
-            <div class="app-status-line"><span>Pending cloud sync</span><strong id="pendingSyncStatus">None</strong></div>
+        <section class="settings-group">
+          <div class="settings-group-heading">
+            <div><span class="settings-group-kicker">App</span><h3>Device & security</h3></div>
+            <p>Offline readiness and account protection, without the clutter.</p>
           </div>
-          <div class="settings-actions">
-            <button type="button" class="btn btn-secondary hidden" id="installAppBtn">Install LUMIN</button>
-            <button type="button" class="btn btn-ghost" id="refreshOfflineCacheBtn">Refresh offline cache</button>
+          <div class="settings-group-grid">
+            <section class="settings-card settings-card-app">
+              <div class="settings-card-header">
+                <span class="settings-card-icon" aria-hidden="true">↓</span>
+                <div><div class="settings-card-title">App & offline</div><p class="settings-card-desc">Keep LUMIN available when your connection drops and manage its local app cache.</p></div>
+              </div>
+              <div class="app-status-box settings-status-list">
+                <div class="app-status-line"><span>Connection</span><strong id="offlineSettingsNetwork">Online</strong></div>
+                <div class="app-status-line"><span>Offline cache</span><strong id="offlineCacheStatus">Checking…</strong></div>
+                <div class="app-status-line"><span>Pending cloud sync</span><strong id="pendingSyncStatus">None</strong></div>
+              </div>
+              <div class="settings-actions">
+                <button type="button" class="btn btn-secondary hidden" id="installAppBtn">Install LUMIN</button>
+                <button type="button" class="btn btn-ghost" id="refreshOfflineCacheBtn">Refresh offline cache</button>
+              </div>
+            </section>
+
+            <section class="settings-card settings-card-security">
+              <div class="settings-card-header">
+                <span class="settings-card-icon" aria-hidden="true">⌁</span>
+                <div><div class="settings-card-title">Security</div><p class="settings-card-desc">Use a passkey for fast, phishing-resistant sign-in while keeping your password as recovery.</p></div>
+              </div>
+              <div class="security-status-box settings-status-list">
+                <div class="passkey-status">
+                  <span class="passkey-status-icon">⌁</span>
+                  <span><strong id="passkeyStatusTitle">Checking passkeys…</strong><span id="passkeyStatusText">Checking browser support and server connection.</span></span>
+                </div>
+              </div>
+              <div class="settings-actions">
+                <button type="button" class="btn btn-secondary" id="addPasskeyBtn">Add a passkey</button>
+              </div>
+            </section>
           </div>
         </section>
 
-        <section class="settings-card settings-card-security">
-          <div class="settings-card-title"><span class="dash"></span>Security</div>
-          <p class="settings-card-desc">Use a passkey with Windows Hello, Touch ID, Face ID or a security key. Email/password stays available as recovery.</p>
-          <div class="security-status-box">
-            <div class="passkey-status">
-              <span class="passkey-status-icon">⌁</span>
-              <span><strong id="passkeyStatusTitle">Checking passkeys…</strong><span id="passkeyStatusText">Checking browser support and server connection.</span></span>
+        <section class="settings-group settings-group-last">
+          <div class="settings-group-heading">
+            <div><span class="settings-group-kicker">Account</span><h3>Cloud account</h3></div>
+            <p>Your account connection and cloud-save status.</p>
+          </div>
+          <section class="settings-card settings-account-card">
+            <div class="settings-card-header">
+              <span class="settings-card-icon" aria-hidden="true">☁</span>
+              <div><div class="settings-card-title">Account & cloud</div><p class="settings-card-desc">Cloud saves keep your wallet, goals and activity available across supported devices.</p></div>
             </div>
-          </div>
-          <div class="settings-actions">
-            <button type="button" class="btn btn-secondary" id="addPasskeyBtn">Add a passkey</button>
-          </div>
-        </section>
-
-        <section class="settings-card wide">
-          <div class="settings-card-title"><span class="dash"></span>Account & cloud</div>
-          <p class="settings-card-desc">Your cloud status and account controls. Cloud saves keep LUMIN synced between supported devices.</p>
-          <div class="settings-cloud-wrap">
-            <div class="cloud-status" id="cloudStatus">
-              <span class="cloud-dot"></span>
-              <span class="cloud-text" id="cloudStatusText">Connecting…</span>
-              <button type="button" class="cloud-action hidden" id="cloudSignInBtn">Sign in</button>
-              <button type="button" class="cloud-action hidden" id="cloudLogoutBtn">Log out</button>
+            <div class="settings-cloud-wrap">
+              <div class="cloud-status" id="cloudStatus">
+                <span class="cloud-dot"></span>
+                <span class="cloud-text" id="cloudStatusText">Connecting…</span>
+                <button type="button" class="cloud-action hidden" id="cloudSignInBtn">Sign in</button>
+                <button type="button" class="cloud-action hidden" id="cloudLogoutBtn">Log out</button>
+              </div>
             </div>
-          </div>
+          </section>
         </section>
       </div>
     </div>
@@ -4454,6 +4820,41 @@
 
 
   <div class="offline-toast" id="offlineToast" role="status" aria-live="polite"></div>
+
+  <!-- FIRST-SIGNUP PASSKEY CHOICE -->
+  <div id="signupPasskeyBackdrop" class="modal-backdrop hidden">
+    <div class="modal signup-passkey-modal" role="dialog" aria-modal="true" aria-labelledby="signupPasskeyTitle" aria-describedby="signupPasskeyDescription">
+      <div class="signup-passkey-hero">
+        <div class="signup-passkey-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="15" r="3"></circle><path d="M11 15h9M17 15v3M14 15v2"></path><path d="M12 4a5 5 0 0 1 5 5v1"></path>
+          </svg>
+        </div>
+        <div class="signup-passkey-heading">
+          <div class="signup-passkey-kicker" id="signupPasskeyKicker">One more thing</div>
+          <h2 class="modal-title" id="signupPasskeyTitle">Secure your account with a passkey?</h2>
+        </div>
+      </div>
+      <p class="modal-sub" id="signupPasskeyDescription">Sign in faster with Windows Hello, Touch ID, Face ID or another supported passkey. Your password stays available as a recovery option.</p>
+
+      <div class="signup-passkey-benefits">
+        <div class="signup-passkey-benefit">
+          <span class="signup-passkey-benefit-mark">✓</span>
+          <span><strong>Faster sign-in</strong>No password typing on supported devices.</span>
+        </div>
+        <div class="signup-passkey-benefit">
+          <span class="signup-passkey-benefit-mark">⌁</span>
+          <span><strong>Phishing resistant</strong>Your passkey is tied to LUMIN’s real domain.</span>
+        </div>
+      </div>
+
+      <div class="signup-passkey-message" id="signupPasskeyMessage" aria-live="polite"></div>
+      <div class="signup-passkey-actions">
+        <button type="button" class="btn btn-ghost" id="signupPasskeyLaterBtn">Maybe later</button>
+        <button type="button" class="btn btn-primary" id="signupPasskeySetupBtn">Set up passkey</button>
+      </div>
+    </div>
+  </div>
 
   <!-- FIRST-SIGNUP INTERACTIVE TUTORIAL -->
   <div class="tutorial-catcher hidden" id="tutorialCatcher"></div>
@@ -4882,9 +5283,31 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09";
+  const APP_VERSION = "2026.09.09.2";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.2",
+      title: "Cleaner settings & smarter passkey reminders",
+      date: "9 September 2026",
+      changes: [
+        "Users without a known passkey now get a lightweight reminder roughly every fourth password sign-in instead of being nagged constantly.",
+        "Passkey reminders stop after a passkey is added or successfully used on the device.",
+        "Rebuilt Settings into cleaner Personalisation, Money, App, Security and Account sections.",
+        "Improved Settings hierarchy, spacing, status surfaces and account controls for a more professional app-like feel."
+      ]
+    },
+    {
+      version: "2026.09.09.1",
+      title: "Passkeys at signup",
+      date: "9 September 2026",
+      changes: [
+        "New accounts are now offered passkey setup immediately after signup.",
+        "Set up passkey opens Windows Hello, Touch ID, Face ID or another supported authenticator without hunting through Settings.",
+        "Maybe later skips the prompt cleanly and keeps email/password available as recovery.",
+        "Existing users signing in normally are not shown the signup prompt."
+      ]
+    },
     {
       version: "2026.09.09",
       title: "Readable passkey errors",
@@ -5817,6 +6240,14 @@
     });
   }
 
+  if(typeof ResizeObserver!=="undefined"){
+    const barsRowEl = $("barsRow");
+    if(barsRowEl){
+      const barsObserver = new ResizeObserver(()=>scheduleBarsRender());
+      barsObserver.observe(barsRowEl);
+    }
+  }
+
   function buildChartViewToggle(){
     const container = $("chartViewToggle");
     container.querySelectorAll("button").forEach(btn=>{
@@ -5946,7 +6377,10 @@
     renderTutorialStep();
   });
   $("tutorialSkipBtn").addEventListener("click",finishTutorial);
-  window.addEventListener("resize",()=>{if(tutorialActive)positionTutorial();});
+  window.addEventListener("resize",()=>{
+    if(tutorialActive) positionTutorial();
+    scheduleBarsRender();
+  });
   window.addEventListener("scroll",()=>{if(tutorialActive)positionTutorial();},{passive:true});
 
   // ---- storage + account/cloud sync ----
@@ -5960,6 +6394,9 @@
   let lastCloudPayload = null;
   let remoteApplyInFlight = false;
   let authCreateMode = false;
+  let pendingPasskeyPromptAfterSignup = false;
+  let pendingPasskeyReminderAfterSignin = false;
+  let explicitAuthAction = ""; // signup | password | passkey | ""
   let legacyCandidatePayload = null;
   let legacyCandidateSource = "";
   let deferredInstallPrompt = null;
@@ -5967,6 +6404,9 @@
 
   const LAST_CLOUD_USER_KEY = "lumin-last-cloud-user";
   const PENDING_SYNC_PREFIX = "lumin-pending-cloud-sync:";
+  const PASSKEY_SIGNIN_COUNT_PREFIX = "lumin-passkey-signin-count:";
+  const PASSKEY_KNOWN_PREFIX = "lumin-passkey-known:";
+  const PASSKEY_REMINDER_EVERY = 4;
 
   try{
     const testKey = "__lumin_storage_test__";
@@ -6000,6 +6440,37 @@
 
   function pendingSyncKey(uid){
     return PENDING_SYNC_PREFIX+String(uid||"local");
+  }
+
+  function passkeySigninCountKey(uid){
+    return PASSKEY_SIGNIN_COUNT_PREFIX+String(uid||"local");
+  }
+
+  function passkeyKnownKey(uid){
+    return PASSKEY_KNOWN_PREFIX+String(uid||"local");
+  }
+
+  function isPasskeyKnown(uid){
+    if(!localStorageOk||!uid) return false;
+    try{return localStorage.getItem(passkeyKnownKey(uid))==="1";}catch{return false;}
+  }
+
+  function markPasskeyKnown(uid){
+    if(!localStorageOk||!uid) return;
+    try{
+      localStorage.setItem(passkeyKnownKey(uid),"1");
+      localStorage.removeItem(passkeySigninCountKey(uid));
+    }catch{}
+  }
+
+  function shouldShowPasskeySigninReminder(user){
+    if(!localStorageOk||!user||!user.uid||isPasskeyKnown(user.uid)) return false;
+    try{
+      const key=passkeySigninCountKey(user.uid);
+      const next=Math.max(0,Number(localStorage.getItem(key))||0)+1;
+      localStorage.setItem(key,String(next));
+      return next%PASSKEY_REMINDER_EVERY===0;
+    }catch{return false;}
   }
 
   function hasPendingCloudSync(uid){
@@ -7311,12 +7782,24 @@
         tutorialCompleted=false;
         await persist();
       }
+
+      if(explicitAuthAction==="passkey"){
+        markPasskeyKnown(user.uid);
+      }else if(explicitAuthAction==="password"){
+        pendingPasskeyReminderAfterSignin=shouldShowPasskeySigninReminder(user);
+      }
+
       setAppLoading("Almost ready","Finishing your dashboard and cloud sync.");
       await startCloudSubscription();
       maybeSignalLegacySave();
     }finally{
+      explicitAuthAction="";
       hideAppLoading(650);
-      setTimeout(maybeStartSignupTutorial,900);
+      setTimeout(()=>{
+        if(pendingPasskeyPromptAfterSignup) openSignupPasskeyPrompt();
+        else if(pendingPasskeyReminderAfterSignin) openSigninPasskeyReminder();
+        else maybeStartSignupTutorial();
+      },720);
     }
   }
 
@@ -7617,11 +8100,17 @@
       return;
     }
 
-    if(title) title.textContent=cloudUser?"Passkeys ready":"Passkey sign-in ready";
-    if(detail) detail.textContent=cloudUser
-      ?"Add Windows Hello, Touch ID, Face ID or another compatible passkey to this account."
-      :"Enter your account email, then continue with a saved passkey.";
-    if(add) add.disabled=!(cloudUser&&cloudMode==="cloud");
+    const known=!!(cloudUser&&isPasskeyKnown(cloudUser.uid));
+    if(title) title.textContent=known?"Passkey enabled":(cloudUser?"Passkeys ready":"Passkey sign-in ready");
+    if(detail) detail.textContent=known
+      ?"A passkey has been set up or used on this account from this device."
+      : cloudUser
+        ?"Add Windows Hello, Touch ID, Face ID or another compatible passkey to this account."
+        :"Enter your account email, then continue with a saved passkey.";
+    if(add){
+      add.disabled=!(cloudUser&&cloudMode==="cloud");
+      add.textContent=known?"Add another passkey":"Add a passkey";
+    }
     if(signIn) signIn.disabled=false;
   }
 
@@ -7660,6 +8149,7 @@
       });
       if(!finish.firebaseToken) throw new Error("Passkey verification did not return a Firebase sign-in token.");
 
+      explicitAuthAction="passkey";
       setAppLoading("Signing in with your passkey","Verifying Windows Hello or your selected authenticator.");
       await cloudApi.signInToken(finish.firebaseToken);
     }catch(error){
@@ -7670,17 +8160,84 @@
     }
   }
 
-  async function addPasskey(){
-    if(!cloudUser||cloudMode!=="cloud"){
-      showOfflineToast("Sign in to your cloud account before adding a passkey.");
-      return;
-    }
-    if(!passkeysSupported()||!passkeyApiBase()){
-      showOfflineToast("Passkey backend is not connected yet.");
+  function preparePasskeyPromptCopy(mode="signup"){
+    const reminder=mode==="reminder";
+    $("signupPasskeyKicker").textContent=reminder?"Quick security reminder":"One more thing";
+    $("signupPasskeyTitle").textContent=reminder?"Want faster sign-in next time?":"Secure your account with a passkey?";
+    $("signupPasskeyDescription").textContent=reminder
+      ?"You can replace password typing with Windows Hello, Touch ID, Face ID or another passkey. We’ll only remind you occasionally."
+      :"Sign in faster with Windows Hello, Touch ID, Face ID or another supported passkey. Your password stays available as a recovery option.";
+    $("signupPasskeyLaterBtn").textContent=reminder?"Not now":"Maybe later";
+    $("signupPasskeySetupBtn").textContent="Set up passkey";
+  }
+
+  function openSignupPasskeyPrompt(){
+    if(!pendingPasskeyPromptAfterSignup) return;
+
+    if(!passkeysSupported() || !passkeyApiBase()){
+      pendingPasskeyPromptAfterSignup=false;
+      maybeStartSignupTutorial();
       return;
     }
 
-    const button=$("addPasskeyBtn");
+    preparePasskeyPromptCopy("signup");
+    $("signupPasskeyMessage").textContent="";
+    $("signupPasskeyMessage").className="signup-passkey-message";
+    $("signupPasskeySetupBtn").disabled=false;
+    $("signupPasskeyBackdrop").classList.remove("hidden");
+  }
+
+  function openSigninPasskeyReminder(){
+    if(!pendingPasskeyReminderAfterSignin || !cloudUser || isPasskeyKnown(cloudUser.uid)) return;
+    if(!passkeysSupported() || !passkeyApiBase()){
+      pendingPasskeyReminderAfterSignin=false;
+      return;
+    }
+
+    preparePasskeyPromptCopy("reminder");
+    $("signupPasskeyMessage").textContent="";
+    $("signupPasskeyMessage").className="signup-passkey-message";
+    $("signupPasskeySetupBtn").disabled=false;
+    $("signupPasskeyBackdrop").classList.remove("hidden");
+  }
+
+  function closeSignupPasskeyPrompt(){
+    $("signupPasskeyBackdrop").classList.add("hidden");
+    pendingPasskeyPromptAfterSignup=false;
+    pendingPasskeyReminderAfterSignin=false;
+
+    if(wallet && pendingTutorialAfterSignup && !tutorialCompleted){
+      setTimeout(maybeStartSignupTutorial,220);
+    }
+  }
+
+  async function setupPasskeyFromSignup(){
+    const button=$("signupPasskeySetupBtn");
+    $("signupPasskeyMessage").textContent="Windows Hello or your passkey provider may open now.";
+    $("signupPasskeyMessage").className="signup-passkey-message";
+
+    const success=await addPasskey(button);
+    if(success){
+      $("signupPasskeyMessage").textContent="Passkey added. Your account is ready.";
+      setTimeout(closeSignupPasskeyPrompt,420);
+    }else{
+      $("signupPasskeyMessage").textContent="Passkey setup wasn’t completed. You can try again or choose Maybe later.";
+      $("signupPasskeyMessage").className="signup-passkey-message error";
+    }
+  }
+
+  async function addPasskey(triggerButton=null){
+    if(!cloudUser||cloudMode!=="cloud"){
+      showOfflineToast("Sign in to your cloud account before adding a passkey.");
+      return false;
+    }
+    if(!passkeysSupported()||!passkeyApiBase()){
+      showOfflineToast("Passkey backend is not connected yet.");
+      return false;
+    }
+
+    const button=triggerButton||$("addPasskeyBtn");
+    const originalText=button.textContent;
     button.disabled=true;
     button.textContent="Adding…";
     try{
@@ -7700,14 +8257,19 @@
           name:"Passkey"
         }
       });
+      markPasskeyKnown(cloudUser.uid);
+      pendingPasskeyReminderAfterSignin=false;
       showOfflineToast("Passkey added to your LUMIN account.");
-      $("passkeyStatusTitle").textContent="Passkey added";
+      $("passkeyStatusTitle").textContent="Passkey enabled";
       $("passkeyStatusText").textContent="This account can now use the registered authenticator to sign in.";
+      updatePasskeyUi();
+      return true;
     }catch(error){
       showOfflineToast(friendlyPasskeyError(error));
+      return false;
     }finally{
       button.disabled=false;
-      button.textContent="Add a passkey";
+      button.textContent=originalText;
     }
   }
 
@@ -7715,10 +8277,13 @@
     cloudApi = await window.luminCloudReady;
 
     $("sidebarVersion").textContent=APP_VERSION;
+    $("settingsVersionLabel").textContent=APP_VERSION;
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
     $("passkeySignInBtn").addEventListener("click",signInWithPasskey);
-    $("addPasskeyBtn").addEventListener("click",addPasskey);
+    $("addPasskeyBtn").addEventListener("click",()=>addPasskey());
+    $("signupPasskeySetupBtn").addEventListener("click",setupPasskeyFromSignup);
+    $("signupPasskeyLaterBtn").addEventListener("click",closeSignupPasskeyPrompt);
     $("refreshOfflineCacheBtn").addEventListener("click",refreshOfflineCache);
     $("installAppBtn").addEventListener("click",installLuminApp);
     updateOfflineUi();
@@ -7802,11 +8367,17 @@
 
       try{
         pendingTutorialAfterSignup=authCreateMode;
+        pendingPasskeyPromptAfterSignup=authCreateMode;
+        pendingPasskeyReminderAfterSignin=false;
+        explicitAuthAction=authCreateMode?"signup":"password";
         if(authCreateMode) await cloudApi.signUp(email,password);
         else await cloudApi.signIn(email,password);
         setAppLoading("Loading your savings","Your account is ready. Fetching your LUMIN data.");
       }catch(error){
         pendingTutorialAfterSignup=false;
+        pendingPasskeyPromptAfterSignup=false;
+        pendingPasskeyReminderAfterSignin=false;
+        explicitAuthAction="";
         hideAppLoading(300);
         setAuthMessage(friendlyAuthError(error),"error");
       }finally{
@@ -9006,6 +9577,15 @@
     unlockBodyScroll();
   }
 
+  let barsResizeRaf = 0;
+  function scheduleBarsRender(){
+    if(barsResizeRaf) cancelAnimationFrame(barsResizeRaf);
+    barsResizeRaf = requestAnimationFrame(()=>{
+      barsResizeRaf = 0;
+      renderBars();
+    });
+  }
+
   function renderBars(){
     const data=getBarSeries();
     const maxVal=Math.max(1,...data.map(d=>d.value));
@@ -9022,7 +9602,8 @@
         barsRow.appendChild(col);
       });
     }else{
-      const width=1000, height=126, top=8, bottom=24;
+      const rect=barsRow.getBoundingClientRect();
+      const width=Math.max(480,Math.round(rect.width||barsRow.clientWidth||1000)), height=126, top=8, bottom=24;
       const plotH=height-top-bottom;
       const count=Math.max(1,data.length);
       const xFor=i=>count===1?width/2:24+(i/(count-1))*(width-48);
@@ -9044,7 +9625,7 @@
 
       const zeroLine=top+plotH;
       barsRow.innerHTML=`
-        <svg class="chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" role="img" aria-label="${chartType==="area"?"Area":"Line"} chart of earnings">
+        <svg class="chart-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${chartType==="area"?"Area":"Line"} chart of earnings">
           <defs>
             <linearGradient id="luminAreaGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="var(--accent)" stop-opacity=".34"></stop>
