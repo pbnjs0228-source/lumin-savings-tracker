@@ -4,7 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="LUMIN is a private cloud-synced savings tracker for goals, work hours and deadlines." />
-<title>LUMIN — Cloud Savings Tracker</title>
+<title>LUMIN — Savings Tracker</title>
+<meta name="theme-color" content="#12111a" />
+<meta name="application-name" content="LUMIN" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="LUMIN" />
+<link rel="manifest" href="./manifest.json" />
   <!-- Embedded favicons -->
   <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACSklEQVR42k2TO48USRCEv8yq7p6e2UGzCwgWhwPpJCQkcDDxcfgB+Dhg4uHBH+CvYGOcc0LCAelsxEkIA/Fa9jU7O9M9VZkY1ftIp6RSRJQyIkpGky0HMDeqUNE2G4gIICCCAI4DTtevWPXHqChlnFjImWm7yWS8hRsgzsABERiOthH6dMzB/AfuDkA0N5qqZdzMWK2WiChd1wOZqoqICCIBQXCcumqZjrfYP9pBRYm4U4WWrl/hGDlnbty4Rlonvv3YJWqkS2vEjRgDXbdAtUJVwR0VKcrZM+DsHuzw6sVTnj15xN7+ArPM88cPuHtrm8Oj+fBIQlzOPCj7GKgiGmC5oJ8fkvOcfi28+fcDX77vEUMgZxtMBneIg804jpsTqxrpe2y5RBxU4O1//9PUNXVVnZrng7MlBRxxw8wwS6y//yTtH+JEkjntqCGoki0Dip5JFAHcMC/Rg3H05Sv93iHTNjOrIx4Cv+Ydo1rADCtAAEKsRy+D1AgCKvQu3Nu+xN+TEfevb/Pw9k0+7R6xjs6dv2Z8/nZAVCFZX/rRTGZehzFmyuVJYFpFMpDMUJSr0xE3r0yJF2pev/vM8SoRY2Cdj/HTJlpCqfm1WKJtxfULFRcnDbONMdO64uPvOf+830FFiKqYO2URQUaTTQeowxhz6NZr3J1aFVVlkRx3Y6OJ4CCiJFtinktLR5PNEoxDDPXgsZx+hSAlcBtAyXrMc2niSQqC4OKkvMJ9CENKwdI5xx1HRIcaF0wc4CUFCYg4nKOcjgh67vZE9g+VMiLGOBaXaQAAAABJRU5ErkJggg==">
   <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAG6ElEQVR42mWXzaslZxHGf1Vvnz73fNzPyTUQg5iggl+4CEYFGcSFf4EudKn/gKArwYVZhuzEnQtRV8aFZGNQAm4UElGEUTATo4MYmHFmMvfec89Hd79vlYv37T7nXBsu59zTb3dVPfXUU1Uynp06DiICAOKA5D93zA13L/f7e4D3353y4Paj3FIRRBR3x/F8ywXB8XK84sYlCMmy0SpUHIymiCq44+7DmWzP954TkfKLY5Zou5YYW1QDIgo4InuPFQcEHEcRYorMJsccz88ZVWNEQglq1wFwhAG08kWQglY2ktxYNwueXD2g6zaEUOU3yU7A49mp9zG4JZ46fZbZ5JT1ZkWMHeYpR48BoEgBs3+DIJ4dpDgqnp1TDYxGY+pRzfuX77FYX6KqQwDgGQERIVni1skzHIwOubh8DOKoKAq4CILuQT1cDi7Zsd6B3j/zyHrT0nQVt06exdxYbRY5pcVhBcHcmNaHTEaHXC0vEMlcdE+4Ge6WTcvWuHt+Ryap5c+SpuF/F1QqcLheXXM0O8+k3OGc9m+bTo7YNOvsvPQ5BwPcndh1dG0kJhtYYJ6A4qAbnhJeqqa34j2xU4s5HNTTgUuFhE6QgEigS11hsBeoc45xODqZEoKQIiyXTeGE59RIPmYWC1IBR4pxx8xAIKVIVR3g7XWuJEDdHdWAG5glzA2wof5zRJGf/fgV3nzjF/zyJy9T107btUMUQZUHDx/x4oufZjafcrlYoZIrYjc1ZjEHezMF3pfZcNBxT5hHzBxUOJtPOJvPOD+eoUEy5GaYJbrY8KXPf5Iffe+b/ODb3+DDH3wqO+g26IcX3jiwW4fVUNfuUGq4fwAXVMHN6dYrvN3gDlVVg6/zOUuFscb63r+wiyeZvH3puuc43XHdilfRw+yAI/S86NktkhNrljA64uIKuXoCbYNKhUrIyieCivK7t97muz98lTv37vPgquFoNiFZKnFaLlcX9vAflNC9sLlovmylHXHcjLhcEC/fp7tekVJkV4jN4fzsmD/c/Q8A88mImLo9WzkFttc29nuBM5RHz95c8opoBbGjXSxprhbE2GBuiElRQCfGVNLmJAwkoyoqu/XIAHVxv9rat0HJnMyWnCclhIAno+0itmnw1GHeoYyK0z4Y8P0AM6oFUncv3XaL3h4CW/XIcZUCQoHUtHRthC4iQDJDLWZGF75kp33IqpbffK9z+g0ODAj50FB28MqllqBdXNPMpth6g8oIodkNcwutCLuTguROVeYB7XNN30qrXfP7l+PmgxOrJ5csRyM2TUMVAqEaoWI7qctl6+XlpfiI5qhstSZnQP6fhDJ4ud9qe+83iyXX9YhV27JqG5bthoCRLJVjwnhUU4cqw6/QdJGT2YTrTTNMUC6FMwWNapgFCoy+IxS5FwQqVWLXsVgs2WzWfOf2Z7JCekYpITx9csRrf7vH63+/x+lkzP1HF9x+4XmatuUvd5dMxmEvTftVII6LDwhYclSFIIoRUHXmqhy0HdK03L51llVNA65KNQo8aVr++d9HBBHuP17wta+8wHwMP3/9j0wOJrnBiaA5tH0lxHfJKRxNA9frjqtNZDYeEZPx6p/vcDyqaGOHIFShIoQKCRXiiV/99R3effCQk9NTvv+tL5M88dJPf8O4Pij9oJTpDSWU8ezElcBBfURKEXPncKJ86gNHXKxb3n644GrdQLfKXmqA6gCo89uSgSXOzud8/bPP8dXPfZRf/+kdXn7tLWazGRqqYjVPyKKwaa/KYOJ5JhQoDiQEp03ObBz4wodO+MhxzdW649+XGx4uN1x3jknFtD7g/GjK8+dzvvjcLT7+9CH3L6545bd3+P0/HnB4NMNNQHQoyaAB90QTl0MZ5qHUjbqalzJKeT5AWcXE8Vj4xNmIj50c8MzRhOODinFVMakr5nVF53D38ZI33n3Im+8tEB1xOA7ElIoK9tXkhFDTpRXJu8KBwYE8gNajOTG2GSpRVIRozrLdQGwIAaajiloVM6Mz2CQhuiIhMKsrVBgqZHdTEQ2oKOvmEg26lbs+BeaJOkwJWhNjt7PoZGXwomhpGPdydFo2IB9KWPrVZbsziVCFmk23wDwOY9yeEKkEurhCRkI1qkkplnHMcMn0FRGC7Mzi/QTlO+rRt3wRFCVoQAQ23YJkHUHD0Lv2FpPeZzMjaKDSvBX1qiX9uCzb6WmQbN8VT9nbM1OKdGmTm9rwvm3HqbbGCxKqmEeaGMsO2N/dnvK+zcpeJy7NZ6v1ecY0VLRMylup9/15YL+Li4S+DezJc284L5mC7bTwflfsVy6RoncSSnUxbNju2026urkbD/td72u/CRVndiNUvSlrsoPwDtTiW1JuOzEO/A97bUslLtawagAAAABJRU5ErkJggg==">
@@ -3484,19 +3490,24 @@
   .trajectory-status.behind{color:#ef9a7b;border-color:color-mix(in srgb,#ef9a7b 30%,var(--line));background:color-mix(in srgb,#ef9a7b 7%,var(--panel-raised));}
   .trajectory-status.funded{color:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--panel-raised));}
 
-  .trajectory-path-wrap{position:relative;height:128px;margin:1px 0 6px;}
-  .trajectory-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+  .trajectory-path-wrap{position:relative;height:132px;margin:1px 0 6px;transition:height .2s ease;}
+  .trajectory-path-wrap.crowded{height:164px;}
+  .trajectory-svg{position:absolute;inset:0;width:100%;height:128px;overflow:visible;}
   .trajectory-base{fill:none;stroke:var(--line-strong);stroke-width:8;stroke-linecap:round;opacity:.58;}
   .trajectory-progress{fill:none;stroke:url(#trajectoryGradient);stroke-width:8;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000;transition:stroke-dashoffset .7s cubic-bezier(.2,.8,.2,1);}
-  .trajectory-node{position:absolute;top:82px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;min-width:98px;text-align:center;pointer-events:none;}
+  .trajectory-node{position:absolute;top:82px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;width:108px;text-align:center;pointer-events:none;}
   .trajectory-node-now{left:3%;transform:none;align-items:flex-start;text-align:left;}
   .trajectory-node-project{left:50%;}
-  .trajectory-node-release{left:97%;transform:translateX(-100%);align-items:flex-end;text-align:right;}
-  .trajectory-dot{width:11px;height:11px;border-radius:50%;border:2px solid var(--panel-solid);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent);margin-bottom:5px;}
+  .trajectory-node-release{left:96%;}
+  .trajectory-dot{flex:0 0 auto;width:11px;height:11px;border-radius:50%;border:2px solid var(--panel-solid);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 12%,transparent);}
   .trajectory-node-project .trajectory-dot{background:var(--accent);}
   .trajectory-node-release .trajectory-dot{background:var(--accent2);}
-  .trajectory-node b{font-size:9.5px;color:var(--white);font-weight:700;line-height:1.2;}
-  .trajectory-node small{font-size:8.5px;color:var(--muted);line-height:1.25;margin-top:2px;max-width:115px;}
+  .trajectory-node-copy{position:absolute;top:17px;display:flex;flex-direction:column;align-items:inherit;width:108px;}
+  .trajectory-node b{font-size:9.5px;color:var(--white);font-weight:700;line-height:1.2;white-space:nowrap;}
+  .trajectory-node small{font-size:8.5px;color:var(--muted);line-height:1.25;margin-top:2px;max-width:108px;white-space:nowrap;}
+  .trajectory-path-wrap.crowded .trajectory-node-project .trajectory-node-copy{top:48px;}
+  .trajectory-path-wrap.crowded.project-after-release .trajectory-node-project .trajectory-node-copy{top:48px;}
+  .trajectory-path-wrap.crowded.project-after-release .trajectory-node-release .trajectory-node-copy{top:17px;}
 
   .trajectory-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
   .trajectory-metric{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 9px;border-radius:8px;border:1px solid var(--line);background:color-mix(in srgb,var(--panel-solid) 72%,transparent);}
@@ -3504,18 +3515,343 @@
   .trajectory-metric strong{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--white);text-align:right;}
 
   @media(max-width:760px){
-    .trajectory-path-wrap{height:118px;}
+    .trajectory-path-wrap{height:148px;}
+    .trajectory-path-wrap.crowded{height:178px;}
+    .trajectory-svg{height:120px;}
+    .trajectory-node{top:76px;width:92px;}
+    .trajectory-node-copy{width:92px;}
+    .trajectory-node small{max-width:92px;}
+    .trajectory-node-project .trajectory-node-copy{top:42px;}
     .trajectory-metrics{grid-template-columns:1fr;gap:5px;}
   }
   @media(max-width:520px){
     .trajectory-panel{padding:10px !important;}
     .trajectory-head{align-items:center;}
     .trajectory-title{font-size:9.5px;}
-    .trajectory-path-wrap{height:110px;margin-top:4px;}
-    .trajectory-node{top:72px;min-width:72px;}
+    .trajectory-path-wrap{height:144px;margin-top:4px;}
+    .trajectory-path-wrap.crowded{height:174px;}
+    .trajectory-svg{height:112px;}
+    .trajectory-node{top:70px;width:78px;}
+    .trajectory-node-copy{width:78px;top:17px;}
     .trajectory-node b{font-size:8.5px;}
-    .trajectory-node small{font-size:7.5px;max-width:88px;}
+    .trajectory-node small{font-size:7.5px;max-width:78px;}
+    .trajectory-node-project .trajectory-node-copy{top:40px;}
     .trajectory-status{font-size:8px;padding:4px 6px;}
+  }
+
+
+  /* ================================================================
+     LUMIN APP SHELL · NAVIGATION · OFFLINE · PASSKEYS
+     ================================================================ */
+  :root{
+    --app-nav-width:176px;
+    --app-bottom-nav-height:68px;
+  }
+
+  .wrap.content{max-width:1260px;}
+  #mainScreen{
+    display:grid;
+    grid-template-columns:var(--app-nav-width) minmax(0,1fr);
+    column-gap:22px;
+    align-items:start;
+  }
+  #mainScreen.hidden{display:none !important;}
+  #mainScreen > .sync-banner{grid-column:1/-1;}
+  #mainScreen > .header-row,
+  #mainScreen > #dashboardTabPanel,
+  #mainScreen > #goalsTabPanel,
+  #mainScreen > #activityTabPanel,
+  #mainScreen > #settingsTabPanel{
+    grid-column:2;
+  }
+
+  .app-sidebar{
+    grid-column:1;
+    grid-row:2 / span 8;
+    position:sticky;
+    top:18px;
+    min-height:calc(100vh - 72px);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding:10px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:color-mix(in srgb,var(--panel-solid) 92%,transparent);
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    z-index:30;
+  }
+  .app-nav-label{
+    padding:6px 8px 5px;
+    font-size:8px;
+    font-weight:750;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .app-nav-list{display:flex;flex-direction:column;gap:3px;}
+  .app-nav-btn{
+    appearance:none;
+    width:100%;
+    min-height:40px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border:1px solid transparent;
+    border-radius:9px;
+    background:transparent;
+    color:var(--muted);
+    padding:7px 9px;
+    cursor:pointer;
+    font:650 10.5px/1 'Inter',sans-serif;
+    text-align:left;
+    transition:background .15s ease,color .15s ease,border-color .15s ease;
+  }
+  .app-nav-btn svg{width:16px;height:16px;flex:0 0 auto;}
+  .app-nav-btn:hover{
+    color:var(--white);
+    background:color-mix(in srgb,var(--white) 4%,transparent);
+  }
+  .app-nav-btn.active{
+    color:var(--white);
+    background:color-mix(in srgb,var(--accent) 10%,var(--panel-raised));
+    border-color:color-mix(in srgb,var(--accent) 28%,var(--line));
+  }
+  .app-nav-btn.active svg{color:var(--accent-soft);}
+  .app-sidebar-spacer{flex:1;}
+  .app-sidebar-footer{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    padding:8px 7px 3px;
+    border-top:1px solid var(--line);
+  }
+  .network-state{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    min-width:0;
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.3;
+  }
+  .network-dot{
+    width:7px;height:7px;border-radius:50%;flex:0 0 auto;
+    background:var(--positive);
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--positive) 9%,transparent);
+  }
+  .network-state.offline .network-dot{
+    background:#e4a85e;
+    box-shadow:0 0 0 3px color-mix(in srgb,#e4a85e 10%,transparent);
+  }
+  .network-state.syncing .network-dot{
+    background:var(--accent);
+    animation:networkPulse 1.2s ease-in-out infinite;
+  }
+  @keyframes networkPulse{50%{opacity:.35;transform:scale(.78);}}
+
+  .header-row.app-header{
+    align-items:center;
+    min-height:70px;
+    padding:9px 2px 14px;
+    margin-bottom:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .app-header-copy{min-width:0;}
+  .app-header .brand-row{margin-bottom:4px;}
+  .app-header h1.title{
+    margin:4px 0 0;
+    font-size:clamp(20px,3vw,26px);
+  }
+  .app-header .subtitle{max-width:620px;font-size:11.5px;margin-top:5px;}
+  .app-header .header-right{
+    flex-direction:row;
+    align-items:center;
+    gap:8px;
+  }
+  .app-network-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    min-height:30px;
+    padding:5px 8px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:var(--panel-solid);
+    color:var(--muted);
+    font-size:9px;
+    font-weight:650;
+  }
+  .app-network-pill .network-dot{width:6px;height:6px;}
+  .app-network-pill.offline{color:#e8b97a;}
+  .app-network-pill.offline .network-dot{background:#e4a85e;}
+  .app-view{animation:appViewIn .18s ease;}
+  @keyframes appViewIn{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+  /* Home is deliberately lighter than the old everything-at-once dashboard. */
+  #dashboardTabPanel .dashboard-hero-grid{margin-top:0;}
+  #goalsTabPanel .goal-cluster,
+  #activityTabPanel .money-cluster{margin-top:0;}
+
+  .settings-app-card-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+  .app-status-box,
+  .security-status-box{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    padding:9px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:color-mix(in srgb,var(--panel-solid) 78%,transparent);
+  }
+  .app-status-line{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    color:var(--muted);
+    font-size:9.5px;
+  }
+  .app-status-line strong{
+    color:var(--white);
+    font-weight:650;
+    text-align:right;
+  }
+  .settings-card-security .settings-actions,
+  .settings-card-app .settings-actions{margin-top:3px;}
+
+  .passkey-auth-block{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    margin-bottom:14px;
+  }
+  .passkey-btn{
+    width:100%;
+    justify-content:center;
+    min-height:42px !important;
+    font-weight:700;
+  }
+  .passkey-btn svg{width:17px;height:17px;}
+  .passkey-helper{
+    color:var(--muted);
+    font-size:9.5px;
+    line-height:1.45;
+    text-align:center;
+  }
+  .passkey-status{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    color:var(--muted);
+    font-size:9.5px;
+    line-height:1.45;
+  }
+  .passkey-status-icon{
+    flex:0 0 auto;
+    width:22px;height:22px;border-radius:7px;
+    display:grid;place-items:center;
+    border:1px solid var(--line);
+    background:var(--panel-raised);
+    color:var(--accent-soft);
+    font-size:11px;
+  }
+  .passkey-status strong{display:block;color:var(--white);font-size:10px;margin-bottom:1px;}
+
+  .offline-toast{
+    position:fixed;
+    left:50%;
+    bottom:18px;
+    transform:translate(-50%,18px);
+    z-index:220;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    max-width:min(520px,calc(100vw - 28px));
+    padding:9px 11px;
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 95%,transparent);
+    color:var(--white);
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
+    font-size:10px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease,transform .18s ease;
+  }
+  .offline-toast.show{opacity:1;transform:translate(-50%,0);}
+
+  /* Old two-tab control is retired by the app shell. */
+  .main-tabs{display:none !important;}
+
+  @media(max-width:820px){
+    body{
+      padding:18px 12px calc(var(--app-bottom-nav-height) + 28px + env(safe-area-inset-bottom));
+    }
+    .wrap.content{max-width:100%;}
+    #mainScreen{
+      display:block;
+    }
+    #mainScreen > .header-row,
+    #mainScreen > #dashboardTabPanel,
+    #mainScreen > #goalsTabPanel,
+    #mainScreen > #activityTabPanel,
+    #mainScreen > #settingsTabPanel{
+      width:100%;
+    }
+    .app-sidebar{
+      position:fixed;
+      left:8px;right:8px;bottom:8px;top:auto;
+      min-height:0;
+      height:calc(var(--app-bottom-nav-height) + env(safe-area-inset-bottom));
+      padding:6px 7px calc(6px + env(safe-area-inset-bottom));
+      border-radius:14px;
+      flex-direction:row;
+      align-items:center;
+      box-shadow:0 12px 38px rgba(0,0,0,.32);
+      background:color-mix(in srgb,var(--panel-solid) 96%,transparent);
+      backdrop-filter:blur(14px);
+    }
+    .app-nav-label,.app-sidebar-footer,.app-sidebar-spacer{display:none;}
+    .app-nav-list{
+      width:100%;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:3px;
+    }
+    .app-nav-btn{
+      min-width:0;
+      min-height:51px;
+      padding:5px 2px;
+      flex-direction:column;
+      justify-content:center;
+      gap:4px;
+      font-size:8px;
+      text-align:center;
+    }
+    .app-nav-btn svg{width:17px;height:17px;}
+    .header-row.app-header{
+      min-height:0;
+      padding:4px 1px 11px;
+      margin-bottom:11px;
+    }
+    .app-header .brand-tag{display:none;}
+    .app-header .header-right{align-self:flex-start;}
+    .app-header .save-note{display:none;}
+    .app-network-pill{padding:5px 7px;}
+    .settings-app-card-grid{grid-template-columns:1fr;}
+    .offline-toast{
+      bottom:calc(var(--app-bottom-nav-height) + 18px + env(safe-area-inset-bottom));
+    }
+  }
+  @media(max-width:520px){
+    .app-header h1.title{font-size:20px;}
+    .app-header .subtitle{font-size:10.5px;line-height:1.4;}
+    .app-network-pill span:last-child{max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   }
 
 </style>
@@ -3559,6 +3895,18 @@
 
     <div class="auth-config-warning" id="authConfigWarning"><b>Firebase isn’t configured yet.</b><br>Fill in <code>firebase-config.js</code> before publishing. You can still use device-only mode while setting it up.</div>
 
+    <div class="passkey-auth-block" id="passkeyAuthBlock">
+      <button type="button" class="btn btn-secondary passkey-btn" id="passkeySignInBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="8" cy="15" r="3"></circle><path d="M11 15h9M17 15v3M14 15v2"></path><path d="M12 4a5 5 0 0 1 5 5v1"></path>
+        </svg>
+        Continue with passkey
+      </button>
+      <div class="passkey-helper" id="passkeyAuthHelper">Use Windows Hello, Touch ID, Face ID or another saved passkey.</div>
+    </div>
+
+    <div class="auth-divider" id="emailAuthDivider">or use email</div>
+
     <form class="auth-form" id="authForm">
       <label class="field">Email
         <input type="email" id="authEmail" autocomplete="email" placeholder="you@example.com" required />
@@ -3577,7 +3925,7 @@
     </div>
     <div class="auth-message" id="authMessage" aria-live="polite"></div>
 
-    <div class="auth-divider">or</div>
+    <div class="auth-divider">or stay local</div>
     <button type="button" class="btn btn-ghost" id="offlineModeBtn" style="width:100%;justify-content:center;">Use on this device only</button>
   </div>
 </div>
@@ -3616,26 +3964,57 @@
   <!-- MAIN SCREEN -->
   <div id="mainScreen" class="hidden">
     <div class="sync-banner" id="syncBanner"></div>
-    <div class="header-row">
+
+    <aside class="app-sidebar" aria-label="LUMIN navigation">
+      <div class="app-nav-label">Workspace</div>
+      <nav class="app-nav-list">
+        <button type="button" class="app-nav-btn active" id="homeNavBtn" data-app-view="home" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path><path d="M9 21v-6h6v6"></path></svg>
+          <span>Home</span>
+        </button>
+        <button type="button" class="app-nav-btn" id="goalsNavBtn" data-app-view="goals">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3"></circle><path d="M15 9l5-5M16 4h4v4"></path></svg>
+          <span>Goals</span>
+        </button>
+        <button type="button" class="app-nav-btn" id="activityNavBtn" data-app-view="activity">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"></path></svg>
+          <span>Activity</span>
+        </button>
+        <button type="button" class="app-nav-btn" id="settingsNavBtn" data-app-view="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1A1.7 1.7 0 0 0 8.2 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 3.8 15a1.7 1.7 0 0 0-.6-1A1.7 1.7 0 0 0 2.1 13.6H2V9.6h.1A1.7 1.7 0 0 0 3.6 8.2a1.7 1.7 0 0 0-.34-1.88L3.2 6.26l2.83-2.83.06.06A1.7 1.7 0 0 0 8 3.8a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V2h4v.1A1.7 1.7 0 0 0 14.8 3.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.2 8a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4h.1v4h-.1A1.7 1.7 0 0 0 19.4 15Z"></path></svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+      <div class="app-sidebar-spacer"></div>
+      <div class="app-sidebar-footer">
+        <div class="network-state" id="sidebarNetworkState">
+          <span class="network-dot"></span>
+          <span id="sidebarNetworkText">Online</span>
+        </div>
+        <div style="font-size:8px;color:var(--muted);">LUMIN v<span id="sidebarVersion">—</span></div>
+      </div>
+    </aside>
+
+    <div class="header-row app-header">
       <div>
         <div class="brand-row">
           <svg class="brand-mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="var(--accent)"/><g stroke="var(--accent-soft)" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/></g></svg>
           <span class="brand-word">LUMIN</span>
           <span class="brand-tag">Savings tracker</span>
         </div>
-        <h1 class="title">Save up for what's <span>next</span></h1>
-        <p class="subtitle">Track earnings and expenses, grow your fund, and see how close you are to every item on your list.</p>
+        <h1 class="title" id="appPageTitle">Your <span>home</span></h1>
+        <p class="subtitle" id="appPageSubtitle">Your savings pulse, streak, recent progress and forecast at a glance.</p>
       </div>
       <div class="header-right">
-        <div class="main-tabs" role="tablist" aria-label="LUMIN pages">
-          <button type="button" class="main-tab-btn active" id="dashboardTabBtn" role="tab" aria-selected="true" aria-controls="dashboardTabPanel">Dashboard</button>
-          <button type="button" class="main-tab-btn" id="settingsTabBtn" role="tab" aria-selected="false" aria-controls="settingsTabPanel">Settings</button>
+        <div class="app-network-pill" id="networkPill">
+          <span class="network-dot"></span>
+          <span id="networkPillText">Online</span>
         </div>
         <span id="saveNote" class="save-note">Saved</span>
       </div>
     </div>
 
-    <div id="dashboardTabPanel" role="tabpanel" aria-labelledby="dashboardTabBtn">
+    <div id="dashboardTabPanel" class="app-view" role="region" aria-label="Home">
     <div class="dashboard-hero-grid">
 <div class="section panel dashboard-chart-first">
       <div class="panel-header-row">
@@ -3831,7 +4210,7 @@
         <div class="trajectory-status" id="trajectoryStatus">On track</div>
       </div>
 
-      <div class="trajectory-path-wrap" aria-label="Savings trajectory toward product release">
+      <div class="trajectory-path-wrap" id="trajectoryPathWrap" aria-label="Savings trajectory toward product release">
         <svg class="trajectory-svg" viewBox="0 0 1000 150" preserveAspectRatio="none" role="img">
           <defs>
             <linearGradient id="trajectoryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -3844,18 +4223,24 @@
         </svg>
         <div class="trajectory-node trajectory-node-now" id="trajectoryNowNode">
           <span class="trajectory-dot"></span>
-          <b>Today</b>
-          <small id="trajectoryNowText">$0 saved</small>
+          <span class="trajectory-node-copy">
+            <b>Today</b>
+            <small id="trajectoryNowText">$0 saved</small>
+          </span>
         </div>
         <div class="trajectory-node trajectory-node-project" id="trajectoryProjectNode">
           <span class="trajectory-dot"></span>
-          <b id="trajectoryProjectLabel">Projected</b>
-          <small id="trajectoryProjectText">—</small>
+          <span class="trajectory-node-copy">
+            <b id="trajectoryProjectLabel">Projected</b>
+            <small id="trajectoryProjectText">—</small>
+          </span>
         </div>
         <div class="trajectory-node trajectory-node-release" id="trajectoryReleaseNode">
           <span class="trajectory-dot"></span>
-          <b>Release</b>
-          <small id="trajectoryReleaseText">—</small>
+          <span class="trajectory-node-copy">
+            <b>Release</b>
+            <small id="trajectoryReleaseText">—</small>
+          </span>
         </div>
       </div>
 
@@ -3986,8 +4371,11 @@
 
     </div>
 
-    <!-- SETTINGS TAB -->
-    <div id="settingsTabPanel" class="settings-page hidden" role="tabpanel" aria-labelledby="settingsTabBtn">
+    <div id="goalsTabPanel" class="app-view hidden" role="region" aria-label="Goals"></div>
+    <div id="activityTabPanel" class="app-view hidden" role="region" aria-label="Activity"></div>
+
+    <!-- SETTINGS -->
+    <div id="settingsTabPanel" class="settings-page app-view hidden" role="region" aria-label="Settings">
       <div class="section settings-head">
         <div>
           <h2 class="settings-title">Settings</h2>
@@ -4020,6 +4408,34 @@
           </div>
         </section>
 
+        <section class="settings-card settings-card-app">
+          <div class="settings-card-title"><span class="dash"></span>App & offline</div>
+          <p class="settings-card-desc">LUMIN caches the app shell and your latest local save so it can keep working when the network disappears.</p>
+          <div class="app-status-box">
+            <div class="app-status-line"><span>Connection</span><strong id="offlineSettingsNetwork">Online</strong></div>
+            <div class="app-status-line"><span>Offline cache</span><strong id="offlineCacheStatus">Checking…</strong></div>
+            <div class="app-status-line"><span>Pending cloud sync</span><strong id="pendingSyncStatus">None</strong></div>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn btn-secondary hidden" id="installAppBtn">Install LUMIN</button>
+            <button type="button" class="btn btn-ghost" id="refreshOfflineCacheBtn">Refresh offline cache</button>
+          </div>
+        </section>
+
+        <section class="settings-card settings-card-security">
+          <div class="settings-card-title"><span class="dash"></span>Security</div>
+          <p class="settings-card-desc">Use a passkey with Windows Hello, Touch ID, Face ID or a security key. Email/password stays available as recovery.</p>
+          <div class="security-status-box">
+            <div class="passkey-status">
+              <span class="passkey-status-icon">⌁</span>
+              <span><strong id="passkeyStatusTitle">Checking passkeys…</strong><span id="passkeyStatusText">Checking browser support and server connection.</span></span>
+            </div>
+          </div>
+          <div class="settings-actions">
+            <button type="button" class="btn btn-secondary" id="addPasskeyBtn">Add a passkey</button>
+          </div>
+        </section>
+
         <section class="settings-card wide">
           <div class="settings-card-title"><span class="dash"></span>Account & cloud</div>
           <p class="settings-card-desc">Your cloud status and account controls. Cloud saves keep LUMIN synced between supported devices.</p>
@@ -4036,6 +4452,8 @@
     </div>
   </div>
 
+
+  <div class="offline-toast" id="offlineToast" role="status" aria-live="polite"></div>
 
   <!-- FIRST-SIGNUP INTERACTIVE TUTORIAL -->
   <div class="tutorial-catcher hidden" id="tutorialCatcher"></div>
@@ -4386,7 +4804,11 @@
   const resolveCloud = window.__resolveLuminCloud || (()=>{});
 
   try{
-    const { firebaseConfig } = await import('./firebase-config.js');
+    const configModule = await import('./firebase-config.js');
+    const { firebaseConfig } = configModule;
+    const passkeyApiBase = typeof configModule.passkeyApiBase === 'string'
+      ? configModule.passkeyApiBase.replace(/\/$/,'')
+      : '';
     const configured = firebaseConfig &&
       typeof firebaseConfig.apiKey === 'string' && firebaseConfig.apiKey.trim() && !firebaseConfig.apiKey.includes('PASTE_') &&
       typeof firebaseConfig.projectId === 'string' && firebaseConfig.projectId.trim() && !firebaseConfig.projectId.includes('PASTE_');
@@ -4410,10 +4832,15 @@
       resolveCloud({
         configured:true,
         onAuth(callback){ return authMod.onAuthStateChanged(auth, callback); },
+        passkeyApiBase,
         signIn(email,password){ return authMod.signInWithEmailAndPassword(auth,email,password); },
+        signInToken(token){ return authMod.signInWithCustomToken(auth,token); },
         signUp(email,password){ return authMod.createUserWithEmailAndPassword(auth,email,password); },
         resetPassword(email){ return authMod.sendPasswordResetEmail(auth,email); },
         logout(){ return authMod.signOut(auth); },
+        async getIdToken(forceRefresh=false){
+          return auth.currentUser ? auth.currentUser.getIdToken(forceRefresh) : null;
+        },
         async read(uid){
           const snap = await fsMod.getDoc(refFor(uid));
           return snap.exists() ? (snap.data().payload || null) : null;
@@ -4455,9 +4882,42 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.07.11";
+  const APP_VERSION = "2026.09.08.2";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.08.2",
+      title: "LUMIN feels like an app",
+      date: "8 September 2026",
+      changes: [
+        "Replaced the old Dashboard / Settings tabs with real Home, Goals, Activity and Settings app navigation.",
+        "Desktop now uses a compact sidebar and phones automatically switch to a fixed bottom navigation bar.",
+        "Added installable PWA support, an offline app shell, connection status and offline-save recovery.",
+        "Cloud changes made while offline are marked for sync and pushed when the signed-in app reconnects.",
+        "Added passkey sign-in and registration flows for Windows Hello, Touch ID, Face ID and compatible security keys.",
+        "Added App & offline and Security controls to Settings."
+      ]
+    },
+    {
+      version: "2026.09.08",
+      title: "True-time release trajectory",
+      date: "8 September 2026",
+      changes: [
+        "Release and Projected ready now appear in the correct chronological order.",
+        "Trajectory spacing is proportional to the actual amount of time between Today, Release and your projected ready date.",
+        "If you are behind pace, Release appears first and Projected ready moves after it instead of being forced before launch."
+      ]
+    },
+    {
+      version: "2026.09.07.12",
+      title: "Cleaner trajectory labels",
+      date: "7 September 2026",
+      changes: [
+        "Fixed Projected ready and Release labels overlapping when their markers are close together.",
+        "Crowded trajectory milestones now automatically stagger vertically.",
+        "Improved trajectory spacing on narrow cards and mobile screens."
+      ]
+    },
     {
       version: "2026.09.07.11",
       title: "Release trajectories",
@@ -5364,11 +5824,11 @@
 
   // ---- first-signup tutorial ----
   const TUTORIAL_STEPS = [
-    {target:".dashboard-chart-first",title:"Your money at a glance",copy:"The Dashboard starts with your earnings graph. Your range totals and “At this rate” goal forecast live here too.",tab:"dashboard"},
-    {target:"#chartTypeToggle",title:"Pick your graph style",copy:"Switch between Bar, Line and Area whenever you want. Day, Week and Month change how the same range is grouped.",tab:"dashboard"},
-    {target:"#addItemBtn",title:"Add something worth saving for",copy:"Goals turn your wallet into something tangible. Add the price, image, deadline, priority and even a product link.",tab:"dashboard"},
-    {target:"#entryForm",title:"Log money",copy:"Add hours, direct earnings or expenses here. LUMIN uses those entries for stats, XP and affordability estimates.",tab:"dashboard"},
-    {target:"#gameStrip",title:"Check in and level up",copy:"Check in once per day to grow your streak. Missions earn XP, and streak freezes protect the occasional missed day.",tab:"dashboard"},
+    {target:".dashboard-chart-first",title:"Your money at a glance",copy:"The Dashboard starts with your earnings graph. Your range totals and “At this rate” goal forecast live here too.",tab:"home"},
+    {target:"#chartTypeToggle",title:"Pick your graph style",copy:"Switch between Bar, Line and Area whenever you want. Day, Week and Month change how the same range is grouped.",tab:"home"},
+    {target:"#addItemBtn",title:"Add something worth saving for",copy:"Goals turn your wallet into something tangible. Add the price, image, deadline, priority and even a product link.",tab:"goals"},
+    {target:"#entryForm",title:"Log money",copy:"Add hours, direct earnings or expenses here. LUMIN uses those entries for stats, XP and affordability estimates.",tab:"activity"},
+    {target:"#gameStrip",title:"Check in and level up",copy:"Check in once per day to grow your streak. Missions earn XP, and streak freezes protect the occasional missed day.",tab:"home"},
     {target:"#themePickerMain",title:"Make LUMIN yours",copy:"Settings keeps themes, wallet options, regular pay, cloud controls and updates out of your main Dashboard.",tab:"settings"}
   ];
 
@@ -5453,7 +5913,7 @@
     $("tutorialCatcher").classList.add("hidden");
     $("tutorialSpotlight").classList.add("hidden");
     $("tutorialCard").classList.add("hidden");
-    setMainTab("dashboard");
+    setMainTab("home");
     await persist();
     if(items.length===0) setTimeout(()=>openItemModal(null),260);
   }
@@ -5492,6 +5952,11 @@
   let authCreateMode = false;
   let legacyCandidatePayload = null;
   let legacyCandidateSource = "";
+  let deferredInstallPrompt = null;
+  let offlineBootUser = null;
+
+  const LAST_CLOUD_USER_KEY = "lumin-last-cloud-user";
+  const PENDING_SYNC_PREFIX = "lumin-pending-cloud-sync:";
 
   try{
     const testKey = "__lumin_storage_test__";
@@ -5500,9 +5965,45 @@
   }catch(e){ localStorageOk = false; }
 
   function currentCacheKey(){
-    return cloudMode === "cloud" && cloudUser
+    return (cloudUser && (cloudMode === "cloud" || cloudMode === "offline-cloud"))
       ? `${STORAGE_KEY}:user:${cloudUser.uid}`
       : `${STORAGE_KEY}:local`;
+  }
+
+  function rememberCloudUser(user){
+    if(!localStorageOk || !user || !user.uid) return;
+    try{
+      localStorage.setItem(LAST_CLOUD_USER_KEY,JSON.stringify({
+        uid:String(user.uid),
+        email:String(user.email||"")
+      }));
+    }catch{}
+  }
+
+  function getRememberedCloudUser(){
+    if(!localStorageOk) return null;
+    try{
+      const parsed=JSON.parse(localStorage.getItem(LAST_CLOUD_USER_KEY)||"null");
+      return parsed&&parsed.uid ? {uid:String(parsed.uid),email:String(parsed.email||"")} : null;
+    }catch{return null;}
+  }
+
+  function pendingSyncKey(uid){
+    return PENDING_SYNC_PREFIX+String(uid||"local");
+  }
+
+  function hasPendingCloudSync(uid){
+    if(!localStorageOk || !uid) return false;
+    try{return localStorage.getItem(pendingSyncKey(uid))==="1";}catch{return false;}
+  }
+
+  function setPendingCloudSync(uid,pending=true){
+    if(!localStorageOk || !uid) return;
+    try{
+      if(pending) localStorage.setItem(pendingSyncKey(uid),"1");
+      else localStorage.removeItem(pendingSyncKey(uid));
+    }catch{}
+    updateOfflineUi();
   }
 
   async function localGetPayload(){
@@ -5548,7 +6049,8 @@
   }
 
   function storageModeLabel(){
-    if(cloudMode === "cloud" && cloudUser) return "cloud synced";
+    if(cloudMode === "cloud" && cloudUser) return navigator.onLine ? "cloud synced" : "offline cache";
+    if(cloudMode === "offline-cloud" && cloudUser) return "offline cache";
     if(localStorageOk) return "this device";
     return "this session";
   }
@@ -5703,6 +6205,20 @@
       if(cloudMode === "cloud" && cloudUser && cloudApi && cloudApi.configured){
         try{
           setCloudStatus("saving", "Checking cloud…");
+
+          // If this account changed while offline, the device cache is the
+          // newest intentional save. Push it before reading cloud state.
+          if(localPayload && hasPendingCloudSync(cloudUser.uid)){
+            await cloudApi.write(cloudUser.uid,localPayload);
+            lastCloudPayload=localPayload;
+            setPendingCloudSync(cloudUser.uid,false);
+            setCloudStatus("synced",cloudUser.email || "Cloud synced");
+            setSyncBanner("Offline changes synced to LUMIN Cloud.");
+            clearTimeout(store.get._syncBannerTimer);
+            store.get._syncBannerTimer=setTimeout(()=>setSyncBanner(""),2600);
+            return {key,value:localPayload};
+          }
+
           const remotePayload = await cloudApi.read(cloudUser.uid);
           if(remotePayload){
             lastCloudPayload = remotePayload;
@@ -5747,11 +6263,14 @@
           setSyncBanner("");
         }catch(error){
           console.error("Cloud save failed", error);
+          setPendingCloudSync(cloudUser.uid,true);
           setCloudStatus("error", "Saved locally");
           setSyncBanner(error && error.message ? error.message : "Couldn’t sync to the cloud. Your change is still saved on this device.", true);
         }finally{
           cloudWriteInFlight = false;
         }
+      }else if(cloudMode === "offline-cloud" && cloudUser){
+        setPendingCloudSync(cloudUser.uid,true);
       }
       return {key,value};
     }
@@ -6533,7 +7052,8 @@
     buildThemePicker($("themePickerMain"));
     buildChartTypeToggle();
     buildChartViewToggle();
-    setMainTab("dashboard");
+    organizeAppViews();
+    setAppView(initialAppView(),false,false);
     render();
     renderChangelog();
     maybeShowChangelog();
@@ -6631,6 +7151,8 @@
 
   function setAuthMode(create){
     authCreateMode = !!create;
+    $("passkeyAuthBlock").classList.toggle("hidden",authCreateMode);
+    $("emailAuthDivider").classList.toggle("hidden",authCreateMode);
     $("authKicker").textContent = authCreateMode ? "Create account" : "Sign in";
     $("authSubmitBtn").textContent = authCreateMode ? "Create account" : "Sign in";
     $("authModeBtn").textContent = authCreateMode ? "Already have an account? Sign in" : "Create an account instead";
@@ -6688,15 +7210,20 @@
   function updateAccountControls(){
     const signInBtn = $("cloudSignInBtn");
     const logoutBtn = $("cloudLogoutBtn");
-    if(cloudMode === "cloud" && cloudUser){
+    if((cloudMode === "cloud" || cloudMode === "offline-cloud") && cloudUser){
       signInBtn.classList.add("hidden");
       logoutBtn.classList.remove("hidden");
-      setCloudStatus("synced", cloudUser.email || "Cloud synced");
+      setCloudStatus(
+        cloudMode==="offline-cloud" ? "error" : "synced",
+        cloudMode==="offline-cloud" ? "Offline · cached account" : (cloudUser.email || "Cloud synced")
+      );
     }else{
       logoutBtn.classList.add("hidden");
       signInBtn.classList.remove("hidden");
       setCloudStatus("", cloudMode === "local" ? "This device only" : "Not signed in");
     }
+    updateOfflineUi();
+    updatePasskeyUi();
   }
 
   async function startCloudSubscription(){
@@ -6735,10 +7262,36 @@
     maybeSignalLegacySave();
   }
 
+  async function enterOfflineCachedMode(){
+    if(cloudUnsubscribe){ cloudUnsubscribe(); cloudUnsubscribe=null; }
+    const remembered=getRememberedCloudUser();
+    offlineBootUser=remembered;
+
+    if(remembered){
+      cloudMode="offline-cloud";
+      cloudUser=remembered;
+      hideAuthGate();
+      updateAccountControls();
+      await load();
+      setSyncBanner("Offline mode · using the last cached copy of your cloud account.");
+    }else{
+      cloudMode="local";
+      cloudUser=null;
+      hideAuthGate();
+      updateAccountControls();
+      await load();
+      setSyncBanner("Offline mode · using this device’s local save.");
+    }
+
+    updateOfflineUi();
+    maybeSignalLegacySave();
+  }
+
   async function enterCloudMode(user){
     setAppLoading("Loading your savings","Syncing your wallet, goals and activity from LUMIN Cloud.");
     cloudMode = "cloud";
     cloudUser = user;
+    rememberCloudUser(user);
     hideAuthGate();
     updateAccountControls();
 
@@ -6757,11 +7310,347 @@
     }
   }
 
+
+  // ---- app install / offline / passkeys ----
+  function showOfflineToast(message){
+    const toast=$("offlineToast");
+    if(!toast) return;
+    toast.textContent=message;
+    toast.classList.add("show");
+    clearTimeout(showOfflineToast._t);
+    showOfflineToast._t=setTimeout(()=>toast.classList.remove("show"),2600);
+  }
+
+  function updateOfflineUi(){
+    const online=navigator.onLine;
+    const sidebar=$("sidebarNetworkState");
+    const pill=$("networkPill");
+
+    if(sidebar){
+      sidebar.classList.toggle("offline",!online);
+      sidebar.classList.toggle("syncing",false);
+      $("sidebarNetworkText").textContent=online?"Online":"Offline";
+    }
+    if(pill){
+      pill.classList.toggle("offline",!online);
+      $("networkPillText").textContent=online?"Online":"Offline";
+    }
+    if($("offlineSettingsNetwork")) $("offlineSettingsNetwork").textContent=online?"Online":"Offline";
+
+    const pending=!!(cloudUser&&hasPendingCloudSync(cloudUser.uid));
+    if($("pendingSyncStatus")) $("pendingSyncStatus").textContent=pending?"Waiting to sync":"None";
+  }
+
+  async function registerLuminServiceWorker(){
+    if(!("serviceWorker" in navigator) || !/^https?:$/.test(location.protocol)){
+      if($("offlineCacheStatus")) $("offlineCacheStatus").textContent="Needs HTTPS";
+      return;
+    }
+    try{
+      const registration=await navigator.serviceWorker.register("./sw.js",{scope:"./"});
+      if($("offlineCacheStatus")) $("offlineCacheStatus").textContent="Ready";
+      registration.update().catch(()=>{});
+
+      navigator.serviceWorker.addEventListener("message",event=>{
+        const data=event.data||{};
+        if(data.type==="CACHE_READY"){
+          if($("offlineCacheStatus")) $("offlineCacheStatus").textContent="Ready";
+          if(data.manual) showOfflineToast("Offline cache refreshed.");
+        }
+      });
+    }catch(error){
+      console.warn("Service worker registration failed",error);
+      if($("offlineCacheStatus")) $("offlineCacheStatus").textContent="Unavailable";
+    }
+  }
+
+  async function refreshOfflineCache(){
+    if(!navigator.serviceWorker || !navigator.serviceWorker.controller){
+      showOfflineToast("Offline cache will be ready after the first reload.");
+      await registerLuminServiceWorker();
+      return;
+    }
+    if($("offlineCacheStatus")) $("offlineCacheStatus").textContent="Refreshing…";
+    navigator.serviceWorker.controller.postMessage({type:"CACHE_NOW"});
+  }
+
+  window.addEventListener("beforeinstallprompt",event=>{
+    event.preventDefault();
+    deferredInstallPrompt=event;
+    if($("installAppBtn")) $("installAppBtn").classList.remove("hidden");
+  });
+
+  window.addEventListener("appinstalled",()=>{
+    deferredInstallPrompt=null;
+    if($("installAppBtn")) $("installAppBtn").classList.add("hidden");
+    showOfflineToast("LUMIN installed.");
+  });
+
+  async function installLuminApp(){
+    if(!deferredInstallPrompt){
+      showOfflineToast("Use your browser’s Install app option if it is available.");
+      return;
+    }
+    deferredInstallPrompt.prompt();
+    try{await deferredInstallPrompt.userChoice;}catch{}
+    deferredInstallPrompt=null;
+    $("installAppBtn").classList.add("hidden");
+  }
+
+  window.addEventListener("offline",()=>{
+    updateOfflineUi();
+    setSyncBanner("You’re offline. LUMIN will keep saving to this device.",true);
+    showOfflineToast("Offline · changes will stay on this device.");
+  });
+
+  window.addEventListener("online",()=>{
+    updateOfflineUi();
+    if(cloudMode==="offline-cloud"){
+      setSyncBanner("Back online · reconnecting your cloud account…");
+      showOfflineToast("Back online · reconnecting cloud sync.");
+      setTimeout(()=>location.reload(),900);
+    }else if(cloudMode==="cloud"&&cloudUser&&hasPendingCloudSync(cloudUser.uid)){
+      setSyncBanner("Back online · retrying pending cloud changes…");
+      setTimeout(()=>location.reload(),900);
+    }else{
+      setSyncBanner("");
+      showOfflineToast("Back online.");
+    }
+  });
+
+  function passkeyApiBase(){
+    return cloudApi&&typeof cloudApi.passkeyApiBase==="string"
+      ? cloudApi.passkeyApiBase.replace(/\/$/,"")
+      : "";
+  }
+
+  function passkeysSupported(){
+    return !!(window.PublicKeyCredential && navigator.credentials);
+  }
+
+  function base64UrlToBytes(value){
+    const padded=String(value||"").replace(/-/g,"+").replace(/_/g,"/");
+    const pad=padded+"===".slice((padded.length+3)%4);
+    const binary=atob(pad);
+    return Uint8Array.from(binary,c=>c.charCodeAt(0));
+  }
+
+  function bytesToBase64Url(value){
+    if(value===null||value===undefined) return null;
+    const bytes=value instanceof ArrayBuffer
+      ? new Uint8Array(value)
+      : ArrayBuffer.isView(value)
+        ? new Uint8Array(value.buffer,value.byteOffset,value.byteLength)
+        : value;
+    let binary="";
+    for(const b of bytes) binary+=String.fromCharCode(b);
+    return btoa(binary).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  }
+
+  function creationOptionsFromJSON(options){
+    const out={...options,challenge:base64UrlToBytes(options.challenge)};
+    out.user={...options.user,id:base64UrlToBytes(options.user.id)};
+    if(Array.isArray(options.excludeCredentials)){
+      out.excludeCredentials=options.excludeCredentials.map(c=>({...c,id:base64UrlToBytes(c.id)}));
+    }
+    return out;
+  }
+
+  function requestOptionsFromJSON(options){
+    const out={...options,challenge:base64UrlToBytes(options.challenge)};
+    if(Array.isArray(options.allowCredentials)){
+      out.allowCredentials=options.allowCredentials.map(c=>({...c,id:base64UrlToBytes(c.id)}));
+    }
+    return out;
+  }
+
+  function credentialToJSON(credential){
+    if(credential&&typeof credential.toJSON==="function") return credential.toJSON();
+    const response=credential.response;
+    const result={
+      id:credential.id,
+      rawId:bytesToBase64Url(credential.rawId),
+      type:credential.type,
+      clientExtensionResults:credential.getClientExtensionResults?credential.getClientExtensionResults():{},
+      authenticatorAttachment:credential.authenticatorAttachment||undefined,
+      response:{
+        clientDataJSON:bytesToBase64Url(response.clientDataJSON)
+      }
+    };
+
+    if(response.attestationObject){
+      result.response.attestationObject=bytesToBase64Url(response.attestationObject);
+      if(response.getTransports) result.response.transports=response.getTransports();
+      if(response.getAuthenticatorData) result.response.authenticatorData=bytesToBase64Url(response.getAuthenticatorData());
+      if(response.getPublicKeyAlgorithm) result.response.publicKeyAlgorithm=response.getPublicKeyAlgorithm();
+      if(response.getPublicKey){
+        const key=response.getPublicKey();
+        if(key) result.response.publicKey=bytesToBase64Url(key);
+      }
+    }else{
+      result.response.authenticatorData=bytesToBase64Url(response.authenticatorData);
+      result.response.signature=bytesToBase64Url(response.signature);
+      result.response.userHandle=response.userHandle?bytesToBase64Url(response.userHandle):null;
+    }
+    return result;
+  }
+
+  async function passkeyRequest(path,{body={},token=""}={}){
+    const base=passkeyApiBase();
+    if(!base) throw new Error("Passkey server is not connected yet.");
+    const headers={"Content-Type":"application/json","Accept":"application/json"};
+    if(token) headers.Authorization="Bearer "+token;
+    const response=await fetch(base+path,{
+      method:"POST",
+      headers,
+      body:JSON.stringify(body)
+    });
+    let payload={};
+    try{payload=await response.json();}catch{}
+    if(!response.ok) throw new Error(payload.error||"Passkey request failed.");
+    return payload;
+  }
+
+  function friendlyPasskeyError(error){
+    if(error&&error.name==="NotAllowedError") return "Passkey request cancelled or timed out.";
+    if(error&&error.name==="InvalidStateError") return "That passkey is already registered on this authenticator.";
+    if(error&&error.name==="SecurityError") return "This domain is not allowed to use that passkey.";
+    return error&&error.message?error.message:"Passkey request failed.";
+  }
+
+  async function updatePasskeyUi(){
+    const supported=passkeysSupported();
+    const base=passkeyApiBase();
+    const title=$("passkeyStatusTitle");
+    const detail=$("passkeyStatusText");
+    const add=$("addPasskeyBtn");
+    const signIn=$("passkeySignInBtn");
+
+    if(!supported){
+      if(title) title.textContent="Passkeys unavailable";
+      if(detail) detail.textContent="This browser or device does not expose WebAuthn passkeys.";
+      if(add) add.disabled=true;
+      if(signIn) signIn.disabled=true;
+      return;
+    }
+
+    if(!base){
+      if(title) title.textContent="Passkey frontend ready";
+      if(detail) detail.textContent="Deploy the included Firebase passkey function and add its URL to firebase-config.js.";
+      if(add) add.disabled=true;
+      if(signIn){
+        signIn.disabled=false;
+        signIn.title="Passkey backend not connected yet";
+      }
+      return;
+    }
+
+    if(title) title.textContent=cloudUser?"Passkeys ready":"Passkey sign-in ready";
+    if(detail) detail.textContent=cloudUser
+      ?"Add Windows Hello, Touch ID, Face ID or another compatible passkey to this account."
+      :"Enter your account email, then continue with a saved passkey.";
+    if(add) add.disabled=!(cloudUser&&cloudMode==="cloud");
+    if(signIn) signIn.disabled=false;
+  }
+
+  async function signInWithPasskey(){
+    if(!passkeysSupported()){
+      setAuthMessage("Passkeys aren’t supported in this browser.","error");
+      return;
+    }
+    if(!passkeyApiBase()){
+      setAuthMessage("The passkey frontend is ready, but the secure passkey server still needs to be deployed.","error");
+      return;
+    }
+    if(!cloudApi||!cloudApi.configured){
+      setAuthMessage("Cloud authentication is unavailable right now.","error");
+      return;
+    }
+
+    const email=$("authEmail").value.trim();
+    if(!email){
+      setAuthMessage("Enter your account email first, then press Continue with passkey.","error");
+      $("authEmail").focus();
+      return;
+    }
+
+    const button=$("passkeySignInBtn");
+    button.disabled=true;
+    setAuthMessage("");
+    try{
+      const begin=await passkeyRequest("/auth/options",{body:{email}});
+      const publicKey=requestOptionsFromJSON(begin.options);
+      const credential=await navigator.credentials.get({publicKey});
+      if(!credential) throw new Error("No passkey was returned.");
+
+      const finish=await passkeyRequest("/auth/verify",{
+        body:{sessionId:begin.sessionId,credential:credentialToJSON(credential)}
+      });
+      if(!finish.firebaseToken) throw new Error("Passkey verification did not return a Firebase sign-in token.");
+
+      setAppLoading("Signing in with your passkey","Verifying Windows Hello or your selected authenticator.");
+      await cloudApi.signInToken(finish.firebaseToken);
+    }catch(error){
+      hideAppLoading(0);
+      setAuthMessage(friendlyPasskeyError(error),"error");
+    }finally{
+      button.disabled=false;
+    }
+  }
+
+  async function addPasskey(){
+    if(!cloudUser||cloudMode!=="cloud"){
+      showOfflineToast("Sign in to your cloud account before adding a passkey.");
+      return;
+    }
+    if(!passkeysSupported()||!passkeyApiBase()){
+      showOfflineToast("Passkey backend is not connected yet.");
+      return;
+    }
+
+    const button=$("addPasskeyBtn");
+    button.disabled=true;
+    button.textContent="Adding…";
+    try{
+      const token=await cloudApi.getIdToken(true);
+      if(!token) throw new Error("Couldn’t verify your signed-in account.");
+
+      const begin=await passkeyRequest("/register/options",{token,body:{}});
+      const publicKey=creationOptionsFromJSON(begin.options);
+      const credential=await navigator.credentials.create({publicKey});
+      if(!credential) throw new Error("No passkey was created.");
+
+      await passkeyRequest("/register/verify",{
+        token,
+        body:{
+          sessionId:begin.sessionId,
+          credential:credentialToJSON(credential),
+          name:"Passkey"
+        }
+      });
+      showOfflineToast("Passkey added to your LUMIN account.");
+      $("passkeyStatusTitle").textContent="Passkey added";
+      $("passkeyStatusText").textContent="This account can now use the registered authenticator to sign in.";
+    }catch(error){
+      showOfflineToast(friendlyPasskeyError(error));
+    }finally{
+      button.disabled=false;
+      button.textContent="Add a passkey";
+    }
+  }
+
   async function initPublicApp(){
     cloudApi = await window.luminCloudReady;
 
+    $("sidebarVersion").textContent=APP_VERSION;
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
+    $("passkeySignInBtn").addEventListener("click",signInWithPasskey);
+    $("addPasskeyBtn").addEventListener("click",addPasskey);
+    $("refreshOfflineCacheBtn").addEventListener("click",refreshOfflineCache);
+    $("installAppBtn").addEventListener("click",installLuminApp);
+    updateOfflineUi();
+    updatePasskeyUi();
 
     $("importLegacyBtn").addEventListener("click", openLegacyImport);
     $("setupImportLegacyBtn").addEventListener("click", openLegacyImport);
@@ -6871,12 +7760,17 @@
     });
 
     if(!cloudApi || !cloudApi.configured){
+      if(!navigator.onLine){
+        await enterOfflineCachedMode();
+        return;
+      }
       $("authConfigWarning").classList.add("show");
       $("authSubmitBtn").disabled = true;
       $("authModeBtn").disabled = true;
       $("authResetBtn").disabled = true;
       setCloudStatus("error", "Cloud not configured");
       showAuthGate();
+      updatePasskeyUi();
       return;
     }
 
@@ -7640,16 +8534,32 @@
     let status="No pace yet";
     let statusClass="";
     let forecast="Log earnings to forecast";
-    let position=52;
+
+    // Timeline positions are chronological and proportional to real time.
+    // The later of Release / Projected ready becomes the end of the path.
+    const timelineStart=4;
+    const timelineEnd=96;
+    let releasePosition=timelineEnd;
+    let projectedPosition=52;
+    let timelineDays=Math.max(1,daysToRelease);
 
     if(remaining<=0){
       status="Ready for release";
       statusClass="funded";
       forecast="Fully funded before launch";
-      position=18;
+      projectedPosition=timelineStart;
+      releasePosition=timelineEnd;
     }else if(projectedDays!==null){
-      const ratio=daysToRelease>0?projectedDays/Math.max(1,daysToRelease):1;
-      position=Math.max(18,Math.min(88,18+ratio*70));
+      timelineDays=Math.max(1,daysToRelease,projectedDays);
+
+      const toPosition=(days)=>{
+        const ratio=Math.max(0,Number(days)||0)/timelineDays;
+        return timelineStart+Math.max(0,Math.min(1,ratio))*(timelineEnd-timelineStart);
+      };
+
+      releasePosition=toPosition(daysToRelease);
+      projectedPosition=toPosition(projectedDays);
+
       if(projectedDays<=daysToRelease){
         const early=Math.max(0,Math.round(daysToRelease-projectedDays));
         status="On track";
@@ -7663,7 +8573,12 @@
       }
     }
 
-    return {daysToRelease,requiredDaily,projectedDays,projectedDate,projectedKey,status,statusClass,forecast,position,remaining,goal};
+    return {
+      daysToRelease,requiredDaily,projectedDays,projectedDate,projectedKey,
+      status,statusClass,forecast,
+      releasePosition,projectedPosition,timelineDays,
+      remaining,goal
+    };
   }
 
   function renderReleaseTrajectory(item,saved){
@@ -7696,13 +8611,40 @@
     }
     $("trajectoryForecast").textContent=data.forecast;
 
-    const node=$("trajectoryProjectNode");
-    node.style.left=data.position+"%";
-    node.style.transform="translateX(-50%)";
+    const projectNode=$("trajectoryProjectNode");
+    const releaseNode=$("trajectoryReleaseNode");
+
+    projectNode.style.left=data.projectedPosition+"%";
+    releaseNode.style.left=data.releasePosition+"%";
+
+    const placeNode=(node,position)=>{
+      if(position>=88){
+        node.style.transform="translateX(-100%)";
+        node.style.alignItems="flex-end";
+        node.style.textAlign="right";
+      }else if(position<=12){
+        node.style.transform="none";
+        node.style.alignItems="flex-start";
+        node.style.textAlign="left";
+      }else{
+        node.style.transform="translateX(-50%)";
+        node.style.alignItems="center";
+        node.style.textAlign="center";
+      }
+    };
+
+    placeNode(projectNode,data.projectedPosition);
+    placeNode(releaseNode,data.releasePosition);
+
+    const markerGap=Math.abs(data.projectedPosition-data.releasePosition);
+    const pathWrap=$("trajectoryPathWrap");
+    pathWrap.classList.toggle("crowded",data.projectedDays!==null && markerGap<18);
+    pathWrap.classList.toggle("project-after-release",data.projectedDays!==null && data.projectedDays>data.daysToRelease);
 
     const path=$("trajectoryProgressPath");
     const pathLength=1000;
-    const progressRatio=Math.max(.08,Math.min(1,data.position/100));
+    const latestPosition=Math.max(data.releasePosition,data.projectedPosition);
+    const progressRatio=Math.max(.08,Math.min(1,latestPosition/100));
     path.style.strokeDasharray=String(pathLength);
     path.style.strokeDashoffset=String(pathLength*(1-progressRatio));
   }
@@ -8472,27 +9414,88 @@
     });
   });
 
-  let currentMainTab = "dashboard";
+  let currentMainTab = "home";
+  let appViewsOrganized = false;
 
-  function setMainTab(tab, focus=false){
-    currentMainTab = tab==="settings" ? "settings" : "dashboard";
-    const dashboard = currentMainTab==="dashboard";
-
-    $("dashboardTabPanel").classList.toggle("hidden",!dashboard);
-    $("settingsTabPanel").classList.toggle("hidden",dashboard);
-
-    $("dashboardTabBtn").classList.toggle("active",dashboard);
-    $("settingsTabBtn").classList.toggle("active",!dashboard);
-    $("dashboardTabBtn").setAttribute("aria-selected",dashboard?"true":"false");
-    $("settingsTabBtn").setAttribute("aria-selected",dashboard?"false":"true");
-
-    if(focus){
-      (dashboard ? $("dashboardTabBtn") : $("settingsTabBtn")).focus();
+  const APP_VIEW_META = {
+    home:{
+      panel:"dashboardTabPanel",
+      button:"homeNavBtn",
+      title:'Your <span>home</span>',
+      subtitle:"Your savings pulse, streak, recent progress and forecast at a glance."
+    },
+    goals:{
+      panel:"goalsTabPanel",
+      button:"goalsNavBtn",
+      title:'Your <span>goals</span>',
+      subtitle:"Everything you’re saving for, with progress, priorities, deadlines and release trajectories."
+    },
+    activity:{
+      panel:"activityTabPanel",
+      button:"activityNavBtn",
+      title:'Money <span>activity</span>',
+      subtitle:"Log earnings or expenses and review the money movements behind your progress."
+    },
+    settings:{
+      panel:"settingsTabPanel",
+      button:"settingsNavBtn",
+      title:'LUMIN <span>settings</span>',
+      subtitle:"Appearance, wallet setup, offline mode, security, cloud controls and maintenance."
     }
+  };
+
+  function organizeAppViews(){
+    if(appViewsOrganized) return;
+    const goals=document.querySelector(".goal-cluster");
+    const money=document.querySelector(".money-cluster");
+    if(goals) $("goalsTabPanel").appendChild(goals);
+    if(money) $("activityTabPanel").appendChild(money);
+    appViewsOrganized=true;
   }
 
-  $("dashboardTabBtn").addEventListener("click",()=>setMainTab("dashboard"));
-  $("settingsTabBtn").addEventListener("click",()=>setMainTab("settings"));
+  function initialAppView(){
+    const hash=String(location.hash||"").replace(/^#/,"").toLowerCase();
+    return APP_VIEW_META[hash] ? hash : "home";
+  }
+
+  function setAppView(view,focus=false,updateHash=true){
+    organizeAppViews();
+    view=APP_VIEW_META[view]?view:"home";
+    currentMainTab=view;
+
+    Object.entries(APP_VIEW_META).forEach(([key,meta])=>{
+      const active=key===view;
+      $(meta.panel).classList.toggle("hidden",!active);
+      const btn=$(meta.button);
+      btn.classList.toggle("active",active);
+      if(active) btn.setAttribute("aria-current","page");
+      else btn.removeAttribute("aria-current");
+    });
+
+    const meta=APP_VIEW_META[view];
+    $("appPageTitle").innerHTML=meta.title;
+    $("appPageSubtitle").textContent=meta.subtitle;
+
+    if(updateHash){
+      try{history.replaceState(null,"","#"+view);}catch{}
+    }
+    if(focus) $(meta.button).focus();
+  }
+
+  // Compatibility for the tutorial and older code that called setMainTab().
+  function setMainTab(tab,focus=false){
+    const mapped=tab==="dashboard"?"home":tab;
+    setAppView(mapped,focus,true);
+  }
+
+  document.querySelectorAll("[data-app-view]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      setAppView(btn.dataset.appView,false,true);
+      window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    });
+  });
+
+  window.addEventListener("hashchange",()=>setAppView(initialAppView(),false,false));
 
   $("purchaseBtn").addEventListener("click", markActivePurchased);
   $("recordsBtn").addEventListener("click", openRecordsModal);
@@ -8742,6 +9745,8 @@
 
   installValueAnimations();
   buildBlades();
+  registerLuminServiceWorker();
+  updateOfflineUi();
   initPublicApp();
 })();
 </script>
