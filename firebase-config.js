@@ -8,6 +8,4 @@ export const firebaseConfig = {
   measurementId: "G-76B9FWMYBB"
 };
 
-// After deploying functions/passkeys, paste its public HTTPS function URL here.
-// Example: "https://australia-southeast1-YOUR_PROJECT.cloudfunctions.net/passkeys"
-export const passkeyApiBase = "";
+export const passkeyApiBase = "/api/passkeys";
