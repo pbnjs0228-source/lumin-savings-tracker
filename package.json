@@ -1,0 +1,9 @@
+{
+  "name": "lumin-passkeys",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@simplewebauthn/server": "^13.3.0",
+    "firebase-admin": "^13.0.0"
+  }
+}
