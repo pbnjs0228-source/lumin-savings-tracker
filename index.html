@@ -334,8 +334,10 @@
   /* Custom theme: user-picked solid colour or 2-8 colour gradient. */
   html[data-theme="custom"] body{
     background:
-      linear-gradient(rgba(7,7,13,.35),rgba(7,7,13,.48)),
-      var(--custom-background,linear-gradient(135deg,#6c8ef5,#c47cff));
+      radial-gradient(ellipse 860px 520px at 12% -6%, color-mix(in srgb,var(--custom-primary,#6c8ef5) 14%, transparent), transparent 62%),
+      radial-gradient(ellipse 760px 560px at 104% 14%, color-mix(in srgb,var(--custom-secondary,#c47cff) 12%, transparent), transparent 58%),
+      linear-gradient(rgba(7,7,13,.42),rgba(7,7,13,.58)),
+      var(--custom-background,linear-gradient(135deg,#20243a,#2a2140));
     background-attachment:fixed;
     background-color:#11111b;
   }
@@ -353,16 +355,17 @@
   html[data-theme="custom"] .auth-card,
   html[data-theme="custom"] .modal{
     background:
-      linear-gradient(135deg,
-        color-mix(in srgb,var(--custom-primary,#6c8ef5) 8%,rgba(18,18,29,.90)),
-        color-mix(in srgb,var(--custom-secondary,#c47cff) 7%,rgba(20,19,32,.92)));
-    border-color:color-mix(in srgb,var(--custom-primary,#6c8ef5) 19%,var(--line));
+      linear-gradient(180deg,
+        color-mix(in srgb,var(--custom-primary,#6c8ef5) 5%,rgba(24,23,38,.95)),
+        color-mix(in srgb,var(--custom-secondary,#c47cff) 4%,rgba(18,18,31,.97)));
+    border-color:color-mix(in srgb,var(--custom-primary,#6c8ef5) 15%,var(--line));
+    box-shadow:0 18px 44px rgba(0,0,0,.18);
   }
   html[data-theme="custom"] .item-card:not(.priority):not(.purchased){
-    background:linear-gradient(135deg,
-      color-mix(in srgb,var(--custom-primary,#6c8ef5) 9%,#242238),
-      color-mix(in srgb,var(--custom-secondary,#c47cff) 8%,#242238));
-    border-color:color-mix(in srgb,var(--custom-secondary,#c47cff) 18%,var(--line));
+    background:linear-gradient(180deg,
+      color-mix(in srgb,var(--custom-primary,#6c8ef5) 7%,#25243a),
+      color-mix(in srgb,var(--custom-secondary,#c47cff) 5%,#222136));
+    border-color:color-mix(in srgb,var(--custom-secondary,#c47cff) 15%,var(--line));
   }
   html[data-theme="custom"] .btn-primary,
   html[data-theme="custom"] .segmented button.active{
@@ -4173,6 +4176,189 @@
     #settingsTabPanel .settings-theme-picker .swatch.theme-option{min-height:60px;}
   }
 
+
+  /* ================================================================
+     LUMIN UI REVAMP · 2026.09.09.3
+     ================================================================ */
+  :root{
+    --app-nav-width:188px;
+    --ui-radius-xl:17px;
+    --ui-radius-lg:14px;
+    --ui-radius-md:11px;
+    --ui-shadow:0 1px 0 rgba(255,255,255,.025) inset,0 1px 2px rgba(0,0,0,.12),0 16px 38px rgba(0,0,0,.055);
+  }
+  body{
+    background-image:
+      radial-gradient(circle at 19% -12%,color-mix(in srgb,var(--accent) 9%,transparent) 0,transparent 31%),
+      radial-gradient(circle at 92% 8%,color-mix(in srgb,var(--accent2) 7%,transparent) 0,transparent 26%),
+      linear-gradient(color-mix(in srgb,var(--white) 1.25%,transparent) 1px,transparent 1px),
+      linear-gradient(90deg,color-mix(in srgb,var(--white) 1.25%,transparent) 1px,transparent 1px),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    background-size:auto,auto,42px 42px,42px 42px,auto;
+    background-position:center,center,-1px -1px,-1px -1px,center;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:linear-gradient(180deg,rgba(255,255,255,.012),transparent 15%,transparent 85%,rgba(0,0,0,.035));
+  }
+  .wrap.content{max-width:1320px;}
+  #mainScreen{column-gap:24px;}
+
+  /* Sidebar */
+  .app-sidebar{
+    top:20px;min-height:calc(100vh - 40px);padding:9px;gap:7px;border-radius:16px;
+    border-color:color-mix(in srgb,var(--line-strong) 74%,transparent);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 64%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 94%,transparent));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 18px 46px rgba(0,0,0,.12);overflow:hidden;
+  }
+  .app-sidebar::before{content:"";position:absolute;inset:0 0 auto;height:82px;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 7%,transparent),transparent);}
+  .sidebar-brand-lockup{position:relative;display:flex;align-items:center;gap:9px;min-height:50px;padding:7px 7px 9px;margin-bottom:2px;border-bottom:1px solid var(--line);}
+  .sidebar-brand-icon{width:31px;height:31px;display:grid;place-items:center;flex:0 0 auto;border-radius:9px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 10%,var(--panel-raised)),color-mix(in srgb,var(--accent2) 5%,var(--panel-solid)));box-shadow:inset 0 1px 0 rgba(255,255,255,.035);}
+  .sidebar-brand-icon svg{width:19px;height:19px;}
+  .sidebar-brand-copy{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .sidebar-brand-copy strong{font:800 11.5px/1 'Sora',sans-serif;letter-spacing:1.3px;color:var(--white);}
+  .sidebar-brand-copy span{font-size:7.8px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .app-nav-label{padding:7px 9px 4px;font-size:7.5px;letter-spacing:.14em;}
+  .app-nav-list{gap:4px;}
+  .app-nav-btn{position:relative;min-height:42px;gap:10px;padding:8px 10px;border-radius:10px;font-size:10.5px;font-weight:650;color:color-mix(in srgb,var(--muted) 88%,var(--white));}
+  .app-nav-btn::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:2px;border-radius:99px;background:transparent;transition:background .16s ease,box-shadow .16s ease;}
+  .app-nav-btn:hover{color:var(--white);background:color-mix(in srgb,var(--white) 3.5%,transparent);}
+  .app-nav-btn.active{color:var(--white);border-color:color-mix(in srgb,var(--accent) 18%,var(--line));background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 11%,var(--panel-raised)),color-mix(in srgb,var(--accent) 4%,var(--panel-solid)));box-shadow:inset 0 1px 0 rgba(255,255,255,.025);}
+  .app-nav-btn.active::before{background:var(--accent);box-shadow:0 0 12px color-mix(in srgb,var(--accent) 55%,transparent);}
+  .app-nav-btn svg{width:16.5px;height:16.5px;}
+  .app-sidebar-footer{padding:9px 8px 4px;gap:8px;}
+
+  /* Header */
+  .header-row.app-header{position:sticky;top:0;z-index:24;min-height:76px;padding:12px 4px 13px;margin-bottom:16px;border-bottom:1px solid color-mix(in srgb,var(--line-strong) 80%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--bg1) 92%,transparent),color-mix(in srgb,var(--bg1) 76%,transparent));backdrop-filter:blur(16px) saturate(125%);-webkit-backdrop-filter:blur(16px) saturate(125%);}
+  .app-header .brand-row{margin-bottom:3px;}
+  .app-header .brand-mark{width:20px;height:20px;}
+  .app-header .brand-word{font-size:13px;letter-spacing:1.8px;}
+  .app-header .brand-tag{font-size:9px;padding:3px 7px;margin-left:2px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel-solid) 70%,transparent);}
+  .app-page-kicker{margin-top:7px;color:var(--accent-soft);font-size:7.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;}
+  .app-header h1.title{margin-top:2px;font-size:clamp(22px,3vw,28px);letter-spacing:-.55px;}
+  .app-header .subtitle{max-width:660px;margin-top:4px;font-size:10.5px;line-height:1.5;}
+  .app-network-pill{min-height:29px;border-radius:9px;padding:5px 8px;background:color-mix(in srgb,var(--panel-solid) 80%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.025);}
+  .save-note{min-height:29px;display:inline-flex;align-items:center;padding:5px 8px;border-radius:9px;}
+
+  /* Surfaces */
+  .panel,.dashboard-cluster,.settings-card,.chip,.game-strip{border-color:color-mix(in srgb,var(--line-strong) 72%,transparent);box-shadow:var(--ui-shadow);}
+  .panel{border-radius:var(--ui-radius-xl);background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 34%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 74%,var(--panel)));}
+  .section.panel{position:relative;}
+  .section.panel::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.024);}
+  .panel-header-row{margin-bottom:12px;}
+  .panel-label{font-size:9.5px;font-weight:700;letter-spacing:.072em;text-transform:uppercase;color:color-mix(in srgb,var(--muted) 84%,var(--white));}
+  .panel-label .dash{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px color-mix(in srgb,var(--accent) 38%,transparent);}
+
+  /* Buttons + inputs */
+  .btn{border-radius:10px;min-height:36px;font-size:10.5px;transition:border-color .15s ease,background .15s ease,color .15s ease,transform .15s ease,box-shadow .15s ease;}
+  .btn-primary{color:#18131e;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 94%,white 6%),color-mix(in srgb,var(--accent2) 74%,var(--accent)));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 13px color-mix(in srgb,var(--accent) 14%,transparent);}
+  .btn-primary:hover{filter:none;transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 7px 18px color-mix(in srgb,var(--accent) 19%,transparent);}
+  .btn-secondary,.btn-ghost{background:color-mix(in srgb,var(--panel-raised) 74%,transparent);border-color:color-mix(in srgb,var(--line-strong) 82%,transparent);}
+  .btn-secondary:hover,.btn-ghost:hover{color:var(--white);border-color:color-mix(in srgb,var(--accent) 34%,var(--line-strong));background:color-mix(in srgb,var(--accent) 6%,var(--panel-raised));}
+  input,select,textarea{background:color-mix(in srgb,var(--panel-solid) 86%,transparent) !important;border-color:color-mix(in srgb,var(--line-strong) 78%,transparent) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.018);}
+  .segmented{padding:3px;border-radius:10px;background:color-mix(in srgb,var(--panel-solid) 88%,transparent);box-shadow:inset 0 1px 2px rgba(0,0,0,.12);}
+  .segmented button{min-height:29px;border-radius:7px;color:var(--muted);}
+  .segmented button.active{color:#18131e;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent2) 55%,var(--accent)));box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 2px 8px rgba(0,0,0,.12);}
+
+  /* Analytics */
+  .dashboard-hero-grid{gap:12px;margin-bottom:14px;}
+  .dashboard-hero-grid .dashboard-chart-first{position:relative;overflow:hidden;border-radius:var(--ui-radius-xl);background:radial-gradient(circle at 78% 4%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 30%),linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 42%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 78%,var(--panel)));}
+  .dashboard-hero-grid .dashboard-chart-first::before{content:"";display:block;position:absolute;left:18px;right:18px;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.42;}
+  .range-toolbar{border-radius:10px;padding:8px 10px;background:color-mix(in srgb,var(--panel-solid) 70%,transparent);}
+  .range-summary{gap:8px;margin-top:9px;}
+  .range-summary-card{position:relative;overflow:hidden;padding:10px 11px;border-radius:11px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 46%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 86%,transparent));border:1px solid var(--line);}
+  .range-summary-card::after{content:"";position:absolute;right:-18px;top:-18px;width:46px;height:46px;border-radius:50%;background:color-mix(in srgb,var(--accent) 8%,transparent);}
+  .range-summary-label{font-size:7.8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+  .range-summary-value{margin-top:4px;font-size:14px;letter-spacing:-.2px;}
+  .chart-line-path{stroke-width:2.2;filter:drop-shadow(0 0 5px color-mix(in srgb,var(--accent) 18%,transparent));}
+  .chart-point{stroke-width:1.8;filter:drop-shadow(0 0 3px color-mix(in srgb,var(--accent) 14%,transparent));}
+
+  /* Progress card */
+  .dashboard-hero-grid .game-strip{border-radius:var(--ui-radius-xl);background:radial-gradient(circle at 14% 18%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 34%),linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 40%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 82%,var(--panel)));}
+  .game-level-orb{border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 13%,var(--panel-raised)),color-mix(in srgb,var(--accent2) 5%,var(--panel-solid)));box-shadow:inset 0 1px 0 rgba(255,255,255,.035);}
+  .game-xp-track{height:8px;background:color-mix(in srgb,var(--white) 6%,transparent);box-shadow:inset 0 1px 3px rgba(0,0,0,.18);}
+  .game-xp-fill{background:linear-gradient(90deg,var(--accent),var(--positive));box-shadow:0 0 12px color-mix(in srgb,var(--accent) 24%,transparent);}
+  .game-streak,.game-freeze-btn,.game-missions-btn{background:color-mix(in srgb,var(--panel-solid) 76%,transparent);border-color:color-mix(in srgb,var(--line-strong) 70%,transparent);}
+
+  /* Stats */
+  .stats-ribbon{gap:8px;margin-bottom:14px;}
+  .stats-ribbon .chip{position:relative;overflow:hidden;min-height:72px;padding:11px 12px;border-radius:13px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 32%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 76%,var(--panel)));}
+  .stats-ribbon .chip::before{content:"";position:absolute;left:0;top:13px;bottom:13px;width:2px;border-radius:99px;background:linear-gradient(var(--accent),var(--accent2));opacity:.6;}
+  .stats-ribbon .chip::after{content:"";position:absolute;width:42px;height:42px;right:-22px;top:-22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 7%,transparent);}
+  .chip-label{font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+  .stats-ribbon .chip-value{margin-top:5px;font-size:14px;letter-spacing:-.25px;}
+
+  /* Goals + activity */
+  .goal-shelf-panel,.goal-workspace,.money-cluster,.dashboard-cluster{border-radius:var(--ui-radius-xl);}
+  .goal-cluster .item-card{border-radius:13px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 38%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 78%,var(--panel-raised)));border-color:color-mix(in srgb,var(--line-strong) 65%,transparent);box-shadow:inset 0 1px 0 rgba(255,255,255,.02);}
+  .goal-cluster .item-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 28%,var(--line-strong));box-shadow:0 12px 26px rgba(0,0,0,.10);}
+  .goal-cluster .item-thumb{border-radius:9px;box-shadow:0 7px 16px rgba(0,0,0,.11);}
+  .item-card.active{border-color:color-mix(in srgb,var(--accent) 62%,var(--line-strong));box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 7%,transparent),0 12px 28px rgba(0,0,0,.08);}
+  .goal-workspace .product-card,.goal-workspace .dial-card,.goal-workspace .deadline-panel,.money-cluster .punch-card-form,.money-cluster .activity-panel{border-radius:14px;border-color:color-mix(in srgb,var(--line-strong) 68%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 30%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 76%,var(--panel)));}
+  .ledger-list{gap:7px;}
+  .ledger-row{min-height:48px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--panel-solid) 80%,transparent);transition:background .14s ease,border-color .14s ease;}
+  .ledger-row:hover{background:color-mix(in srgb,var(--panel-raised) 76%,var(--panel-solid));border-color:color-mix(in srgb,var(--accent) 18%,var(--line-strong));}
+
+  /* Settings + modals */
+  #settingsTabPanel .settings-card{border-radius:14px;background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 28%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 82%,var(--panel)));box-shadow:var(--ui-shadow);}
+  #settingsTabPanel .settings-card-icon{border-radius:9px;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 9%,var(--panel-raised)),color-mix(in srgb,var(--accent2) 4%,var(--panel-solid)));}
+  .modal,.auth-card,.signup-passkey-modal{border-radius:17px;border-color:color-mix(in srgb,var(--line-strong) 78%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 30%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 94%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 30px 80px rgba(0,0,0,.34);}
+
+  .app-view{animation:appViewInRevamp .22s cubic-bezier(.2,.75,.25,1);}
+  @keyframes appViewInRevamp{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+  @media(max-width:820px){
+    .sidebar-brand-lockup{display:none;}
+    .app-sidebar{border-radius:16px;background:color-mix(in srgb,var(--panel-solid) 94%,transparent);backdrop-filter:blur(18px) saturate(125%);-webkit-backdrop-filter:blur(18px) saturate(125%);}
+    .app-sidebar::before,.app-nav-btn::before{display:none;}
+    .app-nav-btn.active{background:color-mix(in srgb,var(--accent) 10%,var(--panel-raised));}
+    .header-row.app-header{position:relative;top:auto;backdrop-filter:none;-webkit-backdrop-filter:none;background:transparent;}
+  }
+  @media(max-width:520px){
+    .app-page-kicker{font-size:7px;}
+    .range-summary{grid-template-columns:1fr 1fr;}
+    .range-summary-card:last-child{grid-column:1/-1;}
+    .stats-ribbon .chip{min-height:66px;}
+  }
+  @media(prefers-reduced-motion:reduce){.btn,.app-nav-btn,.ledger-row,.goal-cluster .item-card{transition:none !important;}}
+
+
+  .auth-2fa-note{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    margin-top:-2px;
+    padding:9px 10px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--accent) 4%,var(--panel-solid));
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.45;
+  }
+  .auth-2fa-note svg{
+    width:14px;
+    height:14px;
+    flex:0 0 auto;
+    margin-top:1px;
+    color:var(--accent-soft);
+  }
+
+  /* Top marketing-style app header removed. Navigation already provides context. */
+  #mainScreen > #dashboardTabPanel,
+  #mainScreen > #goalsTabPanel,
+  #mainScreen > #activityTabPanel,
+  #mainScreen > #settingsTabPanel{
+    margin-top:0;
+  }
+  @media(min-width:821px){
+    #mainScreen > #dashboardTabPanel,
+    #mainScreen > #goalsTabPanel,
+    #mainScreen > #activityTabPanel,
+    #mainScreen > #settingsTabPanel{
+      padding-top:2px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -4210,21 +4396,9 @@
     </div>
     <div class="auth-kicker" id="authKicker">Sign in</div>
     <h1 class="auth-title" id="authTitle">Your savings, on every device.</h1>
-    <p class="auth-copy">Sign in to keep your wallet, goals, images, deadlines and work history synced privately across your devices.</p>
+    <p class="auth-copy" id="authCopy">Sign in with your email and password. If passkey 2FA is enabled, LUMIN will ask for Windows Hello, Touch ID, Face ID or another passkey as the second step.</p>
 
     <div class="auth-config-warning" id="authConfigWarning"><b>Firebase isn’t configured yet.</b><br>Fill in <code>firebase-config.js</code> before publishing. You can still use device-only mode while setting it up.</div>
-
-    <div class="passkey-auth-block" id="passkeyAuthBlock">
-      <button type="button" class="btn btn-secondary passkey-btn" id="passkeySignInBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="8" cy="15" r="3"></circle><path d="M11 15h9M17 15v3M14 15v2"></path><path d="M12 4a5 5 0 0 1 5 5v1"></path>
-        </svg>
-        Continue with passkey
-      </button>
-      <div class="passkey-helper" id="passkeyAuthHelper">Use Windows Hello, Touch ID, Face ID or another saved passkey.</div>
-    </div>
-
-    <div class="auth-divider" id="emailAuthDivider">or use email</div>
 
     <form class="auth-form" id="authForm">
       <label class="field">Email
@@ -4233,6 +4407,13 @@
       <label class="field">Password
         <input type="password" id="authPassword" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required />
       </label>
+      <div class="auth-2fa-note" id="auth2faNote">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3 5 6v5c0 4.6 2.8 8.4 7 10 4.2-1.6 7-5.4 7-10V6l-7-3Z"></path>
+          <path d="m9.5 12 1.7 1.7 3.6-4"></path>
+        </svg>
+        <span>If passkey 2FA is enabled, your device will ask for the second verification step after your password is accepted.</span>
+      </div>
       <div class="auth-actions">
         <button type="submit" class="btn btn-primary" id="authSubmitBtn">Sign in</button>
       </div>
@@ -4285,6 +4466,20 @@
     <div class="sync-banner" id="syncBanner"></div>
 
     <aside class="app-sidebar" aria-label="LUMIN navigation">
+      <div class="sidebar-brand-lockup">
+        <div class="sidebar-brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="4" fill="var(--accent)"/>
+            <g stroke="var(--accent-soft)" stroke-width="1.8" stroke-linecap="round">
+              <line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/>
+              <line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/>
+              <line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/>
+              <line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/>
+            </g>
+          </svg>
+        </div>
+        <div class="sidebar-brand-copy"><strong>LUMIN</strong><span>Savings workspace</span></div>
+      </div>
       <div class="app-nav-label">Workspace</div>
       <nav class="app-nav-list">
         <button type="button" class="app-nav-btn active" id="homeNavBtn" data-app-view="home" aria-current="page">
@@ -4313,25 +4508,6 @@
         <div style="font-size:8px;color:var(--muted);">LUMIN v<span id="sidebarVersion">—</span></div>
       </div>
     </aside>
-
-    <div class="header-row app-header">
-      <div>
-        <div class="brand-row">
-          <svg class="brand-mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="var(--accent)"/><g stroke="var(--accent-soft)" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/></g></svg>
-          <span class="brand-word">LUMIN</span>
-          <span class="brand-tag">Savings tracker</span>
-        </div>
-        <h1 class="title" id="appPageTitle">Your <span>home</span></h1>
-        <p class="subtitle" id="appPageSubtitle">Your savings pulse, streak, recent progress and forecast at a glance.</p>
-      </div>
-      <div class="header-right">
-        <div class="app-network-pill" id="networkPill">
-          <span class="network-dot"></span>
-          <span id="networkPillText">Online</span>
-        </div>
-        <span id="saveNote" class="save-note">Saved</span>
-      </div>
-    </div>
 
     <div id="dashboardTabPanel" class="app-view" role="region" aria-label="Home">
     <div class="dashboard-hero-grid">
@@ -4779,7 +4955,7 @@
             <section class="settings-card settings-card-security">
               <div class="settings-card-header">
                 <span class="settings-card-icon" aria-hidden="true">⌁</span>
-                <div><div class="settings-card-title">Security</div><p class="settings-card-desc">Use a passkey for fast, phishing-resistant sign-in while keeping your password as recovery.</p></div>
+                <div><div class="settings-card-title">Security</div><p class="settings-card-desc">Use a passkey as the second verification step after your password for stronger account protection.</p></div>
               </div>
               <div class="security-status-box settings-status-list">
                 <div class="passkey-status">
@@ -5283,9 +5459,50 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.2";
+  const APP_VERSION = "2026.09.09.6";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.6",
+      title: "Cleaner workspace",
+      date: "9 September 2026",
+      changes: [
+        "Removed the large top Overview / Your home header block.",
+        "The main workspace now starts immediately with useful dashboard content while navigation remains in the sidebar and mobile nav."
+      ]
+    },
+    {
+      version: "2026.09.09.5",
+      title: "Custom theme polish",
+      date: "9 September 2026",
+      changes: [
+        "Refined custom themes so they tint the app more naturally instead of flooding the whole page with a flat bright colour.",
+        "Darkened custom-theme surfaces and item cards so the dashboard keeps a more professional, readable look.",
+        "Synced the browser theme-color with the active theme for a cleaner app-like appearance."
+      ]
+    },
+    {
+      version: "2026.09.09.4",
+      title: "Passkey two-factor authentication",
+      date: "9 September 2026",
+      changes: [
+        "Removed the separate passkey-only login option.",
+        "Accounts with a registered passkey now require it as a second step after the password is accepted.",
+        "Accounts without a passkey continue to use password sign-in and receive occasional reminders to enable passkey 2FA.",
+        "Updated signup and Security settings to explain passkeys as two-factor protection instead of a password replacement."
+      ]
+    },
+    {
+      version: "2026.09.09.3",
+      title: "UI polish pass",
+      date: "9 September 2026",
+      changes: [
+        "Revamped the app shell with a branded sidebar, clearer active navigation and a more deliberate workspace header.",
+        "Upgraded panels, analytics cards, stats, goals, controls and account surfaces with cleaner depth and hierarchy.",
+        "Added subtle ambient background detail and restrained accent lighting while keeping every existing theme intact.",
+        "Refined mobile behaviour so the desktop polish does not crowd the bottom navigation experience."
+      ]
+    },
     {
       version: "2026.09.09.2",
       title: "Cleaner settings & smarter passkey reminders",
@@ -5967,9 +6184,17 @@
   function customThemeBackground(theme=customTheme){
     const t=sanitizeCustomTheme(theme);
     if(t.mode==="solid"){
-      return `linear-gradient(${t.colors[0]},${t.colors[0]})`;
+      const start=mixHex(t.colors[0],"#111325",.22);
+      const end=mixHex(t.colors[0],"#1a1830",.10);
+      return `linear-gradient(180deg,${start},${end})`;
     }
-    return `linear-gradient(${t.angle}deg,${t.colors.join(",")})`;
+    const darkened=t.colors.map((color,index)=>{
+      const bias=index/(Math.max(1,t.colors.length-1));
+      const base=bias>.55 ? "#1b1730" : "#111325";
+      const amount=.12 + (bias*.08);
+      return mixHex(color,base,amount);
+    });
+    return `linear-gradient(${t.angle}deg,${darkened.join(",")})`;
   }
 
   function customThemeSwatch(theme=customTheme){
@@ -6007,6 +6232,21 @@
     });
   }
 
+  function syncBrowserThemeColor(){
+    const meta=document.querySelector('meta[name="theme-color"]');
+    if(!meta) return;
+    const styles=getComputedStyle(document.documentElement);
+    let color=(styles.getPropertyValue("--bg1")||"#12111a").trim() || "#12111a";
+    if(currentTheme==="custom"){
+      const primary=(styles.getPropertyValue("--custom-primary")||"").trim() || "#6c8ef5";
+      color=mixHex(primary,"#111325",.22);
+    }else if(currentTheme==="rainbow"){
+      const accent=(styles.getPropertyValue("--accent")||"").trim();
+      if(accent) color=mixHex(accent,"#12111a",.18);
+    }
+    meta.setAttribute("content",color);
+  }
+
   function applyTheme(key){
     const theme = THEMES[key] || THEMES.midnight;
     currentTheme = THEMES[key] ? key : "midnight";
@@ -6022,6 +6262,7 @@
         if(preview) preview.style.background=customThemeSwatch();
       }
     });
+    syncBrowserThemeColor();
   }
   document.addEventListener("visibilitychange",()=>{
     if(currentTheme!=="rainbow") return;
@@ -6396,7 +6637,9 @@
   let authCreateMode = false;
   let pendingPasskeyPromptAfterSignup = false;
   let pendingPasskeyReminderAfterSignin = false;
-  let explicitAuthAction = ""; // signup | password | passkey | ""
+  let explicitAuthAction = ""; // signup | password | passkey2fa | ""
+  let passwordSecondFactorFlow = false;
+  let suppressAuthObserverUid = "";
   let legacyCandidatePayload = null;
   let legacyCandidateSource = "";
   let deferredInstallPrompt = null;
@@ -6461,6 +6704,11 @@
       localStorage.setItem(passkeyKnownKey(uid),"1");
       localStorage.removeItem(passkeySigninCountKey(uid));
     }catch{}
+  }
+
+  function clearPasskeyKnown(uid){
+    if(!localStorageOk||!uid) return;
+    try{localStorage.removeItem(passkeyKnownKey(uid));}catch{}
   }
 
   function shouldShowPasskeySigninReminder(user){
@@ -7605,6 +7853,7 @@
 
   function flashSaved(){
     const el = $("saveNote");
+    if(!el) return;
     el.textContent = "Saved · " + storageModeLabel();
     el.classList.add("show");
     clearTimeout(flashSaved._t);
@@ -7632,12 +7881,14 @@
 
   function setAuthMode(create){
     authCreateMode = !!create;
-    $("passkeyAuthBlock").classList.toggle("hidden",authCreateMode);
-    $("emailAuthDivider").classList.toggle("hidden",authCreateMode);
     $("authKicker").textContent = authCreateMode ? "Create account" : "Sign in";
     $("authSubmitBtn").textContent = authCreateMode ? "Create account" : "Sign in";
     $("authModeBtn").textContent = authCreateMode ? "Already have an account? Sign in" : "Create an account instead";
     $("authPassword").autocomplete = authCreateMode ? "new-password" : "current-password";
+    $("auth2faNote").classList.toggle("hidden",authCreateMode);
+    $("authCopy").textContent = authCreateMode
+      ? "Create your LUMIN account with email and password. After signup, you can enable passkey 2FA so future sign-ins require a second verification step."
+      : "Sign in with your email and password. If passkey 2FA is enabled, LUMIN will ask for Windows Hello, Touch ID, Face ID or another passkey as the second step.";
     setAuthMessage("");
   }
 
@@ -7783,7 +8034,7 @@
         await persist();
       }
 
-      if(explicitAuthAction==="passkey"){
+      if(explicitAuthAction==="passkey2fa"){
         markPasskeyKnown(user.uid);
       }else if(explicitAuthAction==="password"){
         pendingPasskeyReminderAfterSignin=shouldShowPasskeySigninReminder(user);
@@ -8079,96 +8330,87 @@
     const title=$("passkeyStatusTitle");
     const detail=$("passkeyStatusText");
     const add=$("addPasskeyBtn");
-    const signIn=$("passkeySignInBtn");
 
     if(!supported){
-      if(title) title.textContent="Passkeys unavailable";
+      if(title) title.textContent="Passkey 2FA unavailable";
       if(detail) detail.textContent="This browser or device does not expose WebAuthn passkeys.";
       if(add) add.disabled=true;
-      if(signIn) signIn.disabled=true;
       return;
     }
 
     if(!base){
-      if(title) title.textContent="Passkey frontend ready";
-      if(detail) detail.textContent="Deploy the included Firebase passkey function and add its URL to firebase-config.js.";
+      if(title) title.textContent="Passkey 2FA server unavailable";
+      if(detail) detail.textContent="The secure passkey backend is not connected.";
       if(add) add.disabled=true;
-      if(signIn){
-        signIn.disabled=false;
-        signIn.title="Passkey backend not connected yet";
-      }
       return;
     }
 
     const known=!!(cloudUser&&isPasskeyKnown(cloudUser.uid));
-    if(title) title.textContent=known?"Passkey enabled":(cloudUser?"Passkeys ready":"Passkey sign-in ready");
+    if(title) title.textContent=known?"Passkey 2FA enabled":(cloudUser?"Passkey 2FA available":"Two-factor protection");
     if(detail) detail.textContent=known
-      ?"A passkey has been set up or used on this account from this device."
+      ?"After your password, LUMIN requires a registered passkey as the second verification step."
       : cloudUser
-        ?"Add Windows Hello, Touch ID, Face ID or another compatible passkey to this account."
-        :"Enter your account email, then continue with a saved passkey.";
+        ?"Add a passkey to require Windows Hello, Touch ID, Face ID or another authenticator after your password."
+        :"Sign in to manage passkey two-factor authentication.";
     if(add){
       add.disabled=!(cloudUser&&cloudMode==="cloud");
-      add.textContent=known?"Add another passkey":"Add a passkey";
+      add.textContent=known?"Add another passkey":"Enable passkey 2FA";
     }
-    if(signIn) signIn.disabled=false;
   }
 
-  async function signInWithPasskey(){
-    if(!passkeysSupported()){
-      setAuthMessage("Passkeys aren’t supported in this browser.","error");
-      return;
-    }
+  function isNoRegisteredPasskeyError(error){
+    const message=passkeyErrorText(error,"").toLowerCase();
+    return message.includes("no passkey is registered");
+  }
+
+  async function verifyPasswordSecondFactor(email,user){
     if(!passkeyApiBase()){
-      setAuthMessage("The passkey frontend is ready, but the secure passkey server still needs to be deployed.","error");
-      return;
-    }
-    if(!cloudApi||!cloudApi.configured){
-      setAuthMessage("Cloud authentication is unavailable right now.","error");
-      return;
+      throw new Error("LUMIN couldn’t reach the passkey 2FA server. Sign-in was stopped to keep your account protected.");
     }
 
-    const email=$("authEmail").value.trim();
-    if(!email){
-      setAuthMessage("Enter your account email first, then press Continue with passkey.","error");
-      $("authEmail").focus();
-      return;
-    }
+    setAppLoading("Checking account security","Password accepted. Checking whether passkey 2FA is enabled.");
 
-    const button=$("passkeySignInBtn");
-    button.disabled=true;
-    setAuthMessage("");
+    let begin;
     try{
-      const begin=await passkeyRequest("/auth/options",{body:{email}});
-      const publicKey=requestOptionsFromJSON(begin.options);
-      const credential=await navigator.credentials.get({publicKey});
-      if(!credential) throw new Error("No passkey was returned.");
-
-      const finish=await passkeyRequest("/auth/verify",{
-        body:{sessionId:begin.sessionId,credential:credentialToJSON(credential)}
-      });
-      if(!finish.firebaseToken) throw new Error("Passkey verification did not return a Firebase sign-in token.");
-
-      explicitAuthAction="passkey";
-      setAppLoading("Signing in with your passkey","Verifying Windows Hello or your selected authenticator.");
-      await cloudApi.signInToken(finish.firebaseToken);
+      begin=await passkeyRequest("/auth/options",{body:{email}});
     }catch(error){
-      hideAppLoading(0);
-      setAuthMessage(friendlyPasskeyError(error),"error");
-    }finally{
-      button.disabled=false;
+      if(isNoRegisteredPasskeyError(error)){
+        clearPasskeyKnown(user&&user.uid);
+        return {required:false};
+      }
+      throw error;
     }
+
+    if(!passkeysSupported()){
+      throw new Error("This account has passkey 2FA enabled, but this browser or device can’t use passkeys.");
+    }
+
+    setAppLoading("Two-step verification","Password accepted. Confirm your sign-in with your passkey.");
+    const publicKey=requestOptionsFromJSON(begin.options);
+    const credential=await navigator.credentials.get({publicKey});
+    if(!credential) throw new Error("No passkey was returned.");
+
+    const finish=await passkeyRequest("/auth/verify",{
+      body:{sessionId:begin.sessionId,credential:credentialToJSON(credential)}
+    });
+
+    if(!finish.firebaseToken){
+      throw new Error("Passkey verification succeeded but did not return a secure session token.");
+    }
+
+    markPasskeyKnown(user.uid);
+    return {required:true,firebaseToken:finish.firebaseToken};
   }
 
   function preparePasskeyPromptCopy(mode="signup"){
     const reminder=mode==="reminder";
-    $("signupPasskeyKicker").textContent=reminder?"Quick security reminder":"One more thing";
-    $("signupPasskeyTitle").textContent=reminder?"Want faster sign-in next time?":"Secure your account with a passkey?";
+    $("signupPasskeyKicker").textContent=reminder?"Quick security reminder":"Protect your account";
+    $("signupPasskeyTitle").textContent=reminder?"Enable passkey 2FA?":"Add passkey two-factor authentication?";
     $("signupPasskeyDescription").textContent=reminder
-      ?"You can replace password typing with Windows Hello, Touch ID, Face ID or another passkey. We’ll only remind you occasionally."
-      :"Sign in faster with Windows Hello, Touch ID, Face ID or another supported passkey. Your password stays available as a recovery option.";
+      ?"Add a passkey as a second verification step after your password. We’ll only remind you occasionally."
+      :"Your password remains the first step. A passkey adds Windows Hello, Touch ID, Face ID or another authenticator as the second step on future sign-ins.";
     $("signupPasskeyLaterBtn").textContent=reminder?"Not now":"Maybe later";
-    $("signupPasskeySetupBtn").textContent="Set up passkey";
+    $("signupPasskeySetupBtn").textContent="Enable passkey 2FA";
   }
 
   function openSignupPasskeyPrompt(){
@@ -8218,10 +8460,10 @@
 
     const success=await addPasskey(button);
     if(success){
-      $("signupPasskeyMessage").textContent="Passkey added. Your account is ready.";
+      $("signupPasskeyMessage").textContent="Passkey 2FA enabled. Your account is protected.";
       setTimeout(closeSignupPasskeyPrompt,420);
     }else{
-      $("signupPasskeyMessage").textContent="Passkey setup wasn’t completed. You can try again or choose Maybe later.";
+      $("signupPasskeyMessage").textContent="Passkey 2FA wasn’t enabled. You can try again or choose Maybe later.";
       $("signupPasskeyMessage").className="signup-passkey-message error";
     }
   }
@@ -8259,9 +8501,9 @@
       });
       markPasskeyKnown(cloudUser.uid);
       pendingPasskeyReminderAfterSignin=false;
-      showOfflineToast("Passkey added to your LUMIN account.");
-      $("passkeyStatusTitle").textContent="Passkey enabled";
-      $("passkeyStatusText").textContent="This account can now use the registered authenticator to sign in.";
+      showOfflineToast("Passkey 2FA enabled for your LUMIN account.");
+      $("passkeyStatusTitle").textContent="Passkey 2FA enabled";
+      $("passkeyStatusText").textContent="Future password sign-ins now require a registered passkey as the second step.";
       updatePasskeyUi();
       return true;
     }catch(error){
@@ -8280,7 +8522,6 @@
     $("settingsVersionLabel").textContent=APP_VERSION;
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
-    $("passkeySignInBtn").addEventListener("click",signInWithPasskey);
     $("addPasskeyBtn").addEventListener("click",()=>addPasskey());
     $("signupPasskeySetupBtn").addEventListener("click",setupPasskeyFromSignup);
     $("signupPasskeyLaterBtn").addEventListener("click",closeSignupPasskeyPrompt);
@@ -8370,16 +8611,55 @@
         pendingPasskeyPromptAfterSignup=authCreateMode;
         pendingPasskeyReminderAfterSignin=false;
         explicitAuthAction=authCreateMode?"signup":"password";
-        if(authCreateMode) await cloudApi.signUp(email,password);
-        else await cloudApi.signIn(email,password);
-        setAppLoading("Loading your savings","Your account is ready. Fetching your LUMIN data.");
+
+        if(authCreateMode){
+          await cloudApi.signUp(email,password);
+          setAppLoading("Loading your savings","Your account is ready. Fetching your LUMIN data.");
+        }else{
+          passwordSecondFactorFlow=true;
+          const passwordCredential=await cloudApi.signIn(email,password);
+          const passwordUser=passwordCredential&&passwordCredential.user;
+          if(!passwordUser) throw new Error("Password sign-in did not return an account.");
+
+          const secondFactor=await verifyPasswordSecondFactor(email,passwordUser);
+          suppressAuthObserverUid=passwordUser.uid;
+
+          if(secondFactor.required){
+            explicitAuthAction="passkey2fa";
+            setAppLoading("Verification complete","Opening your LUMIN account securely.");
+            const verifiedCredential=await cloudApi.signInToken(secondFactor.firebaseToken);
+            passwordSecondFactorFlow=false;
+            const verifiedUser=(verifiedCredential&&verifiedCredential.user)||passwordUser;
+            await enterCloudMode(verifiedUser);
+          }else{
+            passwordSecondFactorFlow=false;
+            explicitAuthAction="password";
+            setAppLoading("Loading your savings","Your account is ready. Fetching your LUMIN data.");
+            await enterCloudMode(passwordUser);
+          }
+
+          setTimeout(()=>{
+            if(suppressAuthObserverUid===passwordUser.uid) suppressAuthObserverUid="";
+          },1800);
+        }
       }catch(error){
+        const wasPasswordSignin=!authCreateMode;
+        passwordSecondFactorFlow=false;
+        suppressAuthObserverUid="";
         pendingTutorialAfterSignup=false;
         pendingPasskeyPromptAfterSignup=false;
         pendingPasskeyReminderAfterSignin=false;
         explicitAuthAction="";
+
+        if(wasPasswordSignin && cloudApi && cloudApi.configured){
+          try{await cloudApi.logout();}catch{}
+        }
+
         hideAppLoading(300);
-        setAuthMessage(friendlyAuthError(error),"error");
+        const message=(error&&["NotAllowedError","InvalidStateError","SecurityError"].includes(error.name))
+          ?friendlyPasskeyError(error)
+          :friendlyAuthError(error);
+        setAuthMessage(message,"error");
       }finally{
         submit.disabled = false;
         submit.textContent = authCreateMode ? "Create account" : "Sign in";
@@ -8419,6 +8699,8 @@
 
     cloudApi.onAuth(async user=>{
       if(user){
+        if(passwordSecondFactorFlow) return;
+        if(suppressAuthObserverUid && suppressAuthObserverUid===user.uid) return;
         setAppLoading("Welcome back","Loading your LUMIN account and cloud save.");
         await enterCloudMode(user);
       }else if(cloudMode !== "local"){
@@ -10126,8 +10408,6 @@
     });
 
     const meta=APP_VIEW_META[view];
-    $("appPageTitle").innerHTML=meta.title;
-    $("appPageSubtitle").textContent=meta.subtitle;
 
     if(updateHash){
       try{history.replaceState(null,"","#"+view);}catch{}
