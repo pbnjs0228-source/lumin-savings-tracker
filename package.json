@@ -2,11 +2,11 @@
   "name": "lumin-passkeys",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "@simplewebauthn/server": "^13.3.0",
     "firebase-admin": "^13.0.0"
-  },
-  "engines": {
-    "node": "22.x"
   }
 }
