@@ -4882,9 +4882,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.08.2";
+  const APP_VERSION = "2026.09.09";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09",
+      title: "Readable passkey errors",
+      date: "9 September 2026",
+      changes: [
+        "Fixed passkey failures appearing as [object Object].",
+        "LUMIN now extracts useful nested Vercel and Firebase error messages.",
+        "Improved passkey network and HTTP error reporting so deployment problems are easier to diagnose."
+      ]
+    },
     {
       version: "2026.09.08.2",
       title: "LUMIN feels like an app",
@@ -7495,19 +7505,81 @@
     return result;
   }
 
+  function passkeyErrorText(value,fallback="Passkey request failed."){
+    if(value===null||value===undefined||value==="") return fallback;
+    if(typeof value==="string") return value;
+
+    if(value instanceof Error){
+      return passkeyErrorText(value.message||value.cause||value,fallback);
+    }
+
+    if(typeof value==="object"){
+      const candidates=[
+        value.message,
+        value.error_description,
+        value.error,
+        value.details,
+        value.reason,
+        value.errorInfo&&value.errorInfo.message,
+        value.response&&value.response.data&&value.response.data.message
+      ];
+      for(const candidate of candidates){
+        if(candidate!==undefined&&candidate!==null&&candidate!==value){
+          const extracted=passkeyErrorText(candidate,"");
+          if(extracted) return extracted;
+        }
+      }
+
+      try{
+        const compact=JSON.stringify(value);
+        if(compact&&compact!=="{}") return compact;
+      }catch{}
+    }
+
+    try{
+      const stringified=String(value);
+      return stringified==="[object Object]"?fallback:stringified;
+    }catch{
+      return fallback;
+    }
+  }
+
   async function passkeyRequest(path,{body={},token=""}={}){
     const base=passkeyApiBase();
     if(!base) throw new Error("Passkey server is not connected yet.");
+
     const headers={"Content-Type":"application/json","Accept":"application/json"};
     if(token) headers.Authorization="Bearer "+token;
-    const response=await fetch(base+path,{
-      method:"POST",
-      headers,
-      body:JSON.stringify(body)
-    });
+
+    let response;
+    try{
+      response=await fetch(base+path,{
+        method:"POST",
+        headers,
+        body:JSON.stringify(body)
+      });
+    }catch(error){
+      throw new Error("Couldn’t reach the passkey server. Check the Vercel deployment and try again.");
+    }
+
     let payload={};
-    try{payload=await response.json();}catch{}
-    if(!response.ok) throw new Error(payload.error||"Passkey request failed.");
+    const contentType=response.headers.get("content-type")||"";
+    try{
+      payload=contentType.includes("application/json")
+        ? await response.json()
+        : {error:await response.text()};
+    }catch{
+      payload={};
+    }
+
+    if(!response.ok){
+      const message=passkeyErrorText(
+        payload&&("error" in payload?payload.error:payload),
+        `Passkey server returned ${response.status}.`
+      );
+      throw new Error(message);
+    }
+
     return payload;
   }
 
@@ -7515,7 +7587,7 @@
     if(error&&error.name==="NotAllowedError") return "Passkey request cancelled or timed out.";
     if(error&&error.name==="InvalidStateError") return "That passkey is already registered on this authenticator.";
     if(error&&error.name==="SecurityError") return "This domain is not allowed to use that passkey.";
-    return error&&error.message?error.message:"Passkey request failed.";
+    return passkeyErrorText(error,"Passkey request failed.");
   }
 
   async function updatePasskeyUi(){
