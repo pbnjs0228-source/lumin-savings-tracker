@@ -2,23 +2,130 @@ import { getApps, initializeApp, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { getFirestore, FieldValue, Timestamp } from "firebase-admin/firestore";
 
-if (!getApps().length) {
-  initializeApp({
-    credential: cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: String(process.env.FIREBASE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
-    }),
-  });
+let adminApp = null;
+
+function cleanEnv(name) {
+  let value = String(process.env[name] || "").trim();
+
+  // People often paste JSON string values into Vercel including quotes.
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    try {
+      value = JSON.parse(value);
+    } catch {
+      value = value.slice(1, -1);
+    }
+  }
+
+  return String(value).trim();
 }
 
-export const auth = getAuth();
-export const db = getFirestore();
-export const rpID = process.env.LUMIN_RP_ID;
-export const origin = process.env.LUMIN_ORIGIN;
-export const rpName = "LUMIN";
+function privateKeyValue() {
+  let key = cleanEnv("FIREBASE_PRIVATE_KEY");
+  key = key.replace(/\\n/g, "\n");
+  return key;
+}
 
-const challenges = db.collection("_lumin_passkey_challenges");
+export function environmentStatus() {
+  const privateKey = privateKeyValue();
+
+  return {
+    FIREBASE_PROJECT_ID: !!cleanEnv("FIREBASE_PROJECT_ID"),
+    FIREBASE_CLIENT_EMAIL: !!cleanEnv("FIREBASE_CLIENT_EMAIL"),
+    FIREBASE_PRIVATE_KEY: !!privateKey,
+    FIREBASE_PRIVATE_KEY_LOOKS_VALID:
+      privateKey.includes("-----BEGIN PRIVATE KEY-----") &&
+      privateKey.includes("-----END PRIVATE KEY-----"),
+    LUMIN_ORIGIN: !!cleanEnv("LUMIN_ORIGIN"),
+    LUMIN_RP_ID: !!cleanEnv("LUMIN_RP_ID"),
+    CBOR_NATIVE_ACCELERATION_DISABLED:
+      String(process.env.CBOR_NATIVE_ACCELERATION_DISABLED || "") === "true",
+  };
+}
+
+function assertEnvironment() {
+  const status = environmentStatus();
+
+  const missing = [
+    "FIREBASE_PROJECT_ID",
+    "FIREBASE_CLIENT_EMAIL",
+    "FIREBASE_PRIVATE_KEY",
+    "LUMIN_ORIGIN",
+    "LUMIN_RP_ID",
+  ].filter(key => !status[key]);
+
+  if (missing.length) {
+    throw new Error(`Missing Vercel environment variable${missing.length === 1 ? "" : "s"}: ${missing.join(", ")}`);
+  }
+
+  if (!status.FIREBASE_PRIVATE_KEY_LOOKS_VALID) {
+    throw new Error(
+      "FIREBASE_PRIVATE_KEY does not look like a valid PEM private key. Paste the full private_key value including BEGIN PRIVATE KEY and END PRIVATE KEY."
+    );
+  }
+}
+
+export function getAdminApp() {
+  assertEnvironment();
+
+  if (adminApp) return adminApp;
+
+  if (getApps().length) {
+    adminApp = getApps()[0];
+    return adminApp;
+  }
+
+  // This is intentionally lazy. If a credential is malformed, the error now
+  // happens inside the request handler and can be returned as JSON instead of
+  // Vercel's generic "A server error has occurred".
+  adminApp = initializeApp({
+    credential: cert({
+      projectId: cleanEnv("FIREBASE_PROJECT_ID"),
+      clientEmail: cleanEnv("FIREBASE_CLIENT_EMAIL"),
+      privateKey: privateKeyValue(),
+    }),
+  });
+
+  return adminApp;
+}
+
+export function adminAuth() {
+  return getAuth(getAdminApp());
+}
+
+export function adminDb() {
+  return getFirestore(getAdminApp());
+}
+
+export function webauthnConfig() {
+  assertEnvironment();
+
+  const origin = cleanEnv("LUMIN_ORIGIN").replace(/\/+$/, "");
+  const rpID = cleanEnv("LUMIN_RP_ID");
+
+  let parsed;
+  try {
+    parsed = new URL(origin);
+  } catch {
+    throw new Error("LUMIN_ORIGIN must be a full HTTPS URL, for example https://lumin-savings.vercel.app");
+  }
+
+  if (parsed.protocol !== "https:") {
+    throw new Error("LUMIN_ORIGIN must use https://");
+  }
+
+  if (parsed.hostname !== rpID) {
+    throw new Error(
+      `LUMIN_ORIGIN hostname (${parsed.hostname}) does not match LUMIN_RP_ID (${rpID}).`
+    );
+  }
+
+  return { origin, rpID, rpName: "LUMIN" };
+}
+
+const challengeCollection = () => adminDb().collection("_lumin_passkey_challenges");
 
 export function send(res, status, body) {
   res.status(status).json(body);
@@ -36,16 +143,16 @@ export async function requireUser(req) {
   const value = String(req.headers.authorization || "");
   const token = value.startsWith("Bearer ") ? value.slice(7) : "";
   if (!token) throw new Error("Please sign in first.");
-  return auth.verifyIdToken(token);
+  return adminAuth().verifyIdToken(token);
 }
 
 export async function listPasskeys(uid) {
-  const snap = await db.collection("users").doc(uid).collection("passkeys").get();
+  const snap = await adminDb().collection("users").doc(uid).collection("passkeys").get();
   return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
 export async function createChallenge(uid, type, challenge) {
-  const ref = challenges.doc();
+  const ref = challengeCollection().doc();
   await ref.set({
     uid,
     type,
@@ -58,17 +165,21 @@ export async function createChallenge(uid, type, challenge) {
 
 export async function consumeChallenge(sessionId, expectedType) {
   if (!sessionId) throw new Error("Missing passkey session.");
-  const ref = challenges.doc(String(sessionId));
+
+  const ref = challengeCollection().doc(String(sessionId));
   const snap = await ref.get();
+
   if (!snap.exists) throw new Error("Passkey session expired.");
 
   const data = snap.data();
   await ref.delete().catch(() => {});
 
   if (data.type !== expectedType) throw new Error("Wrong passkey session.");
+
   if (!data.expiresAt || data.expiresAt.toMillis() < Date.now()) {
     throw new Error("Passkey session expired.");
   }
+
   return data;
 }
 
@@ -80,7 +191,49 @@ export function base64UrlToBytes(value) {
   return new Uint8Array(Buffer.from(String(value), "base64url"));
 }
 
+function errorText(value, fallback = "Passkey request failed.") {
+  if (value === null || value === undefined || value === "") return fallback;
+  if (typeof value === "string") return value;
+
+  if (value instanceof Error) {
+    return errorText(
+      value.message ||
+      value.errorInfo?.message ||
+      value.cause ||
+      value,
+      fallback
+    );
+  }
+
+  if (typeof value === "object") {
+    const candidates = [
+      value.message,
+      value.error_description,
+      value.error,
+      value.details,
+      value.reason,
+      value.errorInfo?.message,
+      value.response?.data?.message,
+    ];
+
+    for (const candidate of candidates) {
+      if (candidate !== undefined && candidate !== null && candidate !== value) {
+        const found = errorText(candidate, "");
+        if (found) return found;
+      }
+    }
+
+    try {
+      const json = JSON.stringify(value);
+      if (json && json !== "{}") return json;
+    } catch {}
+  }
+
+  const stringified = String(value);
+  return stringified === "[object Object]" ? fallback : stringified;
+}
+
 export function safeError(error) {
-  console.error(error);
-  return error?.message || "Passkey request failed.";
+  console.error("[LUMIN passkeys]", error);
+  return errorText(error);
 }

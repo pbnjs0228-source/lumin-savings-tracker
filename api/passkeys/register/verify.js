@@ -1,7 +1,7 @@
 import { verifyRegistrationResponse } from "@simplewebauthn/server";
 import { FieldValue } from "firebase-admin/firestore";
 import {
-  db, rpID, origin, onlyPost, requireUser, consumeChallenge,
+  adminDb, webauthnConfig, onlyPost, requireUser, consumeChallenge,
   bytesToBase64Url, send, safeError
 } from "../_lib.js";
 
@@ -9,6 +9,7 @@ export default async function handler(req, res) {
   if (!onlyPost(req, res)) return;
 
   try {
+    const { rpID, origin } = webauthnConfig();
     const user = await requireUser(req);
     const { sessionId, credential, name } = req.body || {};
     const session = await consumeChallenge(sessionId, "register");
@@ -22,6 +23,7 @@ export default async function handler(req, res) {
       expectedChallenge: session.challenge,
       expectedOrigin: origin,
       expectedRPID: rpID,
+      supportedAlgorithmIDs: [-7, -257],
     });
 
     if (!verification.verified || !verification.registrationInfo) {
@@ -30,7 +32,7 @@ export default async function handler(req, res) {
 
     const saved = verification.registrationInfo.credential;
 
-    await db.collection("users").doc(user.uid)
+    await adminDb().collection("users").doc(user.uid)
       .collection("passkeys").doc(saved.id).set({
         publicKey: bytesToBase64Url(saved.publicKey),
         counter: saved.counter || 0,
