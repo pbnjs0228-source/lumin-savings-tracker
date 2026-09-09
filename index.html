@@ -3570,7 +3570,8 @@
 
   .app-sidebar{
     grid-column:1;
-    grid-row:2 / span 8;
+    grid-row:1 / span 12;
+    align-self:start;
     position:sticky;
     top:18px;
     min-height:calc(100vh - 72px);
@@ -4358,6 +4359,15 @@
     #mainScreen > #settingsTabPanel{
       padding-top:2px;
     }
+  }
+
+  /* Fix post-header layout regression: keep the sidebar aligned with the top of the workspace. */
+  #mainScreen{
+    grid-auto-rows:min-content;
+    align-items:start;
+  }
+  #mainScreen > .app-sidebar{
+    margin-top:0;
   }
 </style>
 </head>
@@ -5459,9 +5469,18 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.6";
+  const APP_VERSION = "2026.09.09.7";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.7",
+      title: "Sidebar alignment fix",
+      date: "9 September 2026",
+      changes: [
+        "Fixed the layout bug where the desktop sidebar dropped far down the page after the top header was removed.",
+        "The sidebar now anchors to the top of the workspace again so Settings and the other views line up properly."
+      ]
+    },
     {
       version: "2026.09.09.6",
       title: "Cleaner workspace",
