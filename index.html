@@ -4369,6 +4369,237 @@
   #mainScreen > .app-sidebar{
     margin-top:0;
   }
+
+  .security-toggle-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    min-height:58px;
+    margin-bottom:9px;
+    padding:10px 11px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 88%,transparent);
+  }
+  .security-toggle-copy{
+    display:flex;
+    min-width:0;
+    flex-direction:column;
+    gap:3px;
+  }
+  .security-toggle-copy strong{
+    color:var(--white);
+    font-size:9.8px;
+    font-weight:700;
+  }
+  .security-toggle-copy span{
+    color:var(--muted);
+    font-size:8.8px;
+    line-height:1.35;
+  }
+  .security-switch{
+    appearance:none;
+    position:relative;
+    width:38px;
+    height:22px;
+    flex:0 0 auto;
+    padding:0;
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    background:color-mix(in srgb,var(--white) 7%,var(--panel-solid));
+    cursor:pointer;
+    transition:background .17s ease,border-color .17s ease,box-shadow .17s ease;
+  }
+  .security-switch-knob{
+    position:absolute;
+    top:3px;
+    left:3px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--muted);
+    box-shadow:0 1px 4px rgba(0,0,0,.28);
+    transition:transform .17s ease,background .17s ease;
+  }
+  .security-switch[aria-checked="true"]{
+    border-color:color-mix(in srgb,var(--accent) 58%,var(--line-strong));
+    background:color-mix(in srgb,var(--accent) 38%,var(--panel-raised));
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 7%,transparent);
+  }
+  .security-switch[aria-checked="true"] .security-switch-knob{
+    transform:translateX(16px);
+    background:var(--accent-soft);
+  }
+  .security-switch:disabled{
+    opacity:.42;
+    cursor:not-allowed;
+  }
+  .security-switch:not(:disabled):hover{
+    border-color:color-mix(in srgb,var(--accent) 42%,var(--line-strong));
+  }
+
+  /* ================================================================
+     APPEARANCE MODE + HYPERDRIVE
+     ================================================================ */
+  .appearance-mode-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:12px;
+    padding:10px 11px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+  }
+  .appearance-mode-copy{
+    display:flex;
+    min-width:0;
+    flex-direction:column;
+    gap:3px;
+  }
+  .appearance-mode-copy strong{
+    color:var(--white);
+    font-size:9.8px;
+    font-weight:700;
+  }
+  .appearance-mode-copy span{
+    color:var(--muted);
+    font-size:8.8px;
+    line-height:1.35;
+  }
+  .appearance-mode-picker{
+    flex:0 0 auto;
+    min-width:205px;
+  }
+  .appearance-mode-picker button{
+    flex:1;
+    min-width:60px;
+  }
+
+  /* Light mode overrides the surface system, while preserving theme accents. */
+  html[data-appearance="light"]{
+    color-scheme:light;
+  }
+  html[data-appearance="dark"]{
+    color-scheme:dark;
+  }
+  html[data-appearance="light"] body{
+    background:
+      radial-gradient(ellipse 820px 480px at 10% -8%,color-mix(in srgb,var(--accent) 8%,transparent),transparent 62%),
+      radial-gradient(ellipse 720px 520px at 103% 8%,color-mix(in srgb,var(--accent2) 7%,transparent),transparent 58%),
+      linear-gradient(color-mix(in srgb,#111827 2.2%,transparent) 1px,transparent 1px),
+      linear-gradient(90deg,color-mix(in srgb,#111827 2.2%,transparent) 1px,transparent 1px),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+    background-size:auto,auto,42px 42px,42px 42px,auto;
+    background-position:center,center,-1px -1px,-1px -1px,center;
+  }
+  html[data-appearance="light"] body::after{
+    background:linear-gradient(180deg,rgba(255,255,255,.28),transparent 19%,transparent 83%,rgba(20,24,38,.03));
+  }
+  html[data-appearance="light"] .app-sidebar{
+    background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(247,249,253,.94));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 18px 46px rgba(31,39,61,.09);
+  }
+  html[data-appearance="light"] .panel,
+  html[data-appearance="light"] .settings-card,
+  html[data-appearance="light"] .game-strip,
+  html[data-appearance="light"] .chip{
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 10px 30px rgba(30,38,58,.055);
+  }
+  html[data-appearance="light"] input,
+  html[data-appearance="light"] select,
+  html[data-appearance="light"] textarea{
+    background:rgba(255,255,255,.88) !important;
+  }
+  html[data-appearance="light"] .btn-primary{
+    color:#081112;
+  }
+  html[data-appearance="light"][data-theme="custom"] body{
+    background:
+      radial-gradient(ellipse 850px 500px at 10% -5%,color-mix(in srgb,var(--custom-primary,#6c8ef5) 9%,transparent),transparent 62%),
+      radial-gradient(ellipse 760px 520px at 103% 10%,color-mix(in srgb,var(--custom-secondary,#c47cff) 8%,transparent),transparent 60%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
+  }
+  html[data-appearance="light"][data-theme="custom"] .panel,
+  html[data-appearance="light"][data-theme="custom"] .chip,
+  html[data-appearance="light"][data-theme="custom"] .projection-banner,
+  html[data-appearance="light"][data-theme="custom"] .deadline-panel,
+  html[data-appearance="light"][data-theme="custom"] .record-card,
+  html[data-appearance="light"][data-theme="custom"] .auth-card,
+  html[data-appearance="light"][data-theme="custom"] .modal{
+    background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(247,249,253,.94));
+    border-color:var(--line);
+  }
+
+  /* HYPERDRIVE: black glass + electric cyan/green with a restrained violet edge. */
+  html[data-theme="hyperdrive"][data-appearance="dark"] body{
+    background:
+      radial-gradient(ellipse 760px 500px at 13% -5%,rgba(31,242,235,.13),transparent 60%),
+      radial-gradient(ellipse 700px 520px at 101% 23%,rgba(78,244,119,.10),transparent 56%),
+      radial-gradient(ellipse 560px 400px at 76% 104%,rgba(175,49,255,.085),transparent 58%),
+      linear-gradient(180deg,#010304 0%,#040a0b 48%,#020607 100%);
+    background-attachment:fixed;
+  }
+  html[data-theme="hyperdrive"][data-appearance="dark"] .app-sidebar{
+    background:
+      linear-gradient(180deg,rgba(8,17,19,.97),rgba(3,8,9,.96));
+    border-color:rgba(44,247,231,.15);
+    box-shadow:
+      inset 0 1px 0 rgba(94,255,246,.04),
+      0 20px 52px rgba(0,0,0,.34),
+      0 0 40px rgba(23,238,225,.035);
+  }
+  html[data-theme="hyperdrive"][data-appearance="dark"] .panel,
+  html[data-theme="hyperdrive"][data-appearance="dark"] .settings-card,
+  html[data-theme="hyperdrive"][data-appearance="dark"] .game-strip{
+    border-color:rgba(54,246,230,.12);
+    background:
+      linear-gradient(180deg,rgba(13,24,26,.90),rgba(5,12,13,.94));
+  }
+  html[data-theme="hyperdrive"] .btn-primary,
+  html[data-theme="hyperdrive"] .segmented button.active{
+    background:linear-gradient(110deg,#21f0eb 0%,#32f3b1 52%,#58ef70 100%);
+    color:#03100f;
+    box-shadow:0 0 18px rgba(32,238,233,.13);
+  }
+  html[data-theme="hyperdrive"] .app-nav-btn.active::before{
+    background:linear-gradient(180deg,#27f4ee,#57ef79);
+    box-shadow:0 0 14px rgba(36,241,231,.48);
+  }
+  html[data-theme="hyperdrive"] .chart-line-path{
+    stroke:#25eee7;
+    filter:drop-shadow(0 0 7px rgba(39,238,232,.28));
+  }
+  html[data-theme="hyperdrive"] .chart-point{
+    stroke:#67fff8;
+  }
+  html[data-theme="hyperdrive"] .game-xp-fill{
+    background:linear-gradient(90deg,#22eee8,#55f07b);
+    box-shadow:0 0 15px rgba(38,240,224,.25);
+  }
+  html[data-theme="hyperdrive"] .sidebar-brand-icon{
+    border-color:rgba(36,242,232,.25);
+    background:linear-gradient(145deg,rgba(30,238,230,.12),rgba(65,239,112,.055));
+    box-shadow:inset 0 1px 0 rgba(123,255,249,.08),0 0 18px rgba(32,238,231,.07);
+  }
+  html[data-theme="hyperdrive"] h1.title span,
+  html[data-theme="hyperdrive"] .projection-time{
+    color:#2ef1e9;
+  }
+
+  @media(max-width:620px){
+    .appearance-mode-row{
+      align-items:stretch;
+      flex-direction:column;
+    }
+    .appearance-mode-picker{
+      width:100%;
+      min-width:0;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -4406,8 +4637,6 @@
     </div>
     <div class="auth-kicker" id="authKicker">Sign in</div>
     <h1 class="auth-title" id="authTitle">Your savings, on every device.</h1>
-    <p class="auth-copy" id="authCopy">Sign in with your email and password. If passkey 2FA is enabled, LUMIN will ask for Windows Hello, Touch ID, Face ID or another passkey as the second step.</p>
-
     <div class="auth-config-warning" id="authConfigWarning"><b>Firebase isn’t configured yet.</b><br>Fill in <code>firebase-config.js</code> before publishing. You can still use device-only mode while setting it up.</div>
 
     <form class="auth-form" id="authForm">
@@ -4905,6 +5134,17 @@
                 <span class="settings-card-icon" aria-hidden="true">◐</span>
                 <div><div class="settings-card-title">Appearance</div><p class="settings-card-desc">Choose a visual style for the entire app, or build your own custom palette.</p></div>
               </div>
+              <div class="appearance-mode-row">
+                <div class="appearance-mode-copy">
+                  <strong>Mode</strong>
+                  <span>Choose dark, light, or follow your device.</span>
+                </div>
+                <div class="segmented appearance-mode-picker" id="appearanceModePicker" aria-label="Appearance mode">
+                  <button type="button" data-appearance-mode="dark">Dark</button>
+                  <button type="button" data-appearance-mode="light">Light</button>
+                  <button type="button" data-appearance-mode="system">System</button>
+                </div>
+              </div>
               <div class="theme-picker settings-theme-picker" id="themePickerMain"></div>
             </section>
           </div>
@@ -4967,10 +5207,19 @@
                 <span class="settings-card-icon" aria-hidden="true">⌁</span>
                 <div><div class="settings-card-title">Security</div><p class="settings-card-desc">Use a passkey as the second verification step after your password for stronger account protection.</p></div>
               </div>
+              <div class="security-toggle-row">
+                <div class="security-toggle-copy">
+                  <strong>Require passkey after password</strong>
+                  <span>Passkey two-factor authentication</span>
+                </div>
+                <button type="button" class="security-switch" id="passkey2faToggle" role="switch" aria-checked="false" aria-label="Toggle passkey two-factor authentication">
+                  <span class="security-switch-knob"></span>
+                </button>
+              </div>
               <div class="security-status-box settings-status-list">
                 <div class="passkey-status">
                   <span class="passkey-status-icon">⌁</span>
-                  <span><strong id="passkeyStatusTitle">Checking passkeys…</strong><span id="passkeyStatusText">Checking browser support and server connection.</span></span>
+                  <span><strong id="passkeyStatusTitle">Checking 2FA…</strong><span id="passkeyStatusText">Checking your account security settings.</span></span>
                 </div>
               </div>
               <div class="settings-actions">
@@ -5469,9 +5718,39 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.7";
+  const APP_VERSION = "2026.09.09.10";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.10",
+      title: "HYPERDRIVE & appearance modes",
+      date: "9 September 2026",
+      changes: [
+        "Added Dark, Light and System appearance modes in Settings independently from colour themes.",
+        "System mode automatically follows the device colour-scheme preference.",
+        "Added HYPERDRIVE, a near-black neon theme with electric cyan, green and violet energy.",
+        "Light mode now adapts every colour theme into a cleaner pale surface system while retaining its accent colours."
+      ]
+    },
+    {
+      version: "2026.09.09.9",
+      title: "2FA controls",
+      date: "9 September 2026",
+      changes: [
+        "Added a real on/off switch for passkey two-factor authentication in Settings → Security.",
+        "Turning 2FA off keeps registered passkeys saved so it can be turned back on later without recreating them.",
+        "Turning 2FA on automatically starts passkey setup when the account does not have one yet.",
+        "2FA status is stored securely on the server and follows the account across devices."
+      ]
+    },
+    {
+      version: "2026.09.09.8",
+      title: "Cleaner sign-in",
+      date: "9 September 2026",
+      changes: [
+        "Removed the oversized explanatory paragraph from the sign-in card for a cleaner, more compact login screen."
+      ]
+    },
     {
       version: "2026.09.09.7",
       title: "Sidebar alignment fix",
@@ -5852,6 +6131,18 @@
         "--blade-a":"#20213a","--blade-b":"#252945","--housing":"#181a2a","--housing-inner":"#11121f"
       }
     },
+    hyperdrive: {
+      label:"HYPERDRIVE",
+      swatch:"linear-gradient(145deg,#020506 0%,#071415 42%,#18f4ef 43%,#41f077 69%,#a23cff 100%)",
+      vars:{
+        "--bg1":"#020506","--bg2":"#061011",
+        "--panel":"rgba(255,255,255,0.035)","--panel-solid":"#091214","--panel-raised":"#101b1e",
+        "--accent":"#20eee9","--accent-soft":"#77fffb","--accent2":"#45ef72","--positive":"#62f08e",
+        "--white":"#f3fffe","--muted":"#7f9b9d",
+        "--line":"rgba(82,255,239,0.09)","--line-strong":"rgba(82,255,239,0.19)",
+        "--blade-a":"#0c1e21","--blade-b":"#112d2d","--housing":"#091719","--housing-inner":"#03090a"
+      }
+    },
     rainbow: {
       label:"Rainbow",
       swatch:"conic-gradient(from 35deg,#ff667f,#ffbc58,#f0dc65,#64d99b,#58c6df,#7f8cff,#c47cff,#f06bc9,#ff667f)",
@@ -5877,7 +6168,7 @@
       }
     }
   };
-  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","rainbow","custom"];
+  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","hyperdrive","rainbow","custom"];
 
   let wallet = null;           // {balance, hourlyRate}; hourlyRate may be 0
   let items = [];              // [{id, name, goal, link, image}]
@@ -5897,6 +6188,7 @@
   let streakFrozenDates = null;
   let streakFreezeLastCheck = "";
   let currentTheme = "midnight";
+  let appearanceMode = "dark"; // dark | light | system
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
   let chartView = "month";
@@ -6251,37 +6543,110 @@
     });
   }
 
+  const appearanceMediaQuery=window.matchMedia
+    ? window.matchMedia("(prefers-color-scheme: dark)")
+    : null;
+
+  function effectiveAppearanceMode(){
+    if(appearanceMode==="system"){
+      return appearanceMediaQuery && appearanceMediaQuery.matches ? "dark" : "light";
+    }
+    return appearanceMode==="light" ? "light" : "dark";
+  }
+
+  function applyAppearanceOverrides(){
+    const root=document.documentElement;
+    const effective=effectiveAppearanceMode();
+    root.dataset.appearance=effective;
+    root.dataset.appearancePreference=appearanceMode;
+
+    if(effective!=="light") return;
+
+    const styles=getComputedStyle(root);
+    const accent=normalizeHex((styles.getPropertyValue("--accent")||"#6c8ef5").trim());
+    const accent2=normalizeHex((styles.getPropertyValue("--accent2")||accent).trim());
+    const positive=normalizeHex((styles.getPropertyValue("--positive")||"#55b97c").trim());
+
+    root.style.setProperty("--bg1",mixHex(accent,"#f8f9fc",.95));
+    root.style.setProperty("--bg2",mixHex(accent2,"#eef2f7",.96));
+    root.style.setProperty("--panel","rgba(255,255,255,0.68)");
+    root.style.setProperty("--panel-solid","#ffffff");
+    root.style.setProperty("--panel-raised",mixHex(accent,"#f4f6fb",.97));
+
+    root.style.setProperty("--white","#171925");
+    root.style.setProperty("--muted","#697086");
+    root.style.setProperty("--line","rgba(21,25,38,0.075)");
+    root.style.setProperty("--line-strong","rgba(21,25,38,0.14)");
+
+    root.style.setProperty("--accent-soft",mixHex(accent,"#111827",.16));
+    root.style.setProperty("--positive",mixHex(positive,"#173628",.18));
+
+    root.style.setProperty("--blade-a",mixHex(accent,"#e7ebf3",.89));
+    root.style.setProperty("--blade-b",mixHex(accent2,"#dfe5ef",.90));
+    root.style.setProperty("--housing",mixHex(accent,"#eef1f6",.93));
+    root.style.setProperty("--housing-inner","#ffffff");
+  }
+
   function syncBrowserThemeColor(){
     const meta=document.querySelector('meta[name="theme-color"]');
     if(!meta) return;
     const styles=getComputedStyle(document.documentElement);
-    let color=(styles.getPropertyValue("--bg1")||"#12111a").trim() || "#12111a";
-    if(currentTheme==="custom"){
-      const primary=(styles.getPropertyValue("--custom-primary")||"").trim() || "#6c8ef5";
-      color=mixHex(primary,"#111325",.22);
-    }else if(currentTheme==="rainbow"){
-      const accent=(styles.getPropertyValue("--accent")||"").trim();
-      if(accent) color=mixHex(accent,"#12111a",.18);
-    }
+    const color=(styles.getPropertyValue("--bg1")||"#12111a").trim() || "#12111a";
     meta.setAttribute("content",color);
+  }
+
+  function buildAppearanceModeControl(){
+    const container=$("appearanceModePicker");
+    if(!container) return;
+
+    container.querySelectorAll("button[data-appearance-mode]").forEach(btn=>{
+      const mode=btn.dataset.appearanceMode;
+      btn.classList.toggle("active",mode===appearanceMode);
+      btn.setAttribute("aria-pressed",mode===appearanceMode?"true":"false");
+      btn.onclick=async()=>{
+        if(!["dark","light","system"].includes(mode) || mode===appearanceMode) return;
+        appearanceMode=mode;
+        applyTheme(currentTheme);
+        buildAppearanceModeControl();
+        buildBlades();
+        await persist();
+      };
+    });
   }
 
   function applyTheme(key){
     const theme = THEMES[key] || THEMES.midnight;
     currentTheme = THEMES[key] ? key : "midnight";
     document.documentElement.dataset.theme = currentTheme;
-    Object.entries(theme.vars).forEach(([k,v])=> document.documentElement.style.setProperty(k, v));
+
+    Object.entries(theme.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
+
     if(currentTheme==="custom") applyCustomThemeVars();
-    if(currentTheme === "rainbow") startRainbowTheme();
+    if(currentTheme==="rainbow") startRainbowTheme();
     else stopRainbowTheme();
+
+    applyAppearanceOverrides();
+
     document.querySelectorAll(".swatch").forEach(sw=>{
-      sw.classList.toggle("active", sw.dataset.theme === currentTheme);
+      sw.classList.toggle("active",sw.dataset.theme===currentTheme);
       if(sw.dataset.theme==="custom"){
         const preview=sw.querySelector(".theme-preview");
         if(preview) preview.style.background=customThemeSwatch();
       }
     });
+
     syncBrowserThemeColor();
+  }
+
+  if(appearanceMediaQuery){
+    const onAppearanceSystemChange=()=>{
+      if(appearanceMode!=="system") return;
+      applyTheme(currentTheme);
+      buildAppearanceModeControl();
+      buildBlades();
+    };
+    if(appearanceMediaQuery.addEventListener) appearanceMediaQuery.addEventListener("change",onAppearanceSystemChange);
+    else if(appearanceMediaQuery.addListener) appearanceMediaQuery.addListener(onAppearanceSystemChange);
   }
   document.addEventListener("visibilitychange",()=>{
     if(currentTheme!=="rainbow") return;
@@ -6298,6 +6663,7 @@
       sunset:"Soft & warm",
       ocean:"Cool & focused",
       neon:"Purple & electric",
+      hyperdrive:"Cyan · green · overclocked",
       rainbow:"Living spectrum",
       custom:"Design your own"
     };
@@ -6659,6 +7025,7 @@
   let explicitAuthAction = ""; // signup | password | passkey2fa | ""
   let passwordSecondFactorFlow = false;
   let suppressAuthObserverUid = "";
+  let passkey2faState = {loaded:false,uid:"",enabled:false,passkeyCount:0,busy:false};
   let legacyCandidatePayload = null;
   let legacyCandidateSource = "";
   let deferredInstallPrompt = null;
@@ -7043,6 +7410,7 @@
     streakFrozenDates = null;
     streakFreezeLastCheck = "";
     currentTheme = "midnight";
+    appearanceMode = "dark";
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
     chartView = "month";
@@ -7079,6 +7447,7 @@
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
     if(parsed.customTheme) customTheme = sanitizeCustomTheme(parsed.customTheme);
     if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
+    if(["dark","light","system"].includes(parsed.appearanceMode)) appearanceMode = parsed.appearanceMode;
     if(parsed.chartView && ["day","week","month"].includes(parsed.chartView)) chartView = parsed.chartView;
     if(parsed.chartType && ["bar","line","area"].includes(parsed.chartType)) chartType = parsed.chartType;
     tutorialCompleted = parsed.tutorialCompleted === false ? false : true;
@@ -7798,6 +8167,7 @@
     applyTheme(currentTheme);
     buildThemePicker($("themePickerSetup"));
     buildThemePicker($("themePickerMain"));
+    buildAppearanceModeControl();
     buildChartTypeToggle();
     buildChartViewToggle();
     organizeAppViews();
@@ -7853,6 +8223,7 @@
       streakFrozenDates:Array.from(streakFrozenDates||[]),
       streakFreezeLastCheck,
       theme:currentTheme,
+      appearanceMode,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
       chartType,
@@ -7905,9 +8276,6 @@
     $("authModeBtn").textContent = authCreateMode ? "Already have an account? Sign in" : "Create an account instead";
     $("authPassword").autocomplete = authCreateMode ? "new-password" : "current-password";
     $("auth2faNote").classList.toggle("hidden",authCreateMode);
-    $("authCopy").textContent = authCreateMode
-      ? "Create your LUMIN account with email and password. After signup, you can enable passkey 2FA so future sign-ins require a second verification step."
-      : "Sign in with your email and password. If passkey 2FA is enabled, LUMIN will ask for Windows Hello, Touch ID, Face ID or another passkey as the second step.";
     setAuthMessage("");
   }
 
@@ -8343,18 +8711,49 @@
     return passkeyErrorText(error,"Passkey request failed.");
   }
 
-  async function updatePasskeyUi(){
-    const supported=passkeysSupported();
-    const base=passkeyApiBase();
+  function resetPasskey2faState(){
+    passkey2faState={loaded:false,uid:"",enabled:false,passkeyCount:0,busy:false};
+  }
+
+  async function refreshPasskey2faStatus(force=false){
+    if(!cloudUser||cloudMode!=="cloud"||!cloudApi||!cloudApi.configured||!passkeyApiBase()){
+      resetPasskey2faState();
+      return passkey2faState;
+    }
+
+    if(!force && passkey2faState.loaded && passkey2faState.uid===cloudUser.uid){
+      return passkey2faState;
+    }
+
+    const token=await cloudApi.getIdToken(true);
+    if(!token) throw new Error("Couldn’t verify your signed-in account.");
+
+    const status=await passkeyRequest("/status",{token,body:{}});
+    passkey2faState={
+      loaded:true,
+      uid:cloudUser.uid,
+      enabled:!!status.enabled,
+      passkeyCount:Math.max(0,Number(status.passkeyCount)||0),
+      busy:false
+    };
+
+    if(passkey2faState.passkeyCount>0) markPasskeyKnown(cloudUser.uid);
+    return passkey2faState;
+  }
+
+  function renderPasskey2faState(){
     const title=$("passkeyStatusTitle");
     const detail=$("passkeyStatusText");
     const add=$("addPasskeyBtn");
+    const toggle=$("passkey2faToggle");
+    const supported=passkeysSupported();
+    const base=passkeyApiBase();
+    const signedIn=!!(cloudUser&&cloudMode==="cloud");
 
-    if(!supported){
-      if(title) title.textContent="Passkey 2FA unavailable";
-      if(detail) detail.textContent="This browser or device does not expose WebAuthn passkeys.";
-      if(add) add.disabled=true;
-      return;
+    if(toggle){
+      toggle.disabled=!signedIn||!base||passkey2faState.busy;
+      toggle.setAttribute("aria-checked",passkey2faState.enabled?"true":"false");
+      toggle.title=passkey2faState.enabled?"Turn off passkey 2FA":"Turn on passkey 2FA";
     }
 
     if(!base){
@@ -8364,22 +8763,118 @@
       return;
     }
 
-    const known=!!(cloudUser&&isPasskeyKnown(cloudUser.uid));
-    if(title) title.textContent=known?"Passkey 2FA enabled":(cloudUser?"Passkey 2FA available":"Two-factor protection");
-    if(detail) detail.textContent=known
-      ?"After your password, LUMIN requires a registered passkey as the second verification step."
-      : cloudUser
-        ?"Add a passkey to require Windows Hello, Touch ID, Face ID or another authenticator after your password."
-        :"Sign in to manage passkey two-factor authentication.";
+    if(!signedIn){
+      if(title) title.textContent="Two-factor protection";
+      if(detail) detail.textContent="Sign in to manage passkey two-factor authentication.";
+      if(add) add.disabled=true;
+      return;
+    }
+
+    if(!passkey2faState.loaded){
+      if(title) title.textContent="Checking 2FA…";
+      if(detail) detail.textContent="Loading your account security settings.";
+      if(add) add.disabled=true;
+      return;
+    }
+
+    if(passkey2faState.enabled){
+      if(title) title.textContent="Passkey 2FA enabled";
+      if(detail) detail.textContent=`Password + passkey required · ${passkey2faState.passkeyCount} passkey${passkey2faState.passkeyCount===1?"":"s"} registered.`;
+    }else if(passkey2faState.passkeyCount>0){
+      if(title) title.textContent="Passkey 2FA off";
+      if(detail) detail.textContent=`Your ${passkey2faState.passkeyCount===1?"passkey is":"passkeys are"} still saved, but ${passkey2faState.passkeyCount===1?"it is":"they are"} not required after your password.`;
+    }else{
+      if(title) title.textContent="Passkey 2FA off";
+      if(detail) detail.textContent="No passkey is registered yet. Turn on 2FA to set one up.";
+    }
+
     if(add){
-      add.disabled=!(cloudUser&&cloudMode==="cloud");
-      add.textContent=known?"Add another passkey":"Enable passkey 2FA";
+      add.disabled=!signedIn||!supported||passkey2faState.busy;
+      add.textContent=passkey2faState.passkeyCount>0?"Add another passkey":"Add a passkey";
     }
   }
 
-  function isNoRegisteredPasskeyError(error){
+  async function updatePasskeyUi(force=false){
+    renderPasskey2faState();
+
+    if(!cloudUser||cloudMode!=="cloud"||!passkeyApiBase()) return;
+
+    try{
+      await refreshPasskey2faStatus(force);
+    }catch(error){
+      console.warn("Could not load passkey 2FA status",error);
+      if($("passkeyStatusTitle")) $("passkeyStatusTitle").textContent="Couldn’t load 2FA";
+      if($("passkeyStatusText")) $("passkeyStatusText").textContent=friendlyPasskeyError(error);
+      if($("passkey2faToggle")) $("passkey2faToggle").disabled=true;
+      if($("addPasskeyBtn")) $("addPasskeyBtn").disabled=true;
+      return;
+    }
+
+    renderPasskey2faState();
+  }
+
+  function isSecondFactorNotRequiredError(error){
     const message=passkeyErrorText(error,"").toLowerCase();
-    return message.includes("no passkey is registered");
+    return message.includes("no passkey is registered") ||
+      message.includes("passkey 2fa is disabled");
+  }
+
+  async function setPasskey2faEnabled(enabled){
+    if(!cloudUser||cloudMode!=="cloud"){
+      showOfflineToast("Sign in before changing two-factor authentication.");
+      return false;
+    }
+    if(!passkeyApiBase()){
+      showOfflineToast("Passkey 2FA server is unavailable.");
+      return false;
+    }
+    if(passkey2faState.busy) return false;
+
+    passkey2faState.busy=true;
+    renderPasskey2faState();
+
+    try{
+      await refreshPasskey2faStatus(true);
+
+      if(enabled && passkey2faState.passkeyCount===0){
+        passkey2faState.busy=false;
+        renderPasskey2faState();
+        const created=await addPasskey();
+        if(created) await updatePasskeyUi(true);
+        return created;
+      }
+
+      const token=await cloudApi.getIdToken(true);
+      if(!token) throw new Error("Couldn’t verify your signed-in account.");
+
+      const result=await passkeyRequest("/toggle",{
+        token,
+        body:{enabled:!!enabled}
+      });
+
+      passkey2faState={
+        loaded:true,
+        uid:cloudUser.uid,
+        enabled:!!result.enabled,
+        passkeyCount:Math.max(0,Number(result.passkeyCount)||0),
+        busy:false
+      };
+
+      if(passkey2faState.passkeyCount>0) markPasskeyKnown(cloudUser.uid);
+      pendingPasskeyReminderAfterSignin=false;
+      renderPasskey2faState();
+
+      showOfflineToast(passkey2faState.enabled
+        ?"Passkey 2FA turned on."
+        :"Passkey 2FA turned off. Your passkey is still saved.");
+      return true;
+    }catch(error){
+      showOfflineToast(friendlyPasskeyError(error));
+      return false;
+    }finally{
+      passkey2faState.busy=false;
+      renderPasskey2faState();
+    }
   }
 
   async function verifyPasswordSecondFactor(email,user){
@@ -8393,8 +8888,10 @@
     try{
       begin=await passkeyRequest("/auth/options",{body:{email}});
     }catch(error){
-      if(isNoRegisteredPasskeyError(error)){
-        clearPasskeyKnown(user&&user.uid);
+      if(isSecondFactorNotRequiredError(error)){
+        if(passkeyErrorText(error,"").toLowerCase().includes("no passkey is registered")){
+          clearPasskeyKnown(user&&user.uid);
+        }
         return {required:false};
       }
       throw error;
@@ -8520,10 +9017,9 @@
       });
       markPasskeyKnown(cloudUser.uid);
       pendingPasskeyReminderAfterSignin=false;
+      passkey2faState.loaded=false;
       showOfflineToast("Passkey 2FA enabled for your LUMIN account.");
-      $("passkeyStatusTitle").textContent="Passkey 2FA enabled";
-      $("passkeyStatusText").textContent="Future password sign-ins now require a registered passkey as the second step.";
-      updatePasskeyUi();
+      await updatePasskeyUi(true);
       return true;
     }catch(error){
       showOfflineToast(friendlyPasskeyError(error));
@@ -8541,6 +9037,10 @@
     $("settingsVersionLabel").textContent=APP_VERSION;
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
+    $("passkey2faToggle").addEventListener("click",async()=>{
+      const next=!passkey2faState.enabled;
+      await setPasskey2faEnabled(next);
+    });
     $("addPasskeyBtn").addEventListener("click",()=>addPasskey());
     $("signupPasskeySetupBtn").addEventListener("click",setupPasskeyFromSignup);
     $("signupPasskeyLaterBtn").addEventListener("click",closeSignupPasskeyPrompt);
@@ -8597,6 +9097,7 @@
       if(cloudUnsubscribe){ cloudUnsubscribe(); cloudUnsubscribe = null; }
       cloudUser = null;
       cloudMode = "pending";
+      resetPasskey2faState();
       updateAccountControls();
       hideAppLoading(0);
       setAuthMode(false);
@@ -8726,6 +9227,7 @@
         hideAppLoading(0);
         cloudUser = null;
         cloudMode = "pending";
+        resetPasskey2faState();
         updateAccountControls();
         showAuthGate();
       }
