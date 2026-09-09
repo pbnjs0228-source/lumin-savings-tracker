@@ -5357,6 +5357,39 @@
     color:#000 !important;
   }
 
+
+  /* ================================================================
+     COMPLETED STATE · PRIORITY ONLY BLACK
+     Normal completed goals stay green. Priority completed goals keep
+     the black text treatment for contrast on the bright gradient.
+     ================================================================ */
+  html[data-theme="hyperdrive"] .item-card.completed:not(.priority) .item-completed-text,
+  html[data-theme="hyperdrive"] .item-card.completed:not(.priority) .item-progress-number,
+  html[data-theme="hyperdrive"] .item-card.completed:not(.priority) .item-complete-banner,
+  html[data-theme="hyperdrive"] .item-card.completed:not(.priority) .item-badge{
+    color:var(--positive) !important;
+    text-shadow:none !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.completed:not(.priority) .item-complete-banner{
+    background:color-mix(in srgb,var(--positive) 16%,transparent) !important;
+    border-color:color-mix(in srgb,var(--positive) 38%,transparent) !important;
+    color:var(--positive) !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.completed.priority .item-completed-text,
+  html[data-theme="hyperdrive"] .item-card.completed.priority .item-progress-number,
+  html[data-theme="hyperdrive"] .item-card.completed.priority .item-complete-banner,
+  html[data-theme="hyperdrive"] .item-card.completed.priority .item-badge{
+    color:#000 !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.completed.priority .item-complete-banner{
+    background:rgba(255,255,255,.14) !important;
+    border-color:rgba(0,0,0,.14) !important;
+    color:#000 !important;
+  }
+
 </style>
 </head>
 <body>
@@ -6477,9 +6510,18 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.20";
+  const APP_VERSION = "2026.09.09.21";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.21",
+      title: "Priority-only completion contrast",
+      date: "9 September 2026",
+      changes: [
+        "Restored the normal green completed styling for non-priority HYPERDRIVE goals.",
+        "Black completed text is now reserved for priority cards where it improves contrast."
+      ]
+    },
     {
       version: "2026.09.09.20",
       title: "Completed-state contrast fix",
