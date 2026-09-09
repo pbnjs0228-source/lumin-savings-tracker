@@ -4933,9 +4933,184 @@
     }
   }
 
+
+  /* ================================================================
+     REAL HYPERDRIVE MATRIX RAIN
+     ================================================================ */
+  .hyperdrive-matrix-canvas{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    pointer-events:none;
+    z-index:0;
+    opacity:.62;
+    mix-blend-mode:screen;
+  }
+
+  html:not([data-theme="hyperdrive"]) > body > #hyperdriveMatrixCanvas{
+    display:none;
+  }
+
+  html[data-theme="hyperdrive"][data-appearance="light"] > body > #hyperdriveMatrixCanvas{
+    opacity:.22;
+    mix-blend-mode:multiply;
+  }
+
+  .auth-matrix-canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    opacity:.64;
+    mix-blend-mode:screen;
+  }
+
+  .auth-gate .auth-card{
+    z-index:2;
+  }
+
+  /* Retire the CSS-only fake rain now that a real canvas drives it. */
+  html[data-theme="hyperdrive"] body::before,
+  .auth-gate::before{
+    display:none !important;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .hyperdrive-matrix-canvas{opacity:.28;}
+  }
+
+
+  /* ================================================================
+     THEME-AWARE NATIVE UI / SCROLLBARS
+     ================================================================ */
+  html{
+    scrollbar-width:thin;
+    scrollbar-color:var(--accent) color-mix(in srgb,var(--panel-solid) 88%,transparent);
+  }
+
+  *{
+    scrollbar-width:thin;
+    scrollbar-color:
+      color-mix(in srgb,var(--accent) 74%,var(--accent2))
+      color-mix(in srgb,var(--panel-solid) 88%,transparent);
+  }
+
+  ::-webkit-scrollbar{
+    width:11px;
+    height:11px;
+  }
+
+  ::-webkit-scrollbar-track{
+    background:color-mix(in srgb,var(--panel-solid) 90%,transparent);
+    border-radius:999px;
+  }
+
+  ::-webkit-scrollbar-thumb{
+    min-width:34px;
+    min-height:34px;
+    border:3px solid color-mix(in srgb,var(--panel-solid) 92%,transparent);
+    border-radius:999px;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb,var(--accent) 88%,var(--accent2)),
+        color-mix(in srgb,var(--accent2) 78%,var(--accent))
+      );
+  }
+
+  ::-webkit-scrollbar-thumb:hover{
+    background:
+      linear-gradient(
+        180deg,
+        var(--accent-soft),
+        color-mix(in srgb,var(--accent2) 88%,var(--accent))
+      );
+  }
+
+  ::-webkit-scrollbar-corner{
+    background:transparent;
+  }
+
+  ::selection{
+    color:#071011;
+    background:color-mix(in srgb,var(--accent) 78%,var(--accent2));
+  }
+
+  input,
+  select,
+  textarea,
+  button{
+    accent-color:var(--accent);
+  }
+
+  /* HYPERDRIVE gets the full cyan -> green treatment. */
+  html[data-theme="hyperdrive"]{
+    scrollbar-color:#24eee8 #061012;
+  }
+
+  html[data-theme="hyperdrive"] ::-webkit-scrollbar-track{
+    background:linear-gradient(180deg,#041012,#071719);
+    box-shadow:inset 0 0 0 1px rgba(41,242,229,.055);
+  }
+
+  html[data-theme="hyperdrive"] ::-webkit-scrollbar-thumb{
+    border-color:#061012;
+    background:
+      linear-gradient(
+        180deg,
+        #22eee8 0%,
+        #2ef0c4 48%,
+        #55ef78 100%
+      );
+    box-shadow:
+      inset 0 0 0 1px rgba(159,255,247,.20),
+      0 0 10px rgba(34,238,232,.11);
+  }
+
+  html[data-theme="hyperdrive"] ::-webkit-scrollbar-thumb:hover{
+    background:
+      linear-gradient(
+        180deg,
+        #6ffff8 0%,
+        #38f3c8 46%,
+        #7bf58e 100%
+      );
+    box-shadow:
+      inset 0 0 0 1px rgba(210,255,252,.26),
+      0 0 15px rgba(34,238,232,.18);
+  }
+
+  html[data-theme="hyperdrive"] ::selection{
+    color:#02100f;
+    background:#39efc5;
+  }
+
+  html[data-theme="hyperdrive"] input,
+  html[data-theme="hyperdrive"] select,
+  html[data-theme="hyperdrive"] textarea,
+  html[data-theme="hyperdrive"] button{
+    accent-color:#22eee8;
+  }
+
+  html[data-theme="hyperdrive"][data-appearance="light"]{
+    scrollbar-color:#159f99 #e8f4f2;
+  }
+
+  html[data-theme="hyperdrive"][data-appearance="light"] ::-webkit-scrollbar-track{
+    background:#e8f4f2;
+  }
+
+  html[data-theme="hyperdrive"][data-appearance="light"] ::-webkit-scrollbar-thumb{
+    border-color:#e8f4f2;
+    background:linear-gradient(180deg,#18b9b2,#45c96e);
+  }
+
 </style>
 </head>
 <body>
+<canvas id="hyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas" aria-hidden="true"></canvas>
 <div class="app-loading-screen hidden" id="appLoadingScreen" aria-hidden="true" aria-live="polite" aria-busy="true">
   <div class="app-loading-card">
     <div class="app-loading-logo" aria-hidden="true">
@@ -4962,6 +5137,7 @@
 </div>
 
 <div class="auth-gate" id="authGate">
+  <canvas id="authHyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas auth-matrix-canvas" aria-hidden="true"></canvas>
   <div class="auth-card">
     <div class="brand-row">
       <svg class="brand-mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="var(--accent)"/><g stroke="var(--accent-soft)" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/></g></svg>
@@ -6051,9 +6227,29 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.13";
+  const APP_VERSION = "2026.09.09.15";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.15",
+      title: "Theme-aware native UI",
+      date: "9 September 2026",
+      changes: [
+        "Scrollbars now follow the active LUMIN theme instead of using the browser’s default colour.",
+        "HYPERDRIVE scrollbars use the cyan-to-green neon palette with a subtle glow.",
+        "Text selection and native control accent colours now follow the active theme too."
+      ]
+    },
+    {
+      version: "2026.09.09.14",
+      title: "Visible Matrix rain",
+      date: "9 September 2026",
+      changes: [
+        "Replaced the barely-visible CSS Matrix effect with a real animated canvas rain system.",
+        "Added soft cyan/green glyph columns with brighter heads and fading trails across HYPERDRIVE backgrounds.",
+        "The effect now runs on both the HYPERDRIVE app background and the login screen while staying lightweight and non-interactive."
+      ]
+    },
     {
       version: "2026.09.09.13",
       title: "HYPERDRIVE login",
@@ -6950,6 +7146,164 @@
     root.style.setProperty("--housing-inner","#ffffff");
   }
 
+  const hyperdriveMatrixSystems=[];
+
+  function createHyperdriveMatrixSystem(canvas,{auth=false}={}){
+    if(!canvas) return null;
+
+    const ctx=canvas.getContext("2d",{alpha:true});
+    if(!ctx) return null;
+
+    const system={
+      canvas,
+      ctx,
+      auth,
+      width:0,
+      height:0,
+      dpr:1,
+      fontSize:auth?18:20,
+      columns:[],
+      lastFrame:0,
+      frameInterval:48,
+      resize(){
+        const rect=canvas.getBoundingClientRect();
+        const width=Math.max(1,Math.round(rect.width||window.innerWidth));
+        const height=Math.max(1,Math.round(rect.height||window.innerHeight));
+        const dpr=Math.min(1.7,window.devicePixelRatio||1);
+
+        if(width===this.width && height===this.height && dpr===this.dpr) return;
+        this.width=width;
+        this.height=height;
+        this.dpr=dpr;
+        canvas.width=Math.round(width*dpr);
+        canvas.height=Math.round(height*dpr);
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+        ctx.clearRect(0,0,width,height);
+
+        const spacing=this.fontSize+(auth?10:12);
+        const count=Math.ceil(width/spacing)+1;
+        this.columns=Array.from({length:count},(_,i)=>({
+          x:i*spacing+(Math.random()*5-2.5),
+          y:Math.random()*-height,
+          speed:(auth?0.72:0.58)+Math.random()*(auth?0.70:0.56),
+          length:5+Math.floor(Math.random()*10),
+          phase:Math.random()*Math.PI*2,
+          skip:Math.random()<.18
+        }));
+      }
+    };
+
+    system.resize();
+    hyperdriveMatrixSystems.push(system);
+    return system;
+  }
+
+  function hyperdriveMatrixGlyph(){
+    const chars="01アイウエオカキクケコサシスセソ<>[]{}:+-*";
+    return chars[Math.floor(Math.random()*chars.length)];
+  }
+
+  function hyperdriveMatrixShouldRun(system){
+    if(document.hidden) return false;
+    if(system.auth){
+      const gate=$("authGate");
+      return !!(gate && !gate.classList.contains("hidden"));
+    }
+    return currentTheme==="hyperdrive";
+  }
+
+  function drawHyperdriveMatrix(system,now){
+    if(!system || !hyperdriveMatrixShouldRun(system)){
+      if(system) system.ctx.clearRect(0,0,system.width,system.height);
+      return;
+    }
+
+    if(now-system.lastFrame<system.frameInterval) return;
+    system.lastFrame=now;
+    system.resize();
+
+    const {ctx,width,height,fontSize}=system;
+    const light=!system.auth && effectiveAppearanceMode()==="light";
+    const baseColor=light ? [10,104,98] : [44,244,229];
+    const accentColor=light ? [18,118,77] : [83,244,126];
+
+    // Fade only previous glyph pixels, preserving canvas transparency.
+    ctx.save();
+    ctx.globalCompositeOperation="destination-out";
+    ctx.fillStyle="rgba(0,0,0,0.105)";
+    ctx.fillRect(0,0,width,height);
+    ctx.restore();
+
+    ctx.font=`500 ${fontSize}px JetBrains Mono, monospace`;
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+
+    for(const col of system.columns){
+      if(col.skip){
+        col.y+=fontSize*col.speed;
+        if(col.y>height+fontSize*4){
+          col.y=-Math.random()*height*.75-fontSize*3;
+          col.skip=Math.random()<.18;
+        }
+        continue;
+      }
+
+      const pulse=.72+.28*Math.sin(now*.0015+col.phase);
+      for(let trail=col.length-1;trail>=0;trail--){
+        const y=col.y-trail*fontSize*1.02;
+        if(y<-fontSize||y>height+fontSize) continue;
+
+        const distance=1-trail/Math.max(1,col.length);
+        let alpha=.018+distance*.105;
+        if(trail===0) alpha=light?.20:.33;
+        alpha*=pulse;
+
+        const useAccent=(trail===0&&Math.random()<.30);
+        const rgb=useAccent?accentColor:baseColor;
+        ctx.fillStyle=`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
+        ctx.shadowColor=trail===0
+          ? `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${light?.08:.24})`
+          : "transparent";
+        ctx.shadowBlur=trail===0?(light?2:6):0;
+        ctx.fillText(hyperdriveMatrixGlyph(),col.x,y);
+      }
+
+      col.y+=fontSize*col.speed;
+      if(col.y-col.length*fontSize>height){
+        col.y=-Math.random()*height*.55-fontSize*2;
+        col.speed=(system.auth?.72:.58)+Math.random()*(system.auth?.70:.56);
+        col.length=5+Math.floor(Math.random()*10);
+        col.phase=Math.random()*Math.PI*2;
+        col.skip=Math.random()<.18;
+      }
+    }
+  }
+
+  let hyperdriveMatrixRaf=0;
+  function hyperdriveMatrixLoop(now){
+    for(const system of hyperdriveMatrixSystems) drawHyperdriveMatrix(system,now);
+    hyperdriveMatrixRaf=requestAnimationFrame(hyperdriveMatrixLoop);
+  }
+
+  function initHyperdriveMatrix(){
+    if(hyperdriveMatrixSystems.length) return;
+    createHyperdriveMatrixSystem($("hyperdriveMatrixCanvas"));
+    createHyperdriveMatrixSystem($("authHyperdriveMatrixCanvas"),{auth:true});
+    window.addEventListener("resize",()=>{
+      hyperdriveMatrixSystems.forEach(system=>system.resize());
+    },{passive:true});
+    hyperdriveMatrixRaf=requestAnimationFrame(hyperdriveMatrixLoop);
+  }
+
+  function refreshHyperdriveMatrix(){
+    hyperdriveMatrixSystems.forEach(system=>{
+      system.resize();
+      if(!hyperdriveMatrixShouldRun(system)){
+        system.ctx.clearRect(0,0,system.width,system.height);
+      }
+    });
+  }
+
   function syncBrowserThemeColor(){
     const meta=document.querySelector('meta[name="theme-color"]');
     if(!meta) return;
@@ -6999,6 +7353,7 @@
     });
 
     syncBrowserThemeColor();
+    refreshHyperdriveMatrix();
   }
 
   if(appearanceMediaQuery){
@@ -8699,11 +9054,13 @@
 
   function showAuthGate(){
     $("authGate").classList.remove("hidden");
+    refreshHyperdriveMatrix();
     setTimeout(()=>$("authEmail").focus(),40);
   }
 
   function hideAuthGate(){
     $("authGate").classList.add("hidden");
+    refreshHyperdriveMatrix();
     resetWorkspaceScroll();
   }
 
@@ -11586,6 +11943,7 @@
 
   installValueAnimations();
   buildBlades();
+  initHyperdriveMatrix();
   registerLuminServiceWorker();
   updateOfflineUi();
   initPublicApp();
