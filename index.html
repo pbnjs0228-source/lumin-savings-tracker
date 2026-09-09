@@ -5134,29 +5134,27 @@
      Replace the rainbow priority card with a theme-matched neon treatment.
      ================================================================ */
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased){
-    border:1.5px solid transparent;
+    border:1.5px solid color-mix(in srgb,var(--priority-rainbow-b) 34%,rgba(255,255,255,.12));
     background:
-      linear-gradient(145deg,
-        rgba(4,14,16,.96) 0%,
-        rgba(6,21,24,.95) 44%,
-        rgba(8,24,27,.96) 100%) padding-box,
+      radial-gradient(circle at 14% 12%,rgba(255,255,255,.22),transparent 24%),
+      radial-gradient(circle at 88% 84%,color-mix(in srgb,var(--priority-rainbow-d) 24%,transparent),transparent 28%),
       linear-gradient(135deg,
-        var(--priority-rainbow-a) 0%,
-        var(--priority-rainbow-b) 38%,
-        var(--priority-rainbow-c) 76%,
-        var(--priority-rainbow-d) 100%) border-box;
-    color:var(--white);
+        color-mix(in srgb,var(--priority-rainbow-a) 86%, white 14%) 0%,
+        color-mix(in srgb,var(--priority-rainbow-b) 88%, white 12%) 34%,
+        color-mix(in srgb,var(--priority-rainbow-c) 86%, white 14%) 68%,
+        color-mix(in srgb,var(--priority-rainbow-d) 82%, white 18%) 100%);
+    color:var(--priority-ink);
     box-shadow:
-      0 14px 34px rgba(0,0,0,.36),
+      0 16px 38px rgba(0,0,0,.34),
       0 0 0 1px rgba(44,244,229,.08),
-      0 0 24px color-mix(in srgb,var(--priority-rainbow-b) 18%,transparent);
+      0 0 24px color-mix(in srgb,var(--priority-rainbow-b) 20%,transparent);
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased):hover{
     box-shadow:
-      0 18px 42px rgba(0,0,0,.42),
+      0 20px 44px rgba(0,0,0,.40),
       0 0 0 1px rgba(44,244,229,.12),
-      0 0 30px color-mix(in srgb,var(--priority-rainbow-c) 24%,transparent);
+      0 0 30px color-mix(in srgb,var(--priority-rainbow-c) 26%,transparent);
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-name,
@@ -5164,49 +5162,68 @@
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-deadline,
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-pct-row,
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-progress-number{
-    color:var(--white);
-    text-shadow:0 0 10px rgba(36,238,232,.08);
+    color:var(--priority-ink);
+    text-shadow:none;
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-goal{
-    color:color-mix(in srgb,var(--priority-rainbow-b) 72%, white);
-    font-weight:800;
+    color:color-mix(in srgb,var(--priority-ink) 88%, black);
+    font-weight:850;
     letter-spacing:.1px;
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-bar-track{
-    background:rgba(255,255,255,.075);
-    border-color:rgba(44,244,229,.18);
+    background:rgba(5,16,18,.18);
+    border-color:rgba(5,16,18,.18);
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-progress-fill{
     background:linear-gradient(90deg,
-      color-mix(in srgb,var(--priority-rainbow-a) 82%, white 18%),
-      color-mix(in srgb,var(--priority-rainbow-b) 88%, white 12%),
-      color-mix(in srgb,var(--priority-rainbow-c) 84%, white 16%));
-    box-shadow:0 0 18px color-mix(in srgb,var(--priority-rainbow-b) 24%,transparent);
+      rgba(255,255,255,.30),
+      color-mix(in srgb,var(--priority-rainbow-b) 80%, white 20%),
+      color-mix(in srgb,var(--priority-rainbow-c) 76%, white 24%));
+    box-shadow:0 0 18px color-mix(in srgb,var(--priority-rainbow-b) 22%,transparent);
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-priority-badge{
-    color:color-mix(in srgb,var(--priority-rainbow-b) 80%, white 20%);
-    background:rgba(10,28,30,.72);
-    border-color:color-mix(in srgb,var(--priority-rainbow-b) 38%,transparent);
-    box-shadow:0 0 14px color-mix(in srgb,var(--priority-rainbow-a) 10%,transparent);
+    color:#06181b;
+    background:rgba(255,255,255,.22);
+    border-color:rgba(6,24,27,.18);
+    box-shadow:0 0 14px rgba(255,255,255,.08);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-actions .item-priority.is-priority{
-    background:rgba(10,28,30,.82);
-    color:color-mix(in srgb,var(--priority-rainbow-b) 76%, white 24%);
+    background:rgba(255,255,255,.18);
+    color:#072023;
     box-shadow:0 0 14px color-mix(in srgb,var(--priority-rainbow-a) 10%,transparent);
   }
 
   html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .rainbow-star{
     background-image:linear-gradient(90deg,
-      var(--priority-rainbow-a) 0%,
-      var(--priority-rainbow-b) 52%,
+      #f7fbff 0%,
+      var(--priority-rainbow-b) 45%,
       var(--priority-rainbow-c) 100%);
     background-size:180% 100%;
     animation:luminStarRainbow 3.5s linear infinite;
+  }
+
+
+  /* ================================================================
+     DESKTOP SIDEBAR HEIGHT FIX
+     Prevent empty vertical dead space by letting the sidebar size to
+     its content instead of forcing a full-screen column.
+     ================================================================ */
+  @media(min-width:821px){
+    #mainScreen > .app-sidebar{
+      min-height:0 !important;
+      height:fit-content;
+      max-height:calc(100dvh - 40px);
+      overflow-y:auto;
+      overflow-x:hidden;
+      align-self:start;
+    }
   }
 
 </style>
@@ -6329,9 +6346,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.17";
+  const APP_VERSION = "2026.09.09.18";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.18",
+      title: "HYPERDRIVE priority fill + tighter layout",
+      date: "9 September 2026",
+      changes: [
+        "The HYPERDRIVE priority goal now uses a full teal/cyan/lime gradient fill instead of a gradient border only.",
+        "Priority text, badge and progress treatment were tuned for better readability inside the brighter HYPERDRIVE card.",
+        "Fixed the desktop workspace dead space by letting the sidebar size to its content instead of forcing extra vertical height."
+      ]
+    },
     {
       version: "2026.09.09.17",
       title: "HYPERDRIVE priority styling",
@@ -7127,7 +7154,7 @@
         `hsl(${(base-14+360)%360} 92% 60%)`
       ];
       palette.forEach((value,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,value));
-      root.style.setProperty('--priority-ink','var(--white)');
+      root.style.setProperty('--priority-ink','#041215');
     }else{
       // Default priority treatment for non-HYPERDRIVE themes.
       const hue=((now%12000)/12000)*360;
