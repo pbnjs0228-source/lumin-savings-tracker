@@ -5226,6 +5226,137 @@
     }
   }
 
+
+  /* ================================================================
+     HYPERDRIVE PRIORITY · CORRECT PALETTE
+     Cyan + green + black only. No violet / pink.
+     ================================================================ */
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased){
+    --hyper-priority-cyan:#39f4ee;
+    --hyper-priority-aqua:#34efc4;
+    --hyper-priority-green:#67f27a;
+    --hyper-priority-teal:#14605a;
+    --hyper-priority-black:#03100f;
+
+    border:1.5px solid rgba(22,110,103,.58) !important;
+    background:
+      radial-gradient(circle at 10% 7%,rgba(255,255,255,.24),transparent 24%),
+      linear-gradient(
+        135deg,
+        #48f7f1 0%,
+        #39f2d1 28%,
+        #67f27a 57%,
+        #2fba85 73%,
+        #14605a 88%,
+        #03100f 100%
+      ) !important;
+    color:#000 !important;
+    box-shadow:
+      0 16px 38px rgba(0,0,0,.34),
+      0 0 0 1px rgba(54,245,231,.10),
+      0 0 28px rgba(50,239,201,.16) !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased):hover{
+    box-shadow:
+      0 20px 46px rgba(0,0,0,.40),
+      0 0 0 1px rgba(54,245,231,.15),
+      0 0 34px rgba(79,242,130,.20) !important;
+  }
+
+  /* Every readable label/value on the priority card is black. */
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased),
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-name,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-goal,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-deadline,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-pct-row,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-progress-number,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-note,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-release-badge,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-release-badge::before,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-priority-badge{
+    color:#000 !important;
+    text-shadow:none !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-goal{
+    color:#000 !important;
+    font-weight:850;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-release-badge{
+    background:rgba(255,255,255,.16) !important;
+    border-color:rgba(0,0,0,.12) !important;
+    color:#000 !important;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-priority-badge{
+    background:rgba(255,255,255,.22) !important;
+    border-color:rgba(0,0,0,.18) !important;
+    color:#000 !important;
+    box-shadow:0 0 14px rgba(255,255,255,.08) !important;
+  }
+
+  /* Kill the old gradient-text star completely. */
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-priority-badge .rainbow-star,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .rainbow-star{
+    color:#000 !important;
+    -webkit-text-fill-color:#000 !important;
+    background:none !important;
+    background-image:none !important;
+    -webkit-background-clip:border-box !important;
+    background-clip:border-box !important;
+    animation:none !important;
+    text-shadow:none !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-bar-track{
+    background:rgba(0,0,0,.18) !important;
+    border-color:rgba(0,0,0,.16) !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-progress-fill{
+    background:linear-gradient(
+      90deg,
+      #071918 0%,
+      #148c75 36%,
+      #2ee6ad 66%,
+      #65ef79 100%
+    ) !important;
+    box-shadow:0 0 14px rgba(33,214,169,.24) !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-actions button{
+    color:#000 !important;
+    background:rgba(255,255,255,.20) !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-actions .item-priority.is-priority{
+    color:#000 !important;
+    background:rgba(255,255,255,.24) !important;
+  }
+
+
+  /* ================================================================
+     HYPERDRIVE COMPLETED CARD TEXT CONTRAST
+     Make completed-state labels black on the bright completed styling.
+     ================================================================ */
+  html[data-theme="hyperdrive"] .item-card.completed .item-completed-text,
+  html[data-theme="hyperdrive"] .item-card.completed .item-progress-number,
+  html[data-theme="hyperdrive"] .item-card.completed .item-complete-banner,
+  html[data-theme="hyperdrive"] .item-card.completed .item-badge{
+    color:#000 !important;
+    text-shadow:none !important;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.completed .item-complete-banner{
+    background:rgba(255,255,255,.14) !important;
+    border-color:rgba(0,0,0,.14) !important;
+    color:#000 !important;
+  }
+
 </style>
 </head>
 <body>
@@ -6346,9 +6477,29 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.18";
+  const APP_VERSION = "2026.09.09.20";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.20",
+      title: "Completed-state contrast fix",
+      date: "9 September 2026",
+      changes: [
+        "Made HYPERDRIVE completed-state text black for stronger contrast on bright completed goal cards.",
+        "Applied the black contrast fix to the Completed label, 100% value and the Goal completed banner."
+      ]
+    },
+    {
+      version: "2026.09.09.19",
+      title: "Correct HYPERDRIVE priority colours",
+      date: "9 September 2026",
+      changes: [
+        "Rebuilt the HYPERDRIVE priority gradient around bright cyan, aqua, neon green, deep teal and near-black only.",
+        "Removed the purple/pink drift from the animated priority palette.",
+        "Made all priority-card text black, including release information, values, percentage and the Priority badge.",
+        "Made the Priority star icon solid black instead of animated gradient text."
+      ]
+    },
     {
       version: "2026.09.09.18",
       title: "HYPERDRIVE priority fill + tighter layout",
@@ -7144,17 +7295,17 @@
     if(currentTheme==="hyperdrive"){
       // HYPERDRIVE priority card: animated cyan/teal/green/violet palette.
       const t=((now%9000)/9000);
-      const base=178 + Math.sin(t*Math.PI*2)*10;
+      const drift=Math.sin(t*Math.PI*2);
       const palette=[
-        `hsl(${(base-8+360)%360} 92% 58%)`,
-        `hsl(${(base+6)%360} 90% 56%)`,
-        `hsl(${(base+20)%360} 88% 54%)`,
-        `hsl(${(base+130)%360} 84% 62%)`,
-        `hsl(${(base+6)%360} 90% 56%)`,
-        `hsl(${(base-14+360)%360} 92% 60%)`
+        `hsl(${178 + drift*4} 92% 60%)`,
+        `hsl(${166 + drift*4} 90% 55%)`,
+        `hsl(${145 + drift*3} 86% 59%)`,
+        `hsl(${162 + drift*3} 72% 35%)`,
+        `hsl(${174 + drift*2} 64% 18%)`,
+        `hsl(${180 + drift*3} 58% 8%)`
       ];
       palette.forEach((value,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,value));
-      root.style.setProperty('--priority-ink','#041215');
+      root.style.setProperty('--priority-ink','#000000');
     }else{
       // Default priority treatment for non-HYPERDRIVE themes.
       const hue=((now%12000)/12000)*360;
