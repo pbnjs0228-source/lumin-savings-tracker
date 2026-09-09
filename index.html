@@ -5107,6 +5107,27 @@
     background:linear-gradient(180deg,#18b9b2,#45c96e);
   }
 
+
+  /* ================================================================
+     CONTENT-AWARE WORKSPACE HEIGHT
+     Short tabs no longer inherit a full viewport of empty grid space.
+     ================================================================ */
+  @media(min-width:821px){
+    #mainScreen[data-compact-view="true"] > .app-sidebar{
+      min-height:0 !important;
+      height:auto !important;
+      max-height:none !important;
+    }
+
+    #mainScreen[data-compact-view="true"] > .app-sidebar .app-sidebar-spacer{
+      flex:0 0 12px;
+    }
+
+    #mainScreen[data-compact-view="true"]{
+      min-height:0;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -6227,9 +6248,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.15";
+  const APP_VERSION = "2026.09.09.16";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.16",
+      title: "Adaptive workspace height",
+      date: "9 September 2026",
+      changes: [
+        "Removed unnecessary vertical dead space on tabs that do not need a full-height workspace.",
+        "The desktop sidebar now collapses to content height on short views instead of inflating the CSS grid.",
+        "Longer tabs still retain the normal sticky sidebar layout automatically."
+      ]
+    },
     {
       version: "2026.09.09.15",
       title: "Theme-aware native UI",
@@ -7724,6 +7755,7 @@
   window.addEventListener("resize",()=>{
     if(tutorialActive) positionTutorial();
     scheduleBarsRender();
+    updateWorkspaceFit();
   });
   window.addEventListener("scroll",()=>{if(tutorialActive)positionTutorial();},{passive:true});
 
@@ -11611,6 +11643,42 @@
     });
   });
 
+  let workspaceFitRaf=0;
+
+  function updateWorkspaceFit(){
+    const main=$("mainScreen");
+    if(!main || main.classList.contains("hidden")) return;
+
+    if(window.innerWidth<=820){
+      main.removeAttribute("data-compact-view");
+      return;
+    }
+
+    if(workspaceFitRaf) cancelAnimationFrame(workspaceFitRaf);
+    workspaceFitRaf=requestAnimationFrame(()=>{
+      workspaceFitRaf=0;
+
+      const active=main.querySelector(".app-view:not(.hidden)");
+      if(!active){
+        main.removeAttribute("data-compact-view");
+        return;
+      }
+
+      const bodyStyles=getComputedStyle(document.body);
+      const bodyPadTop=parseFloat(bodyStyles.paddingTop)||0;
+      const bodyPadBottom=parseFloat(bodyStyles.paddingBottom)||0;
+      const available=Math.max(320,window.innerHeight-bodyPadTop-bodyPadBottom-16);
+
+      const tabHeight=Math.max(
+        active.scrollHeight||0,
+        active.getBoundingClientRect().height||0
+      );
+
+      const compact=tabHeight < available-56;
+      main.dataset.compactView=compact?"true":"false";
+    });
+  }
+
   let currentMainTab = "home";
   let appViewsOrganized = false;
 
@@ -11668,6 +11736,9 @@
       if(active) btn.setAttribute("aria-current","page");
       else btn.removeAttribute("aria-current");
     });
+
+    updateWorkspaceFit();
+    setTimeout(updateWorkspaceFit,80);
 
     const meta=APP_VIEW_META[view];
 
@@ -11944,6 +12015,16 @@
   installValueAnimations();
   buildBlades();
   initHyperdriveMatrix();
+
+  if(typeof ResizeObserver!=="undefined"){
+    const workspaceResizeObserver=new ResizeObserver(()=>updateWorkspaceFit());
+    ["dashboardTabPanel","goalsTabPanel","activityTabPanel","settingsTabPanel"].forEach(id=>{
+      const el=$(id);
+      if(el) workspaceResizeObserver.observe(el);
+    });
+  }
+
+  updateWorkspaceFit();
   registerLuminServiceWorker();
   updateOfflineUi();
   initPublicApp();
