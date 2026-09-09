@@ -5128,6 +5128,87 @@
     }
   }
 
+
+  /* ================================================================
+     HYPERDRIVE PRIORITY GOAL
+     Replace the rainbow priority card with a theme-matched neon treatment.
+     ================================================================ */
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased){
+    border:1.5px solid transparent;
+    background:
+      linear-gradient(145deg,
+        rgba(4,14,16,.96) 0%,
+        rgba(6,21,24,.95) 44%,
+        rgba(8,24,27,.96) 100%) padding-box,
+      linear-gradient(135deg,
+        var(--priority-rainbow-a) 0%,
+        var(--priority-rainbow-b) 38%,
+        var(--priority-rainbow-c) 76%,
+        var(--priority-rainbow-d) 100%) border-box;
+    color:var(--white);
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.36),
+      0 0 0 1px rgba(44,244,229,.08),
+      0 0 24px color-mix(in srgb,var(--priority-rainbow-b) 18%,transparent);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased):hover{
+    box-shadow:
+      0 18px 42px rgba(0,0,0,.42),
+      0 0 0 1px rgba(44,244,229,.12),
+      0 0 30px color-mix(in srgb,var(--priority-rainbow-c) 24%,transparent);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-name,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-goal,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-deadline,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-pct-row,
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-progress-number{
+    color:var(--white);
+    text-shadow:0 0 10px rgba(36,238,232,.08);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-goal{
+    color:color-mix(in srgb,var(--priority-rainbow-b) 72%, white);
+    font-weight:800;
+    letter-spacing:.1px;
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-bar-track{
+    background:rgba(255,255,255,.075);
+    border-color:rgba(44,244,229,.18);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-progress-fill{
+    background:linear-gradient(90deg,
+      color-mix(in srgb,var(--priority-rainbow-a) 82%, white 18%),
+      color-mix(in srgb,var(--priority-rainbow-b) 88%, white 12%),
+      color-mix(in srgb,var(--priority-rainbow-c) 84%, white 16%));
+    box-shadow:0 0 18px color-mix(in srgb,var(--priority-rainbow-b) 24%,transparent);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-priority-badge{
+    color:color-mix(in srgb,var(--priority-rainbow-b) 80%, white 20%);
+    background:rgba(10,28,30,.72);
+    border-color:color-mix(in srgb,var(--priority-rainbow-b) 38%,transparent);
+    box-shadow:0 0 14px color-mix(in srgb,var(--priority-rainbow-a) 10%,transparent);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .item-actions .item-priority.is-priority{
+    background:rgba(10,28,30,.82);
+    color:color-mix(in srgb,var(--priority-rainbow-b) 76%, white 24%);
+    box-shadow:0 0 14px color-mix(in srgb,var(--priority-rainbow-a) 10%,transparent);
+  }
+
+  html[data-theme="hyperdrive"] .item-card.priority:not(.purchased) .rainbow-star{
+    background-image:linear-gradient(90deg,
+      var(--priority-rainbow-a) 0%,
+      var(--priority-rainbow-b) 52%,
+      var(--priority-rainbow-c) 100%);
+    background-size:180% 100%;
+    animation:luminStarRainbow 3.5s linear infinite;
+  }
+
 </style>
 </head>
 <body>
@@ -6248,9 +6329,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.16";
+  const APP_VERSION = "2026.09.09.17";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.09.17",
+      title: "HYPERDRIVE priority styling",
+      date: "9 September 2026",
+      changes: [
+        "Priority goal cards no longer use the rainbow treatment inside the HYPERDRIVE theme.",
+        "Added a HYPERDRIVE-specific neon cyan/teal/green priority style with readable light text.",
+        "The priority badge, progress fill and star now inherit the HYPERDRIVE accent palette."
+      ]
+    },
     {
       version: "2026.09.09.16",
       title: "Adaptive workspace height",
@@ -7020,15 +7111,30 @@
     }
     priorityRainbowLastPaint=now;
 
-    // Always-on, seamless 12-second priority-card rainbow, independent of theme.
-    const hue=((now%12000)/12000)*360;
     const root=document.documentElement;
-    const hues=[hue,hue+60,hue+120,hue+180,hue+240,hue+300];
     const names=['a','b','c','d','e','f'];
-    hues.forEach((v,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,`hsl(${v%360} 86% ${i===2||i===3?60:62}%)`));
 
-    // Priority-card text stays black across the full rainbow cycle.
-    root.style.setProperty('--priority-ink','#000000');
+    if(currentTheme==="hyperdrive"){
+      // HYPERDRIVE priority card: animated cyan/teal/green/violet palette.
+      const t=((now%9000)/9000);
+      const base=178 + Math.sin(t*Math.PI*2)*10;
+      const palette=[
+        `hsl(${(base-8+360)%360} 92% 58%)`,
+        `hsl(${(base+6)%360} 90% 56%)`,
+        `hsl(${(base+20)%360} 88% 54%)`,
+        `hsl(${(base+130)%360} 84% 62%)`,
+        `hsl(${(base+6)%360} 90% 56%)`,
+        `hsl(${(base-14+360)%360} 92% 60%)`
+      ];
+      palette.forEach((value,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,value));
+      root.style.setProperty('--priority-ink','var(--white)');
+    }else{
+      // Default priority treatment for non-HYPERDRIVE themes.
+      const hue=((now%12000)/12000)*360;
+      const hues=[hue,hue+60,hue+120,hue+180,hue+240,hue+300];
+      hues.forEach((v,i)=>root.style.setProperty(`--priority-rainbow-${names[i]}`,`hsl(${v%360} 86% ${i===2||i===3?60:62}%)`));
+      root.style.setProperty('--priority-ink','#000000');
+    }
 
     priorityRainbowAnimationFrame=requestAnimationFrame(paintPriorityRainbow);
   }
