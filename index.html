@@ -6812,6 +6812,24 @@
     .sidebar-quick-add,.tutorial-progress i{transition:none !important;}
   }
 
+
+  /* ================================================================
+     PASSKEY 2FA SWITCH · UNLOCKED STATE
+     ================================================================ */
+  #passkey2faToggle:not(:disabled){
+    cursor:pointer !important;
+    opacity:1 !important;
+  }
+
+  #passkey2faToggle:not(:disabled):hover{
+    border-color:color-mix(in srgb,var(--accent) 42%,var(--line-strong)) !important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 7%,transparent) !important;
+  }
+
+  #passkey2faToggle:disabled{
+    cursor:not-allowed;
+  }
+
 </style>
 </head>
 <body>
@@ -8226,9 +8244,30 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.10.11";
+  const APP_VERSION = "2026.09.11.2";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.11.2",
+      title: "Quick Add button fix",
+      date: "11 September 2026",
+      changes: [
+        "Fixed Quick Add action buttons being replaced on hover before their click could fire.",
+        "Quick Add buttons now reliably open goals, earnings, expenses, budgets and calendar forms.",
+        "Arrow-key navigation now changes selection without rebuilding the action list."
+      ]
+    },
+    {
+      version: "2026.09.11.1",
+      title: "Passkey 2FA switch fix",
+      date: "11 September 2026",
+      changes: [
+        "Fixed the passkey 2FA switch appearing permanently locked in Settings.",
+        "The switch now stays usable while signed in and only locks during an actual security update.",
+        "Added a /api/passkeys fallback so 2FA controls still connect when the frontend config omits the API base.",
+        "If the 2FA status request temporarily fails, LUMIN now allows a retry instead of permanently disabling the control."
+      ]
+    },
     {
       version: "2026.09.10.11",
       title: "Quick Add & Tutorial 2.0",
@@ -9947,9 +9986,17 @@
     list.querySelectorAll("[data-quick-action]").forEach((btn,index)=>{
       btn.addEventListener("mouseenter",()=>{
         quickAddSelectedIndex=index;
-        renderQuickAddActions();
+        list.querySelectorAll("[data-quick-action]").forEach((other,otherIndex)=>{
+          const active=otherIndex===quickAddSelectedIndex;
+          other.classList.toggle("active",active);
+          other.setAttribute("aria-selected",active?"true":"false");
+        });
       });
-      btn.addEventListener("click",()=>runQuickAddAction(btn.dataset.quickAction));
+      btn.addEventListener("click",e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        runQuickAddAction(btn.dataset.quickAction);
+      });
     });
 
     const active=list.querySelector(".quick-add-action.active");
@@ -9996,36 +10043,43 @@
   }
 
   function runQuickAddAction(id){
+    const action=QUICK_ADD_ACTIONS.find(item=>item.id===id);
+    if(!action)return;
+
     closeQuickAdd();
 
-    if(id==="goal"){
-      setAppView("goals",false,true);
-      resetWorkspaceScroll();
-      setTimeout(()=>openItemModal(null),120);
-      return;
-    }
+    // Let the overlay close and body-scroll state settle before opening the
+    // destination form. This avoids clicks being swallowed by the old layer.
+    setTimeout(()=>{
+      if(id==="goal"){
+        setAppView("goals",false,true);
+        resetWorkspaceScroll();
+        setTimeout(()=>openItemModal(null),80);
+        return;
+      }
 
-    if(["hours","money","expense"].includes(id)){
-      setAppView("activity",false,true);
-      resetWorkspaceScroll();
-      const mode=id==="money"?"amount":id;
-      setEntryMode(mode,true);
-      setTimeout(()=>{
-        const field=mode==="hours"?"in-hours":mode==="amount"?"in-earned":"in-expense";
-        focusAfterQuickAdd(field);
-      },90);
-      return;
-    }
+      if(["hours","money","expense"].includes(id)){
+        setAppView("activity",false,true);
+        resetWorkspaceScroll();
+        const mode=id==="money"?"amount":id;
+        setEntryMode(mode,true);
+        setTimeout(()=>{
+          const field=mode==="hours"?"in-hours":mode==="amount"?"in-earned":"in-expense";
+          focusAfterQuickAdd(field);
+        },70);
+        return;
+      }
 
-    if(id==="shift"){prepareCalendarQuickAdd("shift");return;}
-    if(id==="busy"){prepareCalendarQuickAdd("busy");return;}
-    if(id==="event"){prepareCalendarQuickAdd("event");return;}
+      if(id==="shift"){prepareCalendarQuickAdd("shift");return;}
+      if(id==="busy"){prepareCalendarQuickAdd("busy");return;}
+      if(id==="event"){prepareCalendarQuickAdd("event");return;}
 
-    if(id==="budget"){
-      setAppView("budgets",false,true);
-      resetWorkspaceScroll();
-      setTimeout(()=>focusAfterQuickAdd("budgetName"),90);
-    }
+      if(id==="budget"){
+        setAppView("budgets",false,true);
+        resetWorkspaceScroll();
+        setTimeout(()=>focusAfterQuickAdd("budgetName"),70);
+      }
+    },45);
   }
 
   $("quickAddBtn").addEventListener("click",openQuickAdd);
@@ -10037,18 +10091,29 @@
     quickAddSelectedIndex=0;
     renderQuickAddActions();
   });
+  function syncQuickAddSelection(){
+    const buttons=Array.from($("quickAddList").querySelectorAll("[data-quick-action]"));
+    buttons.forEach((btn,index)=>{
+      const active=index===quickAddSelectedIndex;
+      btn.classList.toggle("active",active);
+      btn.setAttribute("aria-selected",active?"true":"false");
+    });
+    const active=buttons[quickAddSelectedIndex];
+    if(active)active.scrollIntoView({block:"nearest"});
+  }
+
   $("quickAddSearch").addEventListener("keydown",e=>{
     if(e.key==="ArrowDown"){
       e.preventDefault();
       if(quickAddVisibleActions.length){
         quickAddSelectedIndex=(quickAddSelectedIndex+1)%quickAddVisibleActions.length;
-        renderQuickAddActions();
+        syncQuickAddSelection();
       }
     }else if(e.key==="ArrowUp"){
       e.preventDefault();
       if(quickAddVisibleActions.length){
         quickAddSelectedIndex=(quickAddSelectedIndex-1+quickAddVisibleActions.length)%quickAddVisibleActions.length;
-        renderQuickAddActions();
+        syncQuickAddSelection();
       }
     }else if(e.key==="Enter"){
       e.preventDefault();
@@ -11855,9 +11920,10 @@
   });
 
   function passkeyApiBase(){
-    return cloudApi&&typeof cloudApi.passkeyApiBase==="string"
+    const configured=cloudApi&&typeof cloudApi.passkeyApiBase==="string"
       ? cloudApi.passkeyApiBase.replace(/\/$/,"")
       : "";
+    return configured || "/api/passkeys";
   }
 
   function passkeysSupported(){
@@ -12056,9 +12122,15 @@
     const signedIn=!!(cloudUser&&cloudMode==="cloud");
 
     if(toggle){
-      toggle.disabled=!signedIn||!base||passkey2faState.busy;
+      toggle.disabled=!signedIn||passkey2faState.busy;
       toggle.setAttribute("aria-checked",passkey2faState.enabled?"true":"false");
-      toggle.title=passkey2faState.enabled?"Turn off passkey 2FA":"Turn on passkey 2FA";
+      toggle.title=!signedIn
+        ? "Sign in to manage passkey 2FA"
+        : passkey2faState.busy
+          ? "Updating passkey 2FA…"
+          : passkey2faState.enabled
+            ? "Turn off passkey 2FA"
+            : "Turn on passkey 2FA";
     }
 
     if(!base){
@@ -12108,10 +12180,14 @@
       await refreshPasskey2faStatus(force);
     }catch(error){
       console.warn("Could not load passkey 2FA status",error);
-      if($("passkeyStatusTitle")) $("passkeyStatusTitle").textContent="Couldn’t load 2FA";
-      if($("passkeyStatusText")) $("passkeyStatusText").textContent=friendlyPasskeyError(error);
-      if($("passkey2faToggle")) $("passkey2faToggle").disabled=true;
-      if($("addPasskeyBtn")) $("addPasskeyBtn").disabled=true;
+      if($("passkeyStatusTitle")) $("passkeyStatusTitle").textContent="2FA status unavailable";
+      if($("passkeyStatusText")) $("passkeyStatusText").textContent=
+        "The current status could not be refreshed. You can still retry the switch.";
+      if($("passkey2faToggle")){
+        $("passkey2faToggle").disabled=!(cloudUser&&cloudMode==="cloud");
+        $("passkey2faToggle").title="Retry changing passkey 2FA";
+      }
+      if($("addPasskeyBtn")) $("addPasskeyBtn").disabled=!(cloudUser&&cloudMode==="cloud"&&passkeysSupported());
       return;
     }
 
@@ -12343,6 +12419,25 @@
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
     $("passkey2faToggle").addEventListener("click",async()=>{
+      if(passkey2faState.busy)return;
+
+      if(!passkey2faState.loaded){
+        try{
+          passkey2faState.busy=true;
+          renderPasskey2faState();
+          await refreshPasskey2faStatus(true);
+        }catch(error){
+          console.warn("Could not refresh 2FA before toggle",error);
+          passkey2faState.busy=false;
+          renderPasskey2faState();
+          showOfflineToast("Couldn’t refresh 2FA status. Try again in a moment.");
+          return;
+        }finally{
+          passkey2faState.busy=false;
+          renderPasskey2faState();
+        }
+      }
+
       const next=!passkey2faState.enabled;
       await setPasskey2faEnabled(next);
     });
