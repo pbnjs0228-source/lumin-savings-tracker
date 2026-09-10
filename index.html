@@ -5390,6 +5390,26 @@
     color:#000 !important;
   }
 
+
+  /* LUMIN 2.0 feature pages */
+  #mainScreen > #budgetsTabPanel,#mainScreen > #calendarTabPanel{grid-column:2;grid-row:1;min-width:0;width:100%;max-width:100%;}
+  .home-widget-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 1px 11px;padding:2px 1px 8px;border-bottom:1px solid var(--line);}
+  .home-widget-eyebrow,.feature-page .dashboard-section-eyebrow{color:var(--accent-soft);font-size:7.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+  .home-widget-toolbar-title{margin-top:2px;color:var(--white);font:700 13px/1.2 'Sora',sans-serif}.home-widget-customize{min-height:31px;font-size:9px}.home-widget-customize span{font-size:13px}
+  .home-secondary-widgets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.home-mini-widget{position:relative;overflow:hidden;padding:13px;border-radius:14px}.home-mini-widget::after{content:"";position:absolute;width:110px;height:110px;right:-55px;top:-55px;border-radius:50%;background:color-mix(in srgb,var(--accent) 8%,transparent);pointer-events:none}.home-mini-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}.home-mini-head h3{margin:2px 0 0;color:var(--white);font:700 12px/1.2 'Sora',sans-serif}.home-widget-link{appearance:none;padding:0;border:0;background:none;color:var(--accent-soft);cursor:pointer;font:650 8.5px/1.2 'Inter',sans-serif}.home-widget-content{position:relative;z-index:1}.home-budget-row,.home-schedule-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;min-height:36px;padding:7px 0;border-bottom:1px solid var(--line)}.home-budget-row:last-child,.home-schedule-row:last-child{border-bottom:0}.home-widget-primary{color:var(--white);font-size:9.5px;font-weight:700}.home-widget-secondary{margin-top:2px;color:var(--muted);font-size:8.5px}.home-widget-amount{color:var(--accent-soft);font:700 9px/1 'JetBrains Mono',monospace}.home-widget-empty{padding:12px 0;color:var(--muted);font-size:9px}
+  .feature-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:12px;padding:2px 2px 11px;border-bottom:1px solid var(--line)}.feature-page-head h2{margin:3px 0 2px;color:var(--white);font:750 20px/1.15 'Sora',sans-serif;letter-spacing:-.35px}.feature-page-head p{margin:0;max-width:610px;color:var(--muted);font-size:9.5px;line-height:1.45}.feature-head-stat{padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:var(--panel-solid);color:var(--accent-soft);font:700 9px/1 'JetBrains Mono',monospace}
+  .budget-layout{display:grid;grid-template-columns:minmax(230px,.38fr) minmax(0,1fr);gap:11px}.feature-form-card,.budget-list-card,.calendar-main-card,.calendar-day-card{padding:13px;border-radius:14px}.feature-form{display:flex;flex-direction:column;gap:10px;margin-top:11px}.budget-list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.budget-list-head>span{color:var(--muted);font-size:8px}.budget-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.budget-card{position:relative;overflow:hidden;min-width:0;padding:11px;border:1px solid var(--line);border-radius:11px;background:color-mix(in srgb,var(--panel-solid) 76%,transparent);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;animation:luminCardArrive .38s cubic-bezier(.2,.8,.2,1) both}.budget-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 30%,var(--line-strong));box-shadow:0 12px 26px rgba(0,0,0,.10)}.budget-card.over{border-color:rgba(220,91,103,.32)}.budget-card.warning{border-color:color-mix(in srgb,#e7b355 45%,var(--line))}.budget-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.budget-card-title{color:var(--white);font:700 10.5px/1.2 'Sora',sans-serif}.budget-card-period{margin-top:2px;color:var(--muted);font-size:8px;text-transform:capitalize}.budget-delete{appearance:none;border:0;background:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0 2px}.budget-delete:hover{color:#e56e78}.budget-money-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:13px}.budget-spent{color:var(--white);font:750 14px/1 'JetBrains Mono',monospace}.budget-spent small{color:var(--muted);font:500 8px/1 'Inter',sans-serif}.budget-remaining{color:var(--muted);font-size:8px;text-align:right}.budget-track{height:7px;margin-top:8px;border-radius:99px;overflow:hidden;background:color-mix(in srgb,var(--white) 6%,transparent);box-shadow:inset 0 1px 2px rgba(0,0,0,.18)}.budget-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--positive));transition:width .7s cubic-bezier(.2,.8,.2,1)}.budget-card.warning .budget-fill{background:linear-gradient(90deg,#e4b455,#e98952)}.budget-card.over .budget-fill{background:linear-gradient(90deg,#e06b72,#ca4858)}.budget-percent{margin-top:6px;color:var(--muted);font-size:8px}
+  .calendar-month-actions{display:flex;gap:5px}.calendar-month-actions .btn{min-width:33px;padding:6px 9px}.calendar-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(270px,.62fr);gap:11px}.calendar-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px}.calendar-month-title{color:var(--white);font:750 15px/1.2 'Sora',sans-serif}.calendar-month-sub{margin-top:3px;color:var(--muted);font-size:8.5px}.calendar-legend{display:flex;gap:9px;flex-wrap:wrap;color:var(--muted);font-size:8px}.calendar-legend span{display:inline-flex;align-items:center;gap:4px}.calendar-legend i{width:6px;height:6px;border-radius:50%}.legend-shift{background:var(--positive)}.legend-busy{background:#e16b73}.legend-event{background:var(--accent)}.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}.calendar-weekdays{padding:0 2px 5px;color:var(--muted);font-size:7.5px;font-weight:700;text-align:center}.calendar-grid{overflow:hidden;border:1px solid var(--line);border-radius:11px;background:color-mix(in srgb,var(--panel-solid) 62%,transparent)}.calendar-day{appearance:none;min-width:0;min-height:86px;padding:6px;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--white);text-align:left;cursor:pointer;transition:background .16s ease,box-shadow .16s ease}.calendar-day:nth-child(7n){border-right:0}.calendar-day:nth-last-child(-n+7){border-bottom:0}.calendar-day:hover{background:color-mix(in srgb,var(--accent) 4%,transparent)}.calendar-day.other-month{opacity:.42}.calendar-day.today{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent)}.calendar-day.selected{background:color-mix(in srgb,var(--accent) 8%,var(--panel-solid))}.calendar-day-num{font:700 8.5px/1 'JetBrains Mono',monospace}.calendar-day-events{display:flex;flex-direction:column;gap:3px;margin-top:6px;overflow:hidden}.calendar-chip{display:block;overflow:hidden;padding:3px 4px;border-radius:5px;white-space:nowrap;text-overflow:ellipsis;font-size:6.9px;font-weight:700;animation:luminChipIn .26s ease both}.calendar-chip.shift{color:var(--positive);background:color-mix(in srgb,var(--positive) 13%,transparent)}.calendar-chip.busy{color:#e87980;background:rgba(224,95,106,.10)}.calendar-chip.event{color:var(--accent-soft);background:color-mix(in srgb,var(--accent) 11%,transparent)}.calendar-more{color:var(--muted);font-size:6.8px}.calendar-side{display:flex;flex-direction:column;gap:11px}.calendar-time-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}.calendar-notify-check{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:8.8px;cursor:pointer}.calendar-notify-check input{width:auto!important}.calendar-day-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.calendar-day-head h3{margin:2px 0 0;color:var(--white);font:700 11px/1.2 'Sora',sans-serif}.availability-badge{padding:4px 6px;border:1px solid color-mix(in srgb,var(--positive) 30%,var(--line));border-radius:99px;color:var(--positive);background:color-mix(in srgb,var(--positive) 8%,transparent);font-size:7.5px;font-weight:700}.availability-badge.busy{color:#e87980;border-color:rgba(224,95,106,.25);background:rgba(224,95,106,.07)}.calendar-selected-events{display:flex;flex-direction:column;gap:6px;margin-top:10px}.calendar-event-row{position:relative;display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:8px;align-items:start;padding:8px;border:1px solid var(--line);border-radius:9px;background:color-mix(in srgb,var(--panel-solid) 78%,transparent);animation:luminCardArrive .28s ease both}.calendar-event-accent{width:4px;height:100%;min-height:34px;border-radius:99px;background:var(--accent)}.calendar-event-row.shift .calendar-event-accent{background:var(--positive)}.calendar-event-row.busy .calendar-event-accent{background:#e16b73}.calendar-event-title{color:var(--white);font-size:9.3px;font-weight:700}.calendar-event-meta{margin-top:2px;color:var(--muted);font-size:7.7px;line-height:1.4}.calendar-event-actions{display:flex;gap:4px}.calendar-event-actions button{appearance:none;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--muted);padding:4px 5px;cursor:pointer;font-size:7px}.calendar-event-actions .log-shift{color:var(--positive)}.calendar-empty{padding:11px 0;color:var(--muted);font-size:8.5px}
+  .notification-lead-row{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:9px}.notification-lead-row select{max-width:150px}
+  .widget-modal{width:min(520px,calc(100vw - 28px))}.widget-options-list{display:flex;flex-direction:column;gap:7px;margin-top:13px}.widget-option{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:color-mix(in srgb,var(--panel-solid) 78%,transparent)}.widget-option-name{color:var(--white);font-size:9.5px;font-weight:700}.widget-option-desc{margin-top:2px;color:var(--muted);font-size:8px}.widget-option-actions{display:flex;gap:4px}.widget-option-actions button{appearance:none;min-width:29px;height:28px;padding:0 7px;border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--muted);cursor:pointer;font-size:9px}.widget-option-actions button:hover{color:var(--white);border-color:var(--accent)}.widget-option-actions button.widget-visible{color:var(--positive)}.widget-option-actions button.widget-hidden{color:#e87980}.widget-modal-foot{display:flex;justify-content:space-between;gap:8px;margin-top:12px}
+  @keyframes luminCardArrive{from{opacity:0;transform:translateY(7px) scale(.992)}to{opacity:1;transform:none}}@keyframes luminChipIn{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}@keyframes luminGlowBreath{0%,100%{box-shadow:0 0 0 color-mix(in srgb,var(--accent) 0%,transparent)}50%{box-shadow:0 0 18px color-mix(in srgb,var(--accent) 9%,transparent)}}
+  .feature-page:not(.hidden)>*,#dashboardTabPanel:not(.hidden)>[data-home-widget]{animation:luminCardArrive .42s cubic-bezier(.2,.8,.2,1) both}.app-nav-btn svg{transition:transform .17s ease,color .17s ease}.app-nav-btn:hover svg{transform:translateY(-1px) scale(1.06)}.app-nav-btn:active,.btn:active{transform:scale(.975)}.security-switch[aria-checked="true"]{animation:luminGlowBreath 2.8s ease-in-out infinite}
+  @media(max-width:1050px){.budget-cards{grid-template-columns:1fr}.calendar-layout{grid-template-columns:1fr}.calendar-side{display:grid;grid-template-columns:1fr 1fr}}
+  @media(max-width:820px){#mainScreen>#budgetsTabPanel,#mainScreen>#calendarTabPanel{grid-column:1;grid-row:auto;width:100%}.app-nav-list{grid-template-columns:repeat(6,1fr)!important}.app-nav-btn{font-size:7.4px!important}.home-secondary-widgets{grid-template-columns:1fr}}
+  @media(max-width:620px){.budget-layout{grid-template-columns:1fr}.calendar-side{grid-template-columns:1fr}.feature-page-head{align-items:flex-start;flex-direction:column}.calendar-day{min-height:72px;padding:4px}.home-widget-toolbar{align-items:flex-start;flex-direction:column}.home-widget-customize{align-self:stretch;justify-content:center}}
+  @media(max-width:500px){.app-sidebar{overflow-x:auto}.app-nav-list{min-width:430px;grid-template-columns:repeat(6,1fr)!important}}
+  @media(prefers-reduced-motion:reduce){.feature-page:not(.hidden)>*,#dashboardTabPanel:not(.hidden)>[data-home-widget],.budget-card,.calendar-chip,.calendar-event-row,.security-switch[aria-checked="true"]{animation:none!important}.app-nav-btn svg,.budget-fill{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -5521,6 +5541,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3"></circle><path d="M15 9l5-5M16 4h4v4"></path></svg>
           <span>Goals</span>
         </button>
+        <button type="button" class="app-nav-btn" id="budgetsNavBtn" data-app-view="budgets">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7"></path><circle cx="18" cy="15" r="3"></circle><path d="M18 13.5v3M17 14.5h1.7"></path></svg>
+          <span>Budgets</span>
+        </button>
+        <button type="button" class="app-nav-btn" id="calendarNavBtn" data-app-view="calendar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"></path></svg>
+          <span>Calendar</span>
+        </button>
         <button type="button" class="app-nav-btn" id="activityNavBtn" data-app-view="activity">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"></path></svg>
           <span>Activity</span>
@@ -5541,7 +5569,11 @@
     </aside>
 
     <div id="dashboardTabPanel" class="app-view" role="region" aria-label="Home">
-    <div class="dashboard-hero-grid">
+    <div class="home-widget-toolbar">
+      <div><div class="home-widget-eyebrow">Dashboard</div><div class="home-widget-toolbar-title">Your workspace</div></div>
+      <button type="button" class="btn btn-ghost home-widget-customize" id="customizeWidgetsBtn"><span aria-hidden="true">⊞</span> Customize widgets</button>
+    </div>
+    <div class="dashboard-hero-grid" data-home-widget="overview" id="homeWidgetOverview">
 <div class="section panel dashboard-chart-first">
       <div class="panel-header-row">
         <div class="panel-label"><span class="dash"></span><span id="barsLabel">Earnings</span></div>
@@ -5635,7 +5667,7 @@
     </div>
     </div>
 
-<div class="section stat-chips stats-ribbon">
+<div class="section stat-chips stats-ribbon" data-home-widget="stats" id="homeWidgetStats">
       <div class="chip"><div class="chip-label">Today</div><div class="chip-value" id="statToday">$0</div></div>
       <div class="chip"><div class="chip-label">This week</div><div class="chip-value" id="statWeek">$0</div></div>
       <div class="chip"><div class="chip-label">This month</div><div class="chip-value" id="statMonth">$0</div></div>
@@ -5644,6 +5676,15 @@
       <button type="button" class="chip records-chip" id="recordsBtn"><div class="chip-label">Personal records</div><div class="chip-value">🏆 View records</div></button>
       <button type="button" class="chip records-chip" id="achievementsBtn"><div class="chip-label">Achievements</div><div class="chip-value" id="achievementChipValue">🏅 0 / 8</div></button>
     </div>
+
+    <section class="panel home-mini-widget" data-home-widget="budgets" id="homeWidgetBudgets">
+        <div class="home-mini-head"><div><div class="dashboard-section-eyebrow">Budgets</div><h3>Spending pulse</h3></div><button type="button" class="home-widget-link" data-jump-view="budgets">Open budgets →</button></div>
+        <div id="homeBudgetContent" class="home-widget-content"></div>
+      </section>
+      <section class="panel home-mini-widget" data-home-widget="schedule" id="homeWidgetSchedule">
+        <div class="home-mini-head"><div><div class="dashboard-section-eyebrow">Calendar</div><h3>Coming up</h3></div><button type="button" class="home-widget-link" data-jump-view="calendar">Open calendar →</button></div>
+        <div id="homeScheduleContent" class="home-widget-content"></div>
+      </section>
 
     <section class="dashboard-cluster goal-cluster">
       <div class="dashboard-section-heading goals-heading">
@@ -5867,6 +5908,9 @@
             <label class="field">What was it? <span style="font-weight:400;color:var(--muted);">(optional)</span>
               <input type="text" maxlength="80" placeholder="e.g. Lunch, game, bus" id="in-expense-note" />
             </label>
+            <label class="field">Count toward budget <span style="font-weight:400;color:var(--muted);">(optional)</span>
+              <select id="in-expense-budget"><option value="">No budget</option></select>
+            </label>
           </div>
           <div class="punch-preview" id="punchPreview">= $0.00 earned</div>
           <button type="submit" class="btn btn-primary" id="entrySubmitBtn" style="margin-top:auto;justify-content:center;">+ Add earnings</button>
@@ -5898,6 +5942,48 @@
     </div>
 
     <div id="goalsTabPanel" class="app-view hidden" role="region" aria-label="Goals"></div>
+
+    <div id="budgetsTabPanel" class="app-view hidden feature-page" role="region" aria-label="Budgets">
+      <div class="feature-page-head"><div><div class="dashboard-section-eyebrow">Spending control</div><h2>Budgets</h2><p>Set weekly or monthly limits, then assign expenses to them as you log spending.</p></div><div class="feature-head-stat" id="budgetOverallStat">$0 budgeted</div></div>
+      <div class="budget-layout">
+        <section class="panel feature-form-card"><div class="panel-label"><span class="dash"></span>Create budget</div>
+          <form id="budgetForm" class="feature-form">
+            <label class="field">Budget name<input id="budgetName" maxlength="40" placeholder="e.g. Games, food, transport" required /></label>
+            <label class="field">Limit<div class="input-prefix"><span>$</span><input id="budgetLimit" type="number" min="0.01" step="0.01" placeholder="100.00" required /></div></label>
+            <label class="field">Reset period<select id="budgetPeriod"><option value="weekly">Every week</option><option value="monthly">Every month</option></select></label>
+            <button type="submit" class="btn btn-primary">+ Add budget</button>
+          </form>
+        </section>
+        <section class="panel budget-list-card"><div class="budget-list-head"><div class="panel-label"><span class="dash"></span>Current budgets</div><span>Current spending period</span></div><div id="budgetCards" class="budget-cards"></div></section>
+      </div>
+    </div>
+
+    <div id="calendarTabPanel" class="app-view hidden feature-page" role="region" aria-label="Calendar">
+      <div class="feature-page-head"><div><div class="dashboard-section-eyebrow">Work planner</div><h2>Calendar</h2><p>Plan shifts, mark unavailable time, and keep personal events beside your earning schedule.</p></div>
+        <div class="calendar-month-actions"><button class="btn btn-ghost" type="button" id="calendarPrevBtn">‹</button><button class="btn btn-secondary" type="button" id="calendarTodayBtn">Today</button><button class="btn btn-ghost" type="button" id="calendarNextBtn">›</button></div></div>
+      <div class="calendar-layout">
+        <section class="panel calendar-main-card">
+          <div class="calendar-toolbar"><div><div class="calendar-month-title" id="calendarMonthTitle">Month</div><div class="calendar-month-sub" id="calendarMonthSub">0 planned hours</div></div>
+            <div class="calendar-legend"><span><i class="legend-shift"></i>Shift</span><span><i class="legend-busy"></i>Unavailable</span><span><i class="legend-event"></i>Event</span></div></div>
+          <div class="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div id="calendarGrid" class="calendar-grid"></div>
+        </section>
+        <aside class="calendar-side">
+          <section class="panel feature-form-card"><div class="panel-label"><span class="dash"></span>Add to calendar</div>
+            <form id="calendarEventForm" class="feature-form">
+              <label class="field">Type<select id="calendarEventType"><option value="shift">Work shift</option><option value="busy">Busy / unavailable</option><option value="event">Event</option></select></label>
+              <label class="field">Title<input id="calendarEventTitle" maxlength="60" placeholder="e.g. Saturday shift" required /></label>
+              <label class="field">Date<input id="calendarEventDate" type="date" required /></label>
+              <div class="calendar-time-row"><label class="field">Start<input id="calendarEventStart" type="time" required /></label><label class="field">End<input id="calendarEventEnd" type="time" required /></label></div>
+              <label class="calendar-notify-check"><input id="calendarEventNotify" type="checkbox" checked /><span>Remind me before this starts</span></label>
+              <label class="field">Notes <span style="font-weight:400;color:var(--muted);">(optional)</span><textarea id="calendarEventNotes" maxlength="180" placeholder="Anything useful to remember"></textarea></label>
+              <button type="submit" class="btn btn-primary">+ Add to calendar</button>
+            </form>
+          </section>
+          <section class="panel calendar-day-card"><div class="calendar-day-head"><div><div class="dashboard-section-eyebrow">Selected day</div><h3 id="calendarSelectedTitle">Today</h3></div><span id="calendarAvailabilityBadge" class="availability-badge">Available</span></div><div id="calendarSelectedEvents" class="calendar-selected-events"></div></section>
+        </aside>
+      </div>
+    </div>
+
     <div id="activityTabPanel" class="app-view hidden" role="region" aria-label="Activity"></div>
 
     <!-- SETTINGS -->
@@ -6018,6 +6104,12 @@
                 <button type="button" class="btn btn-secondary" id="addPasskeyBtn">Add a passkey</button>
               </div>
             </section>
+            <section class="settings-card settings-card-notifications">
+              <div class="settings-card-header"><span class="settings-card-icon" aria-hidden="true">◉</span><div><div class="settings-card-title">Windows notifications</div><p class="settings-card-desc">Get system reminders for shifts, events and budget warnings through your browser or installed LUMIN app.</p></div></div>
+              <div class="security-toggle-row"><div class="security-toggle-copy"><strong>System notifications</strong><span id="notificationPermissionText">Checking browser permission…</span></div><button type="button" class="security-switch" id="notificationToggle" role="switch" aria-checked="false" aria-label="Toggle Windows notifications"><span class="security-switch-knob"></span></button></div>
+              <label class="notification-lead-row">Calendar reminder<select id="notificationLeadSelect"><option value="15">15 minutes before</option><option value="30">30 minutes before</option><option value="60">1 hour before</option><option value="120">2 hours before</option></select></label>
+              <div class="settings-actions"><button type="button" class="btn btn-ghost" id="testNotificationBtn">Send test notification</button></div>
+            </section>
           </div>
         </section>
 
@@ -6047,6 +6139,10 @@
 
 
   <div class="offline-toast" id="offlineToast" role="status" aria-live="polite"></div>
+  <div id="widgetModalBackdrop" class="modal-backdrop hidden"><div class="modal widget-modal" role="dialog" aria-modal="true" aria-labelledby="widgetModalTitle">
+    <div class="modal-head"><div><div class="modal-kicker">Home dashboard</div><h2 class="modal-title" id="widgetModalTitle">Customize widgets</h2><p class="modal-sub">Show, hide and reorder the sections on Home.</p></div><button class="modal-close" type="button" id="widgetModalCloseBtn">×</button></div>
+    <div id="widgetOptionsList" class="widget-options-list"></div><div class="widget-modal-foot"><button class="btn btn-ghost" type="button" id="widgetResetBtn">Reset layout</button><button class="btn btn-primary" type="button" id="widgetDoneBtn">Done</button></div>
+  </div></div>
 
   <!-- FIRST-SIGNUP PASSKEY CHOICE -->
   <div id="signupPasskeyBackdrop" class="modal-backdrop hidden">
@@ -6510,9 +6606,22 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.09.21";
+  const APP_VERSION = "2026.09.10.1";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.10.1",
+      title: "Budgets, Calendar & Windows notifications",
+      date: "10 September 2026",
+      changes: [
+        "Added weekly and monthly budgets with expense assignment, progress tracking and 80% / 100% warnings.",
+        "Added a work calendar for planned shifts, unavailable time and personal events.",
+        "Planned shifts show estimated hours/pay and can be converted into logged earnings after they are worked.",
+        "Added Windows/PWA system notifications for upcoming calendar items and budget thresholds.",
+        "Added customizable Home widgets with visibility and ordering controls.",
+        "Expanded motion throughout navigation, cards, calendar events, budgets, switches and dashboard widgets."
+      ]
+    },
     {
       version: "2026.09.09.21",
       title: "Priority-only completion contrast",
@@ -7103,6 +7212,15 @@
   let pendingImageDataUrl = null;
   let celebratedItemIds = null; // Kept for backwards compatibility with older saves.
   let celebratedMilestones = null; // Set of "itemId:percent" milestone keys already celebrated.
+  let budgets = [];
+  let calendarEvents = [];
+  let notificationsEnabled = false;
+  let notificationLeadMinutes = 30;
+  let notificationHistory = null;
+  let homeWidgetOrder = ["overview","stats","budgets","schedule"];
+  let homeWidgetHidden = null;
+  let calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
+  let calendarSelectedDate = "";
   const MILESTONES = [25, 50, 75, 90, 100];
   const ACHIEVEMENTS = [
     {id:"first-log", icon:"✦", name:"First step", desc:"Log your first earnings.", test:s=>entries.length>=1},
@@ -8499,6 +8617,15 @@
     pendingImageDataUrl = null;
     celebratedItemIds = null;
     celebratedMilestones = null;
+    budgets = [];
+    calendarEvents = [];
+    notificationsEnabled = false;
+    notificationLeadMinutes = 30;
+    notificationHistory = new Set();
+    homeWidgetOrder = ["overview","stats","budgets","schedule"];
+    homeWidgetHidden = new Set();
+    calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
+    calendarSelectedDate = todayStr();
   }
 
   function hydrateParsedSave(parsed){
@@ -8530,6 +8657,17 @@
     if(parsed.entryMode && ["hours","amount","expense"].includes(parsed.entryMode)) entryMode = parsed.entryMode;
     if(Array.isArray(parsed.celebratedItemIds)) celebratedItemIds = new Set(parsed.celebratedItemIds);
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
+    budgets = Array.isArray(parsed.budgets) ? parsed.budgets.filter(b=>b&&typeof b==="object").map(b=>({id:String(b.id||uid()),name:String(b.name||"Budget").trim().slice(0,40)||"Budget",limit:Math.max(.01,Number(b.limit)||0),period:b.period==="weekly"?"weekly":"monthly"})).filter(b=>b.limit>0) : [];
+    calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>({id:String(ev.id||uid()),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged})) : [];
+    notificationsEnabled = parsed.notificationsEnabled===true;
+    notificationLeadMinutes = [15,30,60,120].includes(Number(parsed.notificationLeadMinutes)) ? Number(parsed.notificationLeadMinutes) : 30;
+    notificationHistory = new Set(Array.isArray(parsed.notificationHistory)?parsed.notificationHistory.slice(-250):[]);
+    const allowedWidgets=["overview","stats","budgets","schedule"];
+    homeWidgetOrder = Array.isArray(parsed.homeWidgetOrder) ? parsed.homeWidgetOrder.filter(v=>allowedWidgets.includes(v)) : [];
+    allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)) homeWidgetOrder.push(v);});
+    homeWidgetHidden = new Set(Array.isArray(parsed.homeWidgetHidden)?parsed.homeWidgetHidden.filter(v=>allowedWidgets.includes(v)):[]);
+    calendarSelectedDate = todayStr();
+    calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
 
     // Migrate the original single-item format if an older save is opened.
     if(!wallet && parsed.settings){
@@ -9306,7 +9444,14 @@
       tutorialCompleted,
       entryMode,
       celebratedItemIds:Array.from(celebratedItemIds||[]),
-      celebratedMilestones:Array.from(celebratedMilestones||[])
+      celebratedMilestones:Array.from(celebratedMilestones||[]),
+      budgets,
+      calendarEvents,
+      notificationsEnabled,
+      notificationLeadMinutes,
+      notificationHistory:Array.from(notificationHistory||[]).slice(-250),
+      homeWidgetOrder,
+      homeWidgetHidden:Array.from(homeWidgetHidden||[])
     });
   }
 
@@ -10902,7 +11047,7 @@
       if(amount<=0) return;
       expenses.push({
         id:"expense-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),
-        date, amount, note:$("in-expense-note").value.trim(), type:"expense", itemId:null
+        date, amount, note:$("in-expense-note").value.trim(), type:"expense", itemId:null, budgetId:$("in-expense-budget").value||null
       });
       expenses.sort((a,b)=> a.date < b.date ? 1 : -1);
       $("in-expense").value = "";
@@ -11969,6 +12114,203 @@
     });
   });
 
+
+  // ================================================================
+  // BUDGETS
+  // ================================================================
+  function budgetBounds(budget,anchor=todayStr()){
+    const d=new Date(anchor+"T00:00:00");
+    if(budget.period==="weekly"){
+      const offset=(d.getDay()+6)%7;
+      const start=dateStr(new Date(d.getFullYear(),d.getMonth(),d.getDate()-offset));
+      return {start,end:addDaysKey(start,6),key:"W-"+start};
+    }
+    const start=dateStr(new Date(d.getFullYear(),d.getMonth(),1));
+    const end=dateStr(new Date(d.getFullYear(),d.getMonth()+1,0));
+    return {start,end,key:"M-"+start.slice(0,7)};
+  }
+
+  function budgetSpent(budget){
+    const b=budgetBounds(budget);
+    return expenses.reduce((sum,exp)=>{
+      if(exp.budgetId!==budget.id||!exp.date||exp.date<b.start||exp.date>b.end) return sum;
+      return sum+Math.max(0,Number(exp.amount)||0);
+    },0);
+  }
+
+  function renderBudgetExpenseSelect(){
+    const select=$("in-expense-budget");
+    if(!select) return;
+    const previous=select.value;
+    select.innerHTML='<option value="">No budget</option>'+budgets.map(b=>`<option value="${escapeHtml(b.id)}">${escapeHtml(b.name)}</option>`).join("");
+    if(budgets.some(b=>b.id===previous)) select.value=previous;
+  }
+
+  function renderBudgets(){
+    const wrap=$("budgetCards");
+    if(!wrap) return;
+    const totalLimit=budgets.reduce((s,b)=>s+b.limit,0);
+    const totalSpent=budgets.reduce((s,b)=>s+budgetSpent(b),0);
+    $("budgetOverallStat").textContent=budgets.length?`${fmtMoney(totalSpent)} / ${fmtMoney(totalLimit)}`:"No budgets yet";
+    if(!budgets.length){
+      wrap.innerHTML='<div class="calendar-empty">No budgets yet. Create one on the left, then assign expenses to it from Activity.</div>';
+      renderBudgetExpenseSelect();
+      renderHomeBudgetWidget();
+      return;
+    }
+    wrap.innerHTML=budgets.map((budget,index)=>{
+      const spent=budgetSpent(budget);
+      const pct=budget.limit>0?(spent/budget.limit)*100:0;
+      const capped=Math.min(100,Math.max(0,pct));
+      const cls=pct>=100?"over":pct>=80?"warning":"";
+      const remaining=Math.max(0,budget.limit-spent);
+      return `<article class="budget-card ${cls}" style="animation-delay:${Math.min(index,8)*32}ms">
+        <div class="budget-card-head"><div><div class="budget-card-title">${escapeHtml(budget.name)}</div><div class="budget-card-period">${budget.period==="weekly"?"Weekly":"Monthly"} budget</div></div><button class="budget-delete" type="button" data-delete-budget="${escapeHtml(budget.id)}" title="Delete budget">×</button></div>
+        <div class="budget-money-row"><div class="budget-spent">${fmtMoney(spent)} <small>spent</small></div><div class="budget-remaining">${pct>=100?fmtMoney(spent-budget.limit)+" over":fmtMoney(remaining)+" left"}</div></div>
+        <div class="budget-track"><div class="budget-fill" style="width:${capped.toFixed(1)}%"></div></div><div class="budget-percent">${Math.round(pct)}% of ${fmtMoney(budget.limit)}</div>
+      </article>`;
+    }).join("");
+    renderBudgetExpenseSelect();
+    renderHomeBudgetWidget();
+  }
+
+  async function deleteBudget(id){
+    budgets=budgets.filter(b=>b.id!==id);
+    expenses=expenses.map(exp=>exp.budgetId===id?{...exp,budgetId:null}:exp);
+    await persist(); render();
+  }
+
+  $("budgetForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const name=$("budgetName").value.trim();
+    const limit=Math.max(0,Number($("budgetLimit").value)||0);
+    const period=$("budgetPeriod").value==="weekly"?"weekly":"monthly";
+    if(!name||limit<=0) return;
+    budgets.push({id:"budget-"+uid(),name,limit,period});
+    $("budgetName").value=""; $("budgetLimit").value="";
+    await persist(); render();
+  });
+  $("budgetCards").addEventListener("click",e=>{const b=e.target.closest("[data-delete-budget]");if(b) deleteBudget(b.dataset.deleteBudget);});
+
+  function renderHomeBudgetWidget(){
+    const el=$("homeBudgetContent"); if(!el) return;
+    if(!budgets.length){el.innerHTML='<div class="home-widget-empty">No budgets yet. Create one to start tracking spending limits.</div>';return;}
+    const sorted=budgets.map(b=>({b,spent:budgetSpent(b)})).sort((a,b)=>(b.spent/b.b.limit)-(a.spent/a.b.limit)).slice(0,3);
+    el.innerHTML=sorted.map(({b,spent})=>`<div class="home-budget-row"><div><div class="home-widget-primary">${escapeHtml(b.name)}</div><div class="home-widget-secondary">${Math.round((spent/b.limit)*100)}% used · ${b.period}</div></div><div class="home-widget-amount">${fmtMoney(spent)} / ${fmtMoney(b.limit)}</div></div>`).join("");
+  }
+
+  // ================================================================
+  // CALENDAR
+  // ================================================================
+  function eventHours(ev){
+    const parse=t=>{const [h,m]=String(t||"00:00").split(":").map(Number);return h+(m/60);};
+    let start=parse(ev.start),end=parse(ev.end); if(end<start) end+=24; return Math.max(0,end-start);
+  }
+  function calendarEventTimestamp(ev){const d=new Date(`${ev.date}T${ev.start||"00:00"}:00`);return Number.isNaN(d.getTime())?null:d.getTime();}
+  function eventTypeLabel(type){return type==="shift"?"Shift":type==="busy"?"Unavailable":"Event";}
+  function formatTime12(time){const [h,m]=String(time||"00:00").split(":").map(Number);const suffix=h>=12?"PM":"AM";return `${((h+11)%12)+1}:${String(m||0).padStart(2,"0")} ${suffix}`;}
+
+  function renderCalendar(){
+    const grid=$("calendarGrid"); if(!grid) return;
+    if(!calendarSelectedDate) calendarSelectedDate=todayStr();
+    const year=calendarCursor.getFullYear(),month=calendarCursor.getMonth(),first=new Date(year,month,1);
+    $("calendarMonthTitle").textContent=first.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+    const prefix=`${year}-${String(month+1).padStart(2,"0")}-`;
+    const monthEvents=calendarEvents.filter(ev=>ev.date.startsWith(prefix));
+    const shiftHours=monthEvents.filter(ev=>ev.type==="shift").reduce((s,ev)=>s+eventHours(ev),0);
+    const rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0);
+    $("calendarMonthSub").textContent=`${shiftHours.toFixed(shiftHours%1?1:0)} planned hrs${rate>0?` · ~${fmtMoney(shiftHours*rate)}`:""}`;
+    const mondayIndex=(first.getDay()+6)%7;
+    const gridStart=new Date(year,month,1-mondayIndex),today=todayStr(),cells=[];
+    for(let i=0;i<42;i++){
+      const d=new Date(gridStart.getFullYear(),gridStart.getMonth(),gridStart.getDate()+i),key=dateStr(d);
+      const dayEvents=calendarEvents.filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
+      const chips=dayEvents.slice(0,3).map(ev=>`<span class="calendar-chip ${ev.type}">${escapeHtml(ev.start)} · ${escapeHtml(ev.title)}</span>`).join("");
+      const more=dayEvents.length>3?`<span class="calendar-more">+${dayEvents.length-3} more</span>`:"";
+      cells.push(`<button type="button" class="calendar-day${d.getMonth()===month?"":" other-month"}${key===today?" today":""}${key===calendarSelectedDate?" selected":""}" data-calendar-date="${key}"><span class="calendar-day-num">${d.getDate()}</span><span class="calendar-day-events">${chips}${more}</span></button>`);
+    }
+    grid.innerHTML=cells.join(""); renderCalendarSelectedDay(); renderHomeScheduleWidget();
+  }
+
+  function renderCalendarSelectedDay(){
+    const key=calendarSelectedDate||todayStr(),date=new Date(key+"T00:00:00");
+    $("calendarSelectedTitle").textContent=date.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"short"});
+    const events=calendarEvents.filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
+    const unavailable=events.some(ev=>ev.type==="busy"),badge=$("calendarAvailabilityBadge");
+    badge.textContent=unavailable?"Unavailable":"Available"; badge.classList.toggle("busy",unavailable);
+    const list=$("calendarSelectedEvents");
+    if(!events.length){list.innerHTML='<div class="calendar-empty">Nothing planned. Add a shift, unavailable block or event.</div>';return;}
+    const rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0);
+    list.innerHTML=events.map(ev=>{
+      const hrs=eventHours(ev),pay=ev.type==="shift"&&rate>0?` · ~${fmtMoney(hrs*rate)}`:"",logged=ev.type==="shift"&&ev.logged?" · logged":"";
+      const action=ev.type==="shift"&&!ev.logged?`<button type="button" class="log-shift" data-log-shift="${escapeHtml(ev.id)}">Log worked</button>`:"";
+      return `<div class="calendar-event-row ${ev.type}"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}">×</button></div></div>`;
+    }).join("");
+  }
+
+  function renderHomeScheduleWidget(){
+    const el=$("homeScheduleContent"); if(!el) return;
+    const now=Date.now();
+    const upcoming=calendarEvents.map(ev=>({ev,ts:calendarEventTimestamp(ev)})).filter(x=>x.ts!==null&&x.ts>=now-30*60*1000).sort((a,b)=>a.ts-b.ts).slice(0,3);
+    if(!upcoming.length){el.innerHTML='<div class="home-widget-empty">Nothing upcoming. Plan a shift or add a busy event in Calendar.</div>';return;}
+    el.innerHTML=upcoming.map(({ev})=>{const d=new Date(ev.date+"T00:00:00");return `<div class="home-schedule-row"><div><div class="home-widget-primary">${escapeHtml(ev.title)}</div><div class="home-widget-secondary">${d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} · ${formatTime12(ev.start)}</div></div><div class="home-widget-amount">${eventTypeLabel(ev.type)}</div></div>`;}).join("");
+  }
+
+  $("calendarGrid").addEventListener("click",e=>{const day=e.target.closest("[data-calendar-date]");if(!day)return;calendarSelectedDate=day.dataset.calendarDate;$("calendarEventDate").value=calendarSelectedDate;const d=new Date(calendarSelectedDate+"T00:00:00");calendarCursor=new Date(d.getFullYear(),d.getMonth(),1);renderCalendar();});
+  $("calendarPrevBtn").addEventListener("click",()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderCalendar();});
+  $("calendarNextBtn").addEventListener("click",()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderCalendar();});
+  $("calendarTodayBtn").addEventListener("click",()=>{const n=new Date();calendarCursor=new Date(n.getFullYear(),n.getMonth(),1);calendarSelectedDate=todayStr();$("calendarEventDate").value=calendarSelectedDate;renderCalendar();});
+  $("calendarEventForm").addEventListener("submit",async e=>{
+    e.preventDefault(); const title=$("calendarEventTitle").value.trim(),date=$("calendarEventDate").value,start=$("calendarEventStart").value,end=$("calendarEventEnd").value,type=["shift","busy","event"].includes($("calendarEventType").value)?$("calendarEventType").value:"event";
+    if(!title||!date||!start||!end)return;
+    calendarEvents.push({id:"cal-"+uid(),type,title,date,start,end,notes:$("calendarEventNotes").value.trim(),notify:$("calendarEventNotify").checked,logged:false});
+    calendarEvents.sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start)); calendarSelectedDate=date; const d=new Date(date+"T00:00:00"); calendarCursor=new Date(d.getFullYear(),d.getMonth(),1); $("calendarEventTitle").value="";$("calendarEventNotes").value="";await persist();render();setAppView("calendar",false,true);
+  });
+  $("calendarSelectedEvents").addEventListener("click",async e=>{
+    const del=e.target.closest("[data-delete-calendar]"); if(del){calendarEvents=calendarEvents.filter(ev=>ev.id!==del.dataset.deleteCalendar);await persist();render();return;}
+    const log=e.target.closest("[data-log-shift]"); if(!log)return; const ev=calendarEvents.find(x=>x.id===log.dataset.logShift); if(!ev||ev.logged||ev.type!=="shift")return; const hours=eventHours(ev),rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0); if(hours<=0||rate<=0){showOfflineToast("Set an hourly rate before logging this shift.");return;} entries.push({id:"shift-"+ev.id,date:ev.date,hours,earned:hours*rate,directEarned:0,entryType:"hours",rateAtEntry:rate,source:"calendar-shift",label:ev.title});ev.logged=true;entries.sort((a,b)=>a.date<b.date?1:-1);await persist();render();showOfflineToast(`${ev.title} logged · ${fmtMoney(hours*rate)} earned.`);
+  });
+
+  // ================================================================
+  // WINDOWS / PWA NOTIFICATIONS
+  // ================================================================
+  function notificationSupported(){return "Notification" in window;}
+  function renderNotificationSettings(){
+    const toggle=$("notificationToggle"),status=$("notificationPermissionText"),lead=$("notificationLeadSelect"),test=$("testNotificationBtn"); if(!toggle||!status)return;
+    if(!notificationSupported()){toggle.disabled=true;toggle.setAttribute("aria-checked","false");status.textContent="Not supported by this browser.";test.disabled=true;return;}
+    const permission=Notification.permission; if(permission!=="granted")notificationsEnabled=false; toggle.disabled=permission==="denied";toggle.setAttribute("aria-checked",notificationsEnabled&&permission==="granted"?"true":"false"); status.textContent=permission==="granted"?(notificationsEnabled?"On · Windows notifications allowed":"Allowed · currently off"):permission==="denied"?"Blocked in browser/site settings":"Permission not requested";lead.value=String(notificationLeadMinutes);test.disabled=permission!=="granted"||!notificationsEnabled;
+  }
+  async function showWindowsNotification(title,body,tag="lumin"){
+    if(!notificationsEnabled||!notificationSupported()||Notification.permission!=="granted")return false;
+    const options={body,tag,renotify:false,icon:"./icons/icon-192.png",badge:"./icons/icon-192.png"};
+    try{if("serviceWorker" in navigator){const reg=await navigator.serviceWorker.getRegistration();if(reg&&reg.showNotification){await reg.showNotification(title,options);return true;}}new Notification(title,options);return true;}catch(error){console.warn("Notification failed",error);return false;}
+  }
+  async function setNotificationsEnabled(next){
+    if(!notificationSupported()){showOfflineToast("System notifications are not supported in this browser.");return;}
+    if(next){let permission=Notification.permission;if(permission==="default")permission=await Notification.requestPermission();notificationsEnabled=permission==="granted";showOfflineToast(notificationsEnabled?"Windows notifications enabled.":"Notifications were not allowed.");}else{notificationsEnabled=false;showOfflineToast("Windows notifications turned off.");}await persist();renderNotificationSettings();
+  }
+  $("notificationToggle").addEventListener("click",()=>setNotificationsEnabled(!notificationsEnabled));
+  $("notificationLeadSelect").addEventListener("change",async e=>{notificationLeadMinutes=[15,30,60,120].includes(Number(e.target.value))?Number(e.target.value):30;await persist();});
+  $("testNotificationBtn").addEventListener("click",async()=>{const ok=await showWindowsNotification("LUMIN notifications are ready","Calendar and budget reminders will appear here.","lumin-test");if(!ok)showOfflineToast("Couldn’t send a system notification.");});
+  async function runNotificationChecks(){
+    if(!notificationsEnabled||!notificationSupported()||Notification.permission!=="granted")return; if(!notificationHistory)notificationHistory=new Set(); const now=Date.now(),lead=notificationLeadMinutes*60000; let changed=false;
+    for(const ev of calendarEvents){if(!ev.notify)continue;const ts=calendarEventTimestamp(ev);if(ts===null)continue;const delta=ts-now;if(delta<0||delta>lead)continue;const key=`calendar:${ev.id}:${ev.date}:${ev.start}`;if(notificationHistory.has(key))continue;const mins=Math.max(0,Math.round(delta/60000));await showWindowsNotification(ev.type==="shift"?`Shift in ${mins} min`:`${ev.title} in ${mins} min`,`${ev.title} · ${formatTime12(ev.start)}–${formatTime12(ev.end)}`,key);notificationHistory.add(key);changed=true;}
+    for(const budget of budgets){const spent=budgetSpent(budget),pct=budget.limit>0?(spent/budget.limit)*100:0,bounds=budgetBounds(budget),threshold=pct>=100?100:pct>=80?80:0;if(!threshold)continue;const key=`budget:${budget.id}:${bounds.key}:${threshold}`;if(notificationHistory.has(key))continue;await showWindowsNotification(threshold===100?`${budget.name} budget reached`:`${budget.name} budget is ${Math.round(pct)}% used`,threshold===100?`${fmtMoney(spent)} spent against your ${fmtMoney(budget.limit)} ${budget.period} limit.`:`${fmtMoney(Math.max(0,budget.limit-spent))} remaining this ${budget.period==="weekly"?"week":"month"}.`,key);notificationHistory.add(key);changed=true;}
+    if(changed)await persist();
+  }
+
+  // ================================================================
+  // HOME WIDGETS
+  // ================================================================
+  const HOME_WIDGET_META={overview:{name:"Overview & progress",desc:"Earnings graph, forecast, XP and missions."},stats:{name:"Quick stats",desc:"Today, week, month, year and records."},budgets:{name:"Budget snapshot",desc:"Your most-used spending limits."},schedule:{name:"Upcoming schedule",desc:"Next shifts, busy time and events."}};
+  function applyHomeWidgetLayout(){const panel=$("dashboardTabPanel");if(!panel)return;if(!homeWidgetHidden)homeWidgetHidden=new Set();homeWidgetOrder.forEach(key=>{const el=panel.querySelector(`[data-home-widget="${key}"]`);if(!el)return;el.classList.toggle("hidden",homeWidgetHidden.has(key));panel.appendChild(el);});}
+  function renderWidgetCustomizer(){const list=$("widgetOptionsList");if(!list)return;list.innerHTML=homeWidgetOrder.map((key,index)=>{const meta=HOME_WIDGET_META[key],hidden=homeWidgetHidden&&homeWidgetHidden.has(key);return `<div class="widget-option"><div><div class="widget-option-name">${escapeHtml(meta.name)}</div><div class="widget-option-desc">${escapeHtml(meta.desc)}</div></div><div class="widget-option-actions"><button type="button" data-widget-toggle="${key}" class="${hidden?"widget-hidden":"widget-visible"}" title="${hidden?"Show":"Hide"}">${hidden?"○":"●"}</button><button type="button" data-widget-up="${key}" ${index===0?"disabled":""}>↑</button><button type="button" data-widget-down="${key}" ${index===homeWidgetOrder.length-1?"disabled":""}>↓</button></div></div>`;}).join("");}
+  function openWidgetCustomizer(){renderWidgetCustomizer();$("widgetModalBackdrop").classList.remove("hidden");} function closeWidgetCustomizer(){$("widgetModalBackdrop").classList.add("hidden");}
+  $("customizeWidgetsBtn").addEventListener("click",openWidgetCustomizer);$("widgetModalCloseBtn").addEventListener("click",closeWidgetCustomizer);$("widgetDoneBtn").addEventListener("click",closeWidgetCustomizer);$("widgetModalBackdrop").addEventListener("click",e=>{if(e.target.id==="widgetModalBackdrop")closeWidgetCustomizer();});
+  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","stats","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
+  $("widgetOptionsList").addEventListener("click",async e=>{const toggle=e.target.closest("[data-widget-toggle]"),up=e.target.closest("[data-widget-up]"),down=e.target.closest("[data-widget-down]");let changed=false;if(toggle){const key=toggle.dataset.widgetToggle;if(homeWidgetHidden.has(key))homeWidgetHidden.delete(key);else homeWidgetHidden.add(key);changed=true;}else if(up){const key=up.dataset.widgetUp,i=homeWidgetOrder.indexOf(key);if(i>0){[homeWidgetOrder[i-1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i-1]];changed=true;}}else if(down){const key=down.dataset.widgetDown,i=homeWidgetOrder.indexOf(key);if(i>=0&&i<homeWidgetOrder.length-1){[homeWidgetOrder[i+1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i+1]];changed=true;}}if(changed){renderWidgetCustomizer();applyHomeWidgetLayout();await persist();}});
+  document.querySelectorAll("[data-jump-view]").forEach(btn=>btn.addEventListener("click",()=>setAppView(btn.dataset.jumpView,false,true)));
+
   let workspaceFitRaf=0;
 
   function updateWorkspaceFit(){
@@ -12020,6 +12362,18 @@
       button:"goalsNavBtn",
       title:'Your <span>goals</span>',
       subtitle:"Everything you’re saving for, with progress, priorities, deadlines and release trajectories."
+    },
+    budgets:{
+      panel:"budgetsTabPanel",
+      button:"budgetsNavBtn",
+      title:'Your <span>budgets</span>',
+      subtitle:"Set spending limits and see exactly where your money is going."
+    },
+    calendar:{
+      panel:"calendarTabPanel",
+      button:"calendarNavBtn",
+      title:'Work <span>calendar</span>',
+      subtitle:"Plan shifts, block unavailable time and keep events beside your earning schedule."
     },
     activity:{
       panel:"activityTabPanel",
@@ -12104,6 +12458,9 @@
     }
     $("setupScreen").classList.add("hidden");
     $("mainScreen").classList.remove("hidden");
+    if(!$("calendarEventDate").value) $("calendarEventDate").value=calendarSelectedDate||todayStr();
+    if(!$("calendarEventStart").value) $("calendarEventStart").value="09:00";
+    if(!$("calendarEventEnd").value) $("calendarEventEnd").value="17:00";
 
     const stats = computeGlobalStats();
     $("archiveCount").textContent=String(items.filter(i=>i.purchasedAt).length);
@@ -12112,6 +12469,10 @@
     $("achievementChipValue").textContent="🏅 "+unlockedCount+" / "+ACHIEVEMENTS.length;
     renderRangeControls();
     renderGameStrip();
+    renderBudgets();
+    renderCalendar();
+    renderNotificationSettings();
+    applyHomeWidgetLayout();
     if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
 
@@ -12283,6 +12644,8 @@
     checkAchievements(true);
     renderGameStrip();
     checkGameLevelUp(true);
+    updateWorkspaceFit();
+    setTimeout(runNotificationChecks,80);
   }
   $("deadlineDateInput").addEventListener("change", async (e)=>{
     const activeItem = items.find(i=>i.id===activeItemId);
@@ -12344,13 +12707,14 @@
 
   if(typeof ResizeObserver!=="undefined"){
     const workspaceResizeObserver=new ResizeObserver(()=>updateWorkspaceFit());
-    ["dashboardTabPanel","goalsTabPanel","activityTabPanel","settingsTabPanel"].forEach(id=>{
+    ["dashboardTabPanel","goalsTabPanel","budgetsTabPanel","calendarTabPanel","activityTabPanel","settingsTabPanel"].forEach(id=>{
       const el=$(id);
       if(el) workspaceResizeObserver.observe(el);
     });
   }
 
   updateWorkspaceFit();
+  setInterval(runNotificationChecks,30000);
   registerLuminServiceWorker();
   updateOfflineUi();
   initPublicApp();
