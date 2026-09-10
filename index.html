@@ -5494,6 +5494,975 @@
     .loading-matrix-canvas{opacity:.28;}
   }
 
+
+  /* ================================================================
+     LUMIN COMPACT INTELLIGENCE PASS
+     Notification presets · Focus mode · Savings pace · Weekly recap
+     ================================================================ */
+  .home-toolbar-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .focus-mode-quick-btn[aria-pressed="true"]{
+    color:#041210;
+    border-color:transparent;
+    background:linear-gradient(110deg,var(--accent),var(--positive));
+    box-shadow:0 0 18px color-mix(in srgb,var(--accent) 14%,transparent);
+  }
+
+  .weekly-recap-widget{
+    margin-bottom:14px;
+    background:
+      radial-gradient(circle at 88% 8%,color-mix(in srgb,var(--positive) 10%,transparent),transparent 30%),
+      linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 30%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 82%,transparent));
+  }
+  .weekly-recap-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:6px;
+  }
+  .weekly-recap-mini{
+    min-width:0;
+    padding:8px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:color-mix(in srgb,var(--panel-solid) 72%,transparent);
+  }
+  .weekly-recap-mini span{
+    display:block;
+    margin-bottom:4px;
+    color:var(--muted);
+    font-size:7px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  .weekly-recap-mini strong{
+    display:block;
+    overflow:hidden;
+    color:var(--white);
+    font:700 9.5px/1.2 'JetBrains Mono',monospace;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .weekly-recap-mini.net-positive strong{color:var(--positive);}
+  .weekly-recap-mini.net-negative strong{color:#e87980;}
+
+  .savings-pace-panel{
+    padding:13px;
+    border-radius:14px;
+    background:
+      radial-gradient(circle at 92% 0%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 34%),
+      linear-gradient(180deg,color-mix(in srgb,var(--panel-raised) 28%,var(--panel-solid)),color-mix(in srgb,var(--panel-solid) 84%,transparent));
+  }
+  .savings-pace-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .savings-pace-title{
+    margin-top:4px;
+    color:var(--white);
+    font:700 11px/1.35 'Sora',sans-serif;
+  }
+  .savings-pace-status{
+    flex:0 0 auto;
+    padding:4px 7px;
+    border:1px solid var(--line);
+    border-radius:99px;
+    color:var(--muted);
+    background:color-mix(in srgb,var(--panel-solid) 76%,transparent);
+    font-size:7.5px;
+    font-weight:800;
+  }
+  .savings-pace-status.ahead,.savings-pace-status.on-track{color:var(--positive);border-color:color-mix(in srgb,var(--positive) 30%,var(--line));}
+  .savings-pace-status.behind{color:#e87980;border-color:rgba(224,95,106,.28);}
+  .savings-pace-track{
+    height:6px;
+    margin:11px 0 9px;
+    overflow:hidden;
+    border-radius:99px;
+    background:color-mix(in srgb,var(--white) 6%,transparent);
+  }
+  .savings-pace-fill{
+    width:0;height:100%;border-radius:inherit;
+    background:linear-gradient(90deg,var(--accent),var(--positive));
+    transition:width .7s cubic-bezier(.2,.8,.2,1),background .2s ease;
+  }
+  .savings-pace-fill.behind{background:linear-gradient(90deg,#dc6b72,#d99255);}
+  .savings-pace-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+  }
+  .savings-pace-metrics>div{
+    padding:8px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:color-mix(in srgb,var(--panel-solid) 66%,transparent);
+  }
+  .savings-pace-metrics span{display:block;color:var(--muted);font-size:7px;margin-bottom:3px;}
+  .savings-pace-metrics strong{display:block;color:var(--white);font:700 8.8px/1.25 'JetBrains Mono',monospace;}
+
+  .notification-preset-row,.notification-lead-row{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    color:var(--muted);font-size:9px;margin-top:8px;
+  }
+  .notification-preset-row select,.notification-lead-row select{max-width:170px;}
+  .notification-preset-hint{
+    margin:5px 0 2px;
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.4;
+  }
+
+  .weekly-summary-modal{
+    width:min(480px,calc(100vw - 28px));
+    overflow:hidden;
+  }
+  .weekly-summary-icon{
+    width:42px;height:42px;
+    display:grid;place-items:center;
+    margin-bottom:12px;
+    border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));
+    border-radius:13px;
+    color:#041210;
+    background:linear-gradient(135deg,var(--accent),var(--positive));
+    box-shadow:0 0 24px color-mix(in srgb,var(--accent) 14%,transparent);
+    font:800 20px/1 'Sora',sans-serif;
+    animation:weeklySummaryFloat 2.8s ease-in-out infinite;
+  }
+  .weekly-summary-prompt-actions{
+    display:flex;justify-content:flex-end;gap:7px;margin-top:18px;
+  }
+  .weekly-summary-detail-head{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  }
+  .weekly-summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    margin-top:14px;
+  }
+  .weekly-summary-stat{
+    padding:11px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:color-mix(in srgb,var(--panel-solid) 76%,transparent);
+  }
+  .weekly-summary-stat span{
+    display:block;color:var(--muted);font-size:8px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;
+  }
+  .weekly-summary-stat strong{
+    color:var(--white);font:750 14px/1.2 'JetBrains Mono',monospace;
+  }
+  .weekly-summary-footer-line{
+    margin-top:10px;padding:9px 10px;border-radius:9px;
+    color:var(--muted);font-size:8.5px;line-height:1.45;
+    background:color-mix(in srgb,var(--accent) 5%,transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 12%,var(--line));
+  }
+  .weekly-summary-done{width:100%;justify-content:center;margin-top:10px;}
+  @keyframes weeklySummaryFloat{50%{transform:translateY(-3px);}}
+
+  /* Focus mode intentionally only affects the signed-in workspace. */
+  html[data-focus-mode="true"] body > #hyperdriveMatrixCanvas{display:none !important;}
+  html[data-focus-mode="true"] #mainScreen .game-strip,
+  html[data-focus-mode="true"] #mainScreen #achievementsBtn,
+  html[data-focus-mode="true"] #mainScreen [data-home-widget="budgets"],
+  html[data-focus-mode="true"] #mainScreen [data-home-widget="schedule"]{
+    display:none !important;
+  }
+  html[data-focus-mode="true"] #mainScreen *,
+  html[data-focus-mode="true"] #mainScreen *::before,
+  html[data-focus-mode="true"] #mainScreen *::after{
+    animation:none !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  html[data-focus-mode="true"] #mainScreen{
+    --focus-outline:color-mix(in srgb,var(--accent) 18%,transparent);
+  }
+  html[data-focus-mode="true"] #mainScreen .panel,
+  html[data-focus-mode="true"] #mainScreen .settings-card{
+    box-shadow:none;
+  }
+
+  @media(max-width:620px){
+    .weekly-recap-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .savings-pace-metrics{grid-template-columns:1fr;}
+    .home-toolbar-actions{width:100%;}
+    .home-toolbar-actions .btn{flex:1;justify-content:center;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .weekly-summary-icon{animation:none;}
+  }
+
+
+  /* ================================================================
+     INTERACTIVE WEEKLY RECAP
+     Discord/Wrapped-style mini story instead of a static popup.
+     ================================================================ */
+  .weekly-recap-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1800;
+    display:grid;
+    place-items:center;
+    padding:18px;
+    color:#effffc;
+    background:
+      radial-gradient(circle 900px at 12% 8%,rgba(24,239,229,.13),transparent 52%),
+      radial-gradient(circle 760px at 90% 92%,rgba(83,240,118,.12),transparent 48%),
+      #020606;
+    opacity:1;
+    visibility:visible;
+    transition:opacity .28s ease,visibility .28s ease;
+    overflow:hidden;
+  }
+  .weekly-recap-overlay.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+
+  .weekly-recap-shell{
+    position:relative;
+    isolation:isolate;
+    width:min(860px,100%);
+    height:min(690px,calc(100dvh - 36px));
+    min-height:520px;
+    overflow:hidden;
+    border:1px solid rgba(67,245,225,.16);
+    border-radius:25px;
+    background:
+      linear-gradient(180deg,rgba(9,20,21,.97),rgba(3,10,10,.98));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.035),
+      0 32px 110px rgba(0,0,0,.52),
+      0 0 70px rgba(32,238,233,.045);
+  }
+
+  .weekly-recap-shell::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-3;
+    pointer-events:none;
+    background:
+      linear-gradient(rgba(50,245,224,.022) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(50,245,224,.022) 1px,transparent 1px);
+    background-size:38px 38px;
+    mask-image:linear-gradient(to bottom,#000,transparent 92%);
+  }
+
+  .weekly-recap-ambient{
+    position:absolute;
+    z-index:-2;
+    width:420px;height:420px;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.22;
+    pointer-events:none;
+    animation:weeklyRecapDrift 8s ease-in-out infinite alternate;
+  }
+  .weekly-recap-ambient-a{
+    left:-190px;top:-180px;
+    background:#19eee7;
+  }
+  .weekly-recap-ambient-b{
+    right:-180px;bottom:-190px;
+    background:#54ee76;
+    animation-delay:-3s;
+  }
+
+  .weekly-recap-topbar{
+    position:absolute;
+    left:0;right:0;top:0;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:19px 21px 10px;
+  }
+  .weekly-recap-brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#91aaa7;
+    font:750 8px/1 'Sora',sans-serif;
+    letter-spacing:.13em;
+  }
+  .weekly-recap-mark{
+    width:25px;height:25px;
+    display:grid;place-items:center;
+    border-radius:8px;
+    color:#031210;
+    background:linear-gradient(135deg,#2ef1eb,#5df179);
+    font:850 12px/1 'Sora',sans-serif;
+  }
+  .weekly-recap-close{
+    appearance:none;
+    width:31px;height:31px;
+    display:grid;place-items:center;
+    border:1px solid rgba(255,255,255,.075);
+    border-radius:9px;
+    color:#91aaa7;
+    background:rgba(255,255,255,.025);
+    cursor:pointer;
+    font-size:17px;
+    transition:color .15s ease,border-color .15s ease,background .15s ease,transform .15s ease;
+  }
+  .weekly-recap-close:hover{
+    color:#effffc;
+    border-color:rgba(47,241,224,.25);
+    background:rgba(47,241,224,.045);
+  }
+  .weekly-recap-close:active{transform:scale(.94);}
+
+  .weekly-recap-progress{
+    position:absolute;
+    z-index:10;
+    left:21px;right:21px;top:62px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:5px;
+    opacity:0;
+    transform:translateY(-5px);
+    transition:opacity .2s ease,transform .2s ease;
+  }
+  .weekly-recap-overlay.story-active .weekly-recap-progress{
+    opacity:1;
+    transform:none;
+  }
+  .weekly-recap-progress-segment{
+    height:3px;
+    overflow:hidden;
+    border-radius:999px;
+    background:rgba(255,255,255,.075);
+  }
+  .weekly-recap-progress-segment span{
+    display:block;
+    width:0;height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,#28eee8,#60f27b);
+    transition:width .38s cubic-bezier(.2,.8,.2,1);
+  }
+  .weekly-recap-progress-segment.complete span,
+  .weekly-recap-progress-segment.active span{width:100%;}
+
+  .weekly-recap-intro,
+  .weekly-recap-story{
+    position:absolute;
+    inset:0;
+    padding:92px 74px 46px;
+  }
+  .weekly-recap-intro{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    max-width:720px;
+  }
+  .weekly-recap-intro-orb{
+    position:relative;
+    width:72px;height:72px;
+    display:grid;place-items:center;
+    margin-bottom:20px;
+    border:1px solid rgba(72,245,226,.24);
+    border-radius:23px;
+    color:#031210;
+    background:
+      radial-gradient(circle at 30% 20%,rgba(255,255,255,.38),transparent 27%),
+      linear-gradient(135deg,#28eee8,#64f37c);
+    box-shadow:
+      0 0 0 8px rgba(40,238,232,.025),
+      0 0 44px rgba(40,238,232,.15);
+    font:850 32px/1 'Sora',sans-serif;
+    animation:weeklyRecapOrb 3.5s ease-in-out infinite;
+  }
+  .weekly-recap-kicker,
+  .weekly-recap-slide-kicker{
+    color:#55f0ce;
+    font:800 8px/1 'Sora',sans-serif;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  .weekly-recap-intro h2{
+    max-width:620px;
+    margin:10px 0 10px;
+    color:#f1fffd;
+    font:800 clamp(32px,5.3vw,54px)/1.02 'Sora',sans-serif;
+    letter-spacing:-2.1px;
+  }
+  .weekly-recap-intro p{
+    max-width:590px;
+    margin:0;
+    color:#879f9d;
+    font-size:12px;
+    line-height:1.55;
+  }
+  .weekly-recap-intro-preview{
+    display:grid;
+    grid-template-columns:auto auto 1px auto auto;
+    align-items:center;
+    gap:11px;
+    margin-top:24px;
+    padding:10px 13px;
+    border:1px solid rgba(69,245,225,.10);
+    border-radius:12px;
+    background:rgba(255,255,255,.022);
+    color:#789391;
+    font-size:8px;
+  }
+  .weekly-recap-intro-preview strong{
+    color:#effffc;
+    font:700 10px/1 'JetBrains Mono',monospace;
+  }
+  .weekly-recap-intro-preview i{
+    width:1px;height:19px;
+    background:rgba(255,255,255,.08);
+  }
+  .weekly-recap-intro-actions{
+    display:flex;
+    gap:7px;
+    margin-top:26px;
+  }
+  .weekly-recap-start-btn span{
+    display:inline-block;
+    transition:transform .16s ease;
+  }
+  .weekly-recap-start-btn:hover span{transform:translateX(3px);}
+
+  .weekly-recap-story{
+    display:grid;
+    grid-template-rows:minmax(0,1fr) auto;
+    gap:18px;
+    padding-top:90px;
+  }
+  .weekly-recap-slide-wrap{
+    display:grid;
+    place-items:center;
+    min-height:0;
+  }
+  .weekly-recap-slide{
+    width:min(650px,100%);
+    text-align:center;
+    animation:weeklyRecapSlideIn .42s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .weekly-recap-slide.is-leaving-forward{
+    animation:weeklyRecapSlideOutLeft .18s ease both;
+  }
+  .weekly-recap-slide.is-leaving-back{
+    animation:weeklyRecapSlideOutRight .18s ease both;
+  }
+
+  .weekly-recap-slide-icon{
+    width:62px;height:62px;
+    display:grid;place-items:center;
+    margin:0 auto 18px;
+    border:1px solid rgba(70,245,226,.20);
+    border-radius:20px;
+    color:#041311;
+    background:linear-gradient(135deg,#2befea,#62f27b);
+    box-shadow:0 0 32px rgba(41,239,229,.12);
+    font:850 27px/1 'Sora',sans-serif;
+  }
+  .weekly-recap-slide-value{
+    margin:12px 0 5px;
+    color:#f1fffd;
+    font:800 clamp(48px,8vw,82px)/.95 'Sora',sans-serif;
+    letter-spacing:-4px;
+    text-shadow:0 0 34px rgba(52,242,226,.08);
+  }
+  .weekly-recap-slide h3{
+    margin:14px 0 6px;
+    color:#effffc;
+    font:760 clamp(19px,2.8vw,27px)/1.15 'Sora',sans-serif;
+    letter-spacing:-.7px;
+  }
+  .weekly-recap-slide p{
+    max-width:520px;
+    margin:0 auto;
+    color:#839b99;
+    font-size:10.5px;
+    line-height:1.55;
+  }
+
+  .weekly-recap-viz{
+    width:min(470px,82%);
+    height:8px;
+    margin:24px auto 0;
+    overflow:hidden;
+    border-radius:999px;
+    background:rgba(255,255,255,.065);
+  }
+  .weekly-recap-viz-fill{
+    width:0;height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,#22e9e5,#5cf279);
+    box-shadow:0 0 18px rgba(41,239,228,.25);
+    transition:width .75s cubic-bezier(.2,.8,.2,1);
+  }
+  .weekly-recap-mini-stat{
+    min-height:18px;
+    margin-top:12px;
+    color:#72aaa4;
+    font:650 8px/1.4 'JetBrains Mono',monospace;
+    letter-spacing:.01em;
+  }
+
+  .weekly-recap-nav{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:12px;
+    width:min(650px,100%);
+    margin:0 auto;
+  }
+  .weekly-recap-nav-btn{
+    appearance:none;
+    justify-self:start;
+    min-width:92px;
+    padding:9px 12px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:10px;
+    color:#8ba2a0;
+    background:rgba(255,255,255,.025);
+    cursor:pointer;
+    font:700 8.5px/1 'Inter',sans-serif;
+    transition:transform .15s ease,color .15s ease,border-color .15s ease,background .15s ease;
+  }
+  .weekly-recap-nav-btn.primary{
+    justify-self:end;
+    color:#031210;
+    border-color:transparent;
+    background:linear-gradient(110deg,#2befea,#62f27b);
+  }
+  .weekly-recap-nav-btn:hover{transform:translateY(-1px);}
+  .weekly-recap-nav-btn:disabled{opacity:.28;cursor:default;transform:none;}
+  .weekly-recap-counter{
+    color:#78918f;
+    font:650 8px/1 'JetBrains Mono',monospace;
+  }
+
+  .weekly-recap-slide[data-tone="expense"] .weekly-recap-slide-icon{
+    color:#190808;
+    border-color:rgba(235,112,119,.25);
+    background:linear-gradient(135deg,#ea777d,#df9b5b);
+    box-shadow:0 0 32px rgba(230,109,117,.10);
+  }
+  .weekly-recap-slide[data-tone="expense"] .weekly-recap-viz-fill{
+    background:linear-gradient(90deg,#e26e76,#df9c58);
+    box-shadow:0 0 18px rgba(226,110,118,.20);
+  }
+  .weekly-recap-slide[data-tone="net-negative"] .weekly-recap-slide-value{color:#ef8b91;}
+  .weekly-recap-slide[data-tone="final"] .weekly-recap-slide-icon{
+    background:linear-gradient(135deg,#48f3ed,#79f183);
+  }
+
+  @keyframes weeklyRecapOrb{
+    0%,100%{transform:translateY(0) rotate(-2deg);}
+    50%{transform:translateY(-5px) rotate(2deg);}
+  }
+  @keyframes weeklyRecapDrift{
+    from{transform:translate3d(-20px,-12px,0) scale(.94);}
+    to{transform:translate3d(24px,17px,0) scale(1.08);}
+  }
+  @keyframes weeklyRecapValuePop{
+    0%{opacity:.2;transform:translateY(8px) scale(.97);}
+    100%{opacity:1;transform:none;}
+  }
+  .weekly-recap-value-pop{animation:weeklyRecapValuePop .38s cubic-bezier(.2,.8,.2,1) both;}
+
+  @keyframes weeklyRecapSlideIn{
+    from{opacity:0;transform:translateX(22px) scale(.985);}
+    to{opacity:1;transform:none;}
+  }
+  @keyframes weeklyRecapSlideOutLeft{
+    to{opacity:0;transform:translateX(-24px) scale(.985);}
+  }
+  @keyframes weeklyRecapSlideOutRight{
+    to{opacity:0;transform:translateX(24px) scale(.985);}
+  }
+
+  @media(max-width:620px){
+    .weekly-recap-overlay{padding:0;}
+    .weekly-recap-shell{
+      width:100%;
+      height:100dvh;
+      min-height:0;
+      border:0;
+      border-radius:0;
+    }
+    .weekly-recap-intro,
+    .weekly-recap-story{
+      padding-left:24px;
+      padding-right:24px;
+      padding-bottom:25px;
+    }
+    .weekly-recap-intro{padding-top:92px;}
+    .weekly-recap-intro h2{font-size:36px;letter-spacing:-1.6px;}
+    .weekly-recap-intro-preview{
+      grid-template-columns:auto auto;
+      gap:7px 10px;
+    }
+    .weekly-recap-intro-preview i{display:none;}
+    .weekly-recap-intro-actions{width:100%;}
+    .weekly-recap-intro-actions .btn{flex:1;justify-content:center;}
+    .weekly-recap-slide-value{font-size:56px;letter-spacing:-3px;}
+    .weekly-recap-nav{grid-template-columns:1fr auto 1fr;}
+    .weekly-recap-nav-btn{min-width:78px;padding:9px 9px;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .weekly-recap-ambient,
+    .weekly-recap-intro-orb,
+    .weekly-recap-slide{
+      animation:none !important;
+    }
+    .weekly-recap-viz-fill{transition:none !important;}
+  }
+
+
+  /* Settings · Weekly Recap */
+  .settings-weekly-recap-card{
+    position:relative;
+    overflow:hidden;
+  }
+  .settings-weekly-recap-card::after{
+    content:"";
+    position:absolute;
+    width:130px;height:130px;
+    right:-66px;top:-68px;
+    border-radius:50%;
+    background:radial-gradient(circle,color-mix(in srgb,var(--accent) 14%,transparent),transparent 68%);
+    pointer-events:none;
+  }
+  .settings-recap-icon{
+    color:#051310 !important;
+    border-color:transparent !important;
+    background:linear-gradient(135deg,var(--accent),var(--positive)) !important;
+    box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent);
+  }
+  .settings-recap-preview{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1.25fr 1fr .8fr;
+    gap:6px;
+  }
+  .settings-recap-preview>div{
+    min-width:0;
+    padding:8px 9px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:color-mix(in srgb,var(--panel-solid) 82%,transparent);
+  }
+  .settings-recap-preview span{
+    display:block;
+    margin-bottom:4px;
+    color:var(--muted);
+    font-size:7px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  .settings-recap-preview strong{
+    display:block;
+    overflow:hidden;
+    color:var(--white);
+    font:700 8.8px/1.25 'JetBrains Mono',monospace;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .settings-weekly-recap-card #settingsWeeklyRecapBtn{
+    position:relative;
+    z-index:1;
+  }
+
+  @media(max-width:520px){
+    .settings-recap-preview{
+      grid-template-columns:1fr 1fr;
+    }
+    .settings-recap-preview>div:first-child{
+      grid-column:1/-1;
+    }
+  }
+
+
+  /* ================================================================
+     WEEKLY RECAP · THEME-AWARE MATRIX
+     A more cinematic variant than the normal app rain.
+     ================================================================ */
+  .weekly-recap-matrix-canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+    opacity:.74;
+    mix-blend-mode:screen;
+    filter:saturate(112%);
+  }
+
+  .weekly-recap-shell{
+    z-index:2;
+  }
+
+  .weekly-recap-overlay[data-recap-appearance="light"] .weekly-recap-matrix-canvas{
+    opacity:.34;
+    mix-blend-mode:multiply;
+    filter:saturate(92%);
+  }
+
+  .weekly-recap-overlay::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 44%,transparent 0%,transparent 42%,rgba(0,0,0,.18) 76%,rgba(0,0,0,.48) 100%);
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .weekly-recap-matrix-canvas{
+      opacity:.28;
+    }
+  }
+
+
+  /* ================================================================
+     WEEKLY RECAP · FULL THEME COLOUR SYNC
+     ================================================================ */
+  .weekly-recap-overlay{
+    --recap-accent:var(--accent);
+    --recap-accent-soft:var(--accent-soft);
+    --recap-accent2:var(--accent2);
+    --recap-positive:var(--positive);
+    --recap-text:var(--white);
+    --recap-muted:var(--muted);
+    --recap-line:var(--line);
+    color:var(--recap-text) !important;
+    background:
+      radial-gradient(circle 900px at 12% 8%,color-mix(in srgb,var(--recap-accent) 17%,transparent),transparent 52%),
+      radial-gradient(circle 760px at 90% 92%,color-mix(in srgb,var(--recap-accent2) 14%,transparent),transparent 48%),
+      linear-gradient(180deg,
+        color-mix(in srgb,var(--bg1) 88%,#000 12%),
+        color-mix(in srgb,var(--bg2) 90%,#000 10%)) !important;
+  }
+
+  .weekly-recap-shell{
+    border-color:color-mix(in srgb,var(--recap-accent) 23%,var(--recap-line)) !important;
+    background:
+      radial-gradient(circle at 16% 2%,color-mix(in srgb,var(--recap-accent) 7%,transparent),transparent 30%),
+      radial-gradient(circle at 92% 100%,color-mix(in srgb,var(--recap-accent2) 6%,transparent),transparent 34%),
+      linear-gradient(180deg,
+        color-mix(in srgb,var(--panel-raised) 88%,var(--bg1)),
+        color-mix(in srgb,var(--panel-solid) 90%,var(--bg2))) !important;
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb,var(--recap-accent-soft) 7%,transparent),
+      0 32px 110px rgba(0,0,0,.52),
+      0 0 72px color-mix(in srgb,var(--recap-accent) 7%,transparent) !important;
+  }
+
+  .weekly-recap-shell::before{
+    background:
+      linear-gradient(color-mix(in srgb,var(--recap-accent) 3.5%,transparent) 1px,transparent 1px),
+      linear-gradient(90deg,color-mix(in srgb,var(--recap-accent) 3.5%,transparent) 1px,transparent 1px) !important;
+  }
+
+  .weekly-recap-ambient-a{background:var(--recap-accent) !important;}
+  .weekly-recap-ambient-b{background:var(--recap-accent2) !important;}
+
+  .weekly-recap-brand{color:var(--recap-muted) !important;}
+  .weekly-recap-mark,
+  .weekly-recap-intro-orb,
+  .weekly-recap-slide-icon,
+  .weekly-recap-nav-btn.primary{
+    color:color-mix(in srgb,var(--bg1) 92%,#000 8%) !important;
+    border-color:color-mix(in srgb,var(--recap-accent) 24%,transparent) !important;
+    background:linear-gradient(135deg,var(--recap-accent),var(--recap-accent2)) !important;
+    box-shadow:0 0 34px color-mix(in srgb,var(--recap-accent) 16%,transparent) !important;
+  }
+
+  .weekly-recap-close{
+    color:var(--recap-muted) !important;
+    border-color:color-mix(in srgb,var(--recap-text) 8%,transparent) !important;
+  }
+  .weekly-recap-close:hover{
+    color:var(--recap-text) !important;
+    border-color:color-mix(in srgb,var(--recap-accent) 30%,transparent) !important;
+    background:color-mix(in srgb,var(--recap-accent) 6%,transparent) !important;
+  }
+
+  .weekly-recap-progress-segment{
+    background:color-mix(in srgb,var(--recap-text) 8%,transparent) !important;
+  }
+  .weekly-recap-progress-segment span,
+  .weekly-recap-viz-fill{
+    background:linear-gradient(90deg,var(--recap-accent),var(--recap-accent2)) !important;
+    box-shadow:0 0 18px color-mix(in srgb,var(--recap-accent) 28%,transparent) !important;
+  }
+
+  .weekly-recap-kicker,
+  .weekly-recap-slide-kicker{
+    color:var(--recap-accent-soft) !important;
+  }
+  .weekly-recap-intro h2,
+  .weekly-recap-slide-value,
+  .weekly-recap-slide h3,
+  .weekly-recap-intro-preview strong{
+    color:var(--recap-text) !important;
+  }
+  .weekly-recap-intro p,
+  .weekly-recap-slide p,
+  .weekly-recap-counter,
+  .weekly-recap-intro-preview,
+  .weekly-recap-mini-stat{
+    color:var(--recap-muted) !important;
+  }
+  .weekly-recap-intro-preview{
+    border-color:color-mix(in srgb,var(--recap-accent) 13%,var(--recap-line)) !important;
+    background:color-mix(in srgb,var(--panel-solid) 48%,transparent) !important;
+  }
+  .weekly-recap-intro-preview i{
+    background:color-mix(in srgb,var(--recap-text) 9%,transparent) !important;
+  }
+  .weekly-recap-viz{
+    background:color-mix(in srgb,var(--recap-text) 7%,transparent) !important;
+  }
+  .weekly-recap-nav-btn{
+    color:var(--recap-muted) !important;
+    border-color:color-mix(in srgb,var(--recap-text) 9%,transparent) !important;
+    background:color-mix(in srgb,var(--panel-solid) 45%,transparent) !important;
+  }
+
+  /* Spending uses the theme's secondary accent, while a negative net
+     remains red because that colour is semantic rather than decorative. */
+  .weekly-recap-slide[data-tone="expense"] .weekly-recap-slide-icon{
+    color:color-mix(in srgb,var(--bg1) 92%,#000 8%) !important;
+    border-color:color-mix(in srgb,var(--recap-accent2) 26%,transparent) !important;
+    background:linear-gradient(135deg,var(--recap-accent2),var(--recap-accent-soft)) !important;
+    box-shadow:0 0 32px color-mix(in srgb,var(--recap-accent2) 15%,transparent) !important;
+  }
+  .weekly-recap-slide[data-tone="expense"] .weekly-recap-viz-fill{
+    background:linear-gradient(90deg,var(--recap-accent2),var(--recap-accent-soft)) !important;
+    box-shadow:0 0 18px color-mix(in srgb,var(--recap-accent2) 24%,transparent) !important;
+  }
+  .weekly-recap-slide[data-tone="final"] .weekly-recap-slide-icon{
+    background:linear-gradient(135deg,var(--recap-accent),var(--recap-accent2)) !important;
+  }
+
+  /* ================================================================
+     HYPERDRIVE RAIN · OPTIONAL ON EVERY THEME
+     ================================================================ */
+  .hyperdrive-rain-setting{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-top:12px;
+    padding:10px 11px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:
+      radial-gradient(circle at 3% 0%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 42%),
+      color-mix(in srgb,var(--panel-solid) 84%,transparent);
+  }
+  .hyperdrive-rain-copy{min-width:0;}
+  .hyperdrive-rain-title-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .hyperdrive-rain-title-row strong{color:var(--white);font-size:9.5px;}
+  .hyperdrive-rain-copy>span{display:block;margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4;}
+  .hyperdrive-rain-badge{
+    display:inline-flex;
+    padding:3px 5px;
+    border:1px solid color-mix(in srgb,var(--accent) 19%,var(--line));
+    border-radius:99px;
+    color:var(--accent-soft);
+    background:color-mix(in srgb,var(--accent) 6%,transparent);
+    font:800 6.5px/1 'Sora',sans-serif;
+    letter-spacing:.07em;
+  }
+
+  /* The old HYPERDRIVE-only display rule is intentionally overridden. */
+  html[data-hyperdrive-rain="true"] > body > #hyperdriveMatrixCanvas{
+    display:block !important;
+  }
+  html[data-hyperdrive-rain="false"] > body > #hyperdriveMatrixCanvas{
+    display:none !important;
+  }
+  html[data-hyperdrive-rain="true"][data-appearance="light"] > body > #hyperdriveMatrixCanvas{
+    opacity:.22;
+    mix-blend-mode:multiply;
+  }
+
+  /* Theme-coloured glow pass. Strong enough to feel powered-up, but
+     kept subtle enough that cards remain readable. */
+  html[data-hyperdrive-rain="true"] #mainScreen .panel,
+  html[data-hyperdrive-rain="true"] #mainScreen .settings-card,
+  html[data-hyperdrive-rain="true"] #mainScreen .item-card,
+  html[data-hyperdrive-rain="true"] #mainScreen .budget-card,
+  html[data-hyperdrive-rain="true"] #mainScreen .calendar-event-row{
+    filter:
+      drop-shadow(0 0 8px color-mix(in srgb,var(--accent) 7%,transparent))
+      drop-shadow(0 0 17px color-mix(in srgb,var(--accent2) 3.5%,transparent));
+  }
+
+  html[data-hyperdrive-rain="true"] #mainScreen .btn-primary,
+  html[data-hyperdrive-rain="true"] #mainScreen .app-nav-btn.active,
+  html[data-hyperdrive-rain="true"] #mainScreen .security-switch[aria-checked="true"]{
+    box-shadow:
+      0 0 0 1px color-mix(in srgb,var(--accent) 14%,transparent),
+      0 0 22px color-mix(in srgb,var(--accent) 16%,transparent),
+      0 0 38px color-mix(in srgb,var(--accent2) 7%,transparent);
+  }
+
+  html[data-hyperdrive-rain="true"] #mainScreen .app-nav-btn.active svg,
+  html[data-hyperdrive-rain="true"] #mainScreen .settings-card-icon,
+  html[data-hyperdrive-rain="true"] #mainScreen .panel-label .dash{
+    filter:drop-shadow(0 0 7px color-mix(in srgb,var(--accent) 38%,transparent));
+  }
+
+  html[data-hyperdrive-rain="true"] #mainScreen input:focus,
+  html[data-hyperdrive-rain="true"] #mainScreen select:focus,
+  html[data-hyperdrive-rain="true"] #mainScreen textarea:focus{
+    box-shadow:
+      0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent),
+      0 0 18px color-mix(in srgb,var(--accent) 12%,transparent) !important;
+  }
+
+  html[data-hyperdrive-rain="true"] #mainScreen .item-bar-fill,
+  html[data-hyperdrive-rain="true"] #mainScreen .budget-fill,
+  html[data-hyperdrive-rain="true"] #mainScreen .savings-pace-fill{
+    filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent) 34%,transparent));
+  }
+
+  html[data-focus-mode="true"] > body > #hyperdriveMatrixCanvas{
+    display:none !important;
+  }
+  html[data-focus-mode="true"] #mainScreen .panel,
+  html[data-focus-mode="true"] #mainScreen .settings-card,
+  html[data-focus-mode="true"] #mainScreen .item-card,
+  html[data-focus-mode="true"] #mainScreen .budget-card,
+  html[data-focus-mode="true"] #mainScreen .calendar-event-row{
+    filter:none !important;
+  }
+
+  @media(max-width:520px){
+    .hyperdrive-rain-setting{align-items:flex-start;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html[data-hyperdrive-rain="true"] #mainScreen .panel,
+    html[data-hyperdrive-rain="true"] #mainScreen .settings-card,
+    html[data-hyperdrive-rain="true"] #mainScreen .item-card,
+    html[data-hyperdrive-rain="true"] #mainScreen .budget-card,
+    html[data-hyperdrive-rain="true"] #mainScreen .calendar-event-row{
+      filter:drop-shadow(0 0 7px color-mix(in srgb,var(--accent) 5%,transparent));
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -5656,7 +6625,10 @@
     <div id="dashboardTabPanel" class="app-view" role="region" aria-label="Home">
     <div class="home-widget-toolbar">
       <div><div class="home-widget-eyebrow">Dashboard</div><div class="home-widget-toolbar-title">Your workspace</div></div>
-      <button type="button" class="btn btn-ghost home-widget-customize" id="customizeWidgetsBtn"><span aria-hidden="true">⊞</span> Customize widgets</button>
+      <div class="home-toolbar-actions">
+        <button type="button" class="btn btn-ghost focus-mode-quick-btn" id="focusModeBtn" aria-pressed="false"><span aria-hidden="true">◎</span> Focus</button>
+        <button type="button" class="btn btn-ghost home-widget-customize" id="customizeWidgetsBtn"><span aria-hidden="true">⊞</span> Customize widgets</button>
+      </div>
     </div>
     <div class="dashboard-hero-grid" data-home-widget="overview" id="homeWidgetOverview">
 <div class="section panel dashboard-chart-first">
@@ -5771,6 +6743,14 @@
         <div id="homeScheduleContent" class="home-widget-content"></div>
       </section>
 
+      <section class="panel home-mini-widget weekly-recap-widget" data-home-widget="weekly" id="homeWidgetWeekly">
+        <div class="home-mini-head">
+          <div><div class="dashboard-section-eyebrow">Weekly recap</div><h3>This week</h3></div>
+          <button type="button" class="home-widget-link" id="weeklySummaryOpenBtn">Last week →</button>
+        </div>
+        <div id="homeWeeklyContent" class="home-widget-content"></div>
+      </section>
+
     <section class="dashboard-cluster goal-cluster">
       <div class="dashboard-section-heading goals-heading">
         <div>
@@ -5851,6 +6831,22 @@
 
       <!-- earnings entry -->
       
+    </div>
+
+    <div class="section panel savings-pace-panel hidden" id="savingsPacePanel">
+      <div class="savings-pace-head">
+        <div>
+          <div class="panel-label"><span class="dash"></span>Savings pace</div>
+          <div class="savings-pace-title" id="savingsPaceTitle">Building your pace…</div>
+        </div>
+        <span class="savings-pace-status" id="savingsPaceStatus">—</span>
+      </div>
+      <div class="savings-pace-track"><div class="savings-pace-fill" id="savingsPaceFill"></div></div>
+      <div class="savings-pace-metrics">
+        <div><span>Current pace</span><strong id="savingsPaceCurrent">—</strong></div>
+        <div><span>Needed pace</span><strong id="savingsPaceNeeded">—</strong></div>
+        <div><span>Forecast</span><strong id="savingsPaceForecast">—</strong></div>
+      </div>
     </div>
 
     <div class="section panel trajectory-panel hidden" id="trajectorySection">
@@ -6109,6 +7105,38 @@
                 </div>
               </div>
               <div class="theme-picker settings-theme-picker" id="themePickerMain"></div>
+
+              <div class="hyperdrive-rain-setting">
+                <div class="hyperdrive-rain-copy">
+                  <div class="hyperdrive-rain-title-row">
+                    <strong>HyperDrive Rain</strong>
+                    <span class="hyperdrive-rain-badge">ALL THEMES</span>
+                  </div>
+                  <span id="hyperdriveRainStatusText">Theme-coloured Matrix rain + boosted glow.</span>
+                </div>
+                <button type="button" class="security-switch" id="hyperdriveRainToggle" role="switch" aria-checked="true" aria-label="Toggle HyperDrive Rain">
+                  <span class="security-switch-knob"></span>
+                </button>
+              </div>
+            </section>
+
+            <section class="settings-card focus-mode-card">
+              <div class="settings-card-header">
+                <span class="settings-card-icon" aria-hidden="true">◎</span>
+                <div>
+                  <div class="settings-card-title">Focus mode</div>
+                  <p class="settings-card-desc">Temporarily strip back gamification, Matrix rain and extra motion so only the important money stuff remains.</p>
+                </div>
+              </div>
+              <div class="security-toggle-row">
+                <div class="security-toggle-copy">
+                  <strong>Reduce distractions</strong>
+                  <span id="focusModeStatusText">Focus mode is off</span>
+                </div>
+                <button type="button" class="security-switch" id="focusModeSettingsToggle" role="switch" aria-checked="false" aria-label="Toggle focus mode">
+                  <span class="security-switch-knob"></span>
+                </button>
+              </div>
             </section>
           </div>
         </section>
@@ -6138,6 +7166,33 @@
               <div class="settings-actions">
                 <button class="btn btn-ghost btn-import" id="importLegacyBtn">Import old save</button>
                 <button class="btn btn-ghost" id="whatsNewBtn">What’s new <span class="whats-new-badge" id="whatsNewVersionBadge"></span></button>
+              </div>
+            </section>
+
+            <section class="settings-card settings-weekly-recap-card">
+              <div class="settings-card-header">
+                <span class="settings-card-icon settings-recap-icon" aria-hidden="true">↗</span>
+                <div>
+                  <div class="settings-card-title">Weekly Recap</div>
+                  <p class="settings-card-desc">Replay your latest interactive weekly breakdown whenever you want.</p>
+                </div>
+              </div>
+              <div class="settings-recap-preview">
+                <div>
+                  <span>Last week</span>
+                  <strong id="settingsWeeklyRecapRange">Loading…</strong>
+                </div>
+                <div>
+                  <span>Earned</span>
+                  <strong id="settingsWeeklyRecapEarned">$0.00</strong>
+                </div>
+                <div>
+                  <span>Hours</span>
+                  <strong id="settingsWeeklyRecapHours">0 hrs</strong>
+                </div>
+              </div>
+              <div class="settings-actions">
+                <button type="button" class="btn btn-secondary" id="settingsWeeklyRecapBtn">View weekly recap</button>
               </div>
             </section>
           </div>
@@ -6192,6 +7247,14 @@
             <section class="settings-card settings-card-notifications">
               <div class="settings-card-header"><span class="settings-card-icon" aria-hidden="true">◉</span><div><div class="settings-card-title">Windows notifications</div><p class="settings-card-desc">Get system reminders for shifts, events and budget warnings through your browser or installed LUMIN app.</p></div></div>
               <div class="security-toggle-row"><div class="security-toggle-copy"><strong>System notifications</strong><span id="notificationPermissionText">Checking browser permission…</span></div><button type="button" class="security-switch" id="notificationToggle" role="switch" aria-checked="false" aria-label="Toggle Windows notifications"><span class="security-switch-knob"></span></button></div>
+              <label class="notification-preset-row">Preset
+                <select id="notificationPresetSelect">
+                  <option value="minimal">Minimal</option>
+                  <option value="normal">Normal</option>
+                  <option value="everything">Everything</option>
+                </select>
+              </label>
+              <div class="notification-preset-hint" id="notificationPresetHint">Shifts, events and budget warnings.</div>
               <label class="notification-lead-row">Calendar reminder<select id="notificationLeadSelect"><option value="15">15 minutes before</option><option value="30">30 minutes before</option><option value="60">1 hour before</option><option value="120">2 hours before</option></select></label>
               <div class="settings-actions"><button type="button" class="btn btn-ghost" id="testNotificationBtn">Send test notification</button></div>
             </section>
@@ -6224,6 +7287,68 @@
 
 
   <div class="offline-toast" id="offlineToast" role="status" aria-live="polite"></div>
+  <div id="weeklySummaryBackdrop" class="weekly-recap-overlay hidden" aria-hidden="true">
+    <canvas id="weeklyRecapMatrixCanvas" class="weekly-recap-matrix-canvas" aria-hidden="true"></canvas>
+    <div class="weekly-recap-shell" role="dialog" aria-modal="true" aria-labelledby="weeklySummaryTitle">
+      <div class="weekly-recap-ambient weekly-recap-ambient-a"></div>
+      <div class="weekly-recap-ambient weekly-recap-ambient-b"></div>
+
+      <div class="weekly-recap-topbar">
+        <div class="weekly-recap-brand">
+          <span class="weekly-recap-mark">L</span>
+          <span>LUMIN WEEKLY</span>
+        </div>
+        <button type="button" class="weekly-recap-close" id="weeklySummaryCloseBtn" aria-label="Close weekly recap">×</button>
+      </div>
+
+      <div class="weekly-recap-progress" id="weeklyRecapProgress" aria-hidden="true"></div>
+
+      <section class="weekly-recap-intro" id="weeklySummaryPrompt">
+        <div class="weekly-recap-intro-orb" aria-hidden="true">
+          <span>↗</span>
+        </div>
+        <div class="weekly-recap-kicker">YOUR WEEK IS READY</div>
+        <h2 id="weeklySummaryTitle">Here's your weekly summary!</h2>
+        <p id="weeklySummaryPromptSub">Your last seven days are ready.</p>
+
+        <div class="weekly-recap-intro-preview" id="weeklyRecapIntroPreview">
+          <span>Earned</span><strong>$0</strong>
+          <i></i>
+          <span>Hours</span><strong>0 hrs</strong>
+        </div>
+
+        <div class="weekly-recap-intro-actions">
+          <button type="button" class="btn btn-ghost" id="weeklySummaryLaterBtn">Later</button>
+          <button type="button" class="btn btn-primary weekly-recap-start-btn" id="weeklySummaryViewBtn">View recap <span>→</span></button>
+        </div>
+      </section>
+
+      <section class="weekly-recap-story hidden" id="weeklySummaryDetails">
+        <div class="weekly-recap-slide-wrap">
+          <article class="weekly-recap-slide" id="weeklyRecapSlide" aria-live="polite">
+            <div class="weekly-recap-slide-icon" id="weeklyRecapSlideIcon">↗</div>
+            <div class="weekly-recap-slide-kicker" id="weeklyRecapSlideKicker">LAST WEEK</div>
+            <div class="weekly-recap-slide-value" id="weeklyRecapSlideValue">$0</div>
+            <h3 id="weeklyRecapSlideTitle">You earned</h3>
+            <p id="weeklyRecapSlideCopy">Your week in LUMIN.</p>
+
+            <div class="weekly-recap-viz" id="weeklyRecapViz">
+              <div class="weekly-recap-viz-fill" id="weeklyRecapVizFill"></div>
+            </div>
+
+            <div class="weekly-recap-mini-stat" id="weeklyRecapMiniStat"></div>
+          </article>
+        </div>
+
+        <div class="weekly-recap-nav">
+          <button type="button" class="weekly-recap-nav-btn" id="weeklyRecapBackBtn">← Back</button>
+          <div class="weekly-recap-counter" id="weeklyRecapCounter">1 / 5</div>
+          <button type="button" class="weekly-recap-nav-btn primary" id="weeklyRecapNextBtn">Next →</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
   <div id="widgetModalBackdrop" class="modal-backdrop hidden"><div class="modal widget-modal" role="dialog" aria-modal="true" aria-labelledby="widgetModalTitle">
     <div class="modal-head"><div><div class="modal-kicker">Home dashboard</div><h2 class="modal-title" id="widgetModalTitle">Customize widgets</h2><p class="modal-sub">Show, hide and reorder the sections on Home.</p></div><button class="modal-close" type="button" id="widgetModalCloseBtn">×</button></div>
     <div id="widgetOptionsList" class="widget-options-list"></div><div class="widget-modal-foot"><button class="btn btn-ghost" type="button" id="widgetResetBtn">Reset layout</button><button class="btn btn-primary" type="button" id="widgetDoneBtn">Done</button></div>
@@ -6691,9 +7816,63 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.10.5";
+  const APP_VERSION = "2026.09.10.10";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.10.10",
+      title: "Theme-synced Recap & HyperDrive Rain",
+      date: "10 September 2026",
+      changes: [
+        "Weekly Recap visuals now use the selected theme's accent, secondary accent, surfaces, text and glow colours instead of always using HYPERDRIVE green.",
+        "Added HyperDrive Rain as an independent theme setting that works with every theme.",
+        "HyperDrive Rain adds theme-coloured Matrix rain plus an enhanced glow pass across cards, controls, progress bars and active navigation.",
+        "Focus mode still suppresses the extra rain and glow when distraction reduction is enabled."
+      ]
+    },
+    {
+      version: "2026.09.10.9",
+      title: "Theme-aware Weekly Recap Matrix",
+      date: "10 September 2026",
+      changes: [
+        "Added a dedicated cinematic Matrix effect behind the interactive Weekly Recap.",
+        "Weekly Recap Matrix colors now follow the active theme's accent, secondary accent and soft accent colors.",
+        "The recap effect uses larger glyphs, longer trails, subtle horizontal sway and brighter themed heads so it feels distinct from the normal app rain.",
+        "Light mode automatically tones the recap Matrix down while preserving each theme's identity."
+      ]
+    },
+    {
+      version: "2026.09.10.8",
+      title: "Weekly Recap in Settings",
+      date: "10 September 2026",
+      changes: [
+        "Added a Weekly Recap card to Settings with last week’s date range, earnings and hours preview.",
+        "The Settings button opens the full interactive Weekly Recap directly."
+      ]
+    },
+    {
+      version: "2026.09.10.7",
+      title: "Interactive Weekly Recap",
+      date: "10 September 2026",
+      changes: [
+        "Replaced the static weekly-summary popup with a full interactive LUMIN Recap experience.",
+        "Added individual animated recap screens for earnings, spending, net change, hours worked and the final weekly wrap-up.",
+        "Added recap progress bars, Back and Next controls, keyboard-arrow navigation and mobile swipe navigation.",
+        "The Home weekly widget can reopen the complete recap at any time."
+      ]
+    },
+    {
+      version: "2026.09.10.6",
+      title: "Focus, pace & weekly recap",
+      date: "10 September 2026",
+      changes: [
+        "Added Minimal, Normal and Everything notification presets.",
+        "Added Focus mode to hide gamification, Matrix rain and extra workspace motion while keeping the core money tools visible.",
+        "Added Savings Pace for active goals, including current weekly pace, required pace and deadline forecast.",
+        "Added a tiny weekly recap widget for earnings, spending, net change and hours worked.",
+        "Added a weekly 'Here's your weekly summary!' popup with View and Later actions."
+      ]
+    },
     {
       version: "2026.09.10.5",
       title: "Future shift estimates",
@@ -7323,6 +8502,7 @@
   let streakFreezeLastCheck = "";
   let currentTheme = "hyperdrive";
   let appearanceMode = "dark"; // dark | light | system
+  let hyperdriveRainEnabled = true;
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
   let chartView = "month";
@@ -7340,8 +8520,12 @@
   let calendarEvents = [];
   let notificationsEnabled = false;
   let notificationLeadMinutes = 30;
+  let notificationPreset = "normal";
   let notificationHistory = null;
-  let homeWidgetOrder = ["overview","stats","budgets","schedule"];
+  let focusMode = false;
+  let weeklySummaryLastViewed = "";
+  let weeklySummarySnoozeUntil = 0;
+  let homeWidgetOrder = ["overview","stats","weekly","budgets","schedule"];
   let homeWidgetHidden = null;
   let calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
   let calendarSelectedDate = "";
@@ -7747,7 +8931,7 @@
 
   const hyperdriveMatrixSystems=[];
 
-  function createHyperdriveMatrixSystem(canvas,{auth=false,loading=false}={}){
+  function createHyperdriveMatrixSystem(canvas,{auth=false,loading=false,recap=false}={}){
     if(!canvas) return null;
 
     const ctx=canvas.getContext("2d",{alpha:true});
@@ -7758,13 +8942,14 @@
       ctx,
       auth,
       loading,
+      recap,
       width:0,
       height:0,
       dpr:1,
-      fontSize:19,
+      fontSize:recap?22:19,
       columns:[],
       lastFrame:0,
-      frameInterval:48,
+      frameInterval:recap?42:48,
       resize(){
         const rect=canvas.getBoundingClientRect();
         const width=Math.max(1,Math.round(rect.width||window.innerWidth));
@@ -7780,15 +8965,16 @@
         ctx.setTransform(dpr,0,0,dpr,0,0);
         ctx.clearRect(0,0,width,height);
 
-        const spacing=this.fontSize+11;
+        const spacing=this.fontSize+(recap?15:11);
         const count=Math.ceil(width/spacing)+1;
         this.columns=Array.from({length:count},(_,i)=>({
-          x:i*spacing+(Math.random()*5-2.5),
+          x:i*spacing+(Math.random()*(recap?10:5)-(recap?5:2.5)),
           y:Math.random()*-height,
-          speed:0.68+Math.random()*0.62,
-          length:5+Math.floor(Math.random()*10),
+          speed:(recap?.46:.68)+Math.random()*(recap?.72:.62),
+          length:(recap?8:5)+Math.floor(Math.random()*(recap?15:10)),
           phase:Math.random()*Math.PI*2,
-          skip:Math.random()<.18
+          skip:Math.random()<(recap?.10:.18),
+          sway:recap?(Math.random()*.9+.18)*(Math.random()<.5?-1:1):0
         }));
       }
     };
@@ -7809,11 +8995,39 @@
       const loading=$("appLoadingScreen");
       return !!(loading && !loading.classList.contains("hidden"));
     }
+    if(system.recap){
+      const recap=$("weeklySummaryBackdrop");
+      return !!(recap && !recap.classList.contains("hidden"));
+    }
     if(system.auth){
       const gate=$("authGate");
       return !!(gate && !gate.classList.contains("hidden"));
     }
-    return currentTheme==="hyperdrive";
+    return hyperdriveRainEnabled;
+  }
+
+
+  function matrixCssColorToRgb(value,fallback){
+    const test=document.createElement("span");
+    test.style.color=value||fallback;
+    test.style.display="none";
+    document.body.appendChild(test);
+    const computed=getComputedStyle(test).color;
+    test.remove();
+    const nums=(computed.match(/[\d.]+/g)||[]).slice(0,3).map(Number);
+    return nums.length===3?nums:fallback;
+  }
+
+  function weeklyRecapThemeMatrixColors(){
+    const styles=getComputedStyle(document.documentElement);
+    const accent=(styles.getPropertyValue("--accent")||"#20eee9").trim();
+    const accent2=(styles.getPropertyValue("--accent2")||styles.getPropertyValue("--positive")||"#45ef72").trim();
+    const soft=(styles.getPropertyValue("--accent-soft")||accent).trim();
+    return [
+      matrixCssColorToRgb(accent,[32,238,233]),
+      matrixCssColorToRgb(accent2,[69,239,114]),
+      matrixCssColorToRgb(soft,[119,255,251])
+    ];
   }
 
   function drawHyperdriveMatrix(system,now){
@@ -7828,13 +9042,22 @@
 
     const {ctx,width,height,fontSize}=system;
     const light=!system.auth && effectiveAppearanceMode()==="light";
-    const baseColor=light ? [10,104,98] : [44,244,229];
-    const accentColor=light ? [18,118,77] : [83,244,126];
+
+    let baseColor=light ? [10,104,98] : [44,244,229];
+    let accentColor=light ? [18,118,77] : [83,244,126];
+    let highlightColor=light ? [18,118,77] : [150,255,244];
+
+    if(system.recap || (!system.auth && !system.loading && hyperdriveRainEnabled)){
+      const themeColors=weeklyRecapThemeMatrixColors();
+      baseColor=themeColors[0];
+      accentColor=themeColors[1];
+      highlightColor=themeColors[2];
+    }
 
     // Fade only previous glyph pixels, preserving canvas transparency.
     ctx.save();
     ctx.globalCompositeOperation="destination-out";
-    ctx.fillStyle="rgba(0,0,0,0.105)";
+    ctx.fillStyle=`rgba(0,0,0,${system.recap?.078:.105})`;
     ctx.fillRect(0,0,width,height);
     ctx.restore();
 
@@ -7858,27 +9081,38 @@
         if(y<-fontSize||y>height+fontSize) continue;
 
         const distance=1-trail/Math.max(1,col.length);
-        let alpha=.018+distance*.105;
-        if(trail===0) alpha=light?.20:.33;
+        let alpha=(system.recap?.012:.018)+distance*(system.recap?.125:.105);
+        if(trail===0) alpha=system.recap?(light?.24:.42):(light?.20:.33);
         alpha*=pulse;
 
-        const useAccent=(trail===0&&Math.random()<.30);
-        const rgb=useAccent?accentColor:baseColor;
+        let rgb=baseColor;
+        if(system.recap){
+          if(trail===0&&Math.random()<.26) rgb=highlightColor;
+          else if(Math.random()<.24) rgb=accentColor;
+        }else if(trail===0&&Math.random()<.30){
+          rgb=accentColor;
+        }
+
+        const x=system.recap
+          ? col.x+Math.sin((y*.012)+(now*.0007)+col.phase)*col.sway*8
+          : col.x;
+
         ctx.fillStyle=`rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
         ctx.shadowColor=trail===0
-          ? `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${light?.08:.24})`
+          ? `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${system.recap?(light?.10:.34):(light?.08:.24)})`
           : "transparent";
-        ctx.shadowBlur=trail===0?(light?2:6):0;
-        ctx.fillText(hyperdriveMatrixGlyph(),col.x,y);
+        ctx.shadowBlur=trail===0?(system.recap?(light?3:9):(light?2:6)):0;
+        ctx.fillText(hyperdriveMatrixGlyph(),x,y);
       }
 
       col.y+=fontSize*col.speed;
       if(col.y-col.length*fontSize>height){
         col.y=-Math.random()*height*.55-fontSize*2;
-        col.speed=0.68+Math.random()*0.62;
-        col.length=5+Math.floor(Math.random()*10);
+        col.speed=(system.recap?.46:.68)+Math.random()*(system.recap?.72:.62);
+        col.length=(system.recap?8:5)+Math.floor(Math.random()*(system.recap?15:10));
         col.phase=Math.random()*Math.PI*2;
-        col.skip=Math.random()<.18;
+        col.skip=Math.random()<(system.recap?.10:.18);
+        if(system.recap) col.sway=(Math.random()*.9+.18)*(Math.random()<.5?-1:1);
       }
     }
   }
@@ -7894,6 +9128,7 @@
     createHyperdriveMatrixSystem($("hyperdriveMatrixCanvas"));
     createHyperdriveMatrixSystem($("authHyperdriveMatrixCanvas"),{auth:true});
     createHyperdriveMatrixSystem($("loadingHyperdriveMatrixCanvas"),{auth:true,loading:true});
+    createHyperdriveMatrixSystem($("weeklyRecapMatrixCanvas"),{recap:true});
     window.addEventListener("resize",()=>{
       hyperdriveMatrixSystems.forEach(system=>system.resize());
     },{passive:true});
@@ -7916,6 +9151,28 @@
     const color=(styles.getPropertyValue("--bg1")||"#12111a").trim() || "#12111a";
     meta.setAttribute("content",color);
   }
+
+
+  function applyHyperdriveRain(){
+    document.documentElement.dataset.hyperdriveRain=hyperdriveRainEnabled?"true":"false";
+    const toggle=$("hyperdriveRainToggle");
+    const status=$("hyperdriveRainStatusText");
+    if(toggle) toggle.setAttribute("aria-checked",hyperdriveRainEnabled?"true":"false");
+    if(status){
+      status.textContent=hyperdriveRainEnabled
+        ? `${THEMES[currentTheme]?.label||"Current theme"} colours · Matrix rain + enhanced glow.`
+        : "Off · the selected theme stays clean and low-glow.";
+    }
+    refreshHyperdriveMatrix();
+  }
+
+  async function toggleHyperdriveRain(){
+    hyperdriveRainEnabled=!hyperdriveRainEnabled;
+    applyHyperdriveRain();
+    await persist();
+  }
+
+  $("hyperdriveRainToggle").addEventListener("click",toggleHyperdriveRain);
 
   function buildAppearanceModeControl(){
     const container=$("appearanceModePicker");
@@ -7958,6 +9215,14 @@
     });
 
     syncBrowserThemeColor();
+    applyHyperdriveRain();
+
+    const recapOverlay=$("weeklySummaryBackdrop");
+    if(recapOverlay){
+      recapOverlay.dataset.recapTheme=currentTheme;
+      recapOverlay.dataset.recapAppearance=effectiveAppearanceMode();
+    }
+
     refreshHyperdriveMatrix();
   }
 
@@ -8735,6 +10000,7 @@
     streakFreezeLastCheck = "";
     currentTheme = "hyperdrive";
     appearanceMode = "dark";
+    hyperdriveRainEnabled = true;
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
     customThemeDraft = null;
     chartView = "month";
@@ -8751,8 +10017,12 @@
     calendarEvents = [];
     notificationsEnabled = false;
     notificationLeadMinutes = 30;
+    notificationPreset = "normal";
     notificationHistory = new Set();
-    homeWidgetOrder = ["overview","stats","budgets","schedule"];
+    focusMode = false;
+    weeklySummaryLastViewed = "";
+    weeklySummarySnoozeUntil = 0;
+    homeWidgetOrder = ["overview","stats","weekly","budgets","schedule"];
     homeWidgetHidden = new Set();
     calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
     calendarSelectedDate = todayStr();
@@ -8781,6 +10051,7 @@
     if(parsed.customTheme) customTheme = sanitizeCustomTheme(parsed.customTheme);
     if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
     if(["dark","light","system"].includes(parsed.appearanceMode)) appearanceMode = parsed.appearanceMode;
+    hyperdriveRainEnabled = parsed.hyperdriveRainEnabled===undefined ? true : parsed.hyperdriveRainEnabled===true;
     if(parsed.chartView && ["day","week","month"].includes(parsed.chartView)) chartView = parsed.chartView;
     if(parsed.chartType && ["bar","line","area"].includes(parsed.chartType)) chartType = parsed.chartType;
     tutorialCompleted = parsed.tutorialCompleted === false ? false : true;
@@ -8791,8 +10062,12 @@
     calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>({id:String(ev.id||uid()),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged})) : [];
     notificationsEnabled = parsed.notificationsEnabled===true;
     notificationLeadMinutes = [15,30,60,120].includes(Number(parsed.notificationLeadMinutes)) ? Number(parsed.notificationLeadMinutes) : 30;
+    notificationPreset = ["minimal","normal","everything"].includes(parsed.notificationPreset) ? parsed.notificationPreset : "normal";
     notificationHistory = new Set(Array.isArray(parsed.notificationHistory)?parsed.notificationHistory.slice(-250):[]);
-    const allowedWidgets=["overview","stats","budgets","schedule"];
+    focusMode = parsed.focusMode===true;
+    weeklySummaryLastViewed = /^\d{4}-\d{2}-\d{2}$/.test(parsed.weeklySummaryLastViewed||"") ? parsed.weeklySummaryLastViewed : "";
+    weeklySummarySnoozeUntil = Math.max(0,Number(parsed.weeklySummarySnoozeUntil)||0);
+    const allowedWidgets=["overview","stats","weekly","budgets","schedule"];
     homeWidgetOrder = Array.isArray(parsed.homeWidgetOrder) ? parsed.homeWidgetOrder.filter(v=>allowedWidgets.includes(v)) : [];
     allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)) homeWidgetOrder.push(v);});
     homeWidgetHidden = new Set(Array.isArray(parsed.homeWidgetHidden)?parsed.homeWidgetHidden.filter(v=>allowedWidgets.includes(v)):[]);
@@ -9509,6 +10784,8 @@
 
   function finishLoadedState(){
     applyTheme(currentTheme);
+    applyHyperdriveRain();
+    applyFocusMode();
     buildThemePicker($("themePickerSetup"));
     buildThemePicker($("themePickerMain"));
     buildAppearanceModeControl();
@@ -9519,6 +10796,7 @@
     render();
     renderChangelog();
     maybeShowChangelog();
+    setTimeout(maybeShowWeeklySummary,1300);
   }
 
   async function applySavePayload(payload){
@@ -9568,6 +10846,7 @@
       streakFreezeLastCheck,
       theme:currentTheme,
       appearanceMode,
+      hyperdriveRainEnabled,
       customTheme:sanitizeCustomTheme(customTheme),
       chartView,
       chartType,
@@ -9579,7 +10858,11 @@
       calendarEvents,
       notificationsEnabled,
       notificationLeadMinutes,
+      notificationPreset,
       notificationHistory:Array.from(notificationHistory||[]).slice(-250),
+      focusMode,
+      weeklySummaryLastViewed,
+      weeklySummarySnoozeUntil,
       homeWidgetOrder,
       homeWidgetHidden:Array.from(homeWidgetHidden||[])
     });
@@ -12047,6 +13330,7 @@
     $("changelogBackdrop").classList.add("hidden");
     markCurrentChangelogSeen();
     unlockBodyScroll();
+    setTimeout(maybeShowWeeklySummary,420);
   }
 
   function maybeShowChangelog(){
@@ -12423,7 +13707,15 @@
   // ================================================================
   function notificationSupported(){return "Notification" in window;}
   function renderNotificationSettings(){
-    const toggle=$("notificationToggle"),status=$("notificationPermissionText"),lead=$("notificationLeadSelect"),test=$("testNotificationBtn"); if(!toggle||!status)return;
+    const toggle=$("notificationToggle"),status=$("notificationPermissionText"),lead=$("notificationLeadSelect"),preset=$("notificationPresetSelect"),hint=$("notificationPresetHint"),test=$("testNotificationBtn"); if(!toggle||!status)return;
+    if(preset) preset.value=notificationPreset;
+    if(hint){
+      hint.textContent=notificationPreset==="minimal"
+        ? "Only work-shift reminders and budget-limit alerts."
+        : notificationPreset==="everything"
+          ? "Shifts, events, unavailable blocks and early budget warnings."
+          : "Shifts, events and useful budget warnings without the noisy stuff.";
+    }
     if(!notificationSupported()){toggle.disabled=true;toggle.setAttribute("aria-checked","false");status.textContent="Not supported by this browser.";test.disabled=true;return;}
     const permission=Notification.permission; if(permission!=="granted")notificationsEnabled=false; toggle.disabled=permission==="denied";toggle.setAttribute("aria-checked",notificationsEnabled&&permission==="granted"?"true":"false"); status.textContent=permission==="granted"?(notificationsEnabled?"On · Windows notifications allowed":"Allowed · currently off"):permission==="denied"?"Blocked in browser/site settings":"Permission not requested";lead.value=String(notificationLeadMinutes);test.disabled=permission!=="granted"||!notificationsEnabled;
   }
@@ -12438,25 +13730,597 @@
   }
   $("notificationToggle").addEventListener("click",()=>setNotificationsEnabled(!notificationsEnabled));
   $("notificationLeadSelect").addEventListener("change",async e=>{notificationLeadMinutes=[15,30,60,120].includes(Number(e.target.value))?Number(e.target.value):30;await persist();});
+  $("notificationPresetSelect").addEventListener("change",async e=>{
+    notificationPreset=["minimal","normal","everything"].includes(e.target.value)?e.target.value:"normal";
+    await persist();
+    renderNotificationSettings();
+  });
   $("testNotificationBtn").addEventListener("click",async()=>{const ok=await showWindowsNotification("LUMIN notifications are ready","Calendar and budget reminders will appear here.","lumin-test");if(!ok)showOfflineToast("Couldn’t send a system notification.");});
   async function runNotificationChecks(){
-    if(!notificationsEnabled||!notificationSupported()||Notification.permission!=="granted")return; if(!notificationHistory)notificationHistory=new Set(); const now=Date.now(),lead=notificationLeadMinutes*60000; let changed=false;
-    for(const ev of calendarEvents){if(!ev.notify)continue;const ts=calendarEventTimestamp(ev);if(ts===null)continue;const delta=ts-now;if(delta<0||delta>lead)continue;const key=`calendar:${ev.id}:${ev.date}:${ev.start}`;if(notificationHistory.has(key))continue;const mins=Math.max(0,Math.round(delta/60000));await showWindowsNotification(ev.type==="shift"?`Shift in ${mins} min`:`${ev.title} in ${mins} min`,`${ev.title} · ${formatTime12(ev.start)}–${formatTime12(ev.end)}`,key);notificationHistory.add(key);changed=true;}
-    for(const budget of budgets){const spent=budgetSpent(budget),pct=budget.limit>0?(spent/budget.limit)*100:0,bounds=budgetBounds(budget),threshold=pct>=100?100:pct>=80?80:0;if(!threshold)continue;const key=`budget:${budget.id}:${bounds.key}:${threshold}`;if(notificationHistory.has(key))continue;await showWindowsNotification(threshold===100?`${budget.name} budget reached`:`${budget.name} budget is ${Math.round(pct)}% used`,threshold===100?`${fmtMoney(spent)} spent against your ${fmtMoney(budget.limit)} ${budget.period} limit.`:`${fmtMoney(Math.max(0,budget.limit-spent))} remaining this ${budget.period==="weekly"?"week":"month"}.`,key);notificationHistory.add(key);changed=true;}
+    if(!notificationsEnabled||!notificationSupported()||Notification.permission!=="granted")return;
+    if(!notificationHistory)notificationHistory=new Set();
+
+    const now=Date.now(),lead=notificationLeadMinutes*60000;
+    let changed=false;
+
+    const calendarTypeAllowed=(type)=>{
+      if(notificationPreset==="minimal") return type==="shift";
+      if(notificationPreset==="normal") return type==="shift"||type==="event";
+      return true;
+    };
+
+    for(const ev of calendarEvents){
+      if(!ev.notify||!calendarTypeAllowed(ev.type))continue;
+      const ts=calendarEventTimestamp(ev);
+      if(ts===null)continue;
+      const delta=ts-now;
+      if(delta<0||delta>lead)continue;
+      const key=`calendar:${ev.id}:${ev.date}:${ev.start}`;
+      if(notificationHistory.has(key))continue;
+      const mins=Math.max(0,Math.round(delta/60000));
+      await showWindowsNotification(
+        ev.type==="shift"?`Shift in ${mins} min`:`${ev.title} in ${mins} min`,
+        `${ev.title} · ${formatTime12(ev.start)}–${formatTime12(ev.end)}`,
+        key
+      );
+      notificationHistory.add(key);
+      changed=true;
+    }
+
+    for(const budget of budgets){
+      const spent=budgetSpent(budget);
+      const pct=budget.limit>0?(spent/budget.limit)*100:0;
+      const bounds=budgetBounds(budget);
+      let threshold=0;
+
+      if(notificationPreset==="minimal"){
+        threshold=pct>=100?100:0;
+      }else{
+        threshold=pct>=100?100:pct>=80?80:0;
+      }
+
+      if(!threshold)continue;
+      const key=`budget:${budget.id}:${bounds.key}:${threshold}`;
+      if(notificationHistory.has(key))continue;
+      await showWindowsNotification(
+        threshold===100?`${budget.name} budget reached`:`${budget.name} budget is ${Math.round(pct)}% used`,
+        threshold===100
+          ? `${fmtMoney(spent)} spent against your ${fmtMoney(budget.limit)} ${budget.period} limit.`
+          : `${fmtMoney(Math.max(0,budget.limit-spent))} remaining this ${budget.period==="weekly"?"week":"month"}.`,
+        key
+      );
+      notificationHistory.add(key);
+      changed=true;
+    }
+
     if(changed)await persist();
   }
 
   // ================================================================
   // HOME WIDGETS
   // ================================================================
-  const HOME_WIDGET_META={overview:{name:"Overview & progress",desc:"Earnings graph, forecast, XP and missions."},stats:{name:"Quick stats",desc:"Today, week, month, year and records."},budgets:{name:"Budget snapshot",desc:"Your most-used spending limits."},schedule:{name:"Upcoming schedule",desc:"Next shifts, busy time and events."}};
+  const HOME_WIDGET_META={
+    overview:{name:"Overview & progress",desc:"Earnings graph, forecast, XP and missions."},
+    stats:{name:"Quick stats",desc:"Today, week, month, year and records."},
+    weekly:{name:"Weekly recap",desc:"A tiny snapshot of this week’s money and hours."},
+    budgets:{name:"Budget snapshot",desc:"Your most-used spending limits."},
+    schedule:{name:"Upcoming schedule",desc:"Next shifts, busy time and events."}
+  };
   function applyHomeWidgetLayout(){const panel=$("dashboardTabPanel");if(!panel)return;if(!homeWidgetHidden)homeWidgetHidden=new Set();homeWidgetOrder.forEach(key=>{const el=panel.querySelector(`[data-home-widget="${key}"]`);if(!el)return;el.classList.toggle("hidden",homeWidgetHidden.has(key));panel.appendChild(el);});}
   function renderWidgetCustomizer(){const list=$("widgetOptionsList");if(!list)return;list.innerHTML=homeWidgetOrder.map((key,index)=>{const meta=HOME_WIDGET_META[key],hidden=homeWidgetHidden&&homeWidgetHidden.has(key);return `<div class="widget-option"><div><div class="widget-option-name">${escapeHtml(meta.name)}</div><div class="widget-option-desc">${escapeHtml(meta.desc)}</div></div><div class="widget-option-actions"><button type="button" data-widget-toggle="${key}" class="${hidden?"widget-hidden":"widget-visible"}" title="${hidden?"Show":"Hide"}">${hidden?"○":"●"}</button><button type="button" data-widget-up="${key}" ${index===0?"disabled":""}>↑</button><button type="button" data-widget-down="${key}" ${index===homeWidgetOrder.length-1?"disabled":""}>↓</button></div></div>`;}).join("");}
   function openWidgetCustomizer(){renderWidgetCustomizer();$("widgetModalBackdrop").classList.remove("hidden");} function closeWidgetCustomizer(){$("widgetModalBackdrop").classList.add("hidden");}
   $("customizeWidgetsBtn").addEventListener("click",openWidgetCustomizer);$("widgetModalCloseBtn").addEventListener("click",closeWidgetCustomizer);$("widgetDoneBtn").addEventListener("click",closeWidgetCustomizer);$("widgetModalBackdrop").addEventListener("click",e=>{if(e.target.id==="widgetModalBackdrop")closeWidgetCustomizer();});
-  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","stats","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
+  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","stats","weekly","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
   $("widgetOptionsList").addEventListener("click",async e=>{const toggle=e.target.closest("[data-widget-toggle]"),up=e.target.closest("[data-widget-up]"),down=e.target.closest("[data-widget-down]");let changed=false;if(toggle){const key=toggle.dataset.widgetToggle;if(homeWidgetHidden.has(key))homeWidgetHidden.delete(key);else homeWidgetHidden.add(key);changed=true;}else if(up){const key=up.dataset.widgetUp,i=homeWidgetOrder.indexOf(key);if(i>0){[homeWidgetOrder[i-1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i-1]];changed=true;}}else if(down){const key=down.dataset.widgetDown,i=homeWidgetOrder.indexOf(key);if(i>=0&&i<homeWidgetOrder.length-1){[homeWidgetOrder[i+1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i+1]];changed=true;}}if(changed){renderWidgetCustomizer();applyHomeWidgetLayout();await persist();}});
   document.querySelectorAll("[data-jump-view]").forEach(btn=>btn.addEventListener("click",()=>setAppView(btn.dataset.jumpView,false,true)));
+
+
+  // ================================================================
+  // FOCUS MODE
+  // ================================================================
+  function applyFocusMode(){
+    document.documentElement.dataset.focusMode=focusMode?"true":"false";
+    const quick=$("focusModeBtn");
+    const settings=$("focusModeSettingsToggle");
+    const status=$("focusModeStatusText");
+
+    if(quick){
+      quick.setAttribute("aria-pressed",focusMode?"true":"false");
+      quick.innerHTML=focusMode?'<span aria-hidden="true">●</span> Focus on':'<span aria-hidden="true">◎</span> Focus';
+    }
+    if(settings) settings.setAttribute("aria-checked",focusMode?"true":"false");
+    if(status) status.textContent=focusMode
+      ? "On · gamification, Matrix rain and extra motion are hidden"
+      : "Focus mode is off";
+
+    refreshHyperdriveMatrix();
+    setTimeout(updateWorkspaceFit,20);
+  }
+
+  async function toggleFocusMode(){
+    focusMode=!focusMode;
+    applyFocusMode();
+    await persist();
+  }
+
+  $("focusModeBtn").addEventListener("click",toggleFocusMode);
+  $("focusModeSettingsToggle").addEventListener("click",toggleFocusMode);
+
+  // ================================================================
+  // SAVINGS PACE
+  // ================================================================
+  function recentSavingsPace(days=28){
+    const today=todayStr();
+    const start=addDaysKey(today,-(days-1));
+    let earned=0,spent=0;
+
+    entries.forEach(en=>{
+      if(en.date>=start&&en.date<=today) earned+=entryEarned(en);
+    });
+    expenses.forEach(exp=>{
+      if(exp.date>=start&&exp.date<=today) spent+=Math.max(0,Number(exp.amount)||0);
+    });
+
+    return {
+      earned,spent,
+      net:earned-spent,
+      perDay:(earned-spent)/days,
+      perWeek:((earned-spent)/days)*7
+    };
+  }
+
+  function renderSavingsPace(item,saved){
+    const panel=$("savingsPacePanel");
+    if(!panel) return;
+
+    if(!item||item.purchasedAt||!(Number(item.goal)>0)){
+      panel.classList.add("hidden");
+      return;
+    }
+
+    panel.classList.remove("hidden");
+    const pace=recentSavingsPace(28);
+    const remaining=Math.max(0,Number(item.goal)-saved);
+    const status=$("savingsPaceStatus");
+    const fill=$("savingsPaceFill");
+    const currentPerWeek=Math.max(0,pace.perWeek);
+
+    $("savingsPaceCurrent").textContent=currentPerWeek>0?fmtMoney(currentPerWeek,0)+" / wk":"No pace yet";
+
+    if(remaining<=0){
+      $("savingsPaceTitle").textContent="This goal is fully funded.";
+      status.textContent="Funded";
+      status.className="savings-pace-status ahead";
+      $("savingsPaceNeeded").textContent="Done";
+      $("savingsPaceForecast").textContent="Ready now";
+      fill.className="savings-pace-fill";
+      fill.style.width="100%";
+      return;
+    }
+
+    if(!item.deadline||!/^\d{4}-\d{2}-\d{2}$/.test(item.deadline)){
+      $("savingsPaceTitle").textContent="Add a deadline to compare your current saving speed against a target.";
+      status.textContent=currentPerWeek>0?"Tracking":"No pace yet";
+      status.className="savings-pace-status";
+      $("savingsPaceNeeded").textContent="Add deadline";
+      $("savingsPaceForecast").textContent=currentPerWeek>0?fmtMoney(currentPerWeek,0)+" / wk":"Need activity";
+      fill.className="savings-pace-fill";
+      fill.style.width=currentPerWeek>0?"42%":"0%";
+      return;
+    }
+
+    const todayDate=new Date(todayStr()+"T00:00:00");
+    const deadlineDate=new Date(item.deadline+"T23:59:59");
+    const daysLeft=Math.max(0,Math.ceil((deadlineDate-todayDate)/DAY_MS));
+
+    if(daysLeft<=0){
+      $("savingsPaceTitle").textContent="The deadline has arrived. Update it to keep pace tracking useful.";
+      status.textContent="Deadline passed";
+      status.className="savings-pace-status behind";
+      $("savingsPaceNeeded").textContent=fmtMoney(remaining,0)+" now";
+      $("savingsPaceForecast").textContent="Update deadline";
+      fill.className="savings-pace-fill behind";
+      fill.style.width="100%";
+      return;
+    }
+
+    const neededPerDay=remaining/daysLeft;
+    const neededPerWeek=neededPerDay*7;
+    $("savingsPaceNeeded").textContent=fmtMoney(neededPerWeek,0)+" / wk";
+
+    const ratio=neededPerWeek>0?currentPerWeek/neededPerWeek:1;
+    let state="Behind",stateClass="behind";
+    if(ratio>=1.15){state="Ahead";stateClass="ahead";}
+    else if(ratio>=.90){state="On track";stateClass="on-track";}
+
+    status.textContent=state;
+    status.className="savings-pace-status "+stateClass;
+    fill.className="savings-pace-fill"+(stateClass==="behind"?" behind":"");
+    fill.style.width=Math.min(100,Math.max(4,ratio*72)).toFixed(1)+"%";
+
+    if(pace.perDay>0){
+      const forecastDays=Math.ceil(remaining/pace.perDay);
+      const forecastDate=dateFromTodayOffset(forecastDays);
+      const diff=Math.round((deadlineDate-forecastDate)/DAY_MS);
+      const timing=diff>1?`about ${diff} days early`:diff<-1?`about ${Math.abs(diff)} days late`:"around the deadline";
+      $("savingsPaceForecast").textContent=timing;
+      $("savingsPaceTitle").textContent=`You're saving about ${fmtMoney(currentPerWeek,0)} per week and need ${fmtMoney(neededPerWeek,0)} per week.`;
+    }else{
+      $("savingsPaceForecast").textContent="Need activity";
+      $("savingsPaceTitle").textContent=`You need about ${fmtMoney(neededPerWeek,0)} per week to hit this deadline.`;
+    }
+  }
+
+  // ================================================================
+  // WEEKLY RECAP
+  // ================================================================
+  function mondayOfWeek(key=todayStr()){
+    const d=new Date(key+"T00:00:00");
+    const offset=(d.getDay()+6)%7;
+    return dateStr(new Date(d.getFullYear(),d.getMonth(),d.getDate()-offset));
+  }
+
+  function weeklySummaryFor(start){
+    const end=addDaysKey(start,6);
+    let earned=0,spent=0,hours=0;
+
+    entries.forEach(en=>{
+      if(en.date<start||en.date>end)return;
+      earned+=entryEarned(en);
+      hours+=Math.max(0,Number(en.hours)||0);
+    });
+    expenses.forEach(exp=>{
+      if(exp.date<start||exp.date>end)return;
+      spent+=Math.max(0,Number(exp.amount)||0);
+    });
+
+    const shifts=calendarEvents.filter(ev=>ev.type==="shift"&&ev.date>=start&&ev.date<=end);
+    const completedShifts=shifts.filter(ev=>ev.logged).length;
+    return {start,end,earned,spent,net:earned-spent,hours,shifts:shifts.length,completedShifts};
+  }
+
+  function summaryHasActivity(summary){
+    return summary.earned>0||summary.spent>0||summary.hours>0||summary.shifts>0;
+  }
+
+  function renderHomeWeeklyWidget(){
+    const el=$("homeWeeklyContent");
+    if(!el)return;
+    const current=weeklySummaryFor(mondayOfWeek());
+    el.innerHTML=`<div class="weekly-recap-grid">
+      <div class="weekly-recap-mini"><span>Earned</span><strong>${fmtMoney(current.earned)}</strong></div>
+      <div class="weekly-recap-mini"><span>Spent</span><strong>${fmtMoney(current.spent)}</strong></div>
+      <div class="weekly-recap-mini ${current.net>=0?"net-positive":"net-negative"}"><span>Net</span><strong>${current.net<0?"−":""}${fmtMoney(Math.abs(current.net))}</strong></div>
+      <div class="weekly-recap-mini"><span>Hours</span><strong>${current.hours.toFixed(current.hours%1?1:0)} hrs</strong></div>
+    </div>`;
+  }
+
+
+  function renderSettingsWeeklyRecap(){
+    const rangeEl=$("settingsWeeklyRecapRange");
+    const earnedEl=$("settingsWeeklyRecapEarned");
+    const hoursEl=$("settingsWeeklyRecapHours");
+    const button=$("settingsWeeklyRecapBtn");
+    if(!rangeEl||!earnedEl||!hoursEl||!button)return;
+
+    const summary=previousWeekSummary();
+    const startDate=new Date(summary.start+"T00:00:00");
+    const endDate=new Date(summary.end+"T00:00:00");
+
+    rangeEl.textContent=
+      `${startDate.toLocaleDateString(undefined,{day:"numeric",month:"short"})} – ${endDate.toLocaleDateString(undefined,{day:"numeric",month:"short"})}`;
+    earnedEl.textContent=fmtMoney(summary.earned);
+    hoursEl.textContent=summary.hours.toFixed(summary.hours%1?1:0)+" hrs";
+
+    button.textContent=summaryHasActivity(summary)?"View weekly recap":"View empty recap";
+  }
+
+  async function openWeeklyRecapFromSettings(){
+    const opened=openWeeklySummaryPrompt(true);
+    if(!opened)return;
+    await viewWeeklySummary();
+  }
+
+  function previousWeekSummary(){
+    const currentMonday=mondayOfWeek();
+    return weeklySummaryFor(addDaysKey(currentMonday,-7));
+  }
+
+  let weeklyRecapSlideIndex=0;
+  let weeklyRecapSlides=[];
+  let weeklyRecapTouchStartX=null;
+
+  function weeklyRecapDateRange(summary){
+    const startDate=new Date(summary.start+"T00:00:00");
+    const endDate=new Date(summary.end+"T00:00:00");
+    return `${startDate.toLocaleDateString(undefined,{day:"numeric",month:"short"})} – ${endDate.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})}`;
+  }
+
+  function buildWeeklyRecapSlides(summary){
+    const safeEarned=Math.max(0,summary.earned);
+    const safeSpent=Math.max(0,summary.spent);
+    const totalFlow=Math.max(1,safeEarned+safeSpent);
+    const net=summary.net;
+    const savedPct=safeEarned>0?Math.max(-100,Math.min(100,(net/safeEarned)*100)):0;
+    const shiftCompletion=summary.shifts?Math.round((summary.completedShifts/summary.shifts)*100):0;
+
+    const earnedCopy=safeEarned>0
+      ? `That came from ${summary.hours.toFixed(summary.hours%1?1:0)} logged hour${Math.round(summary.hours)===1?"":"s"} across the week.`
+      : "No earnings were logged last week.";
+
+    const spentCopy=safeSpent>0
+      ? `You spent ${fmtMoney(safeSpent)} across your recorded expenses.`
+      : "No expenses were logged. Your wallet escaped untouched.";
+
+    const netCopy=net>=0
+      ? `After expenses, ${fmtMoney(net)} remained from the week’s money flow.`
+      : `Spending ran ${fmtMoney(Math.abs(net))} above your logged earnings this week.`;
+
+    const shiftsCopy=summary.shifts
+      ? `${summary.completedShifts} of ${summary.shifts} planned shift${summary.shifts===1?"":"s"} were marked as worked.`
+      : "You didn’t schedule any work shifts last week.";
+
+    return [
+      {
+        icon:"↗",
+        kicker:"MONEY IN",
+        value:fmtMoney(safeEarned),
+        title:"You earned",
+        copy:earnedCopy,
+        mini:`${weeklyRecapDateRange(summary)} · ${summary.hours.toFixed(summary.hours%1?1:0)} hrs logged`,
+        fill:Math.min(100,Math.max(8,(safeEarned/totalFlow)*100)),
+        tone:"income"
+      },
+      {
+        icon:"↘",
+        kicker:"MONEY OUT",
+        value:fmtMoney(safeSpent),
+        title:"You spent",
+        copy:spentCopy,
+        mini:safeEarned>0?`${Math.round((safeSpent/safeEarned)*100)}% of logged earnings`:"No earnings comparison available",
+        fill:Math.min(100,Math.max(safeSpent>0?8:0,(safeSpent/totalFlow)*100)),
+        tone:"expense"
+      },
+      {
+        icon:net>=0?"＋":"−",
+        kicker:"THE DIFFERENCE",
+        value:(net<0?"−":"")+fmtMoney(Math.abs(net)),
+        title:net>=0?"Net saved":"Net change",
+        copy:netCopy,
+        mini:safeEarned>0?`${Math.abs(Math.round(savedPct))}% ${net>=0?"kept":"over earnings"}`:"Based on your logged activity",
+        fill:Math.min(100,Math.max(net!==0?8:0,Math.abs(savedPct))),
+        tone:net>=0?"income":"net-negative"
+      },
+      {
+        icon:"⌁",
+        kicker:"TIME & SHIFTS",
+        value:`${summary.hours.toFixed(summary.hours%1?1:0)}h`,
+        title:"Hours worked",
+        copy:shiftsCopy,
+        mini:summary.shifts?`${shiftCompletion}% of planned shifts logged`:"No planned shifts",
+        fill:summary.shifts?Math.max(5,shiftCompletion):0,
+        tone:"income"
+      },
+      {
+        icon:"✓",
+        kicker:"THAT WAS YOUR WEEK",
+        value:net>=0?"Nice.":"Noted.",
+        title:net>=0?"You finished in the green":"Next week starts fresh",
+        copy:net>=0
+          ? `${fmtMoney(safeEarned)} earned, ${fmtMoney(safeSpent)} spent, and ${fmtMoney(Math.max(0,net))} left over.`
+          : `${fmtMoney(safeEarned)} earned and ${fmtMoney(safeSpent)} spent. LUMIN has the numbers ready for the next week.`,
+        mini:"See you in the next weekly recap.",
+        fill:100,
+        tone:"final"
+      }
+    ];
+  }
+
+  function buildWeeklyRecapProgress(){
+    const wrap=$("weeklyRecapProgress");
+    if(!wrap)return;
+    wrap.innerHTML=weeklyRecapSlides.map((_,i)=>
+      `<span class="weekly-recap-progress-segment${i<weeklyRecapSlideIndex?" complete":i===weeklyRecapSlideIndex?" active":""}"><span></span></span>`
+    ).join("");
+  }
+
+  function animateWeeklyRecapValue(el,value){
+    if(!el)return;
+    el.textContent=value;
+    el.classList.remove("weekly-recap-value-pop");
+    void el.offsetWidth;
+    el.classList.add("weekly-recap-value-pop");
+  }
+
+  function renderWeeklyRecapSlide(direction=1){
+    if(!weeklyRecapSlides.length)return;
+    weeklyRecapSlideIndex=Math.max(0,Math.min(weeklyRecapSlides.length-1,weeklyRecapSlideIndex));
+    const slideData=weeklyRecapSlides[weeklyRecapSlideIndex];
+    const slide=$("weeklyRecapSlide");
+
+    slide.classList.remove("is-leaving-forward","is-leaving-back");
+    slide.style.animation="none";
+    void slide.offsetWidth;
+    slide.style.animation="";
+
+    slide.dataset.tone=slideData.tone;
+    $("weeklyRecapSlideIcon").textContent=slideData.icon;
+    $("weeklyRecapSlideKicker").textContent=slideData.kicker;
+    animateWeeklyRecapValue($("weeklyRecapSlideValue"),slideData.value);
+    $("weeklyRecapSlideTitle").textContent=slideData.title;
+    $("weeklyRecapSlideCopy").textContent=slideData.copy;
+    $("weeklyRecapMiniStat").textContent=slideData.mini;
+    $("weeklyRecapCounter").textContent=`${weeklyRecapSlideIndex+1} / ${weeklyRecapSlides.length}`;
+
+    const back=$("weeklyRecapBackBtn");
+    const next=$("weeklyRecapNextBtn");
+    back.disabled=weeklyRecapSlideIndex===0;
+    next.textContent=weeklyRecapSlideIndex===weeklyRecapSlides.length-1?"Done":"Next →";
+
+    buildWeeklyRecapProgress();
+    const fill=$("weeklyRecapVizFill");
+    fill.style.width="0%";
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      fill.style.width=Math.max(0,Math.min(100,slideData.fill))+"%";
+    }));
+  }
+
+  function changeWeeklyRecapSlide(delta){
+    if(!weeklyRecapSlides.length)return;
+
+    if(delta>0 && weeklyRecapSlideIndex===weeklyRecapSlides.length-1){
+      closeWeeklySummary();
+      return;
+    }
+
+    const target=weeklyRecapSlideIndex+delta;
+    if(target<0||target>=weeklyRecapSlides.length)return;
+
+    const slide=$("weeklyRecapSlide");
+    slide.classList.add(delta>0?"is-leaving-forward":"is-leaving-back");
+
+    setTimeout(()=>{
+      weeklyRecapSlideIndex=target;
+      renderWeeklyRecapSlide(delta);
+    },150);
+  }
+
+  function populateWeeklySummaryDetails(summary){
+    weeklyRecapSlides=buildWeeklyRecapSlides(summary);
+    weeklyRecapSlideIndex=0;
+
+    const preview=$("weeklyRecapIntroPreview");
+    if(preview){
+      preview.innerHTML=`
+        <span>Earned</span><strong>${fmtMoney(summary.earned)}</strong>
+        <i></i>
+        <span>Hours</span><strong>${summary.hours.toFixed(summary.hours%1?1:0)} hrs</strong>
+      `;
+    }
+
+    $("weeklySummaryPromptSub").textContent=
+      `${weeklyRecapDateRange(summary)} · ${fmtMoney(summary.earned)} earned · ${fmtMoney(summary.spent)} spent`;
+    buildWeeklyRecapProgress();
+  }
+
+  function openWeeklySummaryPrompt(force=false){
+    const summary=previousWeekSummary();
+    if(!force&&!summaryHasActivity(summary))return false;
+
+    populateWeeklySummaryDetails(summary);
+    weeklyRecapSlideIndex=0;
+
+    const recapOverlay=$("weeklySummaryBackdrop");
+    recapOverlay.dataset.recapTheme=currentTheme;
+    recapOverlay.dataset.recapAppearance=effectiveAppearanceMode();
+    $("weeklySummaryPrompt").classList.remove("hidden");
+    $("weeklySummaryDetails").classList.add("hidden");
+    $("weeklySummaryBackdrop").classList.remove("hidden","story-active");
+    $("weeklySummaryBackdrop").setAttribute("aria-hidden","false");
+    refreshHyperdriveMatrix();
+
+    lockBodyScroll();
+    return true;
+  }
+
+  async function markWeeklySummaryViewed(){
+    const summary=previousWeekSummary();
+    weeklySummaryLastViewed=summary.start;
+    weeklySummarySnoozeUntil=0;
+    await persist();
+  }
+
+  function closeWeeklySummary(){
+    $("weeklySummaryBackdrop").classList.add("hidden");
+    $("weeklySummaryBackdrop").classList.remove("story-active");
+    $("weeklySummaryBackdrop").setAttribute("aria-hidden","true");
+    refreshHyperdriveMatrix();
+    unlockBodyScroll();
+  }
+
+  async function viewWeeklySummary(){
+    await markWeeklySummaryViewed();
+    $("weeklySummaryPrompt").classList.add("hidden");
+    $("weeklySummaryDetails").classList.remove("hidden");
+    $("weeklySummaryBackdrop").classList.add("story-active");
+    weeklyRecapSlideIndex=0;
+    renderWeeklyRecapSlide(1);
+  }
+
+  async function laterWeeklySummary(){
+    weeklySummarySnoozeUntil=Date.now()+8*60*60*1000;
+    await persist();
+    closeWeeklySummary();
+  }
+
+  let weeklySummaryAutoTimer=null;
+  function maybeShowWeeklySummary(){
+    clearTimeout(weeklySummaryAutoTimer);
+    const summary=previousWeekSummary();
+
+    if(weeklySummaryLastViewed===summary.start)return;
+    if(weeklySummarySnoozeUntil>Date.now())return;
+
+    if(!summaryHasActivity(summary)){
+      weeklySummaryLastViewed=summary.start;
+      persist();
+      return;
+    }
+
+    const blockers=[
+      $("authGate"),$("appLoadingScreen"),$("changelogBackdrop"),$("signupPasskeyBackdrop")
+    ].some(el=>el&&!el.classList.contains("hidden"));
+
+    if(blockers||tutorialActive){
+      weeklySummaryAutoTimer=setTimeout(maybeShowWeeklySummary,1000);
+      return;
+    }
+
+    weeklySummaryAutoTimer=setTimeout(()=>openWeeklySummaryPrompt(false),650);
+  }
+
+  $("weeklySummaryViewBtn").addEventListener("click",viewWeeklySummary);
+  $("weeklySummaryLaterBtn").addEventListener("click",laterWeeklySummary);
+  $("weeklySummaryCloseBtn").addEventListener("click",closeWeeklySummary);
+  $("weeklySummaryOpenBtn").addEventListener("click",()=>openWeeklySummaryPrompt(true));
+  $("settingsWeeklyRecapBtn").addEventListener("click",openWeeklyRecapFromSettings);
+  $("weeklyRecapBackBtn").addEventListener("click",()=>changeWeeklyRecapSlide(-1));
+  $("weeklyRecapNextBtn").addEventListener("click",()=>changeWeeklyRecapSlide(1));
+
+  $("weeklySummaryBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="weeklySummaryBackdrop")closeWeeklySummary();
+  });
+
+  document.addEventListener("keydown",e=>{
+    const open=!$("weeklySummaryBackdrop").classList.contains("hidden");
+    const story=!$("weeklySummaryDetails").classList.contains("hidden");
+    if(!open)return;
+    if(e.key==="Escape"){
+      closeWeeklySummary();
+      return;
+    }
+    if(!story)return;
+    if(e.key==="ArrowRight"||e.key==="Enter"){
+      e.preventDefault();
+      changeWeeklyRecapSlide(1);
+    }else if(e.key==="ArrowLeft"){
+      e.preventDefault();
+      changeWeeklyRecapSlide(-1);
+    }
+  });
+
+  $("weeklySummaryDetails").addEventListener("touchstart",e=>{
+    weeklyRecapTouchStartX=e.changedTouches&&e.changedTouches[0]?e.changedTouches[0].clientX:null;
+  },{passive:true});
+
+  $("weeklySummaryDetails").addEventListener("touchend",e=>{
+    if(weeklyRecapTouchStartX===null)return;
+    const endX=e.changedTouches&&e.changedTouches[0]?e.changedTouches[0].clientX:weeklyRecapTouchStartX;
+    const delta=endX-weeklyRecapTouchStartX;
+    weeklyRecapTouchStartX=null;
+    if(Math.abs(delta)<45)return;
+    changeWeeklyRecapSlide(delta<0?1:-1);
+  },{passive:true});
 
   let workspaceFitRaf=0;
 
@@ -12619,6 +14483,9 @@
     renderBudgets();
     renderCalendar();
     renderNotificationSettings();
+    renderHomeWeeklyWidget();
+    renderSettingsWeeklyRecap();
+    applyFocusMode();
     applyHomeWidgetLayout();
     if(!items.some(i=>i.id===activeItemId)) activeItemId = priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0]&&items[0].id) || null;
     const activeItem = items.find(i=>i.id===activeItemId) || null;
@@ -12726,6 +14593,7 @@
       $("projectionSection").classList.add("hidden");
     }
 
+    renderSavingsPace(activeItem,stats.saved);
     renderReleaseTrajectory(activeItem,stats.saved);
 
     // chips
