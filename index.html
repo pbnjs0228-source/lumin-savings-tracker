@@ -5410,6 +5410,72 @@
   @media(max-width:500px){.app-sidebar{overflow-x:auto}.app-nav-list{min-width:430px;grid-template-columns:repeat(6,1fr)!important}}
   @media(prefers-reduced-motion:reduce){.feature-page:not(.hidden)>*,#dashboardTabPanel:not(.hidden)>[data-home-widget],.budget-card,.calendar-chip,.calendar-event-row,.security-switch[aria-checked="true"]{animation:none!important}.app-nav-btn svg,.budget-fill{transition:none!important}}
 
+
+  /* ================================================================
+     FEATURE FORM SELECT FIX
+     Keep native selects visually consistent with LUMIN inputs.
+     ================================================================ */
+  .feature-form .field select,
+  #budgetPeriod,
+  #calendarEventType{
+    width:100%;
+    min-width:0;
+    min-height:36px;
+    box-sizing:border-box;
+    padding:9px 34px 9px 10px;
+    border:1px solid var(--line-strong);
+    border-radius:9px;
+    color:var(--white);
+    background-color:color-mix(in srgb,var(--panel-solid) 86%,transparent) !important;
+    font-family:'Inter',sans-serif !important;
+    font-size:13px !important;
+    font-weight:500 !important;
+    line-height:1.2 !important;
+    letter-spacing:0 !important;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:
+      linear-gradient(45deg,transparent 50%,var(--muted) 50%),
+      linear-gradient(135deg,var(--muted) 50%,transparent 50%) !important;
+    background-position:
+      calc(100% - 15px) 50%,
+      calc(100% - 10px) 50% !important;
+    background-size:5px 5px,5px 5px !important;
+    background-repeat:no-repeat !important;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+
+  .feature-form .field select:focus,
+  #budgetPeriod:focus,
+  #calendarEventType:focus{
+    outline:none;
+    border-color:color-mix(in srgb,var(--accent) 54%,var(--line-strong)) !important;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 10%,transparent) !important;
+  }
+
+  .feature-form .field select option,
+  #budgetPeriod option,
+  #calendarEventType option{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    background:var(--panel-solid);
+    color:var(--white);
+  }
+
+  @media(max-width:620px){
+    .feature-form .field select,
+    #budgetPeriod,
+    #calendarEventType{
+      min-height:40px;
+      font-size:12.5px !important;
+      padding-top:10px;
+      padding-bottom:10px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -6606,9 +6672,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.10.1";
+  const APP_VERSION = "2026.09.10.2";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.10.2",
+      title: "Budget form typography fix",
+      date: "10 September 2026",
+      changes: [
+        "Fixed the budget period dropdown using a mismatched native font.",
+        "Dropdowns in Budgets and Calendar now use LUMIN's input typography and scale cleanly on smaller screens.",
+        "Added a consistent custom chevron so selects match the rest of the form controls."
+      ]
+    },
     {
       version: "2026.09.10.1",
       title: "Budgets, Calendar & Windows notifications",
