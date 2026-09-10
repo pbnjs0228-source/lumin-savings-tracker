@@ -2338,6 +2338,7 @@
   /* ---- login / cloud loading screen ---- */
   .app-loading-screen{
     position:fixed;inset:0;z-index:1300;display:grid;place-items:center;padding:24px;
+    isolation:isolate;overflow:hidden;
     background:
       radial-gradient(circle 420px at 50% 37%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 68%),
       radial-gradient(circle 360px at 22% 82%,color-mix(in srgb,var(--accent2) 8%,transparent),transparent 68%),
@@ -2350,6 +2351,7 @@
     opacity:0;visibility:hidden;pointer-events:none;
   }
   .app-loading-card{
+    position:relative;z-index:2;
     width:min(390px,100%);text-align:center;display:flex;flex-direction:column;align-items:center;
     padding:28px 24px 25px;border-radius:20px;
     background:color-mix(in srgb,var(--panel-solid) 72%,transparent);
@@ -5476,11 +5478,28 @@
     }
   }
 
+
+  .loading-matrix-canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+    opacity:.62;
+    mix-blend-mode:screen;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .loading-matrix-canvas{opacity:.28;}
+  }
+
 </style>
 </head>
 <body>
 <canvas id="hyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas" aria-hidden="true"></canvas>
 <div class="app-loading-screen hidden" id="appLoadingScreen" aria-hidden="true" aria-live="polite" aria-busy="true">
+  <canvas id="loadingHyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas loading-matrix-canvas" aria-hidden="true"></canvas>
   <div class="app-loading-card">
     <div class="app-loading-logo" aria-hidden="true">
       <div class="app-loading-orbit"></div>
@@ -6029,7 +6048,7 @@
         <div class="calendar-month-actions"><button class="btn btn-ghost" type="button" id="calendarPrevBtn">‹</button><button class="btn btn-secondary" type="button" id="calendarTodayBtn">Today</button><button class="btn btn-ghost" type="button" id="calendarNextBtn">›</button></div></div>
       <div class="calendar-layout">
         <section class="panel calendar-main-card">
-          <div class="calendar-toolbar"><div><div class="calendar-month-title" id="calendarMonthTitle">Month</div><div class="calendar-month-sub" id="calendarMonthSub">0 planned hours</div></div>
+          <div class="calendar-toolbar"><div><div class="calendar-month-title" id="calendarMonthTitle">Month</div><div class="calendar-month-sub" id="calendarMonthSub">0 planned hrs · $0.00 earned · $0.00 upcoming</div></div>
             <div class="calendar-legend"><span><i class="legend-shift"></i>Shift</span><span><i class="legend-busy"></i>Unavailable</span><span><i class="legend-event"></i>Event</span></div></div>
           <div class="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div id="calendarGrid" class="calendar-grid"></div>
         </section>
@@ -6672,9 +6691,38 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.10.2";
+  const APP_VERSION = "2026.09.10.5";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.10.5",
+      title: "Future shift estimates",
+      date: "10 September 2026",
+      changes: [
+        "Calendar month summaries now show estimated earnings from future planned shifts.",
+        "Upcoming estimates use the current hourly rate and only count future shifts that have not already been logged.",
+        "Actual earned money and future estimated money are shown separately to avoid double-counting."
+      ]
+    },
+    {
+      version: "2026.09.10.4",
+      title: "Calendar monthly earnings",
+      date: "10 September 2026",
+      changes: [
+        "Calendar month headers now show the actual amount earned during the displayed month alongside planned shift hours.",
+        "Monthly earnings are calculated from real logged earnings rather than the planned shift estimate."
+      ]
+    },
+    {
+      version: "2026.09.10.3",
+      title: "Consistent matrix rain",
+      date: "10 September 2026",
+      changes: [
+        "Made the HYPERDRIVE matrix rain consistent across the app, sign-in experience and loading screen.",
+        "Added a dedicated loading-screen matrix canvas so cloud/loading states no longer look visually different.",
+        "Unified the matrix density and movement profile so the effect feels the same on every page."
+      ]
+    },
     {
       version: "2026.09.10.2",
       title: "Budget form typography fix",
@@ -7699,7 +7747,7 @@
 
   const hyperdriveMatrixSystems=[];
 
-  function createHyperdriveMatrixSystem(canvas,{auth=false}={}){
+  function createHyperdriveMatrixSystem(canvas,{auth=false,loading=false}={}){
     if(!canvas) return null;
 
     const ctx=canvas.getContext("2d",{alpha:true});
@@ -7709,10 +7757,11 @@
       canvas,
       ctx,
       auth,
+      loading,
       width:0,
       height:0,
       dpr:1,
-      fontSize:auth?18:20,
+      fontSize:19,
       columns:[],
       lastFrame:0,
       frameInterval:48,
@@ -7731,12 +7780,12 @@
         ctx.setTransform(dpr,0,0,dpr,0,0);
         ctx.clearRect(0,0,width,height);
 
-        const spacing=this.fontSize+(auth?10:12);
+        const spacing=this.fontSize+11;
         const count=Math.ceil(width/spacing)+1;
         this.columns=Array.from({length:count},(_,i)=>({
           x:i*spacing+(Math.random()*5-2.5),
           y:Math.random()*-height,
-          speed:(auth?0.72:0.58)+Math.random()*(auth?0.70:0.56),
+          speed:0.68+Math.random()*0.62,
           length:5+Math.floor(Math.random()*10),
           phase:Math.random()*Math.PI*2,
           skip:Math.random()<.18
@@ -7756,6 +7805,10 @@
 
   function hyperdriveMatrixShouldRun(system){
     if(document.hidden) return false;
+    if(system.loading){
+      const loading=$("appLoadingScreen");
+      return !!(loading && !loading.classList.contains("hidden"));
+    }
     if(system.auth){
       const gate=$("authGate");
       return !!(gate && !gate.classList.contains("hidden"));
@@ -7822,7 +7875,7 @@
       col.y+=fontSize*col.speed;
       if(col.y-col.length*fontSize>height){
         col.y=-Math.random()*height*.55-fontSize*2;
-        col.speed=(system.auth?.72:.58)+Math.random()*(system.auth?.70:.56);
+        col.speed=0.68+Math.random()*0.62;
         col.length=5+Math.floor(Math.random()*10);
         col.phase=Math.random()*Math.PI*2;
         col.skip=Math.random()<.18;
@@ -7840,6 +7893,7 @@
     if(hyperdriveMatrixSystems.length) return;
     createHyperdriveMatrixSystem($("hyperdriveMatrixCanvas"));
     createHyperdriveMatrixSystem($("authHyperdriveMatrixCanvas"),{auth:true});
+    createHyperdriveMatrixSystem($("loadingHyperdriveMatrixCanvas"),{auth:true,loading:true});
     window.addEventListener("resize",()=>{
       hyperdriveMatrixSystems.forEach(system=>system.resize());
     },{passive:true});
@@ -9598,6 +9652,7 @@
     screen.classList.remove("hidden");
     screen.setAttribute("aria-hidden","false");
     screen.setAttribute("aria-busy","true");
+    refreshHyperdriveMatrix();
   }
 
   function hideAppLoading(minimumVisibleMs=520){
@@ -9613,6 +9668,7 @@
       screen.setAttribute("aria-hidden","true");
       screen.setAttribute("aria-busy","false");
       appLoadingHideTimer=null;
+      refreshHyperdriveMatrix();
     },wait);
   }
 
@@ -12294,8 +12350,23 @@
     const prefix=`${year}-${String(month+1).padStart(2,"0")}-`;
     const monthEvents=calendarEvents.filter(ev=>ev.date.startsWith(prefix));
     const shiftHours=monthEvents.filter(ev=>ev.type==="shift").reduce((s,ev)=>s+eventHours(ev),0);
-    const rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0);
-    $("calendarMonthSub").textContent=`${shiftHours.toFixed(shiftHours%1?1:0)} planned hrs${rate>0?` · ~${fmtMoney(shiftHours*rate)}`:""}`;
+    const monthEarned=entries.reduce((sum,en)=>{
+      if(!en||!en.date||!en.date.startsWith(prefix)) return sum;
+      return sum+entryEarned(en);
+    },0);
+
+    const now=Date.now();
+    const hourlyRate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0);
+    const futureShiftEstimate=monthEvents.reduce((sum,ev)=>{
+      if(ev.type!=="shift" || ev.logged) return sum;
+      const startTs=calendarEventTimestamp(ev);
+      if(startTs===null || startTs<=now) return sum;
+      return sum+(eventHours(ev)*hourlyRate);
+    },0);
+
+    $("calendarMonthSub").textContent=
+      `${shiftHours.toFixed(shiftHours%1?1:0)} planned hrs · ${fmtMoney(monthEarned)} earned`+
+      (futureShiftEstimate>0 ? ` · ~${fmtMoney(futureShiftEstimate)} upcoming` : "");
     const mondayIndex=(first.getDay()+6)%7;
     const gridStart=new Date(year,month,1-mondayIndex),today=todayStr(),cells=[];
     for(let i=0;i<42;i++){
