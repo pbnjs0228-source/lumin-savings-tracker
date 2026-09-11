@@ -151,6 +151,46 @@ export async function listPasskeys(uid) {
   return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
+function passkey2faRef(uid) {
+  return adminDb().collection("users").doc(uid).collection("security").doc("passkey2fa");
+}
+
+export async function getPasskey2faState(uid, existingPasskeys = null) {
+  const passkeys = existingPasskeys || await listPasskeys(uid);
+  const snap = await passkey2faRef(uid).get();
+
+  // Migration behavior: accounts that already had a passkey before the toggle
+  // feature existed stay protected by default.
+  let enabled = passkeys.length > 0;
+
+  if (snap.exists && typeof snap.data()?.enabled === "boolean") {
+    enabled = snap.data().enabled && passkeys.length > 0;
+  }
+
+  return {
+    enabled,
+    passkeyCount: passkeys.length,
+  };
+}
+
+export async function setPasskey2faEnabled(uid, enabled) {
+  const passkeys = await listPasskeys(uid);
+
+  if (enabled && !passkeys.length) {
+    throw new Error("Add a passkey before turning on passkey 2FA.");
+  }
+
+  await passkey2faRef(uid).set({
+    enabled: !!enabled,
+    updatedAt: FieldValue.serverTimestamp(),
+  }, { merge: true });
+
+  return {
+    enabled: !!enabled && passkeys.length > 0,
+    passkeyCount: passkeys.length,
+  };
+}
+
 export async function createChallenge(uid, type, challenge) {
   const ref = challengeCollection().doc();
   await ref.set({

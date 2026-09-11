@@ -1,6 +1,6 @@
 import { generateAuthenticationOptions } from "@simplewebauthn/server";
 import {
-  adminAuth, webauthnConfig, onlyPost, listPasskeys, createChallenge,
+  adminAuth, webauthnConfig, onlyPost, listPasskeys, getPasskey2faState, createChallenge,
   send, safeError
 } from "../_lib.js";
 
@@ -18,6 +18,11 @@ export default async function handler(req, res) {
 
     if (!existing.length) {
       throw new Error("No passkey is registered for this account yet. Sign in with your password, then add one in Settings → Security.");
+    }
+
+    const state = await getPasskey2faState(account.uid, existing);
+    if (!state.enabled) {
+      throw new Error("Passkey 2FA is disabled for this account.");
     }
 
     const options = await generateAuthenticationOptions({

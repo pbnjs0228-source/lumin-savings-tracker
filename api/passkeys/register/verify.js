@@ -2,7 +2,7 @@ import { verifyRegistrationResponse } from "@simplewebauthn/server";
 import { FieldValue } from "firebase-admin/firestore";
 import {
   adminDb, webauthnConfig, onlyPost, requireUser, consumeChallenge,
-  bytesToBase64Url, send, safeError
+  bytesToBase64Url, setPasskey2faEnabled, send, safeError
 } from "../_lib.js";
 
 export default async function handler(req, res) {
@@ -42,7 +42,8 @@ export default async function handler(req, res) {
         lastUsedAt: null,
       });
 
-    send(res, 200, { verified: true });
+    const state = await setPasskey2faEnabled(user.uid, true);
+    send(res, 200, { verified: true, ...state });
   } catch (error) {
     send(res, 400, { error: safeError(error) });
   }

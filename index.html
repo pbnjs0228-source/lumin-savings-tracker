@@ -8244,9 +8244,19 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.11.2";
+  const APP_VERSION = "2026.09.11.3";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.11.3",
+      title: "2FA backend route diagnostics",
+      date: "11 September 2026",
+      changes: [
+        "LUMIN now detects a missing /api/passkeys/status or /toggle route instead of showing Vercel's generic page-not-found error.",
+        "Settings now tells you when the passkey backend has not been deployed and avoids repeatedly retrying a missing endpoint.",
+        "Includes a matching Vercel backend patch containing the required status and toggle routes."
+      ]
+    },
     {
       version: "2026.09.11.2",
       title: "Quick Add button fix",
@@ -12065,11 +12075,23 @@
     }
 
     if(!response.ok){
-      const message=passkeyErrorText(
+      const rawMessage=passkeyErrorText(
         payload&&("error" in payload?payload.error:payload),
         `Passkey server returned ${response.status}.`
       );
-      throw new Error(message);
+
+      const looksLikeMissingRoute =
+        response.status===404 ||
+        /page could not be found|not found|cannot post/i.test(rawMessage);
+
+      const message=looksLikeMissingRoute
+        ? `LUMIN's passkey API route ${base+path} is missing from this deployment. Deploy the api/passkeys backend files, then retry.`
+        : rawMessage;
+
+      const error=new Error(message);
+      error.status=response.status;
+      error.passkeyRouteMissing=looksLikeMissingRoute;
+      throw error;
     }
 
     return payload;
@@ -12180,14 +12202,20 @@
       await refreshPasskey2faStatus(force);
     }catch(error){
       console.warn("Could not load passkey 2FA status",error);
-      if($("passkeyStatusTitle")) $("passkeyStatusTitle").textContent="2FA status unavailable";
+      const routeMissing=!!error?.passkeyRouteMissing;
+      if($("passkeyStatusTitle")) $("passkeyStatusTitle").textContent=
+        routeMissing ? "2FA backend not deployed" : "2FA status unavailable";
       if($("passkeyStatusText")) $("passkeyStatusText").textContent=
-        "The current status could not be refreshed. You can still retry the switch.";
+        routeMissing
+          ? "The /api/passkeys/status route is missing. Deploy the LUMIN passkey backend patch, then refresh."
+          : "The current status could not be refreshed. You can still retry the switch.";
       if($("passkey2faToggle")){
-        $("passkey2faToggle").disabled=!(cloudUser&&cloudMode==="cloud");
-        $("passkey2faToggle").title="Retry changing passkey 2FA";
+        $("passkey2faToggle").disabled=routeMissing || !(cloudUser&&cloudMode==="cloud");
+        $("passkey2faToggle").title=routeMissing
+          ? "Deploy the missing passkey backend route first"
+          : "Retry changing passkey 2FA";
       }
-      if($("addPasskeyBtn")) $("addPasskeyBtn").disabled=!(cloudUser&&cloudMode==="cloud"&&passkeysSupported());
+      if($("addPasskeyBtn")) $("addPasskeyBtn").disabled=routeMissing || !(cloudUser&&cloudMode==="cloud"&&passkeysSupported());
       return;
     }
 
@@ -12430,7 +12458,11 @@
           console.warn("Could not refresh 2FA before toggle",error);
           passkey2faState.busy=false;
           renderPasskey2faState();
-          showOfflineToast("Couldn’t refresh 2FA status. Try again in a moment.");
+          showOfflineToast(
+            error?.passkeyRouteMissing
+              ? "2FA backend route is missing from this deployment."
+              : "Couldn’t refresh 2FA status. Try again in a moment."
+          );
           return;
         }finally{
           passkey2faState.busy=false;
