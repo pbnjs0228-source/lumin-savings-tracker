@@ -6830,6 +6830,342 @@
     cursor:not-allowed;
   }
 
+
+  /* ================================================================
+     STREAK CALENDAR
+     ================================================================ */
+  .game-streak-calendar-launch{
+    appearance:none;
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-areas:
+      "value hint"
+      "label hint";
+    align-items:center;
+    gap:2px 9px;
+    padding:0;
+    border:0;
+    color:inherit;
+    background:transparent;
+    cursor:pointer;
+    text-align:left;
+  }
+  .game-streak-calendar-launch .game-streak-value{grid-area:value;}
+  .game-streak-calendar-launch .game-streak-label{grid-area:label;}
+  .game-streak-calendar-hint{
+    grid-area:hint;
+    color:var(--muted);
+    font-size:6.8px;
+    white-space:nowrap;
+    opacity:.72;
+    transition:color .15s ease,transform .15s ease,opacity .15s ease;
+  }
+  .game-streak-calendar-launch:hover .game-streak-calendar-hint{
+    color:var(--accent-soft);
+    opacity:1;
+    transform:translateX(2px);
+  }
+  .game-streak-calendar-launch:focus-visible{
+    outline:2px solid color-mix(in srgb,var(--accent) 44%,transparent);
+    outline-offset:5px;
+    border-radius:7px;
+  }
+
+  .streak-calendar-modal{
+    width:min(720px,calc(100vw - 28px));
+    max-height:min(810px,calc(100dvh - 32px));
+    overflow:auto;
+  }
+  .streak-calendar-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+
+  .streak-calendar-stats{
+    display:grid;
+    grid-template-columns:1.2fr repeat(3,1fr);
+    gap:7px;
+    margin:15px 0 10px;
+  }
+  .streak-calendar-stat{
+    min-width:0;
+    padding:10px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--panel-solid) 76%,transparent);
+  }
+  .streak-calendar-stat-main{
+    border-color:color-mix(in srgb,var(--accent) 20%,var(--line));
+    background:
+      radial-gradient(circle at 12% 0%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 44%),
+      color-mix(in srgb,var(--panel-solid) 80%,transparent);
+  }
+  .streak-calendar-stat span{
+    display:block;
+    margin-bottom:4px;
+    color:var(--muted);
+    font-size:7px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  .streak-calendar-stat strong{
+    display:block;
+    overflow:hidden;
+    color:var(--white);
+    font:750 11px/1.2 'JetBrains Mono',monospace;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .streak-calendar-stat-main strong{color:var(--accent-soft);}
+
+  .streak-calendar-shell{
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:
+      radial-gradient(circle at 50% -16%,color-mix(in srgb,var(--accent) 5%,transparent),transparent 42%),
+      color-mix(in srgb,var(--panel-solid) 70%,transparent);
+  }
+  .streak-calendar-toolbar{
+    display:grid;
+    grid-template-columns:36px minmax(0,1fr) 36px;
+    align-items:center;
+    gap:9px;
+    padding:10px 11px;
+    border-bottom:1px solid var(--line);
+  }
+  .streak-calendar-nav{
+    appearance:none;
+    width:32px;height:32px;
+    display:grid;place-items:center;
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--muted);
+    background:color-mix(in srgb,var(--panel-raised) 62%,transparent);
+    cursor:pointer;
+    font-size:12px;
+    transition:color .15s ease,border-color .15s ease,background .15s ease,transform .15s ease;
+  }
+  .streak-calendar-nav:last-child{justify-self:end;}
+  .streak-calendar-nav:hover:not(:disabled){
+    color:var(--white);
+    border-color:color-mix(in srgb,var(--accent) 25%,var(--line));
+    background:color-mix(in srgb,var(--accent) 5%,var(--panel-raised));
+  }
+  .streak-calendar-nav:active:not(:disabled){transform:scale(.94);}
+  .streak-calendar-nav:disabled{opacity:.25;cursor:default;}
+  .streak-calendar-month-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-width:0;
+  }
+  .streak-calendar-month-wrap strong{
+    color:var(--white);
+    font:700 10px/1 'Sora',sans-serif;
+    white-space:nowrap;
+  }
+  .streak-calendar-today{
+    appearance:none;
+    padding:4px 6px;
+    border:1px solid color-mix(in srgb,var(--accent) 16%,var(--line));
+    border-radius:99px;
+    color:var(--accent-soft);
+    background:color-mix(in srgb,var(--accent) 5%,transparent);
+    cursor:pointer;
+    font:700 6.5px/1 'Inter',sans-serif;
+  }
+
+  .streak-calendar-weekdays,
+  .streak-calendar-grid{
+    display:grid;
+    grid-template-columns:repeat(7,minmax(0,1fr));
+  }
+  .streak-calendar-weekdays{
+    padding:8px 8px 4px;
+  }
+  .streak-calendar-weekdays span{
+    text-align:center;
+    color:var(--muted);
+    font:700 6.5px/1 'Inter',sans-serif;
+    letter-spacing:.04em;
+  }
+  .streak-calendar-grid{
+    gap:4px;
+    padding:4px 8px 9px;
+  }
+  .streak-calendar-day{
+    appearance:none;
+    position:relative;
+    aspect-ratio:1/1;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    padding:3px;
+    border:1px solid transparent;
+    border-radius:10px;
+    color:var(--muted);
+    background:transparent;
+    cursor:pointer;
+    transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease;
+  }
+  .streak-calendar-day:hover:not(.outside):not(.future){
+    transform:translateY(-1px);
+    border-color:color-mix(in srgb,var(--accent) 16%,var(--line));
+    background:color-mix(in srgb,var(--accent) 4%,transparent);
+  }
+  .streak-calendar-day.outside{
+    opacity:.22;
+    cursor:default;
+  }
+  .streak-calendar-day.future{
+    opacity:.32;
+  }
+  .streak-calendar-day.selected{
+    border-color:color-mix(in srgb,var(--accent) 44%,var(--line));
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 7%,transparent);
+  }
+  .streak-calendar-day.today::after{
+    content:"";
+    position:absolute;
+    width:4px;height:4px;
+    bottom:4px;
+    border-radius:50%;
+    background:var(--accent-soft);
+    box-shadow:0 0 7px color-mix(in srgb,var(--accent) 42%,transparent);
+  }
+  .streak-calendar-day-number{
+    color:inherit;
+    font:700 7px/1 'JetBrains Mono',monospace;
+  }
+  .streak-calendar-day-mark{
+    width:29px;height:29px;
+    display:grid;place-items:center;
+    border-radius:10px;
+    color:var(--muted);
+    background:color-mix(in srgb,var(--white) 3.5%,transparent);
+    font-size:13px;
+    line-height:1;
+  }
+
+  .streak-calendar-day.checked{color:var(--white);}
+  .streak-calendar-day.checked .streak-calendar-day-mark{
+    color:color-mix(in srgb,var(--bg1) 92%,#000);
+    background:
+      radial-gradient(circle at 30% 18%,rgba(255,255,255,.31),transparent 28%),
+      linear-gradient(145deg,var(--accent),var(--accent2));
+    box-shadow:0 0 15px color-mix(in srgb,var(--accent) 16%,transparent);
+  }
+  .streak-calendar-day.frozen{color:#a8d8ff;}
+  .streak-calendar-day.frozen .streak-calendar-day-mark{
+    color:#cde9ff;
+    border:1px solid rgba(143,197,255,.18);
+    background:rgba(104,170,232,.12);
+    box-shadow:0 0 12px rgba(104,170,232,.10);
+  }
+  .streak-calendar-day.missed .streak-calendar-day-mark{
+    color:color-mix(in srgb,var(--muted) 70%,transparent);
+    background:color-mix(in srgb,var(--white) 2.5%,transparent);
+  }
+
+  .streak-calendar-detail{
+    display:grid;
+    grid-template-columns:38px minmax(0,1fr) auto;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+    padding:10px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:color-mix(in srgb,var(--panel-solid) 72%,transparent);
+  }
+  .streak-calendar-detail-icon{
+    width:38px;height:38px;
+    display:grid;place-items:center;
+    border-radius:10px;
+    color:color-mix(in srgb,var(--bg1) 92%,#000);
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    font-size:17px;
+  }
+  .streak-calendar-detail-copy{min-width:0;}
+  .streak-calendar-detail-copy strong{
+    display:block;
+    margin-bottom:3px;
+    color:var(--white);
+    font-size:9px;
+  }
+  .streak-calendar-detail-copy span{
+    display:block;
+    color:var(--muted);
+    font-size:7.7px;
+    line-height:1.4;
+  }
+
+  .streak-calendar-legend{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:9px;
+    color:var(--muted);
+    font-size:6.9px;
+  }
+  .streak-calendar-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .streak-legend-dot{width:7px;height:7px;border-radius:3px;background:var(--line-strong);}
+  .streak-legend-dot.checked{background:linear-gradient(135deg,var(--accent),var(--accent2));}
+  .streak-legend-dot.frozen{background:#80bff2;}
+  .streak-legend-dot.missed{background:color-mix(in srgb,var(--muted) 28%,transparent);}
+  .streak-legend-dot.future{background:color-mix(in srgb,var(--white) 7%,transparent);}
+
+  html[data-hyperdrive-rain="true"] .streak-calendar-day.checked .streak-calendar-day-mark{
+    box-shadow:
+      0 0 13px color-mix(in srgb,var(--accent) 27%,transparent),
+      0 0 26px color-mix(in srgb,var(--accent2) 11%,transparent);
+  }
+
+  @media(max-width:600px){
+    .streak-calendar-modal{
+      width:calc(100vw - 18px);
+      padding:14px;
+    }
+    .streak-calendar-stats{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    .streak-calendar-day{
+      border-radius:8px;
+    }
+    .streak-calendar-day-mark{
+      width:27px;height:27px;
+      border-radius:8px;
+      font-size:12px;
+    }
+    .streak-calendar-detail{
+      grid-template-columns:36px minmax(0,1fr);
+    }
+    .streak-calendar-detail .btn{
+      grid-column:1/-1;
+      width:100%;
+      justify-content:center;
+    }
+  }
+
+  @media(max-width:390px){
+    .streak-calendar-grid{gap:2px;padding-left:4px;padding-right:4px;}
+    .streak-calendar-weekdays{padding-left:4px;padding-right:4px;}
+    .streak-calendar-day-mark{width:24px;height:24px;font-size:11px;}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .streak-calendar-day,.streak-calendar-nav{transition:none !important;}
+  }
+
 </style>
 </head>
 <body>
@@ -7076,8 +7412,11 @@
         <div class="game-xp-caption" id="gameXpCaption">0 / 250 XP to Level 2</div>
       </div>
       <div class="game-streak">
-        <div class="game-streak-value" id="gameStreak">🔥 0</div>
-        <div class="game-streak-label">day check-in streak</div>
+        <button type="button" class="game-streak-calendar-launch" id="streakCalendarBtn" aria-label="Open streak calendar">
+          <span class="game-streak-value" id="gameStreak">🔥 0</span>
+          <span class="game-streak-label">day check-in streak</span>
+          <span class="game-streak-calendar-hint">View calendar →</span>
+        </button>
         <button type="button" class="game-checkin-btn" id="dailyCheckInBtn">Check in</button>
       </div>
       <div class="game-missions-inline" id="missionsInline">
@@ -7994,6 +8333,71 @@
     </div>
   </div>
 
+  <!-- STREAK CALENDAR -->
+  <div id="streakCalendarBackdrop" class="modal-backdrop hidden">
+    <div class="modal streak-calendar-modal" role="dialog" aria-modal="true" aria-labelledby="streakCalendarTitle">
+      <div class="streak-calendar-head">
+        <div>
+          <div class="modal-kicker">CHECK-IN HISTORY</div>
+          <h2 class="modal-title" id="streakCalendarTitle">Streak calendar</h2>
+          <p class="modal-sub">Build the chain one check-in at a time.</p>
+        </div>
+        <button type="button" class="modal-close" id="streakCalendarCloseBtn" aria-label="Close streak calendar">×</button>
+      </div>
+
+      <div class="streak-calendar-stats">
+        <div class="streak-calendar-stat streak-calendar-stat-main">
+          <span>Current</span>
+          <strong id="streakCalendarCurrent">🔥 0</strong>
+        </div>
+        <div class="streak-calendar-stat">
+          <span>Best</span>
+          <strong id="streakCalendarBest">0 days</strong>
+        </div>
+        <div class="streak-calendar-stat">
+          <span>Check-ins</span>
+          <strong id="streakCalendarTotal">0</strong>
+        </div>
+        <div class="streak-calendar-stat">
+          <span>Protected</span>
+          <strong id="streakCalendarProtected">0</strong>
+        </div>
+      </div>
+
+      <div class="streak-calendar-shell">
+        <div class="streak-calendar-toolbar">
+          <button type="button" class="streak-calendar-nav" id="streakCalendarPrevBtn" aria-label="Previous month">←</button>
+          <div class="streak-calendar-month-wrap">
+            <strong id="streakCalendarMonth">September 2026</strong>
+            <button type="button" class="streak-calendar-today" id="streakCalendarTodayBtn">Today</button>
+          </div>
+          <button type="button" class="streak-calendar-nav" id="streakCalendarNextBtn" aria-label="Next month">→</button>
+        </div>
+
+        <div class="streak-calendar-weekdays" aria-hidden="true">
+          <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+        </div>
+        <div class="streak-calendar-grid" id="streakCalendarGrid"></div>
+      </div>
+
+      <div class="streak-calendar-detail" id="streakCalendarDetail">
+        <div class="streak-calendar-detail-icon" id="streakCalendarDetailIcon">🔥</div>
+        <div class="streak-calendar-detail-copy">
+          <strong id="streakCalendarDetailTitle">Today</strong>
+          <span id="streakCalendarDetailText">Pick a day to see what happened.</span>
+        </div>
+        <button type="button" class="btn btn-primary hidden" id="streakCalendarCheckInBtn">Check in today</button>
+      </div>
+
+      <div class="streak-calendar-legend">
+        <span><i class="streak-legend-dot checked"></i> Checked in</span>
+        <span><i class="streak-legend-dot frozen"></i> Freeze used</span>
+        <span><i class="streak-legend-dot missed"></i> Missed</span>
+        <span><i class="streak-legend-dot future"></i> Future</span>
+      </div>
+    </div>
+  </div>
+
   <!-- STREAK FREEZE MODAL -->
   <div id="freezeBackdrop" class="modal-backdrop hidden">
     <div class="modal freeze-modal" role="dialog" aria-modal="true" aria-labelledby="freezeTitle">
@@ -8244,9 +8648,20 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.11.3";
+  const APP_VERSION = "2026.09.15.1";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.15.1",
+      title: "Streak Calendar",
+      date: "15 September 2026",
+      changes: [
+        "Added an interactive monthly streak calendar inspired by modern learning-app streak views.",
+        "Check-in days show a themed flame, protected days show a snowflake, missed days are marked separately and future days stay muted.",
+        "Added current streak, best streak, total check-ins and protected-day stats.",
+        "Click any day for details, navigate previous months, or check in today directly from the calendar."
+      ]
+    },
     {
       version: "2026.09.11.3",
       title: "2FA backend route diagnostics",
@@ -8971,6 +9386,8 @@
   let checkInDates = null;
   let streakFrozenDates = null;
   let streakFreezeLastCheck = "";
+  let streakCalendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
+  let streakCalendarSelectedDate = "";
   let currentTheme = "hyperdrive";
   let appearanceMode = "dark"; // dark | light | system
   let hyperdriveRainEnabled = true;
@@ -11006,6 +11423,242 @@
     return checkedDays;
   }
 
+
+  function longestCheckInStreak(){
+    const checked=checkInDates||new Set();
+    const frozen=streakFrozenDates||new Set();
+    const all=Array.from(new Set([...checked,...frozen]))
+      .filter(Boolean)
+      .sort();
+
+    if(!all.length)return 0;
+
+    let best=0;
+    let currentChecked=0;
+    let prev=null;
+
+    for(const date of all){
+      if(prev && addDaysKey(prev,1)!==date){
+        currentChecked=0;
+      }
+      if(checked.has(date))currentChecked++;
+      best=Math.max(best,currentChecked);
+      prev=date;
+    }
+
+    return best;
+  }
+
+  function streakCalendarDayState(date){
+    const checked=checkInDates||new Set();
+    const frozen=streakFrozenDates||new Set();
+    const today=todayStr();
+
+    if(date>today)return "future";
+    if(checked.has(date))return "checked";
+    if(frozen.has(date))return "frozen";
+
+    // Before the user's first recorded check-in, use a neutral state rather
+    // than painting their entire historical calendar as "missed".
+    const firstCheck=Array.from(checked).sort()[0]||"";
+    if(!firstCheck||date<firstCheck)return "idle";
+
+    return "missed";
+  }
+
+  function streakCalendarMonthLabel(){
+    return streakCalendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"});
+  }
+
+  function streakCalendarCanGoNext(){
+    const now=new Date();
+    const thisMonth=new Date(now.getFullYear(),now.getMonth(),1);
+    return streakCalendarCursor<thisMonth;
+  }
+
+  function streakCalendarDayDetail(date){
+    const state=streakCalendarDayState(date);
+    const d=new Date(date+"T00:00:00");
+    const label=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    const today=todayStr();
+
+    let icon="·";
+    let title=label;
+    let detail="No check-in activity recorded.";
+    let canCheckIn=false;
+
+    if(state==="checked"){
+      icon="🔥";
+      detail="You checked in and kept your LUMIN habit moving.";
+    }else if(state==="frozen"){
+      icon="❄";
+      detail="A streak freeze protected this missed check-in.";
+    }else if(state==="missed"){
+      icon="○";
+      detail="No check-in was recorded on this day.";
+    }else if(state==="future"){
+      icon="·";
+      detail="This day hasn't happened yet.";
+    }else{
+      icon="·";
+      detail="This was before your recorded check-in history.";
+    }
+
+    if(date===today){
+      title="Today · "+d.toLocaleDateString(undefined,{day:"numeric",month:"long"});
+      if(state==="checked")detail="Today's check-in is complete. Nice.";
+      else if(state!=="future"){
+        icon="🔥";
+        detail="You haven't checked in today yet.";
+        canCheckIn=true;
+      }
+    }
+
+    return {state,icon,title,detail,canCheckIn};
+  }
+
+  function renderStreakCalendarDetail(date){
+    if(!date)return;
+    streakCalendarSelectedDate=date;
+    const info=streakCalendarDayDetail(date);
+
+    $("streakCalendarDetailIcon").textContent=info.icon;
+    $("streakCalendarDetailTitle").textContent=info.title;
+    $("streakCalendarDetailText").textContent=info.detail;
+    $("streakCalendarCheckInBtn").classList.toggle("hidden",!info.canCheckIn);
+
+    const detail=$("streakCalendarDetail");
+    detail.dataset.state=info.state;
+
+    document.querySelectorAll(".streak-calendar-day").forEach(btn=>{
+      btn.classList.toggle("selected",btn.dataset.date===date);
+    });
+  }
+
+  function renderStreakCalendar(){
+    const grid=$("streakCalendarGrid");
+    if(!grid)return;
+
+    const year=streakCalendarCursor.getFullYear();
+    const month=streakCalendarCursor.getMonth();
+    const first=new Date(year,month,1);
+    const daysInMonth=new Date(year,month+1,0).getDate();
+
+    // Monday-first calendar.
+    const leading=(first.getDay()+6)%7;
+    const previousMonthDays=new Date(year,month,0).getDate();
+
+    $("streakCalendarMonth").textContent=streakCalendarMonthLabel();
+    $("streakCalendarNextBtn").disabled=!streakCalendarCanGoNext();
+
+    const current=computeCheckInStreak();
+    $("streakCalendarCurrent").textContent="🔥 "+current;
+    $("streakCalendarBest").textContent=longestCheckInStreak()+" days";
+    $("streakCalendarTotal").textContent=(checkInDates||new Set()).size.toLocaleString();
+    $("streakCalendarProtected").textContent=(streakFrozenDates||new Set()).size.toLocaleString();
+
+    const cells=[];
+
+    for(let i=leading-1;i>=0;i--){
+      const d=new Date(year,month-1,previousMonthDays-i);
+      cells.push({date:dateStr(d),day:d.getDate(),outside:true});
+    }
+
+    for(let day=1;day<=daysInMonth;day++){
+      const d=new Date(year,month,day);
+      cells.push({date:dateStr(d),day,outside:false});
+    }
+
+    while(cells.length<42){
+      const nextDay=cells.length-leading-daysInMonth+1;
+      const d=new Date(year,month+1,nextDay);
+      cells.push({date:dateStr(d),day:d.getDate(),outside:true});
+    }
+
+    const today=todayStr();
+
+    grid.innerHTML=cells.map(cell=>{
+      const state=cell.outside?"outside":streakCalendarDayState(cell.date);
+      const isToday=cell.date===today;
+      const selected=cell.date===streakCalendarSelectedDate;
+      let mark="·";
+
+      if(state==="checked")mark="🔥";
+      else if(state==="frozen")mark="❄";
+      else if(state==="missed")mark="○";
+
+      return `<button type="button"
+        class="streak-calendar-day ${state}${isToday?" today":""}${selected?" selected":""}"
+        data-date="${cell.date}"
+        ${cell.outside?'tabindex="-1" aria-hidden="true"':''}
+        ${state==="future"?'aria-label="Future day"':`aria-label="${cell.date} ${state}"`}>
+          <span class="streak-calendar-day-number">${cell.day}</span>
+          <span class="streak-calendar-day-mark">${mark}</span>
+        </button>`;
+    }).join("");
+
+    grid.querySelectorAll(".streak-calendar-day:not(.outside)").forEach(btn=>{
+      btn.addEventListener("click",()=>renderStreakCalendarDetail(btn.dataset.date));
+    });
+
+    let defaultDate=streakCalendarSelectedDate;
+    const visiblePrefix=`${year}-${String(month+1).padStart(2,"0")}-`;
+    if(!defaultDate||!defaultDate.startsWith(visiblePrefix)){
+      defaultDate=today.startsWith(visiblePrefix)?today:`${visiblePrefix}01`;
+    }
+    renderStreakCalendarDetail(defaultDate);
+  }
+
+  function openStreakCalendar(){
+    const now=new Date();
+    streakCalendarCursor=new Date(now.getFullYear(),now.getMonth(),1);
+    streakCalendarSelectedDate=todayStr();
+    renderStreakCalendar();
+
+    $("streakCalendarBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+
+  function closeStreakCalendar(){
+    $("streakCalendarBackdrop").classList.add("hidden");
+    unlockBodyScroll();
+  }
+
+  function moveStreakCalendarMonth(delta){
+    const next=new Date(
+      streakCalendarCursor.getFullYear(),
+      streakCalendarCursor.getMonth()+delta,
+      1
+    );
+
+    const now=new Date();
+    const currentMonth=new Date(now.getFullYear(),now.getMonth(),1);
+    if(next>currentMonth)return;
+
+    streakCalendarCursor=next;
+    streakCalendarSelectedDate="";
+    renderStreakCalendar();
+  }
+
+  $("streakCalendarBtn").addEventListener("click",openStreakCalendar);
+  $("streakCalendarCloseBtn").addEventListener("click",closeStreakCalendar);
+  $("streakCalendarBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="streakCalendarBackdrop")closeStreakCalendar();
+  });
+  $("streakCalendarPrevBtn").addEventListener("click",()=>moveStreakCalendarMonth(-1));
+  $("streakCalendarNextBtn").addEventListener("click",()=>moveStreakCalendarMonth(1));
+  $("streakCalendarTodayBtn").addEventListener("click",()=>{
+    const now=new Date();
+    streakCalendarCursor=new Date(now.getFullYear(),now.getMonth(),1);
+    streakCalendarSelectedDate=todayStr();
+    renderStreakCalendar();
+  });
+  $("streakCalendarCheckInBtn").addEventListener("click",async()=>{
+    await dailyCheckIn();
+    streakCalendarSelectedDate=todayStr();
+    renderStreakCalendar();
+  });
+
   function reconcileUsedFreezes(){
     if(!streakFrozenDates) streakFrozenDates=new Set();
     const dates=checkInDateSet(todayStr());
@@ -11078,6 +11731,7 @@
 
     await persist();
     render();
+    if(!$("streakCalendarBackdrop").classList.contains("hidden"))renderStreakCalendar();
 
     const stack=ensureMilestoneToastStack();
     const toast=document.createElement("div");
@@ -12953,6 +13607,9 @@
     }
     if(!$("archiveBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeArchive(); return;
+    }
+    if(!$("streakCalendarBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeStreakCalendar(); return;
     }
     if(!$("freezeBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeFreezeShop(); return;
