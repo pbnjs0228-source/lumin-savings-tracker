@@ -7166,6 +7166,51 @@
     .streak-calendar-day,.streak-calendar-nav{transition:none !important;}
   }
 
+
+  /* Calendar event details / rescheduling */
+  .calendar-chip[data-calendar-event],.calendar-event-row[data-calendar-event]{cursor:pointer}
+  .calendar-chip[data-calendar-event]{transition:transform .14s ease,filter .14s ease}
+  .calendar-chip[data-calendar-event]:hover{transform:translateX(1px);filter:brightness(1.12)}
+  .calendar-event-row[data-calendar-event]{transition:transform .15s ease,border-color .15s ease,background .15s ease}
+  .calendar-event-row[data-calendar-event]:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--accent) 18%,var(--line));background:color-mix(in srgb,var(--accent) 4%,var(--panel-solid))}
+  .calendar-event-row[data-calendar-event]:focus-visible{outline:2px solid color-mix(in srgb,var(--accent) 38%,transparent);outline-offset:2px}
+  .calendar-event-detail-modal{width:min(580px,calc(100vw - 28px));overflow:hidden}
+  .calendar-event-detail-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+  .calendar-event-detail-heading{min-width:0}
+  .calendar-event-detail-type{display:inline-flex;align-items:center;min-height:21px;padding:4px 7px;margin-bottom:7px;border:1px solid color-mix(in srgb,var(--accent) 20%,var(--line));border-radius:99px;color:var(--accent-soft);background:color-mix(in srgb,var(--accent) 6%,transparent);font:800 6.8px/1 'Sora',sans-serif;letter-spacing:.07em;text-transform:uppercase}
+  .calendar-event-detail-hero{display:grid;grid-template-columns:52px minmax(0,1fr);align-items:center;gap:11px;margin-top:15px;padding:11px;border:1px solid var(--line);border-radius:12px;background:radial-gradient(circle at 7% 0%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 39%),color-mix(in srgb,var(--panel-solid) 76%,transparent)}
+  .calendar-event-detail-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:14px;color:color-mix(in srgb,var(--bg1) 92%,#000);background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 22px color-mix(in srgb,var(--accent) 12%,transparent);font:850 20px/1 'Sora',sans-serif}
+  .calendar-event-detail-hero[data-type="shift"] .calendar-event-detail-icon{background:linear-gradient(135deg,var(--positive),var(--accent2))}
+  .calendar-event-detail-hero[data-type="busy"] .calendar-event-detail-icon{color:#180809;background:linear-gradient(135deg,#e16b73,#e6a064)}
+  .calendar-event-detail-hero-copy span{display:block;margin-bottom:3px;color:var(--muted);font-size:7.5px}
+  .calendar-event-detail-hero-copy strong{display:block;color:var(--white);font:750 12px/1.25 'Sora',sans-serif}
+  .calendar-event-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px}
+  .calendar-event-detail-stat{min-width:0;padding:9px;border:1px solid var(--line);border-radius:9px;background:color-mix(in srgb,var(--panel-solid) 67%,transparent)}
+  .calendar-event-detail-stat span,.calendar-event-detail-notes>span{display:block;margin-bottom:4px;color:var(--muted);font-size:7px;text-transform:uppercase;letter-spacing:.05em}
+  .calendar-event-detail-stat strong{display:block;overflow:hidden;color:var(--white);font:700 8.8px/1.3 'JetBrains Mono',monospace;text-overflow:ellipsis;white-space:nowrap}
+  .calendar-event-detail-notes{margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:9px;background:color-mix(in srgb,var(--panel-solid) 58%,transparent)}
+  .calendar-event-detail-notes p{margin:0;color:var(--white);font-size:8.6px;line-height:1.5;white-space:pre-wrap}
+  .calendar-event-detail-warning{margin-top:8px;padding:8px 9px;border:1px solid color-mix(in srgb,#dfac56 26%,var(--line));border-radius:9px;color:#d8b36f;background:rgba(219,163,74,.055);font-size:7.8px;line-height:1.45}
+  .calendar-event-detail-actions,.calendar-event-edit-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+  .calendar-event-detail-actions-right{display:flex;gap:6px;margin-left:auto}
+  .btn-danger-ghost{color:#e87980;border-color:rgba(224,95,106,.18);background:rgba(224,95,106,.035)}
+  .btn-danger-ghost:hover{color:#f19aa0;border-color:rgba(224,95,106,.38);background:rgba(224,95,106,.07)}
+  .calendar-event-edit-form{margin-top:14px}.calendar-event-edit-form textarea{min-height:72px}
+  #calendarEventEditType{width:100%;min-height:36px;padding:9px 34px 9px 10px;border:1px solid var(--line-strong);border-radius:9px;color:var(--white);background-color:color-mix(in srgb,var(--panel-solid) 86%,transparent);font-family:'Inter',sans-serif;font-size:13px;font-weight:500}
+  .calendar-reschedule-preview{min-height:0;margin-top:8px}
+  .calendar-reschedule-preview:not(:empty){padding:8px 9px;border:1px solid color-mix(in srgb,var(--accent) 14%,var(--line));border-radius:9px;color:var(--muted);background:color-mix(in srgb,var(--accent) 4%,transparent);font-size:7.8px;line-height:1.45}
+  .calendar-reschedule-preview strong{color:var(--white)}
+  html[data-hyperdrive-rain="true"] .calendar-event-detail-icon{box-shadow:0 0 18px color-mix(in srgb,var(--accent) 24%,transparent),0 0 35px color-mix(in srgb,var(--accent2) 9%,transparent)}
+  @media(max-width:520px){
+    .calendar-event-detail-modal{width:calc(100vw - 18px);padding:14px}
+    .calendar-event-detail-grid{grid-template-columns:1fr}
+    .calendar-event-detail-actions{align-items:stretch;flex-direction:column-reverse}
+    .calendar-event-detail-actions-right{width:100%;margin:0;display:grid;grid-template-columns:1fr 1fr}
+    .calendar-event-detail-actions>.btn,.calendar-event-detail-actions-right .btn,.calendar-event-edit-actions .btn{justify-content:center}
+    .calendar-event-detail-actions>.btn{width:100%}
+    .calendar-event-edit-actions{display:grid;grid-template-columns:1fr 1fr}
+  }
+
 </style>
 </head>
 <body>
@@ -8333,6 +8378,70 @@
     </div>
   </div>
 
+  <!-- CALENDAR EVENT DETAILS / RESCHEDULE -->
+  <div id="calendarEventDetailBackdrop" class="modal-backdrop hidden">
+    <div class="modal calendar-event-detail-modal" role="dialog" aria-modal="true" aria-labelledby="calendarEventDetailTitle">
+      <div id="calendarEventDetailView">
+        <div class="calendar-event-detail-head">
+          <div class="calendar-event-detail-heading">
+            <span class="calendar-event-detail-type" id="calendarEventDetailType">Event</span>
+            <h2 class="modal-title" id="calendarEventDetailTitle">Calendar event</h2>
+            <p class="modal-sub" id="calendarEventDetailWhen">Date · time</p>
+          </div>
+          <button type="button" class="modal-close" id="calendarEventDetailCloseBtn" aria-label="Close event details">×</button>
+        </div>
+
+        <div class="calendar-event-detail-hero" id="calendarEventDetailHero">
+          <div class="calendar-event-detail-icon" id="calendarEventDetailIcon">◇</div>
+          <div class="calendar-event-detail-hero-copy">
+            <span id="calendarEventDetailDuration">0 hrs</span>
+            <strong id="calendarEventDetailPrimary">Scheduled</strong>
+          </div>
+        </div>
+
+        <div class="calendar-event-detail-grid">
+          <div class="calendar-event-detail-stat"><span>Date</span><strong id="calendarEventDetailDate">—</strong></div>
+          <div class="calendar-event-detail-stat"><span>Time</span><strong id="calendarEventDetailTime">—</strong></div>
+          <div class="calendar-event-detail-stat"><span>Reminder</span><strong id="calendarEventDetailReminder">—</strong></div>
+          <div class="calendar-event-detail-stat"><span id="calendarEventDetailExtraLabel">Status</span><strong id="calendarEventDetailExtra">—</strong></div>
+        </div>
+
+        <div class="calendar-event-detail-notes"><span>Notes</span><p id="calendarEventDetailNotes">No notes added.</p></div>
+        <div class="calendar-event-detail-warning hidden" id="calendarEventLoggedWarning">This shift has already been logged as earnings. Rescheduling the calendar event will not rewrite that historical earnings entry.</div>
+
+        <div class="calendar-event-detail-actions">
+          <button type="button" class="btn btn-danger-ghost" id="calendarEventDetailDeleteBtn">Delete</button>
+          <div class="calendar-event-detail-actions-right">
+            <button type="button" class="btn btn-ghost hidden" id="calendarEventDetailLogBtn">Log worked</button>
+            <button type="button" class="btn btn-primary" id="calendarEventDetailEditBtn">Edit / Reschedule</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="calendarEventEditView" class="hidden">
+        <div class="calendar-event-detail-head">
+          <div class="calendar-event-detail-heading">
+            <span class="calendar-event-detail-type">EDIT EVENT</span>
+            <h2 class="modal-title">Edit / Reschedule</h2>
+            <p class="modal-sub">Change the event and save it back to your calendar.</p>
+          </div>
+          <button type="button" class="modal-close" id="calendarEventEditCloseBtn" aria-label="Close event editor">×</button>
+        </div>
+
+        <form id="calendarEventEditForm" class="feature-form calendar-event-edit-form">
+          <label class="field">Type<select id="calendarEventEditType"><option value="shift">Work shift</option><option value="busy">Busy / unavailable</option><option value="event">Event</option></select></label>
+          <label class="field">Title<input id="calendarEventEditTitle" maxlength="60" required /></label>
+          <label class="field">Date<input id="calendarEventEditDate" type="date" required /></label>
+          <div class="calendar-time-row"><label class="field">Start<input id="calendarEventEditStart" type="time" required /></label><label class="field">End<input id="calendarEventEditEnd" type="time" required /></label></div>
+          <label class="calendar-notify-check"><input id="calendarEventEditNotify" type="checkbox" /><span>Remind me before this starts</span></label>
+          <label class="field">Notes <span style="font-weight:400;color:var(--muted);">(optional)</span><textarea id="calendarEventEditNotes" maxlength="180" placeholder="Anything useful to remember"></textarea></label>
+          <div class="calendar-reschedule-preview" id="calendarReschedulePreview"></div>
+          <div class="calendar-event-edit-actions"><button type="button" class="btn btn-ghost" id="calendarEventEditCancelBtn">Cancel</button><button type="submit" class="btn btn-primary">Save changes</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- STREAK CALENDAR -->
   <div id="streakCalendarBackdrop" class="modal-backdrop hidden">
     <div class="modal streak-calendar-modal" role="dialog" aria-modal="true" aria-labelledby="streakCalendarTitle">
@@ -8648,9 +8757,20 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.09.15.1";
+  const APP_VERSION = "2026.09.18.1";
 
   const CHANGELOG = [
+    {
+      version: "2026.09.18.1",
+      title: "Clickable calendar events",
+      date: "18 September 2026",
+      changes: [
+        "Calendar shifts, unavailable blocks and personal events can now be clicked to open a full detail view.",
+        "Event details show the date, time, duration, reminder state, notes, shift status and estimated pay where relevant.",
+        "Added Edit / Reschedule so events can be moved to another date or time and have their title, type, notes or reminder updated.",
+        "Logged shifts keep their historical earnings entry when their calendar event is later edited, rescheduled or deleted."
+      ]
+    },
     {
       version: "2026.09.15.1",
       title: "Streak Calendar",
@@ -9418,6 +9538,7 @@
   let homeWidgetHidden = null;
   let calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
   let calendarSelectedDate = "";
+  let calendarDetailEventId = null;
   const MILESTONES = [25, 50, 75, 90, 100];
   const ACHIEVEMENTS = [
     {id:"first-log", icon:"✦", name:"First step", desc:"Log your first earnings.", test:s=>entries.length>=1},
@@ -13608,6 +13729,9 @@
     if(!$("archiveBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeArchive(); return;
     }
+    if(!$("calendarEventDetailBackdrop").classList.contains("hidden")){
+      e.preventDefault(); closeCalendarEventDetail(); return;
+    }
     if(!$("streakCalendarBackdrop").classList.contains("hidden")){
       e.preventDefault(); closeStreakCalendar(); return;
     }
@@ -15056,6 +15180,240 @@
   function eventTypeLabel(type){return type==="shift"?"Shift":type==="busy"?"Unavailable":"Event";}
   function formatTime12(time){const [h,m]=String(time||"00:00").split(":").map(Number);const suffix=h>=12?"PM":"AM";return `${((h+11)%12)+1}:${String(m||0).padStart(2,"0")} ${suffix}`;}
 
+
+  function calendarEventById(id){
+    return calendarEvents.find(ev=>ev.id===id)||null;
+  }
+
+  function calendarEventIcon(type){
+    return type==="shift"?"↗":type==="busy"?"×":"◇";
+  }
+
+  function calendarEventFormattedDate(date){
+    const d=new Date(date+"T00:00:00");
+    return Number.isNaN(d.getTime())
+      ? date
+      : d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  }
+
+  function calendarEventPayEstimate(ev){
+    if(!ev||ev.type!=="shift")return null;
+    const rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0);
+    if(rate<=0)return null;
+    return eventHours(ev)*rate;
+  }
+
+  function renderCalendarEventDetail(){
+    const ev=calendarEventById(calendarDetailEventId);
+    if(!ev){
+      closeCalendarEventDetail();
+      return;
+    }
+
+    const hrs=eventHours(ev);
+    const estimate=calendarEventPayEstimate(ev);
+    const dateLabel=calendarEventFormattedDate(ev.date);
+    const timeLabel=`${formatTime12(ev.start)} – ${formatTime12(ev.end)}`;
+
+    $("calendarEventDetailType").textContent=eventTypeLabel(ev.type);
+    $("calendarEventDetailTitle").textContent=ev.title;
+    $("calendarEventDetailWhen").textContent=`${dateLabel} · ${timeLabel}`;
+    $("calendarEventDetailIcon").textContent=calendarEventIcon(ev.type);
+    $("calendarEventDetailHero").dataset.type=ev.type;
+    $("calendarEventDetailDuration").textContent=
+      `${hrs.toFixed(hrs%1?1:0)} hr${Math.abs(hrs-1)<.001?"":"s"}`;
+
+    if(ev.type==="shift"){
+      $("calendarEventDetailPrimary").textContent=ev.logged
+        ? `Logged as worked${estimate!==null?` · ${fmtMoney(estimate)}`:""}`
+        : estimate!==null
+          ? `Estimated pay · ${fmtMoney(estimate)}`
+          : "Planned work shift";
+    }else if(ev.type==="busy"){
+      $("calendarEventDetailPrimary").textContent="Marked unavailable";
+    }else{
+      $("calendarEventDetailPrimary").textContent="Personal calendar event";
+    }
+
+    $("calendarEventDetailDate").textContent=dateLabel;
+    $("calendarEventDetailTime").textContent=timeLabel;
+    $("calendarEventDetailReminder").textContent=ev.notify?"On":"Off";
+
+    const extraLabel=$("calendarEventDetailExtraLabel");
+    const extra=$("calendarEventDetailExtra");
+    if(ev.type==="shift"){
+      extraLabel.textContent=ev.logged?"Work status":"Estimated pay";
+      extra.textContent=ev.logged?"Logged":estimate!==null?fmtMoney(estimate):"Set hourly rate";
+    }else{
+      extraLabel.textContent="Duration";
+      extra.textContent=`${hrs.toFixed(hrs%1?1:0)} hrs`;
+    }
+
+    $("calendarEventDetailNotes").textContent=ev.notes||"No notes added.";
+    $("calendarEventLoggedWarning").classList.toggle("hidden",!(ev.type==="shift"&&ev.logged));
+    $("calendarEventDetailLogBtn").classList.toggle("hidden",!(ev.type==="shift"&&!ev.logged));
+  }
+
+  function openCalendarEventDetail(id){
+    if(!calendarEventById(id))return;
+    calendarDetailEventId=id;
+    $("calendarEventDetailView").classList.remove("hidden");
+    $("calendarEventEditView").classList.add("hidden");
+    renderCalendarEventDetail();
+    $("calendarEventDetailBackdrop").classList.remove("hidden");
+    lockBodyScroll();
+  }
+
+  function closeCalendarEventDetail(){
+    calendarDetailEventId=null;
+    $("calendarEventDetailBackdrop").classList.add("hidden");
+    $("calendarEventDetailView").classList.remove("hidden");
+    $("calendarEventEditView").classList.add("hidden");
+    unlockBodyScroll();
+  }
+
+  function renderCalendarReschedulePreview(){
+    const ev=calendarEventById(calendarDetailEventId);
+    if(!ev)return;
+    const date=$("calendarEventEditDate").value;
+    const start=$("calendarEventEditStart").value;
+    const end=$("calendarEventEditEnd").value;
+    const preview=$("calendarReschedulePreview");
+    if(!date||!start||!end){preview.textContent="";return;}
+
+    const changed=date!==ev.date||start!==ev.start||end!==ev.end;
+    if(!changed){preview.textContent="Schedule unchanged.";return;}
+
+    const temp={...ev,date,start,end,type:$("calendarEventEditType").value};
+    const hrs=eventHours(temp);
+    const estimate=calendarEventPayEstimate(temp);
+    preview.innerHTML=
+      `<strong>New schedule:</strong> ${escapeHtml(calendarEventFormattedDate(date))} · `+
+      `${escapeHtml(formatTime12(start))}–${escapeHtml(formatTime12(end))} · `+
+      `${hrs.toFixed(hrs%1?1:0)} hrs`+
+      (temp.type==="shift"&&estimate!==null?` · ~${fmtMoney(estimate)}`:"");
+  }
+
+  function openCalendarEventEditor(){
+    const ev=calendarEventById(calendarDetailEventId);
+    if(!ev)return;
+    $("calendarEventEditType").value=ev.type;
+    $("calendarEventEditTitle").value=ev.title;
+    $("calendarEventEditDate").value=ev.date;
+    $("calendarEventEditStart").value=ev.start;
+    $("calendarEventEditEnd").value=ev.end;
+    $("calendarEventEditNotify").checked=ev.notify!==false;
+    $("calendarEventEditNotes").value=ev.notes||"";
+    renderCalendarReschedulePreview();
+    $("calendarEventDetailView").classList.add("hidden");
+    $("calendarEventEditView").classList.remove("hidden");
+    setTimeout(()=>$("calendarEventEditTitle").focus(),30);
+  }
+
+  function cancelCalendarEventEditor(){
+    $("calendarEventEditView").classList.add("hidden");
+    $("calendarEventDetailView").classList.remove("hidden");
+    renderCalendarEventDetail();
+  }
+
+  async function logCalendarShiftById(id){
+    const ev=calendarEventById(id);
+    if(!ev||ev.logged||ev.type!=="shift")return false;
+    const hours=eventHours(ev);
+    const rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0);
+    if(hours<=0||rate<=0){
+      showOfflineToast("Set an hourly rate before logging this shift.");
+      return false;
+    }
+    entries.push({
+      id:"shift-"+ev.id,date:ev.date,hours,earned:hours*rate,directEarned:0,
+      entryType:"hours",rateAtEntry:rate,source:"calendar-shift",label:ev.title
+    });
+    ev.logged=true;
+    entries.sort((a,b)=>a.date<b.date?1:-1);
+    await persist();
+    render();
+    if(calendarDetailEventId===id)renderCalendarEventDetail();
+    showOfflineToast(`${ev.title} logged · ${fmtMoney(hours*rate)} earned.`);
+    return true;
+  }
+
+  async function deleteCalendarEventById(id,{closeDetail=false}={}){
+    const ev=calendarEventById(id);
+    if(!ev)return;
+    const wasLoggedShift=ev.type==="shift"&&ev.logged;
+    calendarEvents=calendarEvents.filter(item=>item.id!==id);
+    if(calendarDetailEventId===id)calendarDetailEventId=null;
+    await persist();
+    render();
+    if(closeDetail)closeCalendarEventDetail();
+    showOfflineToast(wasLoggedShift
+      ? "Calendar event deleted. Its logged earnings were kept in Activity."
+      : "Calendar event deleted.");
+  }
+
+  $("calendarEventDetailCloseBtn").addEventListener("click",closeCalendarEventDetail);
+  $("calendarEventEditCloseBtn").addEventListener("click",closeCalendarEventDetail);
+  $("calendarEventDetailBackdrop").addEventListener("click",e=>{
+    if(e.target.id==="calendarEventDetailBackdrop")closeCalendarEventDetail();
+  });
+  $("calendarEventDetailEditBtn").addEventListener("click",openCalendarEventEditor);
+  $("calendarEventEditCancelBtn").addEventListener("click",cancelCalendarEventEditor);
+  $("calendarEventDetailDeleteBtn").addEventListener("click",async()=>{
+    const id=calendarDetailEventId;
+    if(id)await deleteCalendarEventById(id,{closeDetail:true});
+  });
+  $("calendarEventDetailLogBtn").addEventListener("click",async()=>{
+    const id=calendarDetailEventId;
+    if(id)await logCalendarShiftById(id);
+  });
+
+  ["calendarEventEditDate","calendarEventEditStart","calendarEventEditEnd","calendarEventEditType"].forEach(id=>{
+    $(id).addEventListener("input",renderCalendarReschedulePreview);
+    $(id).addEventListener("change",renderCalendarReschedulePreview);
+  });
+
+  $("calendarEventEditForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const ev=calendarEventById(calendarDetailEventId);
+    if(!ev)return;
+
+    const title=$("calendarEventEditTitle").value.trim();
+    const date=$("calendarEventEditDate").value;
+    const start=$("calendarEventEditStart").value;
+    const end=$("calendarEventEditEnd").value;
+    const type=["shift","busy","event"].includes($("calendarEventEditType").value)
+      ? $("calendarEventEditType").value
+      : "event";
+    if(!title||!date||!start||!end)return;
+
+    const scheduleChanged=date!==ev.date||start!==ev.start||end!==ev.end;
+    ev.type=type;
+    ev.title=title;
+    ev.date=date;
+    ev.start=start;
+    ev.end=end;
+    ev.notes=$("calendarEventEditNotes").value.trim();
+    ev.notify=$("calendarEventEditNotify").checked;
+
+    calendarEvents.sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+
+    if(scheduleChanged&&notificationHistory){
+      notificationHistory.delete(`calendar:${ev.id}:${ev.date}:${ev.start}`);
+    }
+
+    calendarSelectedDate=date;
+    const d=new Date(date+"T00:00:00");
+    calendarCursor=new Date(d.getFullYear(),d.getMonth(),1);
+
+    await persist();
+    render();
+    renderCalendarEventDetail();
+    $("calendarEventEditView").classList.add("hidden");
+    $("calendarEventDetailView").classList.remove("hidden");
+    showOfflineToast(scheduleChanged?"Event rescheduled.":"Event updated.");
+  });
+
   function renderCalendar(){
     const grid=$("calendarGrid"); if(!grid) return;
     if(!calendarSelectedDate) calendarSelectedDate=todayStr();
@@ -15086,7 +15444,7 @@
     for(let i=0;i<42;i++){
       const d=new Date(gridStart.getFullYear(),gridStart.getMonth(),gridStart.getDate()+i),key=dateStr(d);
       const dayEvents=calendarEvents.filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
-      const chips=dayEvents.slice(0,3).map(ev=>`<span class="calendar-chip ${ev.type}">${escapeHtml(ev.start)} · ${escapeHtml(ev.title)}</span>`).join("");
+      const chips=dayEvents.slice(0,3).map(ev=>`<span class="calendar-chip ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details">${escapeHtml(ev.start)} · ${escapeHtml(ev.title)}</span>`).join("");
       const more=dayEvents.length>3?`<span class="calendar-more">+${dayEvents.length-3} more</span>`:"";
       cells.push(`<button type="button" class="calendar-day${d.getMonth()===month?"":" other-month"}${key===today?" today":""}${key===calendarSelectedDate?" selected":""}" data-calendar-date="${key}"><span class="calendar-day-num">${d.getDate()}</span><span class="calendar-day-events">${chips}${more}</span></button>`);
     }
@@ -15105,7 +15463,7 @@
     list.innerHTML=events.map(ev=>{
       const hrs=eventHours(ev),pay=ev.type==="shift"&&rate>0?` · ~${fmtMoney(hrs*rate)}`:"",logged=ev.type==="shift"&&ev.logged?" · logged":"";
       const action=ev.type==="shift"&&!ev.logged?`<button type="button" class="log-shift" data-log-shift="${escapeHtml(ev.id)}">Log worked</button>`:"";
-      return `<div class="calendar-event-row ${ev.type}"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}">×</button></div></div>`;
+      return `<div class="calendar-event-row ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}" aria-label="Delete ${escapeHtml(ev.title)}">×</button></div></div>`;
     }).join("");
   }
 
@@ -15117,7 +15475,30 @@
     el.innerHTML=upcoming.map(({ev})=>{const d=new Date(ev.date+"T00:00:00");return `<div class="home-schedule-row"><div><div class="home-widget-primary">${escapeHtml(ev.title)}</div><div class="home-widget-secondary">${d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} · ${formatTime12(ev.start)}</div></div><div class="home-widget-amount">${eventTypeLabel(ev.type)}</div></div>`;}).join("");
   }
 
-  $("calendarGrid").addEventListener("click",e=>{const day=e.target.closest("[data-calendar-date]");if(!day)return;calendarSelectedDate=day.dataset.calendarDate;$("calendarEventDate").value=calendarSelectedDate;const d=new Date(calendarSelectedDate+"T00:00:00");calendarCursor=new Date(d.getFullYear(),d.getMonth(),1);renderCalendar();});
+  $("calendarGrid").addEventListener("click",e=>{
+    const eventChip=e.target.closest("[data-calendar-event]");
+    if(eventChip){
+      e.preventDefault();
+      e.stopPropagation();
+      openCalendarEventDetail(eventChip.dataset.calendarEvent);
+      return;
+    }
+    const day=e.target.closest("[data-calendar-date]");
+    if(!day)return;
+    calendarSelectedDate=day.dataset.calendarDate;
+    $("calendarEventDate").value=calendarSelectedDate;
+    const d=new Date(calendarSelectedDate+"T00:00:00");
+    calendarCursor=new Date(d.getFullYear(),d.getMonth(),1);
+    renderCalendar();
+  });
+  $("calendarGrid").addEventListener("keydown",e=>{
+    const eventChip=e.target.closest("[data-calendar-event]");
+    if(eventChip&&(e.key==="Enter"||e.key===" ")){
+      e.preventDefault();
+      e.stopPropagation();
+      openCalendarEventDetail(eventChip.dataset.calendarEvent);
+    }
+  });
   $("calendarPrevBtn").addEventListener("click",()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderCalendar();});
   $("calendarNextBtn").addEventListener("click",()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderCalendar();});
   $("calendarTodayBtn").addEventListener("click",()=>{const n=new Date();calendarCursor=new Date(n.getFullYear(),n.getMonth(),1);calendarSelectedDate=todayStr();$("calendarEventDate").value=calendarSelectedDate;renderCalendar();});
@@ -15128,8 +15509,28 @@
     calendarEvents.sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start)); calendarSelectedDate=date; const d=new Date(date+"T00:00:00"); calendarCursor=new Date(d.getFullYear(),d.getMonth(),1); $("calendarEventTitle").value="";$("calendarEventNotes").value="";await persist();render();setAppView("calendar",false,true);
   });
   $("calendarSelectedEvents").addEventListener("click",async e=>{
-    const del=e.target.closest("[data-delete-calendar]"); if(del){calendarEvents=calendarEvents.filter(ev=>ev.id!==del.dataset.deleteCalendar);await persist();render();return;}
-    const log=e.target.closest("[data-log-shift]"); if(!log)return; const ev=calendarEvents.find(x=>x.id===log.dataset.logShift); if(!ev||ev.logged||ev.type!=="shift")return; const hours=eventHours(ev),rate=Math.max(0,Number(wallet&&wallet.hourlyRate)||0); if(hours<=0||rate<=0){showOfflineToast("Set an hourly rate before logging this shift.");return;} entries.push({id:"shift-"+ev.id,date:ev.date,hours,earned:hours*rate,directEarned:0,entryType:"hours",rateAtEntry:rate,source:"calendar-shift",label:ev.title});ev.logged=true;entries.sort((a,b)=>a.date<b.date?1:-1);await persist();render();showOfflineToast(`${ev.title} logged · ${fmtMoney(hours*rate)} earned.`);
+    const del=e.target.closest("[data-delete-calendar]");
+    if(del){
+      e.stopPropagation();
+      await deleteCalendarEventById(del.dataset.deleteCalendar);
+      return;
+    }
+    const log=e.target.closest("[data-log-shift]");
+    if(log){
+      e.stopPropagation();
+      await logCalendarShiftById(log.dataset.logShift);
+      return;
+    }
+    const row=e.target.closest("[data-calendar-event]");
+    if(row)openCalendarEventDetail(row.dataset.calendarEvent);
+  });
+  $("calendarSelectedEvents").addEventListener("keydown",e=>{
+    const row=e.target.closest("[data-calendar-event]");
+    if(!row)return;
+    if((e.key==="Enter"||e.key===" ")&&!e.target.closest("button")){
+      e.preventDefault();
+      openCalendarEventDetail(row.dataset.calendarEvent);
+    }
   });
 
   // ================================================================
