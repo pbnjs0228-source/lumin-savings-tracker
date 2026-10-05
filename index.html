@@ -7488,6 +7488,8 @@
     .btn,.app-nav-btn,.theme-card,.settings-meta-pill{min-width:0;}
   }
 
+
+  .calendar-repeat-box{padding:11px;border:1px solid var(--line);border-radius:11px;background:var(--panel-solid);display:flex;flex-direction:column;gap:10px;} .calendar-repeat-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;} .calendar-repeat-days{display:flex;gap:5px;flex-wrap:wrap;} .calendar-repeat-day{position:relative;} .calendar-repeat-day input{position:absolute;opacity:0;pointer-events:none;} .calendar-repeat-day span{display:flex;align-items:center;justify-content:center;min-width:34px;height:32px;padding:0 7px;border:1px solid var(--line-strong);border-radius:8px;color:var(--muted);font-size:10px;font-weight:750;cursor:pointer;} .calendar-repeat-day input:checked+span{background:color-mix(in srgb,var(--accent) 15%,transparent);border-color:var(--accent-soft);color:var(--white);} .subscription-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;} .subscription-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--panel-solid);} .subscription-main{min-width:0;} .subscription-name{font-weight:700;font-size:12px;color:var(--white);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .subscription-meta{font-size:10px;color:var(--muted);margin-top:3px;} .subscription-price{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-soft);white-space:nowrap;} .subscription-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;} .subscription-actions .btn{padding:6px 8px;font-size:10px;} .subscription-inactive{opacity:.55;} .calendar-subscription-badge{display:inline-flex;margin-top:5px;padding:3px 6px;border-radius:6px;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent-soft);font-size:9px;font-weight:750;} @media(max-width:620px){.calendar-repeat-row{grid-template-columns:1fr}.subscription-row{grid-template-columns:minmax(0,1fr) auto}.subscription-actions{grid-column:1/-1;justify-content:flex-start}}
 </style>
 </head>
 <body>
@@ -8095,10 +8097,19 @@
               <div class="calendar-time-row"><label class="field">Start<input id="calendarEventStart" type="time" required /></label><label class="field">End<input id="calendarEventEnd" type="time" required /></label></div>
               <label class="calendar-notify-check"><input id="calendarEventNotify" type="checkbox" checked /><span>Remind me before this starts</span></label>
               <label class="field">Notes <span style="font-weight:400;color:var(--muted);">(optional)</span><textarea id="calendarEventNotes" maxlength="180" placeholder="Anything useful to remember"></textarea></label>
+              <div class="calendar-repeat-box">
+                <label class="field">Repeat<select id="calendarEventRepeat"><option value="none">Does not repeat</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option><option value="custom">Custom</option></select></label>
+                <div id="calendarRepeatOptions" class="hidden">
+                  <div class="calendar-repeat-row"><label class="field">Every <input id="calendarRepeatInterval" type="number" min="1" max="52" value="1" /></label><label class="field">Unit<select id="calendarRepeatUnit"><option value="week">week(s)</option><option value="month">month(s)</option></select></label></div>
+                  <div id="calendarRepeatWeekdayWrap" class="field">Days of week<div class="calendar-repeat-days"><label class="calendar-repeat-day"><input type="checkbox" value="1"><span>Mon</span></label><label class="calendar-repeat-day"><input type="checkbox" value="2"><span>Tue</span></label><label class="calendar-repeat-day"><input type="checkbox" value="3"><span>Wed</span></label><label class="calendar-repeat-day"><input type="checkbox" value="4"><span>Thu</span></label><label class="calendar-repeat-day"><input type="checkbox" value="5"><span>Fri</span></label><label class="calendar-repeat-day"><input type="checkbox" value="6"><span>Sat</span></label><label class="calendar-repeat-day"><input type="checkbox" value="0"><span>Sun</span></label></div></div>
+                  <label class="field">Repeat until <input id="calendarRepeatUntil" type="date" /></label>
+                </div><div id="calendarRepeatSummary" class="calendar-month-sub">One-time event</div>
+              </div>
               <button type="submit" class="btn btn-primary">+ Add to calendar</button>
             </form>
           </section>
           <section class="panel calendar-day-card"><div class="calendar-day-head"><div><div class="dashboard-section-eyebrow">Selected day</div><h3 id="calendarSelectedTitle">Today</h3></div><span id="calendarAvailabilityBadge" class="availability-badge">Available</span></div><div id="calendarSelectedEvents" class="calendar-selected-events"></div></section>
+          <section class="panel feature-form-card"><div class="panel-label"><span class="dash"></span>Subscriptions</div><p class="settings-card-desc" style="margin-bottom:10px">Track recurring bills and memberships, see due dates on the calendar, and log payments as spending.</p><form id="subscriptionForm" class="feature-form"><label class="field">Name<input id="subscriptionName" maxlength="50" placeholder="e.g. Spotify" required /></label><label class="field">Amount<div class="input-prefix"><span>$</span><input id="subscriptionAmount" type="number" min="0.01" step="0.01" placeholder="12.99" required /></div></label><label class="field">Billing cycle<select id="subscriptionFrequency"><option value="weekly">Weekly</option><option value="monthly" selected>Monthly</option><option value="yearly">Yearly</option></select></label><label class="field">Next payment<input id="subscriptionNextDate" type="date" required /></label><label class="field">Category<input id="subscriptionCategory" maxlength="30" placeholder="Entertainment" /></label><label class="calendar-notify-check"><input id="subscriptionNotify" type="checkbox" checked /><span>Remind me before payment</span></label><button type="submit" class="btn btn-primary">+ Add subscription</button></form><div id="subscriptionList" class="subscription-list"></div></section>
         </aside>
       </div>
     </div>
@@ -9034,20 +9045,9 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.10.03.2";
+  const APP_VERSION = "2026.10.06.1";
 
-  const CHANGELOG = [
-    {
-      version: "2026.10.03.2",
-      title: "Cloud save protection",
-      date: "3 October 2026",
-      changes: [
-        "Cloud saves now use timestamps and device IDs so an older browser cache cannot silently overwrite newer account data.",
-        "A newer cloud copy always wins over a stale local cache, while newer offline device changes can still sync safely.",
-        "LUMIN keeps rolling local recovery backups of saves before sync operations.",
-        "Realtime updates are checked for stale or out-of-order payloads before they can replace current data."
-      ]
-    },
+  const CHANGELOG = [{version:"2026.10.06.1",title:"Recurring calendar + subscriptions",date:"6 October 2026",changes:["Added weekly, monthly and custom recurring calendar events.","Added subscription tracking with due dates, billing cycles, pause/resume and payment logging.","Subscription payments appear on the calendar and become spending entries when logged."]},
     {
       version: "2026.09.18.1",
       title: "Clickable calendar events",
@@ -9815,6 +9815,7 @@
   let celebratedMilestones = null; // Set of "itemId:percent" milestone keys already celebrated.
   let budgets = [];
   let calendarEvents = [];
+  let subscriptions = [];
   let notificationsEnabled = false;
   let notificationLeadMinutes = 30;
   let notificationPreset = "normal";
@@ -11169,11 +11170,6 @@
 
   const LAST_CLOUD_USER_KEY = "lumin-last-cloud-user";
   const PENDING_SYNC_PREFIX = "lumin-pending-cloud-sync:";
-  const SYNC_META_VERSION = 2;
-  const SYNC_DEVICE_KEY = "lumin-sync-device-id";
-  const SYNC_BACKUP_PREFIX = "lumin-save-backups:";
-  let lastAppliedSaveMeta = null;
-  let syncWriteSequence = 0;
   const PASSKEY_SIGNIN_COUNT_PREFIX = "lumin-passkey-signin-count:";
   const PASSKEY_KNOWN_PREFIX = "lumin-passkey-known:";
   const PASSKEY_REMINDER_EVERY = 4;
@@ -11183,41 +11179,6 @@
     window.localStorage.setItem(testKey, "1");
     window.localStorage.removeItem(testKey);
   }catch(e){ localStorageOk = false; }
-
-  function getSyncDeviceId(){
-    if(!localStorageOk) return "session-"+Math.random().toString(36).slice(2);
-    try{
-      let id=window.localStorage.getItem(SYNC_DEVICE_KEY);
-      if(!id){ id="dev-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,10); window.localStorage.setItem(SYNC_DEVICE_KEY,id); }
-      return id;
-    }catch{return "session-"+Math.random().toString(36).slice(2);}
-  }
-  const syncDeviceId = getSyncDeviceId();
-  function readSaveMeta(payload){
-    try{
-      const parsed=JSON.parse(payload||"null"), meta=parsed&&parsed._luminSync;
-      if(!meta||typeof meta!=="object") return {updatedAt:0,deviceId:"",version:1};
-      return {updatedAt:Math.max(0,Number(meta.updatedAt)||0),deviceId:String(meta.deviceId||""),version:Math.max(1,Number(meta.version)||1)};
-    }catch{return {updatedAt:0,deviceId:"",version:1};}
-  }
-  function compareSaveMeta(a,b){
-    const aa=readSaveMeta(a),bb=readSaveMeta(b);
-    if(aa.updatedAt!==bb.updatedAt) return aa.updatedAt>bb.updatedAt?1:-1;
-    if(aa.deviceId===bb.deviceId) return 0;
-    return aa.deviceId>bb.deviceId?1:-1;
-  }
-  function saveLocalBackup(uid,payload){
-    if(!localStorageOk||!payload)return;
-    try{
-      const key=SYNC_BACKUP_PREFIX+String(uid||"local");
-      const old=JSON.parse(localStorage.getItem(key)||"[]");
-      const list=Array.isArray(old)?old:[];
-      const meta=readSaveMeta(payload);
-      const filtered=list.filter(x=>x&&x.payload&&x.updatedAt!==meta.updatedAt);
-      filtered.unshift({savedAt:Date.now(),updatedAt:meta.updatedAt,payload});
-      localStorage.setItem(key,JSON.stringify(filtered.slice(0,8)));
-    }catch{}
-  }
 
   function currentCacheKey(){
     return (cloudUser && (cloudMode === "cloud" || cloudMode === "offline-cloud"))
@@ -11497,39 +11458,35 @@
         try{
           setCloudStatus("saving", "Checking cloud…");
 
-          // Read the cloud first. Never let an old pending browser cache blindly overwrite it.
-          const remotePayload = await cloudApi.read(cloudUser.uid);
-          if(remotePayload && localPayload){
-            const cmp=compareSaveMeta(localPayload,remotePayload);
-            if(cmp>0){
-              await cloudApi.write(cloudUser.uid,localPayload);
-              lastCloudPayload=localPayload;
-              setPendingCloudSync(cloudUser.uid,false);
-              setCloudStatus("synced",cloudUser.email || "Cloud synced");
-              setSyncBanner("Your newer device changes were synced to LUMIN Cloud.");
-              return {key,value:localPayload};
-            }
-            lastCloudPayload=remotePayload;
-            await localSetPayload(remotePayload);
-            setPendingCloudSync(cloudUser.uid,false);
-            setCloudStatus("synced",cloudUser.email || "Cloud synced");
-            setSyncBanner(cmp<0 ? "Loaded the newer cloud copy. Your older device cache was kept safe." : "");
-            return {key,value:remotePayload};
-          }
-          if(remotePayload){
-            lastCloudPayload=remotePayload;
-            await localSetPayload(remotePayload);
-            setPendingCloudSync(cloudUser.uid,false);
-            setCloudStatus("synced",cloudUser.email || "Cloud synced");
-            setSyncBanner("");
-            return {key,value:remotePayload};
-          }
-          if(localPayload){
+          // If this account changed while offline, the device cache is the
+          // newest intentional save. Push it before reading cloud state.
+          if(localPayload && hasPendingCloudSync(cloudUser.uid)){
             await cloudApi.write(cloudUser.uid,localPayload);
             lastCloudPayload=localPayload;
             setPendingCloudSync(cloudUser.uid,false);
             setCloudStatus("synced",cloudUser.email || "Cloud synced");
+            setSyncBanner("Offline changes synced to LUMIN Cloud.");
+            clearTimeout(store.get._syncBannerTimer);
+            store.get._syncBannerTimer=setTimeout(()=>setSyncBanner(""),2600);
             return {key,value:localPayload};
+          }
+
+          const remotePayload = await cloudApi.read(cloudUser.uid);
+          if(remotePayload){
+            lastCloudPayload = remotePayload;
+            await localSetPayload(remotePayload);
+            setCloudStatus("synced", cloudUser.email || "Cloud synced");
+            setSyncBanner("");
+            return {key, value:remotePayload};
+          }
+
+          // New account: if this account already has a per-user local cache,
+          // seed the cloud from it. Otherwise start fresh.
+          if(localPayload){
+            await cloudApi.write(cloudUser.uid, localPayload);
+            lastCloudPayload = localPayload;
+            setCloudStatus("synced", cloudUser.email || "Cloud synced");
+            return {key, value:localPayload};
           }
 
           setCloudStatus("synced", cloudUser.email || "Cloud synced");
@@ -11546,37 +11503,27 @@
     },
 
     async set(key,value){
-      saveLocalBackup(cloudUser && cloudUser.uid ? cloudUser.uid : "local",value);
       await localSetPayload(value);
+
       if(cloudMode === "cloud" && cloudUser && cloudApi && cloudApi.configured){
-        cloudWriteInFlight=true;
-        lastCloudPayload=value;
-        lastAppliedSaveMeta=readSaveMeta(value);
-        setCloudStatus("saving","Saving…");
+        cloudWriteInFlight = true;
+        lastCloudPayload = value;
+        setCloudStatus("saving", "Saving…");
         try{
-          const remoteBeforeWrite=await cloudApi.read(cloudUser.uid);
-          if(remoteBeforeWrite && compareSaveMeta(remoteBeforeWrite,value)>0){
-            lastCloudPayload=remoteBeforeWrite;
-            lastAppliedSaveMeta=readSaveMeta(remoteBeforeWrite);
-            saveLocalBackup(cloudUser.uid,remoteBeforeWrite);
-            await localSetPayload(remoteBeforeWrite);
-            setPendingCloudSync(cloudUser.uid,false);
-            setCloudStatus("synced",cloudUser.email || "Cloud synced");
-            setSyncBanner("A newer cloud save was detected, so LUMIN kept it instead of overwriting it.");
-            await applySavePayload(remoteBeforeWrite);
-            return {key,value:remoteBeforeWrite};
-          }
-          await cloudApi.write(cloudUser.uid,value);
-          setPendingCloudSync(cloudUser.uid,false);
-          setCloudStatus("synced",cloudUser.email || "Cloud synced");
+          await cloudApi.write(cloudUser.uid, value);
+          setCloudStatus("synced", cloudUser.email || "Cloud synced");
           setSyncBanner("");
         }catch(error){
-          console.error("Cloud save failed",error);
+          console.error("Cloud save failed", error);
           setPendingCloudSync(cloudUser.uid,true);
-          setCloudStatus("error","Saved locally");
-          setSyncBanner(error && error.message ? error.message : "Couldn’t sync to the cloud. Your change is still saved on this device.",true);
-        }finally{cloudWriteInFlight=false;}
-      }else if(cloudMode === "offline-cloud" && cloudUser){setPendingCloudSync(cloudUser.uid,true);}
+          setCloudStatus("error", "Saved locally");
+          setSyncBanner(error && error.message ? error.message : "Couldn’t sync to the cloud. Your change is still saved on this device.", true);
+        }finally{
+          cloudWriteInFlight = false;
+        }
+      }else if(cloudMode === "offline-cloud" && cloudUser){
+        setPendingCloudSync(cloudUser.uid,true);
+      }
       return {key,value};
     }
   };
@@ -11616,6 +11563,7 @@
     celebratedMilestones = null;
     budgets = [];
     calendarEvents = [];
+    subscriptions = [];
     notificationsEnabled = false;
     notificationLeadMinutes = 30;
     notificationPreset = "normal";
@@ -11661,6 +11609,7 @@
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
     budgets = Array.isArray(parsed.budgets) ? parsed.budgets.filter(b=>b&&typeof b==="object").map(b=>({id:String(b.id||uid()),name:String(b.name||"Budget").trim().slice(0,40)||"Budget",limit:Math.max(.01,Number(b.limit)||0),period:b.period==="weekly"?"weekly":"monthly"})).filter(b=>b.limit>0) : [];
     calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>({id:String(ev.id||uid()),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged})) : [];
+    subscriptions = Array.isArray(parsed.subscriptions) ? parsed.subscriptions.filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x.nextDate||"")).map(x=>({id:String(x.id||uid()),name:String(x.name||"Subscription").trim().slice(0,50)||"Subscription",amount:Math.max(.01,Number(x.amount)||0),frequency:["weekly","monthly","yearly"].includes(x.frequency)?x.frequency:"monthly",nextDate:x.nextDate,category:String(x.category||"").slice(0,30),notify:x.notify!==false,active:x.active!==false,lastPaid:x.lastPaid||""})).filter(x=>x.amount>0) : [];
     notificationsEnabled = parsed.notificationsEnabled===true;
     notificationLeadMinutes = [15,30,60,120].includes(Number(parsed.notificationLeadMinutes)) ? Number(parsed.notificationLeadMinutes) : 30;
     notificationPreset = ["minimal","normal","everything"].includes(parsed.notificationPreset) ? parsed.notificationPreset : "normal";
@@ -12638,7 +12587,6 @@
   }
 
   async function applySavePayload(payload){
-    if(payload) lastAppliedSaveMeta=readSaveMeta(payload);
     resetStateForLoad();
     if(payload){
       try{ hydrateParsedSave(JSON.parse(payload)); }
@@ -12664,13 +12612,8 @@
   }
 
   function serializeSave(){
-    const previous=lastAppliedSaveMeta;
-    const previousTime=previous&&Number(previous.updatedAt)||0;
-    const now=Math.max(Date.now(),previousTime+1,Date.now()+syncWriteSequence++);
-    lastAppliedSaveMeta={updatedAt:now,deviceId:syncDeviceId,version:SYNC_META_VERSION};
     return JSON.stringify({
-      schemaVersion:2,
-      _luminSync:lastAppliedSaveMeta,
+      schemaVersion:1,
       wallet,
       items,
       activeItemId,
@@ -12700,6 +12643,7 @@
       celebratedMilestones:Array.from(celebratedMilestones||[]),
       budgets,
       calendarEvents,
+      subscriptions,
       notificationsEnabled,
       notificationLeadMinutes,
       notificationPreset,
@@ -12852,21 +12796,18 @@
     cloudUnsubscribe = cloudApi.subscribe(cloudUser.uid, async payload=>{
       if(remoteApplyInFlight || !payload || payload === lastCloudPayload) return;
       if(cloudWriteInFlight && payload === lastCloudPayload) return;
-      if(lastCloudPayload && compareSaveMeta(payload,lastCloudPayload)<0) return;
-      if(lastAppliedSaveMeta && readSaveMeta(payload).updatedAt < Number(lastAppliedSaveMeta.updatedAt||0)) return;
-      remoteApplyInFlight=true;
+      remoteApplyInFlight = true;
       try{
-        lastCloudPayload=payload;
-        lastAppliedSaveMeta=readSaveMeta(payload);
-        saveLocalBackup(cloudUser.uid,payload);
+        lastCloudPayload = payload;
         await localSetPayload(payload);
-        setPendingCloudSync(cloudUser.uid,false);
         await applySavePayload(payload);
-        setCloudStatus("synced",cloudUser.email || "Cloud synced");
+        setCloudStatus("synced", cloudUser.email || "Cloud synced");
         setSyncBanner("Updated from another device.");
         clearTimeout(startCloudSubscription._bannerTimer);
-        startCloudSubscription._bannerTimer=setTimeout(()=>setSyncBanner(""),2200);
-      }finally{remoteApplyInFlight=false;}
+        startCloudSubscription._bannerTimer = setTimeout(()=>setSyncBanner(""),2200);
+      }finally{
+        remoteApplyInFlight = false;
+      }
     }, error=>{
       console.error("Cloud listener error", error);
       setCloudStatus("error", "Cloud unavailable");
@@ -15692,6 +15633,7 @@
   async function deleteCalendarEventById(id,{closeDetail=false}={}){
     const ev=calendarEventById(id);
     if(!ev)return;
+    if(ev.source==="subscription"){ showOfflineToast("Subscription payments are managed below the calendar."); return; }
     const wasLoggedShift=ev.type==="shift"&&ev.logged;
     calendarEvents=calendarEvents.filter(item=>item.id!==id);
     if(calendarDetailEventId===id)calendarDetailEventId=null;
@@ -15765,13 +15707,23 @@
     showOfflineToast(scheduleChanged?"Event rescheduled.":"Event updated.");
   });
 
+  function addMonthsSafe(date, months){const d=new Date(date);const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+months);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));return d;}
+  function recurrenceDates(baseDate,r){if(!r||r.type==="none")return [baseDate];const out=[],start=new Date(baseDate+"T00:00:00"),until=r.until?new Date(r.until+"T00:00:00"):addMonthsSafe(start,12),max=new Date(Math.min(until.getTime(),addMonthsSafe(start,24).getTime()));if(r.type==="weekly"){const days=(r.days&&r.days.length?r.days:[start.getDay()]).map(Number);for(let d=new Date(start);d<=max&&out.length<260;d.setDate(d.getDate()+1))if(days.includes(d.getDay()))out.push(d.toISOString().slice(0,10));}else if(r.type==="monthly"){for(let d=new Date(start);d<=max&&out.length<60;d=addMonthsSafe(d,1))out.push(d.toISOString().slice(0,10));}else{const interval=Math.max(1,Math.min(52,Number(r.interval)||1));if(r.unit==="month"){for(let d=new Date(start);d<=max&&out.length<60;d=addMonthsSafe(d,interval))out.push(d.toISOString().slice(0,10));}else{for(let d=new Date(start);d<=max&&out.length<260;d.setDate(d.getDate()+interval*7))out.push(d.toISOString().slice(0,10));}}return [...new Set(out)];}
+  function createRecurringCalendarEvents(base){const dates=recurrenceDates(base.date,base.recurrence);return dates.map((date,i)=>({...base,id:i?`${base.id}-r${i}`:base.id,date,recurrenceIndex:i}));}
+  function subscriptionCalendarEvents(){const out=[];for(const sub of subscriptions){if(!sub.active)continue;let d=new Date(sub.nextDate+"T00:00:00");for(let i=0;i<24;i++){const date=d.toISOString().slice(0,10);const id=`sub-${sub.id}-${date}`;out.push({id,type:"event",title:`${sub.name} · payment`,date,start:"09:00",end:"09:15",notes:`Subscription · ${fmtMoney(sub.amount)}${sub.category?" · "+sub.category:""}`,notify:sub.notify!==false,logged:sub.lastPaid===date,source:"subscription",subscriptionId:sub.id});if(sub.frequency==="weekly")d.setDate(d.getDate()+7);else if(sub.frequency==="yearly")d.setFullYear(d.getFullYear()+1);else d=addMonthsSafe(d,1);}}return out;}
+  function allCalendarEvents(){return calendarEvents.concat(subscriptionCalendarEvents());}
+  function subscriptionById(id){return subscriptions.find(x=>x.id===id);}
+  function advanceSubscription(sub){const d=new Date(sub.nextDate+"T00:00:00");if(sub.frequency==="weekly")d.setDate(d.getDate()+7);else if(sub.frequency==="yearly")d.setFullYear(d.getFullYear()+1);else d=addMonthsSafe(d,1);sub.nextDate=d.toISOString().slice(0,10);}
+  function renderSubscriptions(){const el=$("subscriptionList");if(!el)return;if(!subscriptions.length){el.innerHTML='<div class="items-empty">No subscriptions yet.</div>';return;}el.innerHTML=subscriptions.map(sub=>{const d=new Date(sub.nextDate+"T00:00:00");return `<div class="subscription-row ${sub.active?'':'subscription-inactive'}"><div class="subscription-main"><div class="subscription-name">${escapeHtml(sub.name)}</div><div class="subscription-meta">Next: ${d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})} · ${sub.frequency}${sub.category?' · '+escapeHtml(sub.category):''}${sub.active?'':' · paused'}</div></div><div class="subscription-price">${fmtMoney(sub.amount)}</div><div class="subscription-actions">${sub.active?`<button type="button" class="btn btn-ghost" data-pay-sub="${escapeHtml(sub.id)}">Log payment</button>`:''}<button type="button" class="btn btn-ghost" data-toggle-sub="${escapeHtml(sub.id)}">${sub.active?'Pause':'Resume'}</button><button type="button" class="btn btn-danger-ghost" data-delete-sub="${escapeHtml(sub.id)}">×</button></div></div>`}).join("");}
+  async function logSubscriptionPayment(id){const sub=subscriptionById(id);if(!sub)return;expenses.push({id:"subscription-"+Date.now()+"-"+Math.random().toString(36).slice(2,6),date:todayStr(),amount:sub.amount,note:`${sub.name} subscription`,type:"subscription",itemId:null,budgetId:null,subscriptionId:sub.id});sub.lastPaid=todayStr();advanceSubscription(sub);await persist();render();}
+
   function renderCalendar(){
     const grid=$("calendarGrid"); if(!grid) return;
     if(!calendarSelectedDate) calendarSelectedDate=todayStr();
     const year=calendarCursor.getFullYear(),month=calendarCursor.getMonth(),first=new Date(year,month,1);
     $("calendarMonthTitle").textContent=first.toLocaleDateString(undefined,{month:"long",year:"numeric"});
     const prefix=`${year}-${String(month+1).padStart(2,"0")}-`;
-    const monthEvents=calendarEvents.filter(ev=>ev.date.startsWith(prefix));
+    const monthEvents=allCalendarEvents().filter(ev=>ev.date.startsWith(prefix));
     const shiftHours=monthEvents.filter(ev=>ev.type==="shift").reduce((s,ev)=>s+eventHours(ev),0);
     const monthEarned=entries.reduce((sum,en)=>{
       if(!en||!en.date||!en.date.startsWith(prefix)) return sum;
@@ -15794,18 +15746,18 @@
     const gridStart=new Date(year,month,1-mondayIndex),today=todayStr(),cells=[];
     for(let i=0;i<42;i++){
       const d=new Date(gridStart.getFullYear(),gridStart.getMonth(),gridStart.getDate()+i),key=dateStr(d);
-      const dayEvents=calendarEvents.filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
+      const dayEvents=allCalendarEvents().filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
       const chips=dayEvents.slice(0,3).map(ev=>`<span class="calendar-chip ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details">${escapeHtml(ev.start)} · ${escapeHtml(ev.title)}</span>`).join("");
       const more=dayEvents.length>3?`<span class="calendar-more">+${dayEvents.length-3} more</span>`:"";
       cells.push(`<button type="button" class="calendar-day${d.getMonth()===month?"":" other-month"}${key===today?" today":""}${key===calendarSelectedDate?" selected":""}" data-calendar-date="${key}"><span class="calendar-day-num">${d.getDate()}</span><span class="calendar-day-events">${chips}${more}</span></button>`);
     }
-    grid.innerHTML=cells.join(""); renderCalendarSelectedDay(); renderHomeScheduleWidget();
+    grid.innerHTML=cells.join(""); renderCalendarSelectedDay(); renderHomeScheduleWidget(); renderSubscriptions();
   }
 
   function renderCalendarSelectedDay(){
     const key=calendarSelectedDate||todayStr(),date=new Date(key+"T00:00:00");
     $("calendarSelectedTitle").textContent=date.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"short"});
-    const events=calendarEvents.filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
+    const events=allCalendarEvents().filter(ev=>ev.date===key).sort((a,b)=>a.start.localeCompare(b.start));
     const unavailable=events.some(ev=>ev.type==="busy"),badge=$("calendarAvailabilityBadge");
     badge.textContent=unavailable?"Unavailable":"Available"; badge.classList.toggle("busy",unavailable);
     const list=$("calendarSelectedEvents");
@@ -15821,7 +15773,7 @@
   function renderHomeScheduleWidget(){
     const el=$("homeScheduleContent"); if(!el) return;
     const now=Date.now();
-    const upcoming=calendarEvents.map(ev=>({ev,ts:calendarEventTimestamp(ev)})).filter(x=>x.ts!==null&&x.ts>=now-30*60*1000).sort((a,b)=>a.ts-b.ts).slice(0,3);
+    const upcoming=allCalendarEvents().map(ev=>({ev,ts:calendarEventTimestamp(ev)})).filter(x=>x.ts!==null&&x.ts>=now-30*60*1000).sort((a,b)=>a.ts-b.ts).slice(0,3);
     if(!upcoming.length){el.innerHTML='<div class="home-widget-empty">Nothing upcoming. Plan a shift or add a busy event in Calendar.</div>';return;}
     el.innerHTML=upcoming.map(({ev})=>{const d=new Date(ev.date+"T00:00:00");return `<div class="home-schedule-row"><div><div class="home-widget-primary">${escapeHtml(ev.title)}</div><div class="home-widget-secondary">${d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} · ${formatTime12(ev.start)}</div></div><div class="home-widget-amount">${eventTypeLabel(ev.type)}</div></div>`;}).join("");
   }
@@ -15853,12 +15805,19 @@
   $("calendarPrevBtn").addEventListener("click",()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);renderCalendar();});
   $("calendarNextBtn").addEventListener("click",()=>{calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderCalendar();});
   $("calendarTodayBtn").addEventListener("click",()=>{const n=new Date();calendarCursor=new Date(n.getFullYear(),n.getMonth(),1);calendarSelectedDate=todayStr();$("calendarEventDate").value=calendarSelectedDate;renderCalendar();});
+  $("calendarEventRepeat").addEventListener("change",()=>{const mode=$("calendarEventRepeat").value;$("calendarRepeatOptions").classList.toggle("hidden",mode==="none");$("calendarRepeatWeekdayWrap").classList.toggle("hidden",!(mode==="weekly"||(mode==="custom"&&$("calendarRepeatUnit").value==="week")));$("calendarRepeatSummary").textContent=mode==="none"?"One-time event":mode==="weekly"?"Repeats weekly":mode==="monthly"?"Repeats monthly":"Custom repeat rule";});
+  $("calendarRepeatUnit").addEventListener("change",()=>$("calendarEventRepeat").dispatchEvent(new Event("change")));
+
   $("calendarEventForm").addEventListener("submit",async e=>{
     e.preventDefault(); const title=$("calendarEventTitle").value.trim(),date=$("calendarEventDate").value,start=$("calendarEventStart").value,end=$("calendarEventEnd").value,type=["shift","busy","event"].includes($("calendarEventType").value)?$("calendarEventType").value:"event";
     if(!title||!date||!start||!end)return;
-    calendarEvents.push({id:"cal-"+uid(),type,title,date,start,end,notes:$("calendarEventNotes").value.trim(),notify:$("calendarEventNotify").checked,logged:false});
+    const mode=$("calendarEventRepeat").value;let recurrence={type:"none"};if(mode!=="none"){const unit=mode==="weekly"?"week":mode==="monthly"?"month":$("calendarRepeatUnit").value;const days=[...document.querySelectorAll("#calendarRepeatWeekdayWrap input:checked")].map(x=>Number(x.value));recurrence={type:mode,interval:mode==="custom"?Math.max(1,Number($("calendarRepeatInterval").value)||1):1,unit,days,until:$("calendarRepeatUntil").value||addMonthsSafe(new Date(date+"T00:00:00"),12).toISOString().slice(0,10)};}
+    const base={id:"cal-"+uid(),type,title,date,start,end,notes:$("calendarEventNotes").value.trim(),notify:$("calendarEventNotify").checked,logged:false,recurrence};calendarEvents.push(...createRecurringCalendarEvents(base));
     calendarEvents.sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start)); calendarSelectedDate=date; const d=new Date(date+"T00:00:00"); calendarCursor=new Date(d.getFullYear(),d.getMonth(),1); $("calendarEventTitle").value="";$("calendarEventNotes").value="";await persist();render();setAppView("calendar",false,true);
   });
+  $("subscriptionForm").addEventListener("submit",async e=>{e.preventDefault();const sub={id:"sub-"+uid(),name:$("subscriptionName").value.trim(),amount:Math.max(.01,Number($("subscriptionAmount").value)||0),frequency:$("subscriptionFrequency").value,nextDate:$("subscriptionNextDate").value,category:$("subscriptionCategory").value.trim(),notify:$("subscriptionNotify").checked,active:true,lastPaid:""};if(!sub.name||!sub.nextDate||!sub.amount)return;subscriptions.push(sub);await persist();render();$("subscriptionForm").reset();$("subscriptionFrequency").value="monthly";$("subscriptionNotify").checked=true;});
+  $("subscriptionList").addEventListener("click",async e=>{const pay=e.target.closest("[data-pay-sub]"),toggle=e.target.closest("[data-toggle-sub]"),del=e.target.closest("[data-delete-sub]");if(pay){await logSubscriptionPayment(pay.dataset.paySub);return;}if(toggle){const sub=subscriptionById(toggle.dataset.toggleSub);if(sub){sub.active=!sub.active;await persist();render();}return;}if(del){subscriptions=subscriptions.filter(x=>x.id!==del.dataset.deleteSub);await persist();render();}});
+
   $("calendarSelectedEvents").addEventListener("click",async e=>{
     const del=e.target.closest("[data-delete-calendar]");
     if(del){
@@ -15931,7 +15890,7 @@
       return true;
     };
 
-    for(const ev of calendarEvents){
+    for(const ev of allCalendarEvents()){
       if(!ev.notify||!calendarTypeAllowed(ev.type))continue;
       const ts=calendarEventTimestamp(ev);
       if(ts===null)continue;
@@ -16654,6 +16613,7 @@
     if(!$("calendarEventDate").value) $("calendarEventDate").value=calendarSelectedDate||todayStr();
     if(!$("calendarEventStart").value) $("calendarEventStart").value="09:00";
     if(!$("calendarEventEnd").value) $("calendarEventEnd").value="17:00";
+    if($("subscriptionNextDate") && !$("subscriptionNextDate").value) $("subscriptionNextDate").value=todayStr();
 
     const stats = computeGlobalStats();
     $("archiveCount").textContent=String(items.filter(i=>i.purchasedAt).length);
