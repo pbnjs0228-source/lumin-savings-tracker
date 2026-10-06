@@ -11608,7 +11608,7 @@
     if(Array.isArray(parsed.celebratedItemIds)) celebratedItemIds = new Set(parsed.celebratedItemIds);
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
     budgets = Array.isArray(parsed.budgets) ? parsed.budgets.filter(b=>b&&typeof b==="object").map(b=>({id:String(b.id||uid()),name:String(b.name||"Budget").trim().slice(0,40)||"Budget",limit:Math.max(.01,Number(b.limit)||0),period:b.period==="weekly"?"weekly":"monthly"})).filter(b=>b.limit>0) : [];
-    calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>({id:String(ev.id||uid()),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged})) : [];
+    calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>{const rawId=String(ev.id||uid());return {id:rawId,seriesId:String(ev.seriesId||rawId).replace(/-r\d+$/, ""),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged,recurrence:ev.recurrence&&typeof ev.recurrence==="object"?ev.recurrence:{type:"none"}}}) : [];
     subscriptions = Array.isArray(parsed.subscriptions) ? parsed.subscriptions.filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x.nextDate||"")).map(x=>({id:String(x.id||uid()),name:String(x.name||"Subscription").trim().slice(0,50)||"Subscription",amount:Math.max(.01,Number(x.amount)||0),frequency:["weekly","monthly","yearly"].includes(x.frequency)?x.frequency:"monthly",nextDate:x.nextDate,category:String(x.category||"").slice(0,30),notify:x.notify!==false,active:x.active!==false,lastPaid:x.lastPaid||""})).filter(x=>x.amount>0) : [];
     notificationsEnabled = parsed.notificationsEnabled===true;
     notificationLeadMinutes = [15,30,60,120].includes(Number(parsed.notificationLeadMinutes)) ? Number(parsed.notificationLeadMinutes) : 30;
@@ -15634,15 +15634,24 @@
     const ev=calendarEventById(id);
     if(!ev)return;
     if(ev.source==="subscription"){ showOfflineToast("Subscription payments are managed below the calendar."); return; }
-    const wasLoggedShift=ev.type==="shift"&&ev.logged;
-    calendarEvents=calendarEvents.filter(item=>item.id!==id);
+    const seriesId=ev.seriesId||ev.id;
+    const isRecurring=calendarEvents.filter(item=>(item.seriesId||item.id)===seriesId).length>1 || (ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none");
+    if(isRecurring){
+      const ok=window.confirm(`Delete all occurrences of “${ev.title}” from the calendar?`);
+      if(!ok)return;
+    }
+    const removed=calendarEvents.filter(item=>(item.seriesId||item.id)===seriesId);
+    const wasLoggedShift=removed.some(item=>item.type==="shift"&&item.logged);
+    calendarEvents=calendarEvents.filter(item=>(item.seriesId||item.id)!==seriesId);
     if(calendarDetailEventId===id)calendarDetailEventId=null;
     await persist();
     render();
     if(closeDetail)closeCalendarEventDetail();
-    showOfflineToast(wasLoggedShift
-      ? "Calendar event deleted. Its logged earnings were kept in Activity."
-      : "Calendar event deleted.");
+    showOfflineToast(isRecurring
+      ? `Repeating event deleted (${removed.length} occurrence${removed.length===1?"":"s"}).${wasLoggedShift?" Logged earnings were kept in Activity.":""}`
+      : wasLoggedShift
+        ? "Calendar event deleted. Its logged earnings were kept in Activity."
+        : "Calendar event deleted.");
   }
 
   $("calendarEventDetailCloseBtn").addEventListener("click",closeCalendarEventDetail);
@@ -15709,7 +15718,7 @@
 
   function addMonthsSafe(date, months){const d=new Date(date);const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+months);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));return d;}
   function recurrenceDates(baseDate,r){if(!r||r.type==="none")return [baseDate];const out=[],start=new Date(baseDate+"T00:00:00"),until=r.until?new Date(r.until+"T00:00:00"):addMonthsSafe(start,12),max=new Date(Math.min(until.getTime(),addMonthsSafe(start,24).getTime()));if(r.type==="weekly"){const days=(r.days&&r.days.length?r.days:[start.getDay()]).map(Number);for(let d=new Date(start);d<=max&&out.length<260;d.setDate(d.getDate()+1))if(days.includes(d.getDay()))out.push(d.toISOString().slice(0,10));}else if(r.type==="monthly"){for(let d=new Date(start);d<=max&&out.length<60;d=addMonthsSafe(d,1))out.push(d.toISOString().slice(0,10));}else{const interval=Math.max(1,Math.min(52,Number(r.interval)||1));if(r.unit==="month"){for(let d=new Date(start);d<=max&&out.length<60;d=addMonthsSafe(d,interval))out.push(d.toISOString().slice(0,10));}else{for(let d=new Date(start);d<=max&&out.length<260;d.setDate(d.getDate()+interval*7))out.push(d.toISOString().slice(0,10));}}return [...new Set(out)];}
-  function createRecurringCalendarEvents(base){const dates=recurrenceDates(base.date,base.recurrence);return dates.map((date,i)=>({...base,id:i?`${base.id}-r${i}`:base.id,date,recurrenceIndex:i}));}
+  function createRecurringCalendarEvents(base){const dates=recurrenceDates(base.date,base.recurrence);return dates.map((date,i)=>({...base,id:i?`${base.id}-r${i}`:base.id,seriesId:base.id,date,recurrenceIndex:i}));}
   function subscriptionCalendarEvents(){const out=[];for(const sub of subscriptions){if(!sub.active)continue;let d=new Date(sub.nextDate+"T00:00:00");for(let i=0;i<24;i++){const date=d.toISOString().slice(0,10);const id=`sub-${sub.id}-${date}`;out.push({id,type:"event",title:`${sub.name} · payment`,date,start:"09:00",end:"09:15",notes:`Subscription · ${fmtMoney(sub.amount)}${sub.category?" · "+sub.category:""}`,notify:sub.notify!==false,logged:sub.lastPaid===date,source:"subscription",subscriptionId:sub.id});if(sub.frequency==="weekly")d.setDate(d.getDate()+7);else if(sub.frequency==="yearly")d.setFullYear(d.getFullYear()+1);else d=addMonthsSafe(d,1);}}return out;}
   function allCalendarEvents(){return calendarEvents.concat(subscriptionCalendarEvents());}
   function subscriptionById(id){return subscriptions.find(x=>x.id===id);}
@@ -15766,7 +15775,7 @@
     list.innerHTML=events.map(ev=>{
       const hrs=eventHours(ev),pay=ev.type==="shift"&&rate>0?` · ~${fmtMoney(hrs*rate)}`:"",logged=ev.type==="shift"&&ev.logged?" · logged":"";
       const action=ev.type==="shift"&&!ev.logged?`<button type="button" class="log-shift" data-log-shift="${escapeHtml(ev.id)}">Log worked</button>`:"";
-      return `<div class="calendar-event-row ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}" aria-label="Delete ${escapeHtml(ev.title)}">×</button></div></div>`;
+      return `<div class="calendar-event-row ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}" aria-label="${(ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none")?"Delete repeating event":"Delete event"}" title="${(ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none")?"Delete all repetitions":"Delete event"}">×</button></div></div>`;
     }).join("");
   }
 
