@@ -2443,6 +2443,10 @@
   .auth-form{display:flex;flex-direction:column;gap:11px;}
   .auth-actions{display:flex;gap:8px;margin-top:2px;}
   .auth-actions .btn{flex:1;justify-content:center;}
+  .google-signin-btn{font-size:13px;font-weight:650;transition:background .18s,border-color .18s,transform .18s;}
+  .google-signin-btn:hover{background:var(--surface-2);border-color:var(--accent-soft);}
+  .google-signin-btn:active{transform:scale(.99)}
+  .google-signin-btn:disabled{opacity:.65;cursor:wait;}
   .auth-link-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px;flex-wrap:wrap;}
   .auth-link{
     border:0;background:none;color:var(--muted);font:inherit;font-size:11.5px;font-weight:600;
@@ -7866,6 +7870,10 @@
         <button type="submit" class="btn btn-primary" id="authSubmitBtn">Sign in</button>
       </div>
     </form>
+    <button type="button" class="btn btn-ghost google-signin-btn" id="googleSignInBtn" style="width:100%;justify-content:center;gap:10px;margin-top:12px;border:1px solid var(--line);min-height:46px;">
+      <svg width="19" height="19" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 37.99 46.98 31.8 46.98 24.55z"/><path fill="#FBBC05" d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.6.28-3.14.78-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.14 1.44-4.89 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      <span>Continue with Google</span>
+    </button>
 
     <div class="auth-link-row">
       <button type="button" class="auth-link" id="authModeBtn">Create an account instead</button>
@@ -9313,6 +9321,24 @@
         onAuth(callback){ return authMod.onAuthStateChanged(auth, callback); },
         passkeyApiBase,
         signIn(email,password){ return authMod.signInWithEmailAndPassword(auth,email,password); },
+        async signInGoogle(){
+          const provider = new authMod.GoogleAuthProvider();
+          provider.setCustomParameters({ prompt: 'select_account' });
+          const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+          const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+          if(standalone || mobile){
+            await authMod.signInWithRedirect(auth, provider);
+            return null;
+          }
+          try{ return await authMod.signInWithPopup(auth, provider); }
+          catch(error){
+            if(['auth/popup-blocked','auth/operation-not-supported-in-this-environment','auth/web-storage-unsupported'].includes(error.code)){
+              await authMod.signInWithRedirect(auth, provider);
+              return null;
+            }
+            throw error;
+          }
+        },
         signInToken(token){ return authMod.signInWithCustomToken(auth,token); },
         signUp(email,password){ return authMod.createUserWithEmailAndPassword(auth,email,password); },
         resetPassword(email){ return authMod.sendPasswordResetEmail(auth,email); },
@@ -9361,7 +9387,7 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.10.08.1";
+  const APP_VERSION = "2026.10.09.1";
 
   const CHANGELOG = [{version:"2026.10.06.1",title:"Recurring calendar + subscriptions",date:"6 October 2026",changes:["Added weekly, monthly and custom recurring calendar events.","Added subscription tracking with due dates, billing cycles, pause/resume and payment logging.","Subscription payments appear on the calendar and become spending entries when logged."]},
     {
@@ -13829,6 +13855,43 @@
     $("settingsVersionLabel").textContent=APP_VERSION;
     $("authModeBtn").addEventListener("click", ()=>setAuthMode(!authCreateMode));
     $("offlineModeBtn").addEventListener("click", enterLocalMode);
+    $("googleSignInBtn").addEventListener("click", async ()=>{
+      if(!cloudApi || !cloudApi.configured){
+        setAuthMessage("Firebase isn’t configured yet. Finish firebase-config.js first.","error");
+        return;
+      }
+      const button=$("googleSignInBtn");
+      button.disabled=true;
+      button.querySelector("span").textContent="Connecting to Google…";
+      setAuthMessage("");
+      setAppLoading("Connecting to Google","Securely signing you in to LUMIN Cloud.");
+      try{
+        explicitAuthAction="google";
+        const result=await cloudApi.signInGoogle();
+        if(result && result.user){
+          pendingTutorialAfterSignup=!!result.additionalUserInfo?.isNewUser;
+          pendingPasskeyPromptAfterSignup=!!result.additionalUserInfo?.isNewUser;
+          await enterCloudMode(result.user);
+        }
+        // On mobile, signInGoogle redirects away. Firebase restores the session on return.
+      }catch(error){
+        explicitAuthAction="";
+        hideAppLoading(0);
+        const code=error?.code||"";
+        if(code.includes("unauthorized-domain")){
+          setAuthMessage("This site domain isn’t authorized. Add lumin-savings.vercel.app in Firebase Console → Authentication → Settings → Authorized domains.","error");
+        }else if(code.includes("operation-not-allowed")){
+          setAuthMessage("Enable Google under Firebase Console → Authentication → Sign-in method.","error");
+        }else if(code.includes("account-exists-with-different-credential")){
+          setAuthMessage("An account with this email already exists. Sign in with that method first.","error");
+        }else{
+          setAuthMessage(friendlyAuthError(error),"error");
+        }
+      }finally{
+        button.disabled=false;
+        button.querySelector("span").textContent="Continue with Google";
+      }
+    });
     $("passkey2faToggle").addEventListener("click",async()=>{
       if(passkey2faState.busy)return;
 
