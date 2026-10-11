@@ -9387,9 +9387,9 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.10.09.1";
+  const APP_VERSION = "2026.10.12.1";
 
-  const CHANGELOG = [{version:"2026.10.06.1",title:"Recurring calendar + subscriptions",date:"6 October 2026",changes:["Added weekly, monthly and custom recurring calendar events.","Added subscription tracking with due dates, billing cycles, pause/resume and payment logging.","Subscription payments appear on the calendar and become spending entries when logged."]},
+  const CHANGELOG = [{version:"2026.10.12.1",title:"More reliable cloud sync",date:"12 October 2026",changes:["Cloud writes are now queued so rapid edits save in order.","Failed cloud saves automatically retry when the connection returns or the app becomes active."]},{version:"2026.10.06.1",title:"Recurring calendar + subscriptions",date:"6 October 2026",changes:["Added weekly, monthly and custom recurring calendar events.","Added subscription tracking with due dates, billing cycles, pause/resume and payment logging.","Subscription payments appear on the calendar and become spending entries when logged."]},
     {
       version: "2026.09.18.1",
       title: "Clickable calendar events",
@@ -11496,6 +11496,8 @@
   let cloudMode = "pending"; // pending | local | cloud
   let cloudUnsubscribe = null;
   let cloudWriteInFlight = false;
+  // Serialize cloud writes so an older, slower request cannot finish after a newer save.
+  let cloudWriteQueue = Promise.resolve();
   let lastCloudPayload = null;
   let remoteApplyInFlight = false;
   let authCreateMode = false;
@@ -11845,30 +11847,60 @@
     },
 
     async set(key,value){
+      // Always commit locally first. The latest local save survives a flaky connection.
       await localSetPayload(value);
 
       if(cloudMode === "cloud" && cloudUser && cloudApi && cloudApi.configured){
-        cloudWriteInFlight = true;
-        lastCloudPayload = value;
-        setCloudStatus("saving", "Saving…");
-        try{
-          await cloudApi.write(cloudUser.uid, value);
-          setCloudStatus("synced", cloudUser.email || "Cloud synced");
-          setSyncBanner("");
-        }catch(error){
-          console.error("Cloud save failed", error);
-          setPendingCloudSync(cloudUser.uid,true);
-          setCloudStatus("error", "Saved locally");
-          setSyncBanner(error && error.message ? error.message : "Couldn’t sync to the cloud. Your change is still saved on this device.", true);
-        }finally{
-          cloudWriteInFlight = false;
-        }
+        const uid = cloudUser.uid;
+        const email = cloudUser.email || "Cloud synced";
+        const writeTask = async()=>{
+          // Do not let a queued save from a previous account leak into a new account.
+          if(cloudMode !== "cloud" || !cloudUser || cloudUser.uid !== uid) return;
+          cloudWriteInFlight = true;
+          setCloudStatus("saving", "Saving…");
+          try{
+            await cloudApi.write(uid, value);
+            lastCloudPayload = value;
+            setPendingCloudSync(uid,false);
+            setCloudStatus("synced", email);
+            setSyncBanner("");
+          }catch(error){
+            console.error("Cloud save failed", error);
+            setPendingCloudSync(uid,true);
+            setCloudStatus("error", "Saved locally");
+            setSyncBanner(error && error.message ? error.message : "Couldn’t sync to the cloud. Your change is still saved on this device.", true);
+          }finally{
+            cloudWriteInFlight = false;
+          }
+        };
+        // Chain even if the previous write failed, preserving the order of edits.
+        cloudWriteQueue = cloudWriteQueue.catch(()=>{}).then(writeTask);
+        await cloudWriteQueue;
       }else if(cloudMode === "offline-cloud" && cloudUser){
         setPendingCloudSync(cloudUser.uid,true);
       }
       return {key,value};
     }
   };
+
+  async function retryPendingCloudSync(){
+    if(!navigator.onLine || cloudMode !== "cloud" || !cloudUser || !cloudApi || !cloudApi.configured) return;
+    const uid = cloudUser.uid;
+    if(!hasPendingCloudSync(uid)) return;
+    try{
+      const payload = await localGetPayload();
+      if(!payload || !cloudUser || cloudUser.uid !== uid || cloudMode !== "cloud") return;
+      await store.set(STORAGE_KEY, payload);
+    }catch(error){
+      console.warn("Pending LUMIN sync retry failed", error);
+    }
+  }
+
+  window.addEventListener("online", ()=>{ setTimeout(retryPendingCloudSync, 500); });
+  window.addEventListener("focus", ()=>{ setTimeout(retryPendingCloudSync, 700); });
+  document.addEventListener("visibilitychange", ()=>{
+    if(document.visibilityState === "visible") setTimeout(retryPendingCloudSync, 500);
+  });
 
   function resetStateForLoad(){
     wallet = null;
