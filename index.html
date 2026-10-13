@@ -7811,6 +7811,191 @@
   .app-sidebar .app-nav-btn svg{width:15px!important;height:15px!important;flex-basis:15px!important;}
 }
 </style>
+
+<style id="lumin-weekly-recap-mobile-reach-fix">
+/* Weekly recap mobile reachability: keep navigation inside the visible scroll area. */
+@media (max-width: 620px) {
+  #weeklySummaryBackdrop.weekly-recap-overlay {
+    display: block !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 0 !important;
+    align-items: stretch !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-shell {
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border-radius: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-topbar {
+    position: sticky !important;
+    top: 0 !important;
+    flex: 0 0 auto !important;
+    min-height: 52px;
+    padding: max(10px, env(safe-area-inset-top, 0px)) 14px 8px !important;
+    background: color-mix(in srgb, var(--bg1) 88%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  #weeklySummaryBackdrop .weekly-recap-progress {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    flex: 0 0 auto !important;
+    margin: 8px 14px 0 !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-intro,
+  #weeklySummaryBackdrop .weekly-recap-story {
+    position: relative !important;
+    inset: auto !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: min-content !important;
+    flex: 1 0 auto !important;
+    padding: 20px 18px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-intro {
+    justify-content: center !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-intro-orb {
+    width: 56px !important;
+    height: 56px !important;
+    margin-bottom: 14px !important;
+    border-radius: 17px !important;
+    font-size: 26px !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-intro h2 {
+    font-size: clamp(25px, 7vw, 34px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -1px !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-intro-preview { margin-top: 16px !important; }
+  #weeklySummaryBackdrop .weekly-recap-intro-actions {
+    position: sticky !important;
+    bottom: 0 !important;
+    margin-top: 18px !important;
+    padding: 10px 0 max(4px, env(safe-area-inset-bottom, 0px)) !important;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg1) 94%, #000 6%) 24%);
+  }
+  #weeklySummaryBackdrop .weekly-recap-story {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding-top: 18px !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-slide-wrap {
+    display: flex !important;
+    flex: 1 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 220px !important;
+    padding: 8px 0 12px !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-slide { width: 100% !important; }
+  #weeklySummaryBackdrop .weekly-recap-slide-icon {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 12px !important;
+    border-radius: 15px !important;
+    font-size: 22px !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-slide-value {
+    font-size: clamp(34px, 10vw, 52px) !important;
+    letter-spacing: -2px !important;
+    overflow-wrap: anywhere;
+  }
+  #weeklySummaryBackdrop .weekly-recap-slide h3 { margin-top: 10px !important; }
+  #weeklySummaryBackdrop .weekly-recap-viz {
+    height: 6px !important;
+    min-height: 0 !important;
+    margin-top: 18px !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-mini-stat { margin-top: 9px !important; }
+  #weeklySummaryBackdrop .weekly-recap-nav {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 12 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+    gap: 7px !important;
+    margin-top: auto !important;
+    padding: 12px 0 max(8px, env(safe-area-inset-bottom, 0px)) !important;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--bg1) 96%, #000 4%) 22%) !important;
+  }
+  #weeklySummaryBackdrop .weekly-recap-nav-btn {
+    justify-self: stretch !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    padding: 10px 7px !important;
+    font-size: 11px !important;
+    white-space: nowrap;
+    touch-action: manipulation;
+  }
+  #weeklySummaryBackdrop .weekly-recap-counter {
+    align-self: center;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 380px) {
+  #weeklySummaryBackdrop .weekly-recap-nav { gap: 5px !important; }
+  #weeklySummaryBackdrop .weekly-recap-nav-btn { font-size: 10px !important; padding-inline: 5px !important; }
+  #weeklySummaryBackdrop .weekly-recap-story { padding-left: 13px !important; padding-right: 13px !important; }
+}
+</style>
+
+<style id="lumin-engagement-polish">
+/* Small, theme-aware interaction polish. Keeps LUMIN's existing visual language. */
+:where(button, .btn, [role="button"], a.button) {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .16s ease, filter .16s ease, border-color .18s ease, box-shadow .18s ease;
+}
+:where(button, .btn, [role="button"], a.button):active { transform: scale(.975); }
+:where(button, .btn, [role="button"], a.button):focus-visible,
+:where(input, select, textarea):focus-visible {
+  outline: 2px solid var(--accent, #7edfd0);
+  outline-offset: 3px;
+}
+.item-card, .mission-card, .budget-card, .stat-card, .dashboard-widget,
+.dashboard-card, .goal-card, .achievement-card {
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .item-card:not(.purchased):hover, .mission-card:hover, .budget-card:hover,
+  .stat-card:hover, .dashboard-widget:hover, .dashboard-card:hover,
+  .goal-card:hover, .achievement-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent, #7edfd0) 38%, var(--border, transparent));
+  }
+  :where(button, .btn, [role="button"], a.button):hover { filter: brightness(1.07); }
+}
+.item-progress-fill, .mission-progress-fill, .mission-inline-progress-fill,
+.progress-fill, .budget-progress-fill { transition: width .65s cubic-bezier(.2,.75,.25,1); }
+.mission-card.complete .mission-progress-fill,
+.mission-card.complete .mission-inline-progress-fill { filter: drop-shadow(0 0 5px color-mix(in srgb, var(--positive, #7fc9b8) 45%, transparent)); }
+.milestone-toast, .achievement-toast { animation: luminToastEnter .32s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes luminToastEnter { from { opacity:0; transform:translateY(10px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  :where(button, .btn, [role="button"], a.button), .item-card, .mission-card,
+  .budget-card, .stat-card, .dashboard-widget, .dashboard-card, .goal-card,
+  .achievement-card, .item-progress-fill, .mission-progress-fill,
+  .mission-inline-progress-fill, .progress-fill, .budget-progress-fill,
+  .milestone-toast, .achievement-toast { transition:none !important; animation:none !important; }
+}
+</style>
+
 </head>
 <body>
 <canvas id="hyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas" aria-hidden="true"></canvas>
@@ -11496,6 +11681,7 @@
   let cloudMode = "pending"; // pending | local | cloud
   let cloudUnsubscribe = null;
   let cloudWriteInFlight = false;
+  let cloudWritesQueued = 0;
   // Serialize cloud writes so an older, slower request cannot finish after a newer save.
   let cloudWriteQueue = Promise.resolve();
   let lastCloudPayload = null;
@@ -11855,7 +12041,11 @@
         const email = cloudUser.email || "Cloud synced";
         const writeTask = async()=>{
           // Do not let a queued save from a previous account leak into a new account.
-          if(cloudMode !== "cloud" || !cloudUser || cloudUser.uid !== uid) return;
+          if(cloudMode !== "cloud" || !cloudUser || cloudUser.uid !== uid){
+            cloudWritesQueued=Math.max(0,cloudWritesQueued-1);
+            return;
+          }
+          cloudWritesQueued=Math.max(0,cloudWritesQueued-1);
           cloudWriteInFlight = true;
           setCloudStatus("saving", "Saving…");
           try{
@@ -11874,6 +12064,8 @@
           }
         };
         // Chain even if the previous write failed, preserving the order of edits.
+        // While a local save is queued, never hydrate an older listener snapshot over it.
+        cloudWritesQueued++;
         cloudWriteQueue = cloudWriteQueue.catch(()=>{}).then(writeTask);
         await cloudWriteQueue;
       }else if(cloudMode === "offline-cloud" && cloudUser){
@@ -13169,7 +13361,14 @@
 
     cloudUnsubscribe = cloudApi.subscribe(cloudUser.uid, async payload=>{
       if(remoteApplyInFlight || !payload || payload === lastCloudPayload) return;
-      if(cloudWriteInFlight && payload === lastCloudPayload) return;
+      // Firestore can echo a snapshot from before our latest write has settled.
+      // Applying it would roll back the UI (including streak history), then replay
+      // the loading/render animations. Keep local state authoritative while writes
+      // are in flight or queued, and ignore snapshots identical to current state.
+      if(cloudWriteInFlight || cloudWritesQueued > 0) return;
+      try{
+        if(payload === serializeSave()) return;
+      }catch(error){ console.warn("Could not compare incoming LUMIN snapshot",error); }
       remoteApplyInFlight = true;
       try{
         lastCloudPayload = payload;
