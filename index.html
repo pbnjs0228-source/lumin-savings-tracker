@@ -847,11 +847,12 @@
 
 
   /* ---- home priority goal island ---- */
+  .dashboard-hero-grid .dashboard-chart-first{display:flex;flex-direction:column;}
   .home-priority-island{
-    position:relative;overflow:hidden;max-width:1080px;margin:0 auto 14px;padding:14px;border-radius:14px;
+    position:relative;z-index:1;flex:1 1 auto;margin-top:14px;padding:14px;border-radius:12px;min-height:150px;
     display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;
-    border-color:color-mix(in srgb,var(--accent) 22%,var(--line));
-    background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,var(--panel)),var(--panel) 50%),var(--panel);
+    border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));
+    background:color-mix(in srgb,var(--accent) 5%,transparent);
   }
   .home-priority-island.hidden,.home-priority-island[data-empty="true"]{display:none !important;}
   .hpi-media{width:150px;height:120px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:color-mix(in srgb,var(--accent) 6%,transparent);display:flex;align-items:center;justify-content:center;}
@@ -8243,6 +8244,35 @@
       </div>
       <div class="bars-row" id="barsRow"></div>
 
+<section class="home-priority-island" data-empty="true" id="homeWidgetPriority">
+  <div class="hpi-media">
+    <img id="homePriorityImg" class="hpi-img hidden" alt="Priority goal" />
+    <div id="homePriorityImgPlaceholder" class="hpi-img-placeholder">No photo</div>
+  </div>
+  <div class="hpi-body">
+    <div class="hpi-head">
+      <div>
+        <div class="dashboard-section-eyebrow">Priority goal</div>
+        <h3 id="homePriorityName">Priority goal</h3>
+      </div>
+      <button type="button" class="home-widget-link" data-jump-view="goals">Open goals →</button>
+    </div>
+    <div class="hpi-progress">
+      <div class="hpi-bar"><div class="hpi-bar-fill" id="homePriorityFill"></div></div>
+      <div class="hpi-bar-caption"><span id="homePriorityPct">0%</span><span id="homePrioritySaved"></span></div>
+    </div>
+    <div class="projection-banner hpi-projection">
+      <div class="projection-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <div class="projection-copy">
+        <div id="homePriorityProjectionText"></div>
+        <div class="projection-note">*Might not be 100% accurate.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
     </div>
 <div class="section game-strip" id="gameStrip">
       <div class="game-level-orb" aria-label="LUMIN level">
@@ -8287,35 +8317,6 @@
       </div>
     </div>
     </div>
-
-<section class="panel home-priority-island" data-empty="true" data-home-widget="priority" id="homeWidgetPriority">
-  <div class="hpi-media">
-    <img id="homePriorityImg" class="hpi-img hidden" alt="Priority goal" />
-    <div id="homePriorityImgPlaceholder" class="hpi-img-placeholder">No photo</div>
-  </div>
-  <div class="hpi-body">
-    <div class="hpi-head">
-      <div>
-        <div class="dashboard-section-eyebrow">Priority goal</div>
-        <h3 id="homePriorityName">Priority goal</h3>
-      </div>
-      <button type="button" class="home-widget-link" data-jump-view="goals">Open goals →</button>
-    </div>
-    <div class="hpi-progress">
-      <div class="hpi-bar"><div class="hpi-bar-fill" id="homePriorityFill"></div></div>
-      <div class="hpi-bar-caption"><span id="homePriorityPct">0%</span><span id="homePrioritySaved"></span></div>
-    </div>
-    <div class="projection-banner hpi-projection">
-      <div class="projection-icon">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-      </div>
-      <div class="projection-copy">
-        <div id="homePriorityProjectionText"></div>
-        <div class="projection-note">*Might not be 100% accurate.</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <div class="section stat-chips stats-ribbon" data-home-widget="stats" id="homeWidgetStats">
       <div class="chip"><div class="chip-label">Today</div><div class="chip-value" id="statToday">$0</div></div>
@@ -10394,7 +10395,7 @@
   let focusMode = false;
   let weeklySummaryLastViewed = "";
   let weeklySummarySnoozeUntil = 0;
-  let homeWidgetOrder = ["overview","priority","stats","weekly","budgets","schedule"];
+  let homeWidgetOrder = ["overview","stats","weekly","budgets","schedule"];
   let homeWidgetHidden = null;
   let calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
   let calendarSelectedDate = "";
@@ -12181,7 +12182,7 @@
     focusMode = false;
     weeklySummaryLastViewed = "";
     weeklySummarySnoozeUntil = 0;
-    homeWidgetOrder = ["overview","priority","stats","weekly","budgets","schedule"];
+    homeWidgetOrder = ["overview","stats","weekly","budgets","schedule"];
     homeWidgetHidden = new Set();
     calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
     calendarSelectedDate = todayStr();
@@ -12227,9 +12228,9 @@
     focusMode = parsed.focusMode===true;
     weeklySummaryLastViewed = /^\d{4}-\d{2}-\d{2}$/.test(parsed.weeklySummaryLastViewed||"") ? parsed.weeklySummaryLastViewed : "";
     weeklySummarySnoozeUntil = Math.max(0,Number(parsed.weeklySummarySnoozeUntil)||0);
-    const allowedWidgets=["overview","priority","stats","weekly","budgets","schedule"];
+    const allowedWidgets=["overview","stats","weekly","budgets","schedule"];
     homeWidgetOrder = Array.isArray(parsed.homeWidgetOrder) ? parsed.homeWidgetOrder.filter(v=>allowedWidgets.includes(v)) : [];
-    allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)){const oi=homeWidgetOrder.indexOf("overview"); if(v==="priority"&&oi>=0) homeWidgetOrder.splice(oi+1,0,v); else homeWidgetOrder.push(v);}});
+    allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)) homeWidgetOrder.push(v);});
     homeWidgetHidden = new Set(Array.isArray(parsed.homeWidgetHidden)?parsed.homeWidgetHidden.filter(v=>allowedWidgets.includes(v)):[]);
     calendarSelectedDate = todayStr();
     calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
@@ -16604,8 +16605,7 @@
   // HOME WIDGETS
   // ================================================================
   const HOME_WIDGET_META={
-    overview:{name:"Overview & progress",desc:"Earnings graph, XP and missions."},
-    priority:{name:"Priority goal",desc:"Your priority goal's photo, progress and ETA."},
+    overview:{name:"Overview & progress",desc:"Earnings graph, priority goal ETA, XP and missions."},
     stats:{name:"Quick stats",desc:"Today, week, month, year and records."},
     weekly:{name:"Weekly recap",desc:"A tiny snapshot of this week’s money and hours."},
     budgets:{name:"Budget snapshot",desc:"Your most-used spending limits."},
@@ -16615,7 +16615,7 @@
   function renderWidgetCustomizer(){const list=$("widgetOptionsList");if(!list)return;list.innerHTML=homeWidgetOrder.map((key,index)=>{const meta=HOME_WIDGET_META[key],hidden=homeWidgetHidden&&homeWidgetHidden.has(key);return `<div class="widget-option"><div><div class="widget-option-name">${escapeHtml(meta.name)}</div><div class="widget-option-desc">${escapeHtml(meta.desc)}</div></div><div class="widget-option-actions"><button type="button" data-widget-toggle="${key}" class="${hidden?"widget-hidden":"widget-visible"}" title="${hidden?"Show":"Hide"}">${hidden?"○":"●"}</button><button type="button" data-widget-up="${key}" ${index===0?"disabled":""}>↑</button><button type="button" data-widget-down="${key}" ${index===homeWidgetOrder.length-1?"disabled":""}>↓</button></div></div>`;}).join("");}
   function openWidgetCustomizer(){renderWidgetCustomizer();$("widgetModalBackdrop").classList.remove("hidden");} function closeWidgetCustomizer(){$("widgetModalBackdrop").classList.add("hidden");}
   $("customizeWidgetsBtn").addEventListener("click",openWidgetCustomizer);$("widgetModalCloseBtn").addEventListener("click",closeWidgetCustomizer);$("widgetDoneBtn").addEventListener("click",closeWidgetCustomizer);$("widgetModalBackdrop").addEventListener("click",e=>{if(e.target.id==="widgetModalBackdrop")closeWidgetCustomizer();});
-  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","priority","stats","weekly","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
+  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","stats","weekly","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
   $("widgetOptionsList").addEventListener("click",async e=>{const toggle=e.target.closest("[data-widget-toggle]"),up=e.target.closest("[data-widget-up]"),down=e.target.closest("[data-widget-down]");let changed=false;if(toggle){const key=toggle.dataset.widgetToggle;if(homeWidgetHidden.has(key))homeWidgetHidden.delete(key);else homeWidgetHidden.add(key);changed=true;}else if(up){const key=up.dataset.widgetUp,i=homeWidgetOrder.indexOf(key);if(i>0){[homeWidgetOrder[i-1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i-1]];changed=true;}}else if(down){const key=down.dataset.widgetDown,i=homeWidgetOrder.indexOf(key);if(i>=0&&i<homeWidgetOrder.length-1){[homeWidgetOrder[i+1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i+1]];changed=true;}}if(changed){renderWidgetCustomizer();applyHomeWidgetLayout();await persist();}});
   document.querySelectorAll("[data-jump-view]").forEach(btn=>btn.addEventListener("click",()=>setAppView(btn.dataset.jumpView,false,true)));
 
@@ -17556,4 +17556,4 @@
 })();
 </script>
 </body>
-</html>
+</html>s
