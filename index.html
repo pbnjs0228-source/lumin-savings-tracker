@@ -845,6 +845,32 @@
   .projection-lead{font-size:14px;color:var(--white);line-height:1.5;}
   .projection-time{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;color:var(--accent-soft);}
 
+
+  /* ---- home priority goal island ---- */
+  .home-priority-island{
+    position:relative;overflow:hidden;max-width:1080px;margin:0 auto 14px;padding:14px;border-radius:14px;
+    display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;
+    border-color:color-mix(in srgb,var(--accent) 22%,var(--line));
+    background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 7%,var(--panel)),var(--panel) 50%),var(--panel);
+  }
+  .home-priority-island.hidden,.home-priority-island[data-empty="true"]{display:none !important;}
+  .hpi-media{width:150px;height:120px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:color-mix(in srgb,var(--accent) 6%,transparent);display:flex;align-items:center;justify-content:center;}
+  .hpi-img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hpi-img.hidden,.hpi-img-placeholder.hidden{display:none;}
+  .hpi-img-placeholder{color:var(--muted);font-size:11px;text-align:center;padding:8px;}
+  .hpi-body{min-width:0;display:flex;flex-direction:column;gap:10px;}
+  .hpi-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .hpi-head h3{margin:2px 0 0;color:var(--white);font:700 16px/1.25 'Sora',sans-serif;overflow-wrap:anywhere;}
+  .hpi-bar{height:7px;border-radius:99px;background:color-mix(in srgb,var(--white) 10%,transparent);overflow:hidden;}
+  .hpi-bar-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-soft));transition:width .5s ease;}
+  .hpi-bar-caption{display:flex;justify-content:space-between;gap:8px;margin-top:5px;color:var(--muted);font:600 10.5px 'JetBrains Mono',monospace;}
+  .hpi-projection{padding:12px 15px;}
+  .hpi-projection.hidden{display:none;}
+  @media(max-width:620px){
+    .home-priority-island{grid-template-columns:1fr;}
+    .hpi-media{width:100%;height:150px;}
+  }
+
   /* ---- dashboard / settings navigation ---- */
   .main-tabs{
     display:inline-flex;align-items:center;gap:3px;padding:4px;border-radius:11px;
@@ -8217,17 +8243,6 @@
       </div>
       <div class="bars-row" id="barsRow"></div>
 
-      <div class="projection-top-wrap hidden" id="projectionSection">
-        <div class="projection-banner">
-          <div class="projection-icon">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          </div>
-          <div class="projection-copy">
-            <div id="projectionText"></div>
-            <div class="projection-note">*Might not be 100% accurate.</div>
-          </div>
-        </div>
-      </div>
     </div>
 <div class="section game-strip" id="gameStrip">
       <div class="game-level-orb" aria-label="LUMIN level">
@@ -8272,6 +8287,35 @@
       </div>
     </div>
     </div>
+
+<section class="panel home-priority-island" data-empty="true" data-home-widget="priority" id="homeWidgetPriority">
+  <div class="hpi-media">
+    <img id="homePriorityImg" class="hpi-img hidden" alt="Priority goal" />
+    <div id="homePriorityImgPlaceholder" class="hpi-img-placeholder">No photo</div>
+  </div>
+  <div class="hpi-body">
+    <div class="hpi-head">
+      <div>
+        <div class="dashboard-section-eyebrow">Priority goal</div>
+        <h3 id="homePriorityName">Priority goal</h3>
+      </div>
+      <button type="button" class="home-widget-link" data-jump-view="goals">Open goals →</button>
+    </div>
+    <div class="hpi-progress">
+      <div class="hpi-bar"><div class="hpi-bar-fill" id="homePriorityFill"></div></div>
+      <div class="hpi-bar-caption"><span id="homePriorityPct">0%</span><span id="homePrioritySaved"></span></div>
+    </div>
+    <div class="projection-banner hpi-projection">
+      <div class="projection-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent-soft)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <div class="projection-copy">
+        <div id="homePriorityProjectionText"></div>
+        <div class="projection-note">*Might not be 100% accurate.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="section stat-chips stats-ribbon" data-home-widget="stats" id="homeWidgetStats">
       <div class="chip"><div class="chip-label">Today</div><div class="chip-value" id="statToday">$0</div></div>
@@ -10350,7 +10394,7 @@
   let focusMode = false;
   let weeklySummaryLastViewed = "";
   let weeklySummarySnoozeUntil = 0;
-  let homeWidgetOrder = ["overview","stats","weekly","budgets","schedule"];
+  let homeWidgetOrder = ["overview","priority","stats","weekly","budgets","schedule"];
   let homeWidgetHidden = null;
   let calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
   let calendarSelectedDate = "";
@@ -12137,7 +12181,7 @@
     focusMode = false;
     weeklySummaryLastViewed = "";
     weeklySummarySnoozeUntil = 0;
-    homeWidgetOrder = ["overview","stats","weekly","budgets","schedule"];
+    homeWidgetOrder = ["overview","priority","stats","weekly","budgets","schedule"];
     homeWidgetHidden = new Set();
     calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
     calendarSelectedDate = todayStr();
@@ -12183,9 +12227,9 @@
     focusMode = parsed.focusMode===true;
     weeklySummaryLastViewed = /^\d{4}-\d{2}-\d{2}$/.test(parsed.weeklySummaryLastViewed||"") ? parsed.weeklySummaryLastViewed : "";
     weeklySummarySnoozeUntil = Math.max(0,Number(parsed.weeklySummarySnoozeUntil)||0);
-    const allowedWidgets=["overview","stats","weekly","budgets","schedule"];
+    const allowedWidgets=["overview","priority","stats","weekly","budgets","schedule"];
     homeWidgetOrder = Array.isArray(parsed.homeWidgetOrder) ? parsed.homeWidgetOrder.filter(v=>allowedWidgets.includes(v)) : [];
-    allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)) homeWidgetOrder.push(v);});
+    allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)){const oi=homeWidgetOrder.indexOf("overview"); if(v==="priority"&&oi>=0) homeWidgetOrder.splice(oi+1,0,v); else homeWidgetOrder.push(v);}});
     homeWidgetHidden = new Set(Array.isArray(parsed.homeWidgetHidden)?parsed.homeWidgetHidden.filter(v=>allowedWidgets.includes(v)):[]);
     calendarSelectedDate = todayStr();
     calendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
@@ -16560,7 +16604,8 @@
   // HOME WIDGETS
   // ================================================================
   const HOME_WIDGET_META={
-    overview:{name:"Overview & progress",desc:"Earnings graph, forecast, XP and missions."},
+    overview:{name:"Overview & progress",desc:"Earnings graph, XP and missions."},
+    priority:{name:"Priority goal",desc:"Your priority goal's photo, progress and ETA."},
     stats:{name:"Quick stats",desc:"Today, week, month, year and records."},
     weekly:{name:"Weekly recap",desc:"A tiny snapshot of this week’s money and hours."},
     budgets:{name:"Budget snapshot",desc:"Your most-used spending limits."},
@@ -16570,7 +16615,7 @@
   function renderWidgetCustomizer(){const list=$("widgetOptionsList");if(!list)return;list.innerHTML=homeWidgetOrder.map((key,index)=>{const meta=HOME_WIDGET_META[key],hidden=homeWidgetHidden&&homeWidgetHidden.has(key);return `<div class="widget-option"><div><div class="widget-option-name">${escapeHtml(meta.name)}</div><div class="widget-option-desc">${escapeHtml(meta.desc)}</div></div><div class="widget-option-actions"><button type="button" data-widget-toggle="${key}" class="${hidden?"widget-hidden":"widget-visible"}" title="${hidden?"Show":"Hide"}">${hidden?"○":"●"}</button><button type="button" data-widget-up="${key}" ${index===0?"disabled":""}>↑</button><button type="button" data-widget-down="${key}" ${index===homeWidgetOrder.length-1?"disabled":""}>↓</button></div></div>`;}).join("");}
   function openWidgetCustomizer(){renderWidgetCustomizer();$("widgetModalBackdrop").classList.remove("hidden");} function closeWidgetCustomizer(){$("widgetModalBackdrop").classList.add("hidden");}
   $("customizeWidgetsBtn").addEventListener("click",openWidgetCustomizer);$("widgetModalCloseBtn").addEventListener("click",closeWidgetCustomizer);$("widgetDoneBtn").addEventListener("click",closeWidgetCustomizer);$("widgetModalBackdrop").addEventListener("click",e=>{if(e.target.id==="widgetModalBackdrop")closeWidgetCustomizer();});
-  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","stats","weekly","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
+  $("widgetResetBtn").addEventListener("click",async()=>{homeWidgetOrder=["overview","priority","stats","weekly","budgets","schedule"];homeWidgetHidden=new Set();renderWidgetCustomizer();applyHomeWidgetLayout();await persist();});
   $("widgetOptionsList").addEventListener("click",async e=>{const toggle=e.target.closest("[data-widget-toggle]"),up=e.target.closest("[data-widget-up]"),down=e.target.closest("[data-widget-down]");let changed=false;if(toggle){const key=toggle.dataset.widgetToggle;if(homeWidgetHidden.has(key))homeWidgetHidden.delete(key);else homeWidgetHidden.add(key);changed=true;}else if(up){const key=up.dataset.widgetUp,i=homeWidgetOrder.indexOf(key);if(i>0){[homeWidgetOrder[i-1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i-1]];changed=true;}}else if(down){const key=down.dataset.widgetDown,i=homeWidgetOrder.indexOf(key);if(i>=0&&i<homeWidgetOrder.length-1){[homeWidgetOrder[i+1],homeWidgetOrder[i]]=[homeWidgetOrder[i],homeWidgetOrder[i+1]];changed=true;}}if(changed){renderWidgetCustomizer();applyHomeWidgetLayout();await persist();}});
   document.querySelectorAll("[data-jump-view]").forEach(btn=>btn.addEventListener("click",()=>setAppView(btn.dataset.jumpView,false,true)));
 
@@ -17335,23 +17380,37 @@
       $("figHoursWrap").classList.add("hidden");
     }
 
-    // projection
-    if(activeItem && !isActivePurchased && remaining>0){
-      $("projectionSection").classList.remove("hidden");
-      const hoursPart = wallet.hourlyRate>0
-        ? ' <span class="projection-lead">\u2014 that\u2019s</span> <span class="projection-time">'+hoursNeeded.toFixed(1)+' hrs</span> <span class="projection-lead">of work left at your current pace.</span>'
-        : '';
-      if(projectedDays!==null){
-        $("projectionText").innerHTML =
-          '<span class="projection-lead">At this rate, you\u2019ll be able to get this in </span>'+
-          '<span class="projection-time">'+formatDuration(projectedDays)+'</span>'+
-          '<span class="projection-lead">.</span>'+hoursPart;
+    // Home screen priority-goal island (photo, progress and ETA). The Goals page stays clean.
+    const homeIsland = $("homeWidgetPriority");
+    const priorityItem = items.find(item => item.id === priorityItemId && !item.purchasedAt);
+    if(homeIsland){
+      if(priorityItem){
+        const pp = computeItemProgress(priorityItem, stats.saved);
+        homeIsland.dataset.empty="false";
+        const hImg=$("homePriorityImg"), hPh=$("homePriorityImgPlaceholder");
+        if(priorityItem.image){ hImg.src=priorityItem.image; hImg.classList.remove("hidden"); hPh.classList.add("hidden"); }
+        else{ hImg.classList.add("hidden"); hPh.classList.remove("hidden"); }
+        $("homePriorityName").textContent = priorityItem.name || "Untitled goal";
+        const ppct = Math.max(0, Math.min(1, pp.progress));
+        $("homePriorityFill").style.width = (ppct*100)+"%";
+        $("homePriorityPct").textContent = Math.round(ppct*100)+"%";
+        $("homePrioritySaved").textContent = fmtMoney(Math.min(stats.saved, priorityItem.goal),0)+" of "+fmtMoney(priorityItem.goal,0);
+        const proj = homeIsland.querySelector(".hpi-projection");
+        if(pp.remaining > 0){
+          proj.classList.remove("hidden");
+          const hoursPart = wallet.hourlyRate > 0
+            ? ' <span class="projection-lead">— that’s</span> <span class="projection-time">'+pp.hoursNeeded.toFixed(1)+' hrs</span> <span class="projection-lead">of work left at your current pace.</span>'
+            : '';
+          $("homePriorityProjectionText").innerHTML = pp.projectedDays !== null
+            ? '<span class="projection-lead">At this rate, you’ll be able to get this in </span><span class="projection-time">'+formatDuration(pp.projectedDays)+'</span><span class="projection-lead">.</span>'+hoursPart
+            : '<span class="projection-lead">Log a few days of earnings to see a projected date.</span>'+hoursPart;
+        }else{
+          proj.classList.remove("hidden");
+          $("homePriorityProjectionText").innerHTML='<span class="projection-lead">Fully funded — ready to buy! 🎉</span>';
+        }
       }else{
-        $("projectionText").innerHTML =
-          '<span class="projection-lead">Log a few days of earnings to see a projected date.</span>'+hoursPart;
+        homeIsland.dataset.empty="true";
       }
-    }else{
-      $("projectionSection").classList.add("hidden");
     }
 
     renderSavingsPace(activeItem,stats.saved);
