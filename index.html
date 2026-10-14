@@ -9617,631 +9617,40 @@
   // When APP_VERSION changes, users will automatically see the
   // What's New popup once on each device.
   // ================================================================
-  const APP_VERSION = "2026.10.12.1";
+  const APP_VERSION = "2026.10.14.1";
 
-  const CHANGELOG = [{version:"2026.10.12.1",title:"More reliable cloud sync",date:"12 October 2026",changes:["Cloud writes are now queued so rapid edits save in order.","Failed cloud saves automatically retry when the connection returns or the app becomes active."]},{version:"2026.10.06.1",title:"Recurring calendar + subscriptions",date:"6 October 2026",changes:["Added weekly, monthly and custom recurring calendar events.","Added subscription tracking with due dates, billing cycles, pause/resume and payment logging.","Subscription payments appear on the calendar and become spending entries when logged."]},
+  const CHANGELOG = [
     {
-      version: "2026.09.18.1",
-      title: "Clickable calendar events",
-      date: "18 September 2026",
+      version: "2026.10.14.1",
+      title: "Priority goal on Home + weekly recap fix",
+      date: "14 October 2026",
       changes: [
-        "Calendar shifts, unavailable blocks and personal events can now be clicked to open a full detail view.",
-        "Event details show the date, time, duration, reminder state, notes, shift status and estimated pay where relevant.",
-        "Added Edit / Reschedule so events can be moved to another date or time and have their title, type, notes or reminder updated.",
-        "Logged shifts keep their historical earnings entry when their calendar event is later edited, rescheduled or deleted."
+        "Added a priority goal island to the Home graph panel with the goal's photo, name, progress bar and saved amount.",
+        "The \u201cAt this rate, you\u2019ll be able to get this in\u2026\u201d countdown now lives in that island instead of under the graph, and always follows your priority goal. The Goals page stays clean.",
+        "Removed the dead space under the earnings graph on Home.",
+        "Fixed the weekly recap popping up again and again: it now only appears automatically on Sunday or Monday, once per week.",
+        "Closing the recap (X, Esc or clicking outside) now counts as seen. \u201cLater\u201d still snoozes it for a few hours. You can always open it from Home or Settings."
       ]
     },
     {
-      version: "2026.09.15.1",
-      title: "Streak Calendar",
-      date: "15 September 2026",
+      version: "2026.10.12.1",
+      title: "More reliable cloud sync",
+      date: "12 October 2026",
       changes: [
-        "Added an interactive monthly streak calendar inspired by modern learning-app streak views.",
-        "Check-in days show a themed flame, protected days show a snowflake, missed days are marked separately and future days stay muted.",
-        "Added current streak, best streak, total check-ins and protected-day stats.",
-        "Click any day for details, navigate previous months, or check in today directly from the calendar."
+        "Cloud writes are now queued so rapid edits save in order.",
+        "Failed cloud saves automatically retry when the connection returns or the app becomes active."
       ]
     },
     {
-      version: "2026.09.11.3",
-      title: "2FA backend route diagnostics",
-      date: "11 September 2026",
+      version: "2026.10.06.1",
+      title: "Recurring calendar + subscriptions",
+      date: "6 October 2026",
       changes: [
-        "LUMIN now detects a missing /api/passkeys/status or /toggle route instead of showing Vercel's generic page-not-found error.",
-        "Settings now tells you when the passkey backend has not been deployed and avoids repeatedly retrying a missing endpoint.",
-        "Includes a matching Vercel backend patch containing the required status and toggle routes."
-      ]
-    },
-    {
-      version: "2026.09.11.2",
-      title: "Quick Add button fix",
-      date: "11 September 2026",
-      changes: [
-        "Fixed Quick Add action buttons being replaced on hover before their click could fire.",
-        "Quick Add buttons now reliably open goals, earnings, expenses, budgets and calendar forms.",
-        "Arrow-key navigation now changes selection without rebuilding the action list."
-      ]
-    },
-    {
-      version: "2026.09.11.1",
-      title: "Passkey 2FA switch fix",
-      date: "11 September 2026",
-      changes: [
-        "Fixed the passkey 2FA switch appearing permanently locked in Settings.",
-        "The switch now stays usable while signed in and only locks during an actual security update.",
-        "Added a /api/passkeys fallback so 2FA controls still connect when the frontend config omits the API base.",
-        "If the 2FA status request temporarily fails, LUMIN now allows a retry instead of permanently disabling the control."
-      ]
-    },
-    {
-      version: "2026.09.10.11",
-      title: "Quick Add & Tutorial 2.0",
-      date: "10 September 2026",
-      changes: [
-        "Added Quick Add with Ctrl/Cmd + K for goals, earnings, expenses, budgets, shifts, unavailable time and calendar events.",
-        "Quick Add includes searchable actions, keyboard navigation and a mobile floating launcher.",
-        "Redesigned the tutorial with richer visuals, clearer tips and eight updated feature-focused steps.",
-        "The tutorial now covers Quick Add, Savings Pace, Budgets, Calendar, Weekly Recap and HyperDrive Rain.",
-        "Added Replay tutorial in Settings so the guided tour can be opened again at any time."
-      ]
-    },
-    {
-      version: "2026.09.10.10",
-      title: "Theme-synced Recap & HyperDrive Rain",
-      date: "10 September 2026",
-      changes: [
-        "Weekly Recap visuals now use the selected theme's accent, secondary accent, surfaces, text and glow colours instead of always using HYPERDRIVE green.",
-        "Added HyperDrive Rain as an independent theme setting that works with every theme.",
-        "HyperDrive Rain adds theme-coloured Matrix rain plus an enhanced glow pass across cards, controls, progress bars and active navigation.",
-        "Focus mode still suppresses the extra rain and glow when distraction reduction is enabled."
-      ]
-    },
-    {
-      version: "2026.09.10.9",
-      title: "Theme-aware Weekly Recap Matrix",
-      date: "10 September 2026",
-      changes: [
-        "Added a dedicated cinematic Matrix effect behind the interactive Weekly Recap.",
-        "Weekly Recap Matrix colors now follow the active theme's accent, secondary accent and soft accent colors.",
-        "The recap effect uses larger glyphs, longer trails, subtle horizontal sway and brighter themed heads so it feels distinct from the normal app rain.",
-        "Light mode automatically tones the recap Matrix down while preserving each theme's identity."
-      ]
-    },
-    {
-      version: "2026.09.10.8",
-      title: "Weekly Recap in Settings",
-      date: "10 September 2026",
-      changes: [
-        "Added a Weekly Recap card to Settings with last week’s date range, earnings and hours preview.",
-        "The Settings button opens the full interactive Weekly Recap directly."
-      ]
-    },
-    {
-      version: "2026.09.10.7",
-      title: "Interactive Weekly Recap",
-      date: "10 September 2026",
-      changes: [
-        "Replaced the static weekly-summary popup with a full interactive LUMIN Recap experience.",
-        "Added individual animated recap screens for earnings, spending, net change, hours worked and the final weekly wrap-up.",
-        "Added recap progress bars, Back and Next controls, keyboard-arrow navigation and mobile swipe navigation.",
-        "The Home weekly widget can reopen the complete recap at any time."
-      ]
-    },
-    {
-      version: "2026.09.10.6",
-      title: "Focus, pace & weekly recap",
-      date: "10 September 2026",
-      changes: [
-        "Added Minimal, Normal and Everything notification presets.",
-        "Added Focus mode to hide gamification, Matrix rain and extra workspace motion while keeping the core money tools visible.",
-        "Added Savings Pace for active goals, including current weekly pace, required pace and deadline forecast.",
-        "Added a tiny weekly recap widget for earnings, spending, net change and hours worked.",
-        "Added a weekly 'Here's your weekly summary!' popup with View and Later actions."
-      ]
-    },
-    {
-      version: "2026.09.10.5",
-      title: "Future shift estimates",
-      date: "10 September 2026",
-      changes: [
-        "Calendar month summaries now show estimated earnings from future planned shifts.",
-        "Upcoming estimates use the current hourly rate and only count future shifts that have not already been logged.",
-        "Actual earned money and future estimated money are shown separately to avoid double-counting."
-      ]
-    },
-    {
-      version: "2026.09.10.4",
-      title: "Calendar monthly earnings",
-      date: "10 September 2026",
-      changes: [
-        "Calendar month headers now show the actual amount earned during the displayed month alongside planned shift hours.",
-        "Monthly earnings are calculated from real logged earnings rather than the planned shift estimate."
-      ]
-    },
-    {
-      version: "2026.09.10.3",
-      title: "Consistent matrix rain",
-      date: "10 September 2026",
-      changes: [
-        "Made the HYPERDRIVE matrix rain consistent across the app, sign-in experience and loading screen.",
-        "Added a dedicated loading-screen matrix canvas so cloud/loading states no longer look visually different.",
-        "Unified the matrix density and movement profile so the effect feels the same on every page."
-      ]
-    },
-    {
-      version: "2026.09.10.2",
-      title: "Budget form typography fix",
-      date: "10 September 2026",
-      changes: [
-        "Fixed the budget period dropdown using a mismatched native font.",
-        "Dropdowns in Budgets and Calendar now use LUMIN's input typography and scale cleanly on smaller screens.",
-        "Added a consistent custom chevron so selects match the rest of the form controls."
-      ]
-    },
-    {
-      version: "2026.09.10.1",
-      title: "Budgets, Calendar & Windows notifications",
-      date: "10 September 2026",
-      changes: [
-        "Added weekly and monthly budgets with expense assignment, progress tracking and 80% / 100% warnings.",
-        "Added a work calendar for planned shifts, unavailable time and personal events.",
-        "Planned shifts show estimated hours/pay and can be converted into logged earnings after they are worked.",
-        "Added Windows/PWA system notifications for upcoming calendar items and budget thresholds.",
-        "Added customizable Home widgets with visibility and ordering controls.",
-        "Expanded motion throughout navigation, cards, calendar events, budgets, switches and dashboard widgets."
-      ]
-    },
-    {
-      version: "2026.09.09.21",
-      title: "Priority-only completion contrast",
-      date: "9 September 2026",
-      changes: [
-        "Restored the normal green completed styling for non-priority HYPERDRIVE goals.",
-        "Black completed text is now reserved for priority cards where it improves contrast."
-      ]
-    },
-    {
-      version: "2026.09.09.20",
-      title: "Completed-state contrast fix",
-      date: "9 September 2026",
-      changes: [
-        "Made HYPERDRIVE completed-state text black for stronger contrast on bright completed goal cards.",
-        "Applied the black contrast fix to the Completed label, 100% value and the Goal completed banner."
-      ]
-    },
-    {
-      version: "2026.09.09.19",
-      title: "Correct HYPERDRIVE priority colours",
-      date: "9 September 2026",
-      changes: [
-        "Rebuilt the HYPERDRIVE priority gradient around bright cyan, aqua, neon green, deep teal and near-black only.",
-        "Removed the purple/pink drift from the animated priority palette.",
-        "Made all priority-card text black, including release information, values, percentage and the Priority badge.",
-        "Made the Priority star icon solid black instead of animated gradient text."
-      ]
-    },
-    {
-      version: "2026.09.09.18",
-      title: "HYPERDRIVE priority fill + tighter layout",
-      date: "9 September 2026",
-      changes: [
-        "The HYPERDRIVE priority goal now uses a full teal/cyan/lime gradient fill instead of a gradient border only.",
-        "Priority text, badge and progress treatment were tuned for better readability inside the brighter HYPERDRIVE card.",
-        "Fixed the desktop workspace dead space by letting the sidebar size to its content instead of forcing extra vertical height."
-      ]
-    },
-    {
-      version: "2026.09.09.17",
-      title: "HYPERDRIVE priority styling",
-      date: "9 September 2026",
-      changes: [
-        "Priority goal cards no longer use the rainbow treatment inside the HYPERDRIVE theme.",
-        "Added a HYPERDRIVE-specific neon cyan/teal/green priority style with readable light text.",
-        "The priority badge, progress fill and star now inherit the HYPERDRIVE accent palette."
-      ]
-    },
-    {
-      version: "2026.09.09.16",
-      title: "Adaptive workspace height",
-      date: "9 September 2026",
-      changes: [
-        "Removed unnecessary vertical dead space on tabs that do not need a full-height workspace.",
-        "The desktop sidebar now collapses to content height on short views instead of inflating the CSS grid.",
-        "Longer tabs still retain the normal sticky sidebar layout automatically."
-      ]
-    },
-    {
-      version: "2026.09.09.15",
-      title: "Theme-aware native UI",
-      date: "9 September 2026",
-      changes: [
-        "Scrollbars now follow the active LUMIN theme instead of using the browser’s default colour.",
-        "HYPERDRIVE scrollbars use the cyan-to-green neon palette with a subtle glow.",
-        "Text selection and native control accent colours now follow the active theme too."
-      ]
-    },
-    {
-      version: "2026.09.09.14",
-      title: "Visible Matrix rain",
-      date: "9 September 2026",
-      changes: [
-        "Replaced the barely-visible CSS Matrix effect with a real animated canvas rain system.",
-        "Added soft cyan/green glyph columns with brighter heads and fading trails across HYPERDRIVE backgrounds.",
-        "The effect now runs on both the HYPERDRIVE app background and the login screen while staying lightweight and non-interactive."
-      ]
-    },
-    {
-      version: "2026.09.09.13",
-      title: "HYPERDRIVE login",
-      date: "9 September 2026",
-      changes: [
-        "The login and account-creation screen now always uses the HYPERDRIVE visual identity.",
-        "Added the same subtle Matrix-style binary rain, cyan/green neon glow and black-glass surfaces to authentication.",
-        "After sign-in, LUMIN still restores the account’s saved theme and appearance mode normally."
-      ]
-    },
-    {
-      version: "2026.09.09.12",
-      title: "HYPERDRIVE default",
-      date: "9 September 2026",
-      changes: [
-        "Made HYPERDRIVE the default theme for new and reset LUMIN installs.",
-        "Added a subtle animated binary Matrix-style background layer to HYPERDRIVE.",
-        "Kept the effect faint, slow and motion-accessible so dashboard readability stays clean."
-      ]
-    },
-    {
-      version: "2026.09.09.11",
-      title: "Workspace positioning fix",
-      date: "9 September 2026",
-      changes: [
-        "Fixed the login bug that placed the active Home/Goals/Activity/Settings view underneath the full-height sidebar.",
-        "LUMIN now resets to the top-left of the workspace after sign-in and when switching views.",
-        "Prevented accidental page-level horizontal scrolling while preserving intentional horizontal shelves and carousels."
-      ]
-    },
-    {
-      version: "2026.09.09.10",
-      title: "HYPERDRIVE & appearance modes",
-      date: "9 September 2026",
-      changes: [
-        "Added Dark, Light and System appearance modes in Settings independently from colour themes.",
-        "System mode automatically follows the device colour-scheme preference.",
-        "Added HYPERDRIVE, a near-black neon theme with electric cyan, green and violet energy.",
-        "Light mode now adapts every colour theme into a cleaner pale surface system while retaining its accent colours."
-      ]
-    },
-    {
-      version: "2026.09.09.9",
-      title: "2FA controls",
-      date: "9 September 2026",
-      changes: [
-        "Added a real on/off switch for passkey two-factor authentication in Settings → Security.",
-        "Turning 2FA off keeps registered passkeys saved so it can be turned back on later without recreating them.",
-        "Turning 2FA on automatically starts passkey setup when the account does not have one yet.",
-        "2FA status is stored securely on the server and follows the account across devices."
-      ]
-    },
-    {
-      version: "2026.09.09.8",
-      title: "Cleaner sign-in",
-      date: "9 September 2026",
-      changes: [
-        "Removed the oversized explanatory paragraph from the sign-in card for a cleaner, more compact login screen."
-      ]
-    },
-    {
-      version: "2026.09.09.7",
-      title: "Sidebar alignment fix",
-      date: "9 September 2026",
-      changes: [
-        "Fixed the layout bug where the desktop sidebar dropped far down the page after the top header was removed.",
-        "The sidebar now anchors to the top of the workspace again so Settings and the other views line up properly."
-      ]
-    },
-    {
-      version: "2026.09.09.6",
-      title: "Cleaner workspace",
-      date: "9 September 2026",
-      changes: [
-        "Removed the large top Overview / Your home header block.",
-        "The main workspace now starts immediately with useful dashboard content while navigation remains in the sidebar and mobile nav."
-      ]
-    },
-    {
-      version: "2026.09.09.5",
-      title: "Custom theme polish",
-      date: "9 September 2026",
-      changes: [
-        "Refined custom themes so they tint the app more naturally instead of flooding the whole page with a flat bright colour.",
-        "Darkened custom-theme surfaces and item cards so the dashboard keeps a more professional, readable look.",
-        "Synced the browser theme-color with the active theme for a cleaner app-like appearance."
-      ]
-    },
-    {
-      version: "2026.09.09.4",
-      title: "Passkey two-factor authentication",
-      date: "9 September 2026",
-      changes: [
-        "Removed the separate passkey-only login option.",
-        "Accounts with a registered passkey now require it as a second step after the password is accepted.",
-        "Accounts without a passkey continue to use password sign-in and receive occasional reminders to enable passkey 2FA.",
-        "Updated signup and Security settings to explain passkeys as two-factor protection instead of a password replacement."
-      ]
-    },
-    {
-      version: "2026.09.09.3",
-      title: "UI polish pass",
-      date: "9 September 2026",
-      changes: [
-        "Revamped the app shell with a branded sidebar, clearer active navigation and a more deliberate workspace header.",
-        "Upgraded panels, analytics cards, stats, goals, controls and account surfaces with cleaner depth and hierarchy.",
-        "Added subtle ambient background detail and restrained accent lighting while keeping every existing theme intact.",
-        "Refined mobile behaviour so the desktop polish does not crowd the bottom navigation experience."
-      ]
-    },
-    {
-      version: "2026.09.09.2",
-      title: "Cleaner settings & smarter passkey reminders",
-      date: "9 September 2026",
-      changes: [
-        "Users without a known passkey now get a lightweight reminder roughly every fourth password sign-in instead of being nagged constantly.",
-        "Passkey reminders stop after a passkey is added or successfully used on the device.",
-        "Rebuilt Settings into cleaner Personalisation, Money, App, Security and Account sections.",
-        "Improved Settings hierarchy, spacing, status surfaces and account controls for a more professional app-like feel."
-      ]
-    },
-    {
-      version: "2026.09.09.1",
-      title: "Passkeys at signup",
-      date: "9 September 2026",
-      changes: [
-        "New accounts are now offered passkey setup immediately after signup.",
-        "Set up passkey opens Windows Hello, Touch ID, Face ID or another supported authenticator without hunting through Settings.",
-        "Maybe later skips the prompt cleanly and keeps email/password available as recovery.",
-        "Existing users signing in normally are not shown the signup prompt."
-      ]
-    },
-    {
-      version: "2026.09.09",
-      title: "Readable passkey errors",
-      date: "9 September 2026",
-      changes: [
-        "Fixed passkey failures appearing as [object Object].",
-        "LUMIN now extracts useful nested Vercel and Firebase error messages.",
-        "Improved passkey network and HTTP error reporting so deployment problems are easier to diagnose."
-      ]
-    },
-    {
-      version: "2026.09.08.2",
-      title: "LUMIN feels like an app",
-      date: "8 September 2026",
-      changes: [
-        "Replaced the old Dashboard / Settings tabs with real Home, Goals, Activity and Settings app navigation.",
-        "Desktop now uses a compact sidebar and phones automatically switch to a fixed bottom navigation bar.",
-        "Added installable PWA support, an offline app shell, connection status and offline-save recovery.",
-        "Cloud changes made while offline are marked for sync and pushed when the signed-in app reconnects.",
-        "Added passkey sign-in and registration flows for Windows Hello, Touch ID, Face ID and compatible security keys.",
-        "Added App & offline and Security controls to Settings."
-      ]
-    },
-    {
-      version: "2026.09.08",
-      title: "True-time release trajectory",
-      date: "8 September 2026",
-      changes: [
-        "Release and Projected ready now appear in the correct chronological order.",
-        "Trajectory spacing is proportional to the actual amount of time between Today, Release and your projected ready date.",
-        "If you are behind pace, Release appears first and Projected ready moves after it instead of being forced before launch."
-      ]
-    },
-    {
-      version: "2026.09.07.12",
-      title: "Cleaner trajectory labels",
-      date: "7 September 2026",
-      changes: [
-        "Fixed Projected ready and Release labels overlapping when their markers are close together.",
-        "Crowded trajectory milestones now automatically stagger vertically.",
-        "Improved trajectory spacing on narrow cards and mobile screens."
-      ]
-    },
-    {
-      version: "2026.09.07.11",
-      title: "Release trajectories",
-      date: "7 September 2026",
-      changes: [
-        "Added an Unreleased Product option to goal creation and editing.",
-        "Unreleased products can now store a release date and show a launch-readiness trajectory.",
-        "The trajectory compares your current savings pace with the product release date and shows whether you are on track.",
-        "Release trajectories only appear for goals currently marked as unreleased."
-      ]
-    },
-    {
-      version: "2026.09.07.10",
-      title: "Cleaner goal carousel",
-      date: "7 September 2026",
-      changes: [
-        "Restored goal-card image previews to the original 4:3 crop ratio.",
-        "Replaced the chunky native horizontal scrollbar with a slimmer LUMIN-styled slider.",
-        "Added smoother card snapping and mouse-wheel horizontal scrolling on desktop."
-      ]
-    },
-    {
-      version: "2026.09.07.9",
-      title: "Better-looking themes",
-      date: "7 September 2026",
-      changes: [
-        "Rebuilt the theme picker with proper mini dashboard previews, names and selected states.",
-        "Refined every built-in palette to feel more deliberate and visually distinct.",
-        "Neon now has its own purple-and-cyan identity, while Midnight, Sunset, Ocean and Graphite were cleaned up.",
-        "Improved the compact theme selector used during wallet setup and kept Custom and Rainbow fully functional."
-      ]
-    },
-    {
-      version: "2026.09.07.8",
-      title: "Missions where they belong",
-      date: "7 September 2026",
-      changes: [
-        "Moved Missions directly into the XP and streak card instead of a separate popup.",
-        "Each mission now shows its progress, XP reward and Claim action inline.",
-        "Used the previously empty middle space in the progression card and kept Streak freezes underneath."
-      ]
-    },
-    {
-      version: "2026.09.07.7",
-      title: "Professional polish",
-      date: "7 September 2026",
-      changes: [
-        "Streak freezes now always shows its full label instead of truncating.",
-        "Refined the interface with cleaner spacing, calmer surfaces, subtler shadows and more consistent controls.",
-        "Improved dashboard typography, navigation, cards, forms and focus states.",
-        "On narrow phones, Streak freezes and Missions stack so neither control gets squashed."
-      ]
-    },
-    {
-      version: "2026.09.07.6",
-      title: "Cleaner streak controls",
-      date: "7 September 2026",
-      changes: [
-        "Redesigned the Streak freezes control so its text stays on one clean line.",
-        "Streak freezes and Missions now share an equal-width action row.",
-        "Improved the progression card spacing on desktop and mobile."
-      ]
-    },
-    {
-      version: "2026.09.07.5",
-      title: "Dashboard tightened up",
-      date: "7 September 2026",
-      changes: [
-        "Removed the empty legacy Your Items container.",
-        "Moved Archive and Add item into the actual Goals header.",
-        "Fixed the active-goal cards so product and progress sit side-by-side on larger screens.",
-        "Made the deadline a compact horizontal dashboard row.",
-        "Grouped Goals and Money Flow into tighter dashboard clusters with much better mobile scaling."
-      ]
-    },
-    {
-      version: "2026.09.07.4",
-      title: "Compact goal cockpit",
-      date: "7 September 2026",
-      changes: [
-        "Made the active-goal area dramatically more compact.",
-        "Goal images now use a small contained preview instead of a huge full-width image.",
-        "Product details sit beside the image and the progress gauge is smaller with compact stats.",
-        "Deadline controls were tightened while keeping everything functional and responsive."
-      ]
-    },
-    {
-      version: "2026.09.07.3",
-      title: "A livelier Dashboard",
-      date: "7 September 2026",
-      changes: [
-        "Reworked the Dashboard into a more visual progress hub instead of a simple stack of panels.",
-        "The graph and forecast now share the top hero with XP, streaks, freezes and Missions.",
-        "Goals now have a dedicated workspace, while logging and activity sit together in a Money Flow section.",
-        "Added stronger hierarchy, hover depth, spacing and responsive card layouts without removing any features."
-      ]
-    },
-    {
-      version: "2026.09.07.2",
-      title: "Charts & first-time tour",
-      date: "7 September 2026",
-      changes: [
-        "Added Bar, Line and Area graph types with a saved graph preference.",
-        "Added a small interactive tutorial for brand-new account signups.",
-        "The tutorial highlights the graph, goals, logging, check-ins and Settings, then stays out of the way."
-      ]
-    },
-    {
-      version: "2026.09.07.1",
-      title: "Forecast up front",
-      date: "7 September 2026",
-      changes: [
-        "Moved the “At this rate” affordability estimate into the graph card at the top of the Dashboard.",
-        "The graph and goal forecast now sit together as one quick financial overview.",
-        "Daily check-ins, streak freezes, Missions and Settings remain unchanged."
-      ]
-    },
-    {
-      version: "2026.09.07",
-      title: "Daily check-ins",
-      date: "7 September 2026",
-      changes: [
-        "Streaks now grow from daily check-ins instead of earnings logs.",
-        "Added a Check in button directly under your streak.",
-        "Streak freezes now protect missed check-ins.",
-        "Streak-related Missions now track check-ins instead of logged earnings."
-      ]
-    },
-    {
-      version: "2026.09.06.2",
-      title: "Streak insurance",
-      date: "6 September 2026",
-      changes: [
-        "Added streak freezes. Every account starts with 2 and 2 is the maximum.",
-        "A freeze is automatically consumed if you miss a day while an earning streak is active.",
-        "You can buy a replacement freeze for 50 available XP.",
-        "Buying freezes spends XP without reducing your level progression."
-      ]
-    },
-    {
-      version: "2026.09.06.1",
-      title: "Dashboard cleanup",
-      date: "6 September 2026",
-      changes: [
-        "Moved themes, wallet editing, regular pay, importing, cloud controls and What’s New into a dedicated Settings tab.",
-        "The earnings graph is now the first section on the Dashboard.",
-        "Kept Missions, achievements and progression on the Dashboard so the gamified layer stays easy to reach."
-      ]
-    },
-    {
-      version: "2026.09.06",
-      title: "Level up your savings",
-      date: "6 September 2026",
-      changes: [
-        "Added XP, levels and rank progression driven by real savings activity.",
-        "Added daily and weekly Missions with claimable XP rewards.",
-        "Added an earning streak that tracks consecutive active days.",
-        "Added level-up celebrations while keeping the dashboard compact."
-      ]
-    },
-    {
-      version: "2026.09.05",
-      title: "Future payments",
-      date: "5 September 2026",
-      changes: [
-        "You can now log earnings, money earned and expenses on dates after today.",
-        "Future-dated activity is saved and synced just like normal entries."
-      ]
-    },
-    {
-      version: "2026.09.04.1",
-      title: "Projection cleanup",
-      date: "4 September 2026",
-      changes: [
-        "Removed the manual Earning Range controls from the affordability banner.",
-        "The “At this rate” estimate now automatically uses your full logged earning history again.",
-        "Kept the new loading screen and editable What’s New changelog."
-      ]
-    },
-    {
-      version: "2026.09.04",
-      title: "Smoother, smarter LUMIN",
-      date: "4 September 2026",
-      changes: [
-        "Added a full LUMIN loading screen while signing in and loading cloud saves.",
-        "Affordability estimates can now use an exact earning date range.",
-        "Added regular pay, a purchased-goal archive, price-change history and achievements.",
-        "Added flexible statistics date ranges and the Custom theme editor."
+        "Added weekly, monthly and custom recurring calendar events.",
+        "Added subscription tracking with due dates, billing cycles, pause/resume and payment logging.",
+        "Subscription payments appear on the calendar and become spending entries when logged."
       ]
     }
-    // Add older releases underneath this one, for example:
-    // ,{
-    //   version: "2026.09.01",
-    //   title: "Previous update",
-    //   date: "1 September 2026",
-    //   changes: ["Added something cool.", "Fixed something else."]
-    // }
   ];
   // ================================================================
 
@@ -16833,6 +16242,14 @@
 
   let weeklyRecapSlideIndex=0;
   let weeklyRecapSlides=[];
+  let weeklyRecapShownSummary=null;
+  // Auto-popup window: Sunday (week ending) and Monday (new week). Both recap the same Mon-Sun week.
+  function autoRecapSummary(){
+    const day=new Date().getDay();
+    if(day===0) return weeklySummaryFor(mondayOfWeek());
+    if(day===1) return previousWeekSummary();
+    return null;
+  }
   let weeklyRecapTouchStartX=null;
 
   function weeklyRecapDateRange(summary){
@@ -17008,10 +16425,11 @@
     buildWeeklyRecapProgress();
   }
 
-  function openWeeklySummaryPrompt(force=false){
-    const summary=previousWeekSummary();
+  function openWeeklySummaryPrompt(force=false,summaryOverride=null){
+    const summary=summaryOverride||previousWeekSummary();
     if(!force&&!summaryHasActivity(summary))return false;
 
+    weeklyRecapShownSummary=summary;
     populateWeeklySummaryDetails(summary);
     weeklyRecapSlideIndex=0;
 
@@ -17029,13 +16447,15 @@
   }
 
   async function markWeeklySummaryViewed(){
-    const summary=previousWeekSummary();
-    weeklySummaryLastViewed=summary.start;
+    const summary=weeklyRecapShownSummary||previousWeekSummary();
+    if(!weeklySummaryLastViewed||summary.start>weeklySummaryLastViewed) weeklySummaryLastViewed=summary.start;
     weeklySummarySnoozeUntil=0;
     await persist();
   }
 
-  function closeWeeklySummary(){
+  function closeWeeklySummary(markSeen){
+    const wasOpen=!$("weeklySummaryBackdrop").classList.contains("hidden");
+    if(wasOpen&&markSeen!==false) markWeeklySummaryViewed();
     $("weeklySummaryBackdrop").classList.add("hidden");
     $("weeklySummaryBackdrop").classList.remove("story-active");
     $("weeklySummaryBackdrop").setAttribute("aria-hidden","true");
@@ -17055,13 +16475,14 @@
   async function laterWeeklySummary(){
     weeklySummarySnoozeUntil=Date.now()+8*60*60*1000;
     await persist();
-    closeWeeklySummary();
+    closeWeeklySummary(false);
   }
 
   let weeklySummaryAutoTimer=null;
   function maybeShowWeeklySummary(){
     clearTimeout(weeklySummaryAutoTimer);
-    const summary=previousWeekSummary();
+    const summary=autoRecapSummary();
+    if(!summary) return; // only Sunday / Monday
 
     if(weeklySummaryLastViewed===summary.start)return;
     if(weeklySummarySnoozeUntil>Date.now())return;
@@ -17081,7 +16502,7 @@
       return;
     }
 
-    weeklySummaryAutoTimer=setTimeout(()=>openWeeklySummaryPrompt(false),650);
+    weeklySummaryAutoTimer=setTimeout(()=>openWeeklySummaryPrompt(false,summary),650);
   }
 
   $("weeklySummaryViewBtn").addEventListener("click",viewWeeklySummary);
@@ -17369,7 +16790,7 @@
     $("fanPct").textContent = Math.round(pct*100)+"%";
     $("fanGoal").textContent = activeItem ? ("of "+fmtMoney(activeItem.goal,0)) : "no item selected";
     const spinDuration = Math.max(1.6, 8 - pct*6.2);
-    $("fanBlades").style.animationDuration = spinDuration+"s";
+    $("fanBlades").style.animationDuration = spinDuration+;
 
     $("figSaved").textContent = fmtMoney(stats.saved);
     $("figRemaining").textContent = !activeItem ? "—" : (isActivePurchased ? "Purchased" : remaining<=0 ? "Goal reached" : fmtMoney(remaining));
@@ -17556,4 +16977,4 @@
 })();
 </script>
 </body>
-</html>s
+</html>
