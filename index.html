@@ -16790,7 +16790,7 @@
     $("fanPct").textContent = Math.round(pct*100)+"%";
     $("fanGoal").textContent = activeItem ? ("of "+fmtMoney(activeItem.goal,0)) : "no item selected";
     const spinDuration = Math.max(1.6, 8 - pct*6.2);
-    $("fanBlades").style.animationDuration = spinDuration+;
+    $("fanBlades").style.animationDuration = spinDuration+"s";
 
     $("figSaved").textContent = fmtMoney(stats.saved);
     $("figRemaining").textContent = !activeItem ? "—" : (isActivePurchased ? "Purchased" : remaining<=0 ? "Goal reached" : fmtMoney(remaining));
