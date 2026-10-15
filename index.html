@@ -8022,6 +8022,358 @@
   .milestone-toast, .achievement-toast { transition:none !important; animation:none !important; }
 }
 </style>
+<style id="lumin-revamp">
+/* ================================================================
+   LUMIN UI REVAMP · 2026.10.14
+   One cohesive layer on top of the existing styles. Everything is
+   built from the theme variables, so every theme and the light/dark
+   appearance modes keep working.
+   ================================================================ */
+:root{
+  --rv-r-sm:10px;
+  --rv-r-md:14px;
+  --rv-r-lg:18px;
+  --rv-shadow:0 1px 0 color-mix(in srgb,var(--white) 5%,transparent) inset,0 14px 34px -22px rgba(0,0,0,.7);
+  --rv-shadow-lift:0 1px 0 color-mix(in srgb,var(--white) 6%,transparent) inset,0 18px 40px -20px rgba(0,0,0,.75);
+  --rv-ease:cubic-bezier(.2,.8,.2,1);
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  line-height:1.5;
+}
+h1,h2,h3,h4{letter-spacing:-.012em;}
+/* tabular figures everywhere money lives, so columns and counters don't jitter */
+.chip-value,.range-summary-value,.weekly-recap-mini strong,.game-total-xp,.hpi-bar-caption,
+.mission-inline-progress-text,.mission-inline-reward,.item-progress-text,.item-price,
+.budget-card strong,.calendar-event-row strong{font-variant-numeric:tabular-nums;}
+
+/* ---------- surfaces ---------- */
+.panel,.section.panel,.modal,.record-card,.settings-card,.settings-group,.budget-card,
+.calendar-main-card,.calendar-side > *{
+  border-radius:var(--rv-r-lg);
+  border-color:var(--line);
+  box-shadow:var(--rv-shadow);
+}
+.modal{border-color:var(--line-strong);box-shadow:0 30px 80px -30px rgba(0,0,0,.85),0 1px 0 color-mix(in srgb,var(--white) 6%,transparent) inset;}
+/* the little quarter-circle blobs in the corner of stat cards were visual noise */
+.range-summary-card::after,.stats-ribbon > *::after,.chip::after{content:none !important;display:none !important;}
+.range-summary-card,.chip,.weekly-recap-mini,.hpi-media{border-radius:var(--rv-r-md);}
+.range-summary-card,.chip{
+  border-color:var(--line);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--white) 3.2%,transparent),color-mix(in srgb,var(--white) 1%,transparent)),var(--panel);
+}
+
+/* ---------- type scale ---------- */
+.dashboard-section-eyebrow,.home-widget-eyebrow,.panel-label{letter-spacing:.14em;font-size:11px;font-weight:700;}
+.dashboard-section-title,.home-widget-toolbar-title{font-size:20px;font-weight:700;letter-spacing:-.02em;}
+.chip-label,.range-summary-label,.weekly-recap-mini span{font-size:11px;letter-spacing:.09em;font-weight:650;color:var(--muted);}
+.chip-value{font-size:24px;font-weight:700;letter-spacing:-.02em;}
+.range-summary-value{font-size:20px;font-weight:700;letter-spacing:-.02em;}
+.home-widget-link,.game-streak-calendar-hint{font-size:12px;font-weight:600;}
+.projection-banner{border-radius:var(--rv-r-md);font-size:14.5px;line-height:1.55;}
+.projection-note{font-size:12px;}
+
+/* ---------- buttons ---------- */
+.btn{
+  min-height:40px;padding:9px 16px;border-radius:12px;
+  font-size:13.5px;font-weight:650;letter-spacing:.005em;
+}
+.btn-primary{
+  box-shadow:0 8px 20px -10px color-mix(in srgb,var(--accent) 70%,transparent),0 1px 0 rgba(255,255,255,.22) inset;
+}
+.btn-ghost{background:color-mix(in srgb,var(--white) 3%,transparent);border-color:var(--line-strong);}
+.btn-ghost:hover{background:color-mix(in srgb,var(--white) 6%,transparent);}
+
+/* ---------- segmented controls ---------- */
+.segmented{padding:3px;border-radius:13px;gap:2px;border-color:var(--line);background:color-mix(in srgb,var(--white) 2.5%,transparent);}
+.segmented button{min-height:34px;padding:6px 14px;border-radius:10px;font-size:13px;font-weight:650;}
+
+/* ---------- form fields ---------- */
+input[type="text"],input[type="number"],input[type="email"],input[type="password"],input[type="date"],
+input[type="time"],input[type="url"],input[type="search"],select,textarea{
+  border-radius:12px;font-size:14px;min-height:42px;
+  transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:color-mix(in srgb,var(--accent) 60%,var(--line-strong));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);
+  outline:none;
+}
+.range-toolbar{border-radius:var(--rv-r-md);}
+
+/* ---------- progress bars ---------- */
+.game-xp-track,.hpi-bar,.mission-inline-progress-track,.item-progress-track,.progress-track{border-radius:99px;}
+.game-xp-track,.hpi-bar{height:8px;}
+
+/* ---------- sidebar (desktop) ---------- */
+@media (min-width:821px){
+  .app-sidebar{border-radius:20px;box-shadow:var(--rv-shadow-lift);}
+  .app-nav-btn{
+    min-height:46px;gap:12px;padding:10px 14px;border-radius:12px;
+    font-size:14px;font-weight:600;letter-spacing:0;
+  }
+  .app-nav-btn svg{width:18px;height:18px;}
+  .app-nav-btn.active{font-weight:700;}
+  .app-nav-label{font-size:11px;letter-spacing:.16em;}
+  .sidebar-quick-add{border-radius:14px;}
+  .sidebar-brand-copy strong,.sidebar-brand-copy b{font-size:16px;}
+  .home-widget-toolbar{margin-bottom:16px;}
+  .dashboard-hero-grid{gap:18px;}
+  .stats-ribbon{gap:12px;}
+  .stats-ribbon > .chip{padding:16px 18px 16px 20px;}
+  .game-strip{border-radius:var(--rv-r-lg);}
+}
+@media (min-width:821px) and (max-width:1100px){
+  .stats-ribbon{grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+}
+
+/* ---------- priority island ---------- */
+.home-priority-island{
+  border-radius:var(--rv-r-md);
+  border-color:color-mix(in srgb,var(--accent) 24%,var(--line));
+  background:
+    linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,transparent),transparent 62%),
+    color-mix(in srgb,var(--white) 1.5%,transparent);
+}
+.hpi-media{width:168px;height:128px;box-shadow:0 10px 24px -14px rgba(0,0,0,.8);}
+.hpi-head h3{font-size:18px;}
+.hpi-bar-caption{font-size:12px;}
+.hpi-projection{margin:0;}
+
+/* ================================================================
+   MOBILE
+   ================================================================ */
+@media (max-width:820px){
+  :root{--app-bottom-nav-height:66px;}
+  html,body{overflow-x:hidden;}
+  body{
+    padding:12px 12px calc(var(--app-bottom-nav-height) + 104px + env(safe-area-inset-bottom)) !important;
+    font-size:15px;
+  }
+
+  /* ----- bottom tab bar ----- */
+  html body #mainScreen > .app-sidebar{
+    left:10px !important;right:10px !important;
+    bottom:max(10px,env(safe-area-inset-bottom)) !important;
+    height:var(--app-bottom-nav-height) !important;max-height:var(--app-bottom-nav-height) !important;
+    padding:6px !important;
+    border-radius:22px !important;
+    border:1px solid var(--line-strong) !important;
+    background:color-mix(in srgb,var(--panel-solid) 86%,transparent) !important;
+    -webkit-backdrop-filter:blur(22px) saturate(1.4) !important;backdrop-filter:blur(22px) saturate(1.4) !important;
+    box-shadow:0 20px 44px -12px rgba(0,0,0,.7),0 1px 0 color-mix(in srgb,var(--white) 7%,transparent) inset !important;
+    overflow:visible !important;
+  }
+  html body #mainScreen > .app-sidebar .app-nav-list{
+    display:grid !important;grid-template-columns:repeat(6,minmax(0,1fr)) !important;gap:2px !important;
+    width:100% !important;min-width:0 !important;height:100%;
+  }
+  html body #mainScreen > .app-sidebar .app-nav-btn{
+    min-height:0 !important;height:100% !important;padding:4px 1px !important;gap:3px !important;
+    border-radius:16px !important;border:0 !important;background:transparent !important;box-shadow:none !important;
+    flex-direction:column !important;justify-content:center !important;align-items:center !important;
+    font-size:10.5px !important;font-weight:650 !important;letter-spacing:0 !important;line-height:1.1 !important;
+    color:var(--muted) !important;
+  }
+  html body #mainScreen > .app-sidebar .app-nav-btn::before,
+  html body #mainScreen > .app-sidebar .app-nav-btn::after{display:none !important;}
+  html body #mainScreen > .app-sidebar .app-nav-btn svg{width:21px !important;height:21px !important;flex:0 0 21px !important;}
+  html body #mainScreen > .app-sidebar .app-nav-btn span{font-size:10.5px !important;overflow:visible !important;text-overflow:clip !important;}
+  html body #mainScreen > .app-sidebar .app-nav-btn.active{
+    color:var(--white) !important;
+    background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 22%,transparent),color-mix(in srgb,var(--accent) 10%,transparent)) !important;
+    box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 28%,transparent) inset !important;
+  }
+  html body #mainScreen > .app-sidebar .app-nav-btn.active svg{color:var(--accent-soft) !important;}
+  /* quick add floating button */
+  html body #mainScreen > .app-sidebar .sidebar-quick-add{
+    right:2px !important;bottom:calc(100% + 14px) !important;
+    width:54px !important;height:54px !important;min-width:54px !important;min-height:54px !important;
+    border-radius:18px !important;border:0 !important;
+    background:linear-gradient(145deg,var(--accent-soft),var(--accent)) !important;
+    box-shadow:0 14px 30px -8px color-mix(in srgb,var(--accent) 65%,transparent),0 1px 0 rgba(255,255,255,.35) inset !important;
+  }
+  html body #mainScreen > .app-sidebar .sidebar-quick-add-icon{
+    width:100% !important;height:100% !important;background:transparent !important;border:0 !important;
+    color:var(--priority-ink,#0a0a0a) !important;font-size:28px !important;font-weight:500 !important;
+  }
+
+  /* ----- page header / toolbar ----- */
+  .home-widget-toolbar{
+    display:grid !important;grid-template-columns:1fr !important;gap:12px;margin:4px 0 14px;padding:0 2px 14px;
+  }
+  .home-widget-toolbar-title{font-size:26px;white-space:normal;}
+  .home-toolbar-actions{display:grid !important;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
+  .home-toolbar-actions .btn{min-height:44px;width:100%;justify-content:center;padding:0 12px;font-size:13.5px;white-space:nowrap;}
+  #mainScreen > .sync-banner.show{background:var(--panel-solid);box-shadow:0 18px 40px -16px rgba(0,0,0,.8);border-radius:14px;top:max(10px,env(safe-area-inset-top));}
+  .feature-page-head h2{font-size:22px !important;}
+  .feature-page-head p{font-size:13px !important;}
+
+  /* ----- general cards ----- */
+  .panel,.section.panel{padding:16px !important;border-radius:var(--rv-r-lg);}
+  .dashboard-hero-grid{display:grid !important;grid-template-columns:1fr !important;gap:14px !important;}
+
+  /* chart panel controls */
+  .dashboard-chart-first .panel-header-row{flex-direction:column;align-items:stretch;gap:12px;}
+  .chart-header-controls{display:grid !important;grid-template-columns:1fr;gap:8px;width:100%;}
+  .chart-header-controls .segmented{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;width:100%;}
+  .chart-header-controls .segmented button{padding:6px 4px;min-height:38px;font-size:14px;}
+  .range-toolbar{padding:10px 12px !important;display:flex;align-items:center;gap:10px;}
+  .range-toolbar > label{flex:1;min-width:0;font-size:12.5px !important;}
+  .range-toolbar select{flex:1;min-width:0;}
+  .range-summary{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8px !important;}
+  .range-summary-card{padding:12px 14px !important;min-width:0;}
+  .range-summary-card:last-child{grid-column:1 / -1 !important;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .range-summary-label{font-size:10.5px !important;letter-spacing:.08em;white-space:nowrap;}
+  .range-summary-value{font-size:clamp(16px,5vw,20px) !important;white-space:nowrap;margin-top:3px;}
+  .range-summary-card:last-child .range-summary-value{margin-top:0;}
+  .bars-row{min-height:150px;}
+
+  /* priority island: compact thumbnail layout */
+  .home-priority-island{
+    display:grid !important;grid-template-columns:76px minmax(0,1fr) !important;
+    gap:10px 14px !important;padding:14px !important;align-items:center;min-height:0;margin-top:14px;
+  }
+  .hpi-body{display:contents !important;}
+  .hpi-media{grid-column:1;grid-row:1 / span 2;width:76px !important;height:76px !important;border-radius:14px;}
+  .hpi-head{grid-column:2;grid-row:1;align-self:end;flex-direction:column;gap:2px;}
+  .hpi-head .home-widget-link{position:absolute;top:12px;right:14px;}
+  .hpi-head h3{font-size:16px;padding-right:76px;}
+  .hpi-progress{grid-column:2;grid-row:2;align-self:start;}
+  .hpi-projection{grid-column:1 / -1;padding:12px 14px !important;}
+  .hpi-projection .projection-copy{font-size:14px;line-height:1.55;}
+
+  /* XP / streak / missions card */
+  .game-strip{padding:16px !important;gap:12px !important;}
+  .game-checkin-btn{min-height:42px;font-size:14px;}
+  .game-missions-inline-title{font-size:15px;}
+  .mission-inline-name{font-size:14px !important;}
+  .mission-inline-reward,.mission-inline-progress-text,.game-xp-caption{font-size:11.5px !important;}
+  .game-missions-inline [class*="status"],.game-missions-inline .btn,.game-missions-inline button{font-size:12px !important;}
+  .game-missions-inline button{min-height:38px;}
+
+  /* stats ribbon: tidy two-up grid, odd one spans */
+  .stats-ribbon{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px !important;}
+  .stats-ribbon > .chip{padding:13px 14px 13px 16px !important;min-width:0;}
+  .stats-ribbon > .chip:last-child:nth-child(odd){grid-column:1 / -1;}
+  .chip-label{font-size:10.5px !important;}
+  .chip-value{font-size:clamp(17px,5.4vw,22px) !important;}
+
+  /* widgets */
+  .home-widget-link{min-height:32px;display:inline-flex;align-items:center;}
+  .weekly-recap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .weekly-recap-mini{padding:11px 12px;}
+  .weekly-recap-mini strong{font-size:15px;}
+
+  /* goals shelf: real grid instead of a clipped scroller */
+  .items-shelf{display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:10px !important;overflow:visible !important;}
+  .items-shelf > *{width:auto !important;min-width:0 !important;max-width:none !important;flex:none !important;}
+  .dashboard-goal-actions{display:grid !important;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
+  .dashboard-goal-actions .btn{width:100%;justify-content:center;}
+  .goals-heading{flex-direction:column;align-items:stretch;gap:12px;}
+
+  /* readable calendar */
+  .calendar-legend{font-size:11px !important;gap:10px !important;}
+  .calendar-weekdays{font-size:11px !important;}
+  .calendar-month-title{font-size:18px !important;}
+  .calendar-month-sub{font-size:12px !important;}
+
+  /* forms: 16px stops iOS zooming into fields; 44px is a proper tap target */
+  input[type="text"],input[type="number"],input[type="email"],input[type="password"],input[type="date"],
+  input[type="time"],input[type="url"],input[type="search"],select,textarea{font-size:16px !important;min-height:46px;}
+  .btn{min-height:44px;}
+  .field label,.field > span{font-size:12px;}
+
+  /* modals become bottom sheets */
+  .modal-backdrop{align-items:flex-end !important;justify-content:center !important;padding:0 !important;}
+  .modal-backdrop > .modal{
+    width:100% !important;max-width:none !important;
+    max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;
+    border-radius:24px 24px 0 0 !important;
+    padding:22px 18px calc(22px + env(safe-area-inset-bottom)) !important;
+    animation:rvSheetUp .3s var(--rv-ease) both;
+  }
+  .modal-backdrop > .modal::before{
+    content:"";display:block;width:40px;height:4px;border-radius:99px;margin:-8px auto 14px;
+    background:var(--line-strong);
+  }
+  .modal-title{font-size:20px;}
+  .changelog-list li,.changelog-entry li{font-size:14px;}
+  .changelog-entry-title{font-size:14px;}
+  .changelog-actions .btn{width:100%;justify-content:center;}
+  .offline-toast{bottom:calc(var(--app-bottom-nav-height) + 24px + env(safe-area-inset-bottom)) !important;}
+}
+@keyframes rvSheetUp{from{transform:translateY(24px);opacity:0;}to{transform:none;opacity:1;}}
+
+@media (max-width:360px){
+  html body #mainScreen > .app-sidebar .app-nav-btn,
+  html body #mainScreen > .app-sidebar .app-nav-btn span{font-size:9.5px !important;}
+  .stats-ribbon > .chip{padding:11px 12px 11px 14px !important;}
+}
+@media (max-width:820px) and (min-width:560px){
+  .items-shelf{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+  .stats-ribbon{grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+  .stats-ribbon > .chip:last-child:nth-child(odd){grid-column:auto;}
+}
+
+/* ---------- polish pass 2 ---------- */
+.home-mini-widget::after,.home-mini-widget::before,.weekly-recap-widget::after{content:none !important;display:none !important;}
+.home-mini-widget{padding:18px 20px;}
+.home-mini-widget .dashboard-section-title,.home-mini-widget h2,.home-mini-widget h3{font-size:18px;}
+.weekly-recap-mini{border:1px solid var(--line);background:color-mix(in srgb,var(--white) 2%,transparent);}
+.weekly-recap-mini span{font-size:11px !important;}
+.weekly-recap-mini strong{font-size:17px;}
+.product-img-wrap{border-radius:var(--rv-r-md);overflow:hidden;}
+@media (max-width:820px){
+  .home-mini-widget{padding:16px !important;}
+  .product-img-wrap{max-height:210px;}
+  .product-img-wrap .product-img{max-height:210px;object-fit:contain;}
+  .range-summary-card:last-child .range-summary-label{margin:0 !important;}
+  .theme-card{padding-right:12px;}
+  .theme-card [class*="name"],.theme-card strong{white-space:normal;overflow-wrap:anywhere;font-size:14px;line-height:1.25;}
+  .theme-card [class*="check"],.theme-card .theme-selected-mark{flex:0 0 auto;position:static !important;}
+  .budget-pulse-row,.home-mini-widget [class*="row"]{font-size:13.5px;}
+}
+
+/* ---------- polish pass 3 (desktop rhythm) ---------- */
+.home-priority-island{grid-template-columns:168px minmax(0,1fr);}
+.bars-row{margin-top:14px;}
+.stats-ribbon{max-width:none !important;width:100%;}
+.stats-ribbon > .chip{min-width:0;}
+.chip-label{white-space:normal;line-height:1.3;}
+.game-strip .mission-inline-name{font-size:13.5px;font-weight:650;}
+.game-strip .mission-inline-reward{font-size:11px;font-weight:700;}
+.game-strip .mission-inline-progress-text,.game-strip .game-xp-caption,.game-total-xp{font-size:11.5px;}
+.game-strip [class*="status"],.game-strip .game-missions-inline button{font-size:11.5px;}
+.game-rank{font-size:22px;letter-spacing:-.02em;}
+.game-streak-label{font-size:12px;}
+.game-freeze-copy,.game-freeze-btn{font-size:13px;}
+.stats-ribbon .chip-value,.stats-ribbon > .chip .chip-value{font-size:22px;font-weight:700;letter-spacing:-.02em;}
+@media (max-width:820px){.stats-ribbon .chip-value{font-size:clamp(17px,5.4vw,21px) !important;}}
+
+/* ---------- weekly recap on phones ---------- */
+#weeklySummaryBackdrop .weekly-recap-intro.hidden,
+#weeklySummaryBackdrop .weekly-recap-story.hidden{display:none !important;}
+@media (max-width:620px){
+  html body #weeklySummaryBackdrop .weekly-recap-shell{max-width:100% !important;width:100% !important;border-radius:0 !important;}
+  #weeklySummaryBackdrop .weekly-recap-topbar{padding-top:max(14px,env(safe-area-inset-top)) !important;}
+  #weeklySummaryBackdrop .weekly-recap-intro-actions{display:grid !important;grid-template-columns:1fr 1.4fr;gap:10px;width:100%;}
+  #weeklySummaryBackdrop .weekly-recap-intro-actions .btn{min-height:50px;font-size:15px;justify-content:center;}
+  #weeklySummaryBackdrop .weekly-recap-nav,
+  #weeklySummaryBackdrop .weekly-recap-story-nav{position:sticky;bottom:0;}
+  #weeklySummaryBackdrop #weeklyRecapBackBtn,#weeklySummaryBackdrop #weeklyRecapNextBtn{min-height:50px;font-size:15px;}
+  #weeklySummaryBackdrop #weeklyRecapSlideValue{font-size:clamp(44px,15vw,64px) !important;}
+  #weeklySummaryBackdrop #weeklyRecapSlideTitle{font-size:clamp(20px,6vw,26px) !important;}
+  #weeklySummaryBackdrop #weeklyRecapSlideCopy{font-size:15px !important;line-height:1.55;}
+}
+@media (prefers-reduced-motion:reduce){
+  .modal-backdrop > .modal{animation:none !important;}
+}
+</style>
+
 
 </head>
 <body>
@@ -9622,13 +9974,16 @@
   const CHANGELOG = [
     {
       version: "2026.10.14.1",
-      title: "Priority goal on Home + weekly recap fix",
+      title: "UI revamp, mobile redesign + priority goal on Home",
       date: "14 October 2026",
       changes: [
+        "Refreshed the whole UI: softer surfaces, consistent rounded corners, cleaner buttons, tabs and form fields, larger readable text, and tabular numbers for money.",
+        "Rebuilt the mobile layout: a proper bottom tab bar with readable labels, a floating Quick Add button, a compact priority goal card, tidy stat grids, and goals shown in a clean grid.",
+        "On phones, pop-ups now open as bottom sheets, form fields no longer trigger zoom on iOS, and tap targets are bigger.",
         "Added a priority goal island to the Home graph panel with the goal's photo, name, progress bar and saved amount.",
         "The \u201cAt this rate, you\u2019ll be able to get this in\u2026\u201d countdown now lives in that island instead of under the graph, and always follows your priority goal. The Goals page stays clean.",
         "Removed the dead space under the earnings graph on Home.",
-        "Fixed the weekly recap popping up again and again: it now only appears automatically on Sunday or Monday, once per week.",
+        "Fixed the weekly recap popping up again and again: it now only appears automatically on Monday (the start of the new week), once per week.",
         "Closing the recap (X, Esc or clicking outside) now counts as seen. \u201cLater\u201d still snoozes it for a few hours. You can always open it from Home or Settings."
       ]
     },
@@ -11637,6 +11992,7 @@
     focusMode = parsed.focusMode===true;
     weeklySummaryLastViewed = /^\d{4}-\d{2}-\d{2}$/.test(parsed.weeklySummaryLastViewed||"") ? parsed.weeklySummaryLastViewed : "";
     weeklySummarySnoozeUntil = Math.max(0,Number(parsed.weeklySummarySnoozeUntil)||0);
+    changelogSeenVersion = typeof parsed.changelogSeenVersion==="string" ? parsed.changelogSeenVersion : "";
     const allowedWidgets=["overview","stats","weekly","budgets","schedule"];
     homeWidgetOrder = Array.isArray(parsed.homeWidgetOrder) ? parsed.homeWidgetOrder.filter(v=>allowedWidgets.includes(v)) : [];
     allowedWidgets.forEach(v=>{if(!homeWidgetOrder.includes(v)) homeWidgetOrder.push(v);});
@@ -12670,6 +13026,7 @@
       notificationHistory:Array.from(notificationHistory||[]).slice(-250),
       focusMode,
       weeklySummaryLastViewed,
+      changelogSeenVersion,
       weeklySummarySnoozeUntil,
       homeWidgetOrder,
       homeWidgetHidden:Array.from(homeWidgetHidden||[])
@@ -15218,13 +15575,19 @@
   }
 
   function getLastSeenChangelogVersion(){
-    try{return localStorage.getItem(CHANGELOG_SEEN_KEY)||"";}
-    catch(_){return "";}
+    let local="";
+    try{local=localStorage.getItem(CHANGELOG_SEEN_KEY)||"";}catch(_){}
+    // Seen on this device OR on any device synced to this account.
+    return (changelogSeenVersion===String(APP_VERSION)||local===String(APP_VERSION)) ? String(APP_VERSION) : (local||changelogSeenVersion||"");
   }
 
   function markCurrentChangelogSeen(){
     try{localStorage.setItem(CHANGELOG_SEEN_KEY,String(APP_VERSION));}
     catch(_){}
+    if(changelogSeenVersion!==String(APP_VERSION)){
+      changelogSeenVersion=String(APP_VERSION);
+      try{persist();}catch(_){}
+    }
   }
 
   function openChangelog(manual=false){
@@ -15233,6 +15596,7 @@
     renderChangelog();
     $("changelogBackdrop").classList.remove("hidden");
     $("changelogBackdrop").dataset.manual=manual?"1":"0";
+    if(!manual) markCurrentChangelogSeen();
     lockBodyScroll();
   }
 
@@ -16243,12 +16607,10 @@
   let weeklyRecapSlideIndex=0;
   let weeklyRecapSlides=[];
   let weeklyRecapShownSummary=null;
-  // Auto-popup window: Sunday (week ending) and Monday (new week). Both recap the same Mon-Sun week.
+  let changelogSeenVersion="";
+  // Auto-popup only on Monday (start of the new week), recapping the week that just ended.
   function autoRecapSummary(){
-    const day=new Date().getDay();
-    if(day===0) return weeklySummaryFor(mondayOfWeek());
-    if(day===1) return previousWeekSummary();
-    return null;
+    return new Date().getDay()===1 ? previousWeekSummary() : null;
   }
   let weeklyRecapTouchStartX=null;
 
