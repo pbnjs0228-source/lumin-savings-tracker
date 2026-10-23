@@ -1,0 +1,92 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------
+    // Helpers
+    // ---------------------------------------------------------------
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // Accounts that always get LUMIN Ultra. The email must be verified on the
+    // auth token, so nobody can claim it by registering the address first.
+    function isUltraEmail() {
+      return signedIn()
+        && request.auth.token.email != null
+        && request.auth.token.email.lower() == 'peyton.bailey@pgs.vic.edu.au'
+        && request.auth.token.email_verified == true;
+    }
+
+    function planPath(uid) {
+      return /databases/$(database)/documents/users/$(uid)/private/plan;
+    }
+
+    function hasUltraPlan(uid) {
+      return exists(planPath(uid)) && get(planPath(uid)).data.plan == 'ultra';
+    }
+
+    function isUltra(uid) {
+      return isUltraEmail() || hasUltraPlan(uid);
+    }
+
+    // The cloud save is one JSON string, so rules cannot count goals inside it.
+    // The app writes `itemCount` (active goals) next to the payload and the
+    // rules enforce the free-plan limit against that number.
+    function validSave() {
+      return request.resource.data.payload is string
+        && request.resource.data.payload.size() < 900000
+        && request.resource.data.itemCount is int
+        && request.resource.data.itemCount >= 0;
+    }
+
+    // ---------------------------------------------------------------
+    // Plan record: users/{uid}/private/plan
+    // ---------------------------------------------------------------
+    match /users/{uid}/private/plan {
+      allow read: if isOwner(uid);
+
+      // DEMO ONLY: the fake checkout lets the signed-in user write their own
+      // plan record. Before taking real payments, replace this with
+      //   allow write: if false;
+      // and write the document from a server (Stripe webhook + Admin SDK).
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['plan', 'since', 'demo', 'updatedAt'])
+        && request.resource.data.plan in ['free', 'ultra'];
+
+      allow delete: if false;
+    }
+
+    // ---------------------------------------------------------------
+    // Cloud save: users/{uid}/private/tracker
+    // ---------------------------------------------------------------
+    match /users/{uid}/private/tracker {
+      allow read: if isOwner(uid);
+
+      // Free plan: up to 5 active goals. Ultra: unlimited.
+      allow create: if isOwner(uid)
+        && validSave()
+        && (request.resource.data.itemCount <= 5 || isUltra(uid));
+
+      // Accounts that already had more than 5 goals keep working, they just
+      // cannot add more until they upgrade.
+      allow update: if isOwner(uid)
+        && validSave()
+        && (request.resource.data.itemCount <= 5
+            || isUltra(uid)
+            || request.resource.data.itemCount <= resource.data.get('itemCount', 0));
+
+      allow delete: if isOwner(uid);
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
