@@ -10155,7 +10155,8 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
         <div class="calendar-event-detail-warning hidden" id="calendarEventLoggedWarning">This shift has already been logged as earnings. Rescheduling the calendar event will not rewrite that historical earnings entry.</div>
 
         <div class="calendar-event-detail-actions">
-          <button type="button" class="btn btn-danger-ghost" id="calendarEventDetailDeleteBtn">Delete</button>
+          <button type="button" class="btn btn-danger-ghost" id="calendarEventDetailDeleteBtn">Delete event</button>
+          <button type="button" class="btn btn-danger-ghost hidden" id="calendarEventDetailDeleteAllBtn">Delete all instances</button>
           <div class="calendar-event-detail-actions-right">
             <button type="button" class="btn btn-ghost hidden" id="calendarEventDetailLogBtn">Log worked</button>
             <button type="button" class="btn btn-primary" id="calendarEventDetailEditBtn">Edit / Reschedule</button>
@@ -17238,6 +17239,10 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     $("calendarEventDetailNotes").textContent=ev.notes||"No notes added.";
     $("calendarEventLoggedWarning").classList.toggle("hidden",!(ev.type==="shift"&&ev.logged));
     $("calendarEventDetailLogBtn").classList.toggle("hidden",!(ev.type==="shift"&&!ev.logged));
+    const related=calendarEvents.filter(item=>(item.seriesId||item.id)===(ev.seriesId||ev.id));
+    const repeating=related.length>1 || (ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none");
+    $("calendarEventDetailDeleteBtn").textContent=repeating?"Delete this instance":"Delete event";
+    $("calendarEventDetailDeleteAllBtn").classList.toggle("hidden",!repeating);
   }
 
   function openCalendarEventDetail(id){
@@ -17324,28 +17329,29 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     return true;
   }
 
-  async function deleteCalendarEventById(id,{closeDetail=false}={}){
+  async function deleteCalendarEventById(id,{closeDetail=false,allInstances=false}={}){
     const ev=calendarEventById(id);
     if(!ev)return;
     if(ev.source==="subscription"){ showOfflineToast("Subscription payments are managed below the calendar."); return; }
     const seriesId=ev.seriesId||ev.id;
-    const isRecurring=calendarEvents.filter(item=>(item.seriesId||item.id)===seriesId).length>1 || (ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none");
-    if(isRecurring){
-      const ok=window.confirm(`Delete all occurrences of “${ev.title}” from the calendar?`);
-      if(!ok)return;
-    }
-    const removed=calendarEvents.filter(item=>(item.seriesId||item.id)===seriesId);
+    const related=calendarEvents.filter(item=>(item.seriesId||item.id)===seriesId);
+    const isRecurring=related.length>1 || (ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none");
+    if(allInstances && isRecurring && !window.confirm(`Delete all ${related.length} instances of “${ev.title}”? This cannot be undone.`))return;
+    const removed=allInstances?related:[ev];
+    const removedIds=new Set(removed.map(item=>item.id));
     const wasLoggedShift=removed.some(item=>item.type==="shift"&&item.logged);
-    calendarEvents=calendarEvents.filter(item=>(item.seriesId||item.id)!==seriesId);
-    if(calendarDetailEventId===id)calendarDetailEventId=null;
+    calendarEvents=calendarEvents.filter(item=>!removedIds.has(item.id));
+    if(calendarDetailEventId && removedIds.has(calendarDetailEventId))calendarDetailEventId=null;
     await persist();
     render();
     if(closeDetail)closeCalendarEventDetail();
-    showOfflineToast(isRecurring
-      ? `Repeating event deleted (${removed.length} occurrence${removed.length===1?"":"s"}).${wasLoggedShift?" Logged earnings were kept in Activity.":""}`
-      : wasLoggedShift
-        ? "Calendar event deleted. Its logged earnings were kept in Activity."
-        : "Calendar event deleted.");
+    showOfflineToast(allInstances && isRecurring
+      ? `Deleted all ${removed.length} instances.${wasLoggedShift?" Logged earnings were kept in Activity.":""}`
+      : isRecurring
+        ? `Deleted only this occurrence. Other repeats remain.${wasLoggedShift?" Logged earnings were kept in Activity.":""}`
+        : wasLoggedShift
+          ? "Calendar event deleted. Its logged earnings were kept in Activity."
+          : "Calendar event deleted.");
   }
 
   $("calendarEventDetailCloseBtn").addEventListener("click",closeCalendarEventDetail);
@@ -17358,6 +17364,10 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
   $("calendarEventDetailDeleteBtn").addEventListener("click",async()=>{
     const id=calendarDetailEventId;
     if(id)await deleteCalendarEventById(id,{closeDetail:true});
+  });
+  $("calendarEventDetailDeleteAllBtn").addEventListener("click",async()=>{
+    const id=calendarDetailEventId;
+    if(id)await deleteCalendarEventById(id,{closeDetail:true,allInstances:true});
   });
   $("calendarEventDetailLogBtn").addEventListener("click",async()=>{
     const id=calendarDetailEventId;
@@ -17469,7 +17479,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     list.innerHTML=events.map(ev=>{
       const hrs=eventHours(ev),pay=ev.type==="shift"&&rate>0?` · ~${fmtMoney(hrs*rate)}`:"",logged=ev.type==="shift"&&ev.logged?" · logged":"";
       const action=ev.type==="shift"&&!ev.logged?`<button type="button" class="log-shift" data-log-shift="${escapeHtml(ev.id)}">Log worked</button>`:"";
-      return `<div class="calendar-event-row ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}" aria-label="${(ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none")?"Delete repeating event":"Delete event"}" title="${(ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none")?"Delete all repetitions":"Delete event"}">×</button></div></div>`;
+      return `<div class="calendar-event-row ${ev.type}" data-calendar-event="${escapeHtml(ev.id)}" role="button" tabindex="0" aria-label="View ${escapeHtml(ev.title)} details"><span class="calendar-event-accent"></span><div><div class="calendar-event-title">${escapeHtml(ev.title)}</div><div class="calendar-event-meta">${formatTime12(ev.start)}–${formatTime12(ev.end)} · ${eventTypeLabel(ev.type)}${pay}${logged}${ev.notes?`<br>${escapeHtml(ev.notes)}`:""}</div></div><div class="calendar-event-actions">${action}<button type="button" data-delete-calendar="${escapeHtml(ev.id)}" aria-label="Delete this occurrence" title="Delete this occurrence">×</button>${calendarEvents.some(item=>item.id===ev.id)&& (calendarEvents.filter(item=>(item.seriesId||item.id)===(ev.seriesId||ev.id)).length>1 || (ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none"))?`<button type="button" data-delete-series="${escapeHtml(ev.id)}" title="Delete all instances" aria-label="Delete all instances">Delete all instances</button>`:""}</div></div>`;
     }).join("");
   }
 
@@ -17526,6 +17536,12 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     if(del){
       e.stopPropagation();
       await deleteCalendarEventById(del.dataset.deleteCalendar);
+      return;
+    }
+    const seriesDel=e.target.closest("[data-delete-series]");
+    if(seriesDel){
+      e.stopPropagation();
+      await deleteCalendarEventById(seriesDel.dataset.deleteSeries,{allInstances:true});
       return;
     }
     const log=e.target.closest("[data-log-shift]");
