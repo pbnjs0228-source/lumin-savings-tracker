@@ -7522,6 +7522,47 @@
 
 
   .calendar-repeat-box{padding:11px;border:1px solid var(--line);border-radius:11px;background:var(--panel-solid);display:flex;flex-direction:column;gap:10px;} .calendar-repeat-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;} .calendar-repeat-days{display:flex;gap:5px;flex-wrap:wrap;} .calendar-repeat-day{position:relative;} .calendar-repeat-day input{position:absolute;opacity:0;pointer-events:none;} .calendar-repeat-day span{display:flex;align-items:center;justify-content:center;min-width:34px;height:32px;padding:0 7px;border:1px solid var(--line-strong);border-radius:8px;color:var(--muted);font-size:10px;font-weight:750;cursor:pointer;} .calendar-repeat-day input:checked+span{background:color-mix(in srgb,var(--accent) 15%,transparent);border-color:var(--accent-soft);color:var(--white);} .subscription-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;} .subscription-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--panel-solid);} .subscription-main{min-width:0;} .subscription-name{font-weight:700;font-size:12px;color:var(--white);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .subscription-meta{font-size:10px;color:var(--muted);margin-top:3px;} .subscription-price{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-soft);white-space:nowrap;} .subscription-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;} .subscription-actions .btn{padding:6px 8px;font-size:10px;} .subscription-inactive{opacity:.55;} .calendar-subscription-badge{display:inline-flex;margin-top:5px;padding:3px 6px;border-radius:6px;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent-soft);font-size:9px;font-weight:750;} @media(max-width:620px){.calendar-repeat-row{grid-template-columns:1fr}.subscription-row{grid-template-columns:minmax(0,1fr) auto}.subscription-actions{grid-column:1/-1;justify-content:flex-start}}
+
+/* LUMIN refined streak and preferences experience */
+.streak-calendar-modal{border-radius:28px !important;overflow:hidden;}
+.streak-calendar-shell{border-radius:23px !important;padding:15px !important;}
+.streak-calendar-stats{gap:10px !important;}
+.streak-calendar-stat{border-radius:20px !important;padding:14px 12px !important;}
+.streak-calendar-nav{border-radius:15px !important;min-height:38px;min-width:38px;}
+.streak-calendar-today{border-radius:99px !important;padding:7px 12px !important;}
+.streak-calendar-grid{gap:7px !important;padding:8px 0 12px !important;}
+.streak-calendar-day{border-radius:17px !important;min-height:46px !important;gap:5px !important;background:color-mix(in srgb,var(--panel-solid) 76%,transparent);border:1px solid var(--line) !important;}
+.streak-calendar-day-mark{border-radius:50% !important;width:30px !important;height:30px !important;font-size:15px !important;transition:transform .2s ease,filter .2s ease,box-shadow .2s ease !important;}
+.streak-calendar-day:hover:not(.outside):not(.future){transform:translateY(-3px) scale(1.035) !important;background:color-mix(in srgb,var(--accent) 12%,var(--panel-solid)) !important;box-shadow:0 8px 19px rgba(0,0,0,.13) !important;}
+.streak-calendar-day:hover .streak-calendar-day-mark{transform:scale(1.13) rotate(-5deg);}
+.streak-calendar-day:active{transform:scale(.95) !important;}
+.streak-calendar-day:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+.streak-calendar-day.selected{border:2px solid var(--accent) !important;background:color-mix(in srgb,var(--accent) 12%,var(--panel-solid)) !important;}
+.streak-calendar-day.today::after{width:6px !important;height:6px !important;bottom:3px !important;}
+.streak-calendar-detail{border-radius:20px !important;}
+.streak-calendar-detail-icon{border-radius:16px !important;}
+.game-streak-calendar-launch{border-radius:20px !important;transition:transform .2s ease,box-shadow .2s ease !important;}
+.game-streak-calendar-launch:hover{transform:translateY(-3px);box-shadow:0 12px 28px color-mix(in srgb,var(--accent) 16%,transparent);}
+.settings-page .settings-title{font-size:clamp(24px,3vw,32px) !important;letter-spacing:-.035em;}
+.settings-page .settings-subtitle{font-size:13px !important;line-height:1.6 !important;}
+.settings-page .settings-group{scroll-margin-top:95px;}
+.settings-page .settings-group-heading h3{font-size:18px !important;line-height:1.3 !important;}
+.settings-page .settings-group-heading p{font-size:12px !important;line-height:1.6 !important;}
+.settings-page .settings-card{border-radius:21px !important;padding:clamp(14px,2vw,22px) !important;}
+.settings-page .settings-card-title{font-size:14px !important;line-height:1.4 !important;}
+.settings-page .settings-card-desc{font-size:12px !important;line-height:1.65 !important;}
+.settings-page .settings-card-icon{border-radius:15px !important;min-width:38px;min-height:38px;display:inline-grid;place-items:center;font-size:18px !important;}
+.settings-page .settings-card-header{gap:13px !important;align-items:center;}
+.settings-page .settings-group-grid{gap:15px !important;}
+.lumin-settings-jump{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px;margin:4px 0 23px;border:1px solid var(--line);border-radius:19px;background:var(--panel-solid);}
+.lumin-settings-jump-label{font-size:11px;font-weight:700;color:var(--muted);margin:0 7px;}
+.lumin-settings-jump a{color:var(--white);font-size:12px;font-weight:650;padding:10px 13px;border:1px solid var(--line);border-radius:13px;background:var(--panel-raised);text-decoration:none;transition:transform .15s ease,background .15s ease,border-color .15s ease;}
+.lumin-settings-jump a:hover,.lumin-settings-jump a:focus-visible{background:color-mix(in srgb,var(--accent) 13%,var(--panel-raised));border-color:var(--accent);transform:translateY(-2px);}
+.settings-theme-picker .swatch.theme-option{border-radius:17px !important;transition:transform .18s ease,box-shadow .18s ease !important;}
+.settings-theme-picker .swatch.theme-option:hover{transform:translateY(-3px) !important;box-shadow:0 8px 22px rgba(0,0,0,.13) !important;}
+.settings-theme-picker .theme-preview{border-radius:13px !important;}
+@media(max-width:600px){.streak-calendar-grid{gap:3px !important}.streak-calendar-day{border-radius:12px !important;min-height:40px !important;padding:2px !important}.streak-calendar-day-mark{width:24px !important;height:24px !important;font-size:12px !important}.lumin-settings-jump{gap:6px;padding:10px}.lumin-settings-jump a{font-size:11px;padding:9px 10px}.settings-page .settings-card{padding:15px !important}}
+@media(prefers-reduced-motion:reduce){.streak-calendar-day,.streak-calendar-day-mark,.game-streak-calendar-launch,.lumin-settings-jump a{transition:none !important;}}
 </style>
 
 <style id="lumin-final-mobile-layout-fix">
@@ -8857,7 +8898,6 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
         <svg class="brand-mark" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="var(--accent)"/><g stroke="var(--accent-soft)" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/></g></svg>
         <span class="brand-word">LUMIN</span>
       </div>
-      <div class="theme-picker" id="themePickerSetup"></div>
     </div>
     <h1 class="title" style="font-size:22px;" id="setupTitle">Set up your <span>wallet</span></h1>
     <p class="subtitle" style="margin-bottom:20px;">Enter your balance. Add an hourly rate if you want LUMIN to calculate earnings from hours, or leave it blank and log money earned directly.</p>
@@ -9464,6 +9504,14 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
         </div>
       </div>
 
+      <nav class="lumin-settings-jump" aria-label="Settings sections">
+        <span class="lumin-settings-jump-label">Jump to</span>
+        <a href="#settingsPlanGroup">✧ Plan</a>
+        <a href="#settingsAppearanceGroup">◐ Appearance</a>
+        <a href="#settingsPreferencesGroup">⚙ Preferences</a>
+        <a href="#settingsToolsGroup">▦ Tools</a>
+        <a href="#settingsAccountGroup">♙ Account</a>
+      </nav>
       <div class="settings-stack">
         <section class="settings-group" id="settingsPlanGroup">
           <div class="settings-group-heading">
@@ -9490,7 +9538,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
             </section>
           </div>
         </section>
-        <section class="settings-group">
+        <section class="settings-group" id="settingsAppearanceGroup">
           <div class="settings-group-heading">
             <div><span class="settings-group-kicker">Personalisation</span><h3>Make LUMIN yours</h3></div>
             <p>Theme and appearance preferences stay with your LUMIN setup.</p>
@@ -9567,7 +9615,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
           </div>
         </section>
 
-        <section class="settings-group">
+        <section class="settings-group" id="settingsPreferencesGroup">
           <div class="settings-group-heading">
             <div><span class="settings-group-kicker">Money</span><h3>Wallet & automation</h3></div>
             <p>Control the numbers and automatic entries that power your forecasts.</p>
@@ -9624,7 +9672,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
           </div>
         </section>
 
-        <section class="settings-group">
+        <section class="settings-group" id="settingsToolsGroup" id="settingsAccountGroup">
           <div class="settings-group-heading">
             <div><span class="settings-group-kicker">App</span><h3>Device & security</h3></div>
             <p>Offline readiness and account protection, without the clutter.</p>
@@ -10592,6 +10640,27 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
   const JPEG_QUALITY = 0.82;
 
   const THEMES = {
+    classicdark: {
+      label:"Classic Dark", swatch:"linear-gradient(145deg,#141519 0%,#1c1e23 55%,#8da4ff 56%,#7f97ca 100%)",
+      vars:{"--bg1":"#141519","--bg2":"#1c1e23","--panel":"rgba(255,255,255,.04)","--panel-solid":"#22252d","--panel-raised":"#293449","--accent":"#8da4ff","--accent-soft":"#b3c2ff","--accent2":"#7f97ca","--positive":"#83cead","--white":"#f5f6fa","--muted":"#a3a8b5","--line":"rgba(235,243,255,.12)","--line-strong":"rgba(235,243,255,.12)","--blade-a":"#1c1e23","--blade-b":"#22252d","--housing":"#1c1e23","--housing-inner":"#141519"}
+    },
+    softlight: {
+      label:"Soft Light", swatch:"linear-gradient(145deg,#f7f7fb 0%,#eeeef5 55%,#667fcb 56%,#a5b2df 100%)",
+      vars:{"--bg1":"#f7f7fb","--bg2":"#eeeef5","--panel":"rgba(255,255,255,.68)","--panel-solid":"#ffffff","--panel-raised":"#f8faf8","--accent":"#667fcb","--accent-soft":"#415ca8","--accent2":"#a5b2df","--positive":"#369477","--white":"#292d3b","--muted":"#666e80","--line":"rgba(50,60,60,.12)","--line-strong":"rgba(50,60,60,.12)","--blade-a":"#eeeef5","--blade-b":"#ffffff","--housing":"#eeeef5","--housing-inner":"#f7f7fb"}
+    },
+    cream: {
+      label:"Cream", swatch:"linear-gradient(145deg,#fbf7f0 0%,#f3ede3 55%,#b78453 56%,#d1b18e 100%)",
+      vars:{"--bg1":"#fbf7f0","--bg2":"#f3ede3","--panel":"rgba(255,255,255,.68)","--panel-solid":"#ffffff","--panel-raised":"#f8faf8","--accent":"#b78453","--accent-soft":"#936338","--accent2":"#d1b18e","--positive":"#5b987a","--white":"#342e29","--muted":"#796e63","--line":"rgba(50,60,60,.12)","--line-strong":"rgba(50,60,60,.12)","--blade-a":"#f3ede3","--blade-b":"#ffffff","--housing":"#f3ede3","--housing-inner":"#fbf7f0"}
+    },
+    sage: {
+      label:"Sage", swatch:"linear-gradient(145deg,#f1f6f1 0%,#e7eee7 55%,#558a72 56%,#a0bc9d 100%)",
+      vars:{"--bg1":"#f1f6f1","--bg2":"#e7eee7","--panel":"rgba(255,255,255,.68)","--panel-solid":"#ffffff","--panel-raised":"#f8faf8","--accent":"#558a72","--accent-soft":"#366d56","--accent2":"#a0bc9d","--positive":"#4a9874","--white":"#293b31","--muted":"#67786e","--line":"rgba(50,60,60,.12)","--line-strong":"rgba(50,60,60,.12)","--blade-a":"#e7eee7","--blade-b":"#ffffff","--housing":"#e7eee7","--housing-inner":"#f1f6f1"}
+    },
+    slate: {
+      label:"Slate Blue", swatch:"linear-gradient(145deg,#161e2b 0%,#1d2938 55%,#80aad9 56%,#6a8faa 100%)",
+      vars:{"--bg1":"#161e2b","--bg2":"#1d2938","--panel":"rgba(255,255,255,.04)","--panel-solid":"#202a39","--panel-raised":"#293449","--accent":"#80aad9","--accent-soft":"#a8c6ed","--accent2":"#6a8faa","--positive":"#75c5a2","--white":"#eef4fc","--muted":"#9baec5","--line":"rgba(235,243,255,.12)","--line-strong":"rgba(235,243,255,.12)","--blade-a":"#1d2938","--blade-b":"#202a39","--housing":"#1d2938","--housing-inner":"#161e2b"}
+    },
+
     midnight: {
       label:"Midnight",
       swatch:"linear-gradient(145deg,#191725 0%,#242039 55%,#e2846b 56%,#d7b060 100%)",
@@ -10701,7 +10770,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
       }
     }
   };
-  const THEME_ORDER = ["midnight","graphite","sunset","ocean","neon","hyperdrive","ultra","rainbow","custom"];
+  const THEME_ORDER = ["classicdark","softlight","cream","sage","slate","midnight","graphite","sunset","ocean","neon","hyperdrive","ultra","rainbow","custom"];
 
   let wallet = null;           // {balance, hourlyRate}; hourlyRate may be 0
   let items = [];              // [{id, name, goal, link, image}]
@@ -11732,7 +11801,6 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
   $("customThemeApplyBtn").addEventListener("click",async ()=>{
     customTheme=sanitizeCustomTheme(customThemeDraft);
     applyTheme("custom");
-    buildThemePicker($("themePickerSetup"));
     buildThemePicker($("themePickerMain"));
     buildBlades();
     $("customThemeBackdrop").classList.add("hidden");
@@ -13642,7 +13710,6 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     applyTheme(currentTheme);
     applyHyperdriveRain();
     applyFocusMode();
-    buildThemePicker($("themePickerSetup"));
     buildThemePicker($("themePickerMain"));
     buildAppearanceModeControl();
     buildChartTypeToggle();
@@ -15321,8 +15388,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
 
     updatePlanUsage();
     try{
-      buildThemePicker($("themePickerSetup"));
-      buildThemePicker($("themePickerMain"));
+        buildThemePicker($("themePickerMain"));
     }catch(_){}
   }
 
