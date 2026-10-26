@@ -8814,6 +8814,61 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
 
 
 
+<style id="lumin-modern-ui-2026">
+/* LUMIN 2026 · polished interface layer */
+:root{--ui-radius:20px;--ui-radius-sm:13px;--ui-shadow:0 12px 36px rgba(0,0,0,.10)}
+body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.008em}
+.panel,.settings-card,.stat-card,.dashboard-card,.dashboard-widget,.goal-card,.budget-card,.mission-card,.item-card,.modal,.chip{
+  border-radius:var(--ui-radius)!important;
+  border:1px solid var(--line)!important;
+  box-shadow:var(--ui-shadow);
+}
+.panel,.settings-card,.dashboard-card,.dashboard-widget,.stat-card{transition:background-color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+@media (hover:hover){.panel:hover,.settings-card:hover,.dashboard-card:hover,.stat-card:hover{border-color:var(--line-strong)!important}}
+.btn,.btn-primary,.btn-secondary,.btn-ghost,.btn-icon,.segmented button,.swatch.theme-option{border-radius:13px!important;transition:background-color .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease!important}
+.btn:active,.swatch.theme-option:active{transform:scale(.98)}
+.field input,.field textarea,.field select,.input-prefix,.deadline-date-input,.feature-form select{border-radius:13px!important;min-height:43px;transition:border-color .2s ease,box-shadow .2s ease}
+.field input:focus-visible,.field textarea:focus-visible,.field select:focus-visible,.btn:focus-visible,.swatch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.settings-card{padding:clamp(17px,2vw,25px)!important}
+.settings-grid{gap:15px!important}
+.settings-head{margin-bottom:20px!important}
+.settings-title{letter-spacing:-.035em}
+.settings-theme-picker{gap:10px!important}
+.settings-theme-picker .swatch.theme-option{min-height:72px;padding:12px!important}
+.streak-calendar-day{border-radius:17px!important;transition:transform .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease!important}
+.streak-calendar-day-mark{border-radius:100px!important}
+@media (hover:hover){.streak-calendar-day:not(.outside):not(.future):hover{transform:translateY(-3px) scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.panel,.settings-card,.btn,.streak-calendar-day,.swatch.theme-option{transition:none!important}}
+/* Deliberately colour-free black theme: no rainbow, coloured accents or glows. */
+html[data-theme="default"][data-appearance="dark"] body{
+ background:linear-gradient(145deg,#101114,#17181b 62%,#101114)!important;
+}
+html[data-theme="default"][data-appearance="dark"] .btn-primary,
+html[data-theme="default"][data-appearance="dark"] .segmented button.active{
+ background:#e7e7e8!important;color:#131417!important;border-color:#e7e7e8!important;
+ box-shadow:none!important;
+}
+html[data-theme="default"][data-appearance="dark"] .btn-primary:hover{background:#fff!important}
+html[data-theme="default"][data-appearance="dark"] .streak-calendar-day.checked,
+html[data-theme="default"][data-appearance="dark"] .streak-calendar-day.selected{background:#33353a!important;border-color:#aaaeb4!important;box-shadow:none!important}
+html[data-theme="default"][data-appearance="dark"] .settings-card,
+html[data-theme="default"][data-appearance="dark"] .panel,
+html[data-theme="default"][data-appearance="dark"] .modal{background-color:#1d1e22;border-color:#34363b!important}
+html[data-theme="default"][data-appearance="dark"] .theme-option.active{box-shadow:0 0 0 1px #b9bbc0!important}
+html[data-theme="default"][data-appearance="dark"] a:not(.btn){text-decoration-color:#7d8086}
+</style>
+<style>
+/* Ensure initial login and home screens use a clean neutral Default even before saved settings load. */
+html[data-theme="default"][data-appearance="light"] .btn-primary,
+html[data-theme="default"][data-appearance="light"] .segmented button.active{background:#202125!important;color:#fff!important;border-color:#202125!important}
+html[data-theme="default"][data-appearance="light"] .theme-option.active{box-shadow:0 0 0 1px #43454b!important}
+html[data-theme="default"][data-appearance="light"] .streak-calendar-day.checked,
+html[data-theme="default"][data-appearance="light"] .streak-calendar-day.selected{background:#e5e5e7!important;color:#18191c!important;border-color:#777980!important;box-shadow:none!important}
+html[data-theme="default"][data-appearance="light"] .settings-card,
+html[data-theme="default"][data-appearance="light"] .panel,
+html[data-theme="default"][data-appearance="light"] .modal{background-color:#fff;border-color:#e1e1e4!important}
+</style>
+<script>document.documentElement.dataset.theme="default";document.documentElement.dataset.appearance="dark";</script>
 </head>
 <body>
 <canvas id="hyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas" aria-hidden="true"></canvas>
@@ -10640,13 +10695,9 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
   const JPEG_QUALITY = 0.82;
 
   const THEMES = {
-    classicdark: {
-      label:"Classic Dark", swatch:"linear-gradient(145deg,#141519 0%,#1c1e23 55%,#8da4ff 56%,#7f97ca 100%)",
-      vars:{"--bg1":"#141519","--bg2":"#1c1e23","--panel":"rgba(255,255,255,.04)","--panel-solid":"#22252d","--panel-raised":"#293449","--accent":"#8da4ff","--accent-soft":"#b3c2ff","--accent2":"#7f97ca","--positive":"#83cead","--white":"#f5f6fa","--muted":"#a3a8b5","--line":"rgba(235,243,255,.12)","--line-strong":"rgba(235,243,255,.12)","--blade-a":"#1c1e23","--blade-b":"#22252d","--housing":"#1c1e23","--housing-inner":"#141519"}
-    },
-    softlight: {
-      label:"Soft Light", swatch:"linear-gradient(145deg,#f7f7fb 0%,#eeeef5 55%,#667fcb 56%,#a5b2df 100%)",
-      vars:{"--bg1":"#f7f7fb","--bg2":"#eeeef5","--panel":"rgba(255,255,255,.68)","--panel-solid":"#ffffff","--panel-raised":"#f8faf8","--accent":"#667fcb","--accent-soft":"#415ca8","--accent2":"#a5b2df","--positive":"#369477","--white":"#292d3b","--muted":"#666e80","--line":"rgba(50,60,60,.12)","--line-strong":"rgba(50,60,60,.12)","--blade-a":"#eeeef5","--blade-b":"#ffffff","--housing":"#eeeef5","--housing-inner":"#f7f7fb"}
+    default: {
+      label:"Default", swatch:"linear-gradient(135deg,#121316 0%,#25262a 49%,#ffffff 50%,#e9e9eb 100%)",
+      vars:{"--bg1":"#101114","--bg2":"#17181b","--panel":"rgba(255,255,255,.035)","--panel-solid":"#1d1e22","--panel-raised":"#27282c","--accent":"#ededee","--accent-soft":"#ffffff","--accent2":"#a5a6a9","--positive":"#c6c7c9","--white":"#f7f7f8","--muted":"#a5a7ab","--line":"rgba(255,255,255,.10)","--line-strong":"rgba(255,255,255,.17)","--blade-a":"#17181b","--blade-b":"#232428","--housing":"#1d1e22","--housing-inner":"#101114"}
     },
     cream: {
       label:"Cream", swatch:"linear-gradient(145deg,#fbf7f0 0%,#f3ede3 55%,#b78453 56%,#d1b18e 100%)",
@@ -10770,7 +10821,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
       }
     }
   };
-  const THEME_ORDER = ["classicdark","softlight","cream","sage","slate","midnight","graphite","sunset","ocean","neon","hyperdrive","ultra","rainbow","custom"];
+  const THEME_ORDER = ["default","cream","sage","slate","midnight","graphite","sunset","ocean","neon","hyperdrive","ultra","rainbow","custom"];
 
   let wallet = null;           // {balance, hourlyRate}; hourlyRate may be 0
   let items = [];              // [{id, name, goal, link, image}]
@@ -10798,7 +10849,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
   const ULTRA_PRICE = "A$4.99";
   let planState = {plan:"free", since:""};
   let ultraMatchTheme = true;
-  let currentTheme = "hyperdrive";
+  let currentTheme = "default";
   let appearanceMode = "dark"; // dark | light | system
   let hyperdriveRainEnabled = true;
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
@@ -11223,13 +11274,45 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     return appearanceMode==="light" ? "light" : "dark";
   }
 
+  const themeDarkAccents={
+    cream:{bg:"#181511",bg2:"#211b15",panel:"#27221b",raised:"#33291f",accent:"#e0b184",accentSoft:"#f0cdac",accent2:"#b58e6b"},
+    sage:{bg:"#111a16",bg2:"#18241d",panel:"#1e2d25",raised:"#283a2e",accent:"#92c8aa",accentSoft:"#b1dec1",accent2:"#75a88a"}
+  };
+
   function applyAppearanceOverrides(){
     const root=document.documentElement;
     const effective=effectiveAppearanceMode();
     root.dataset.appearance=effective;
     root.dataset.appearancePreference=appearanceMode;
 
+    if(effective==="dark" && ["cream","sage"].includes(currentTheme)){
+      // These themes were originally light-only: supply true dark surfaces while retaining their accent hue.
+      const primary=themeDarkAccents[currentTheme];
+      root.style.setProperty("--bg1",primary.bg);
+      root.style.setProperty("--bg2",primary.bg2);
+      root.style.setProperty("--panel","rgba(255,255,255,.045)");
+      root.style.setProperty("--panel-solid",primary.panel);
+      root.style.setProperty("--panel-raised",primary.raised);
+      root.style.setProperty("--white","#f4f2ee");
+      root.style.setProperty("--muted","#aaa8a4");
+      root.style.setProperty("--line","rgba(255,255,255,.10)");
+      root.style.setProperty("--line-strong","rgba(255,255,255,.18)");
+      root.style.setProperty("--accent",primary.accent);
+      root.style.setProperty("--accent-soft",primary.accentSoft);
+      root.style.setProperty("--accent2",primary.accent2);
+      root.style.setProperty("--positive","#8ec6a5");
+      root.style.setProperty("--blade-a",primary.bg2);
+      root.style.setProperty("--blade-b",primary.raised);
+      root.style.setProperty("--housing",primary.panel);
+      root.style.setProperty("--housing-inner",primary.bg);
+    }
     if(effective!=="light") return;
+    if(currentTheme==="default"){
+      // True black/white inversion: no coloured accent anywhere in the base palette.
+      const neutral={"--bg1":"#f9f9fa","--bg2":"#ededf0","--panel":"rgba(255,255,255,.74)","--panel-solid":"#ffffff","--panel-raised":"#f1f1f3","--accent":"#202125","--accent-soft":"#101114","--accent2":"#6b6c72","--positive":"#35363a","--white":"#16171a","--muted":"#64666d","--line":"rgba(0,0,0,.10)","--line-strong":"rgba(0,0,0,.18)","--blade-a":"#e6e6e9","--blade-b":"#f7f7f8","--housing":"#e8e8eb","--housing-inner":"#ffffff"};
+      Object.entries(neutral).forEach(([k,v])=>root.style.setProperty(k,v));
+      return;
+    }
 
     const styles=getComputedStyle(root);
     const accent=normalizeHex((styles.getPropertyValue("--accent")||"#6c8ef5").trim());
@@ -11551,8 +11634,8 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
   }
 
   function applyTheme(key){
-    const theme = THEMES[key] || THEMES.hyperdrive;
-    currentTheme = THEMES[key] ? key : "hyperdrive";
+    const theme = THEMES[key] || THEMES.default;
+    currentTheme = THEMES[key] ? key : "default";
     document.documentElement.dataset.theme = currentTheme;
 
     Object.entries(theme.vars).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));
@@ -11604,6 +11687,10 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
 
   function buildThemePicker(container){
     const descriptions={
+      default:"Monochrome · light or dark",
+      cream:"Warm neutral tones",
+      sage:"Soft green tones",
+      slate:"Cool blue tones",
       midnight:"Warm & understated",
       graphite:"Clean & neutral",
       sunset:"Soft & warm",
@@ -12674,7 +12761,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     checkInDates = null;
     streakFrozenDates = null;
     streakFreezeLastCheck = "";
-    currentTheme = "hyperdrive";
+    currentTheme = "default";
     appearanceMode = "dark";
     hyperdriveRainEnabled = true;
     ultraMatchTheme = true;
@@ -12727,7 +12814,11 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     if(priorityItemId && !items.some(i=>i.id===priorityItemId && !i.purchasedAt)) priorityItemId = null;
     activeItemId = parsed.activeItemId || priorityItemId || (items.find(i=>!i.purchasedAt)?.id) || (items[0] && items[0].id) || null;
     if(parsed.customTheme) customTheme = sanitizeCustomTheme(parsed.customTheme);
-    if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
+    if(parsed.theme === "classicdark" || parsed.theme === "softlight") {
+      currentTheme = "default";
+      // Preserve the former light theme appearance when migrating existing preferences.
+      if(parsed.theme === "softlight" && !["dark","light","system"].includes(parsed.appearanceMode)) appearanceMode = "light";
+    } else if(parsed.theme && THEMES[parsed.theme]) currentTheme = parsed.theme;
     if(["dark","light","system"].includes(parsed.appearanceMode)) appearanceMode = parsed.appearanceMode;
     hyperdriveRainEnabled = parsed.hyperdriveRainEnabled===undefined ? true : parsed.hyperdriveRainEnabled===true;
     ultraMatchTheme = parsed.ultraMatchTheme!==false;
@@ -15359,7 +15450,7 @@ html[data-theme="ultra"] input,html[data-theme="ultra"] select,html[data-theme="
     applyUltraMatch();
 
     if(!ultra && currentTheme==="ultra"){
-      applyTheme("hyperdrive");
+      applyTheme("default");
       try{ buildBlades(); }catch(_){}
       persist();
     }
