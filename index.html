@@ -7581,6 +7581,113 @@ html .home-priority-island{
   border-color:color-mix(in srgb,var(--priority-card-ink) 15%,transparent) !important;
 }
 
+
+
+/* Connected streak calendar lanes — Duolingo-like grouping, adapted to LUMIN. */
+.streak-calendar-shell{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--panel-solid) 94%,transparent),color-mix(in srgb,var(--panel-raised) 55%,var(--panel-solid))) !important;
+  border:1px solid var(--line-strong) !important;
+}
+.streak-calendar-weekdays{padding:7px 12px 4px !important;}
+.streak-calendar-grid{gap:0 !important;padding:3px 12px 12px !important;}
+.streak-calendar-day{
+  width:100% !important;
+  aspect-ratio:1.03 !important;
+  border-radius:0 !important;
+  overflow:visible;
+  isolation:isolate;
+}
+.streak-calendar-day::before{
+  content:"";
+  position:absolute;
+  inset:5px 3px;
+  border-radius:13px;
+  background:transparent;
+  z-index:0;
+  transition:background-color .16s ease, box-shadow .16s ease, inset .16s ease, border-radius .16s ease;
+}
+.streak-calendar-day-number{
+  position:relative;
+  z-index:2;
+  width:29px !important;
+  height:29px !important;
+  font-size:13px !important;
+  font-weight:800;
+}
+.streak-calendar-day:hover:not(.outside):not(.future){background:transparent !important;}
+.streak-calendar-day:hover:not(.outside):not(.future):not(.checked):not(.frozen)::before{
+  background:color-mix(in srgb,var(--accent) 7%,transparent);
+}
+
+/* Warm streak lane */
+.streak-calendar-day.checked{background:transparent !important;}
+.streak-calendar-day.checked::before{
+  background:linear-gradient(180deg,rgba(255,183,43,.14),rgba(255,149,0,.10));
+  box-shadow:inset 0 1px 0 rgba(255,233,178,.05);
+}
+.streak-calendar-day.checked .streak-calendar-day-number{
+  background:linear-gradient(165deg,#ffd75b,#f7a616) !important;
+  color:#6f3a00 !important;
+  box-shadow:inset 0 -2px 0 rgba(167,93,0,.16),0 3px 8px rgba(236,145,0,.16) !important;
+}
+.streak-calendar-day.checked:hover:not(.outside):not(.future) .streak-calendar-day-number{
+  background:linear-gradient(165deg,#ffe074,#ffad1f) !important;
+}
+
+/* Freeze lane */
+.streak-calendar-day.frozen{background:transparent !important;}
+.streak-calendar-day.frozen::before{
+  background:linear-gradient(180deg,rgba(167,205,255,.18),rgba(121,172,235,.12));
+}
+.streak-calendar-day.frozen .streak-calendar-day-number{
+  background:linear-gradient(165deg,#eef6ff,#cfe4ff) !important;
+  color:#416daa !important;
+  box-shadow:inset 0 -2px 0 rgba(85,129,184,.10),0 2px 6px rgba(91,143,210,.10) !important;
+}
+
+/* Connect neighboring days of the same streak state */
+.streak-calendar-day.checked:has(+ .streak-calendar-day.checked)::before,
+.streak-calendar-day.frozen:has(+ .streak-calendar-day.frozen)::before{
+  right:0;
+  border-top-right-radius:5px;
+  border-bottom-right-radius:5px;
+}
+.streak-calendar-day.checked + .streak-calendar-day.checked::before,
+.streak-calendar-day.frozen + .streak-calendar-day.frozen::before{
+  left:0;
+  border-top-left-radius:5px;
+  border-bottom-left-radius:5px;
+}
+.streak-calendar-day.checked:has(+ .streak-calendar-day.checked) + .streak-calendar-day.checked::before,
+.streak-calendar-day.frozen:has(+ .streak-calendar-day.frozen) + .streak-calendar-day.frozen::before{
+  left:0;
+}
+
+/* Selected day sits inside the connected lane instead of breaking it. */
+.streak-calendar-day.selected{background:transparent !important;}
+.streak-calendar-day.selected::before{
+  box-shadow:inset 0 0 0 2px rgba(243,184,91,.88),0 0 0 1px rgba(255,215,138,.15);
+}
+.streak-calendar-day.selected .streak-calendar-day-number{
+  outline:2px solid rgba(126,76,0,.75) !important;
+  outline-offset:-3px !important;
+  box-shadow:0 0 0 3px rgba(246,197,108,.22), inset 0 -2px 0 rgba(167,93,0,.16),0 3px 8px rgba(236,145,0,.16) !important;
+}
+.streak-calendar-day.frozen.selected .streak-calendar-day-number{
+  outline-color:rgba(91,128,188,.75) !important;
+  box-shadow:0 0 0 3px rgba(193,220,255,.28), inset 0 -2px 0 rgba(85,129,184,.10),0 2px 6px rgba(91,143,210,.10) !important;
+}
+
+.streak-calendar-day.future{opacity:.44;}
+.streak-calendar-day.missed{opacity:.7;}
+.streak-calendar-day.today::after{bottom:5px !important;}
+
+@media(max-width:600px){
+  .streak-calendar-grid{padding:2px 10px 10px !important;}
+  .streak-calendar-day::before{inset:4px 2px;border-radius:11px;}
+  .streak-calendar-day-number{width:25px !important;height:25px !important;font-size:11px !important;}
+}
+
 </style>
 
 <style id="lumin-final-mobile-layout-fix">
@@ -8430,23 +8537,6 @@ input:focus,select:focus,textarea:focus{
   #weeklySummaryBackdrop #weeklyRecapSlideCopy{font-size:15px !important;line-height:1.55;}
 }
 
-/* ---------- loading screen is always HyperDrive, whatever theme loads afterwards ---------- */
-html body .app-loading-screen{
-  --bg1:#010304;
-  --bg2:#040a0b;
-  --panel:rgba(255,255,255,.035);
-  --panel-solid:#081113;
-  --panel-raised:#101b1e;
-  --accent:#20eee9;
-  --accent-soft:#77fffb;
-  --accent2:#45ef72;
-  --positive:#62f08e;
-  --white:#f3fffe;
-  --muted:#7f9b9d;
-  --line:rgba(82,255,239,.09);
-  --line-strong:rgba(82,255,239,.19);
-  color:var(--white);
-}
 @media (prefers-reduced-motion:reduce){
   .modal-backdrop > .modal{animation:none !important;}
 }
@@ -8886,40 +8976,6 @@ html[data-theme="default"][data-appearance="light"] .settings-card,
 html[data-theme="default"][data-appearance="light"] .panel,
 html[data-theme="default"][data-appearance="light"] .modal{background-color:#fff;border-color:#e1e1e4!important}
 
-/* Login and registration always use Default Dark, regardless of saved theme. */
-.auth-gate{
-  --bg1:#101114;--bg2:#17181b;--panel:rgba(255,255,255,.035);
-  --panel-solid:#1d1e22;--panel-raised:#292a2e;
-  --accent:#e6e6e8;--accent-soft:#f7f7f8;--accent2:#a5a7ab;
-  --positive:#a5a7ab;--white:#f6f6f7;--muted:#a3a5ab;
-  --line:rgba(255,255,255,.09);--line-strong:rgba(255,255,255,.17);
-  color:#f6f6f7!important;
-  background:radial-gradient(ellipse 700px 440px at 15% 0%,rgba(255,255,255,.045),transparent 70%),linear-gradient(180deg,#101114,#17181b)!important;
-}
-.auth-gate::before,.auth-gate::after,.auth-gate .auth-card::before{display:none!important;}
-.auth-gate .auth-matrix-canvas{display:block!important;opacity:.46!important;mix-blend-mode:screen!important;z-index:1!important;}
-.auth-gate .auth-card{position:relative;z-index:2!important;}
-.auth-gate .auth-card{
-  border:1px solid #34363b!important;border-radius:24px!important;
-  background:linear-gradient(180deg,#212226,#1b1c20)!important;
-  box-shadow:0 30px 90px rgba(0,0,0,.40)!important;
-}
-.auth-gate .brand-mark{filter:none!important;color:#e6e6e8!important;}
-.auth-gate .brand-word,.auth-gate .auth-title{color:#f6f6f7!important;}
-.auth-gate .brand-tag{color:#a3a5ab!important;border-color:#393a3f!important;}
-.auth-gate .auth-kicker{color:#e6e6e8!important;}
-.auth-gate input{color:#f6f6f7!important;background:#151619!important;border-color:#3a3b40!important;border-radius:13px!important;}
-.auth-gate input::placeholder{color:#85878d!important;}
-.auth-gate input:focus{border-color:#bfc0c4!important;box-shadow:0 0 0 3px rgba(255,255,255,.09)!important;}
-.auth-gate .btn-primary{color:#151619!important;border:1px solid #f0f0f1!important;background:#f0f0f1!important;box-shadow:none!important;}
-.auth-gate .btn-primary:hover{background:#ffffff!important;box-shadow:0 5px 18px rgba(255,255,255,.08)!important;}
-.auth-gate .btn-ghost{color:#e4e4e6!important;background:#292a2e!important;border-color:#44464b!important;}
-.auth-gate .btn-ghost:hover{color:#ffffff!important;background:#35363a!important;border-color:#75777d!important;}
-.auth-gate .auth-link:hover{color:#ffffff!important;}
-.auth-gate .auth-2fa-note{color:#afb0b5!important;border-color:#383a3f!important;background:#242529!important;}
-.auth-gate .auth-2fa-note svg{color:#d6d7d9!important;}
-.auth-gate .auth-divider::before,.auth-gate .auth-divider::after{background:#3a3b40!important;}
-
 
 /* Theme-aware PRIORITY GOAL CARD: overrides the legacy animated rainbow and theme-specific card gradients.
    Deliberately does not change .item-progress-fill or other progress bar fills. */
@@ -8967,58 +9023,167 @@ html:not([data-theme="default"]) .item-card.priority:not(.purchased){
 }
 
 /* Streak calendar: friendly, rounded, Duolingo-inspired treatment, theme-compatible. */
-.streak-calendar-modal{width:min(550px,calc(100vw - 24px));padding:0!important;overflow:auto;border-radius:25px!important;}
-.streak-calendar-head{padding:21px 23px 15px;}
-.streak-calendar-head .modal-title{font-size:21px;letter-spacing:-.035em;}
-.streak-calendar-head .modal-sub{font-size:12px;}
-.streak-duo-hero{position:relative;isolation:isolate;overflow:hidden;margin:0 14px 16px;padding:27px 24px 17px;border-radius:21px;background:linear-gradient(120deg,#ff9e06 0%,#ffb900 55%,#ffca23 100%);color:#fff;box-shadow:0 10px 23px rgba(214,125,0,.16);}
-.streak-duo-hero::before{content:"";position:absolute;z-index:-1;right:-35px;top:-70px;width:205px;height:205px;border:24px solid rgba(255,255,255,.16);border-radius:50%;transform:rotate(-15deg)}
-.streak-duo-hero::after{content:"✷";position:absolute;right:48px;top:4px;color:rgba(255,255,255,.30);font-size:113px;line-height:1;transform:rotate(15deg);pointer-events:none;}
-.streak-duo-hero-number{position:relative;z-index:1;font:850 clamp(44px,9vw,63px)/1 'Sora',sans-serif;letter-spacing:-.06em;text-shadow:0 3px 0 rgba(174,91,0,.18);}
-.streak-duo-hero-label{position:relative;z-index:1;margin-top:5px;font-size:17px;font-weight:800;}
-.streak-duo-message{position:relative;z-index:1;display:flex;align-items:center;gap:12px;min-height:65px;margin-top:21px;padding:14px;border-radius:15px;background:#fff;color:#4c4d53;box-shadow:0 3px 0 rgba(153,84,0,.10);font-size:12px;font-weight:650;line-height:1.45;}
-.streak-duo-flag{font-size:24px;color:#f39b04;line-height:1;}
-.streak-duo-calendar-title{margin:0 23px 12px;color:var(--white);font:800 18px/1.25 'Sora',sans-serif;letter-spacing:-.035em;}
-.streak-calendar-stats{margin:0 15px 13px;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;}
-.streak-calendar-stat{padding:10px 7px;border-radius:13px;text-align:center;}
-.streak-calendar-stat span{font-size:9px;letter-spacing:0;}
-.streak-calendar-stat strong{font:800 12px/1.3 'Sora',sans-serif;}
+.streak-calendar-modal{width:min(510px,calc(100vw - 24px));padding:0!important;overflow:auto;border-radius:22px!important;}
+.streak-calendar-head{padding:18px 20px 12px;}
+.streak-calendar-head .modal-title{font-size:19px;letter-spacing:-.03em;}
+.streak-calendar-head .modal-sub{font-size:11px;}
+.streak-duo-hero{position:relative;isolation:isolate;overflow:hidden;margin:0 12px 12px;padding:21px 19px 14px;border-radius:18px;background:linear-gradient(120deg,#ff9e06 0%,#ffb900 55%,#ffca23 100%);color:#fff;box-shadow:0 8px 18px rgba(214,125,0,.13);}
+.streak-duo-hero::before{content:"";position:absolute;z-index:-1;right:-28px;top:-58px;width:160px;height:160px;border:18px solid rgba(255,255,255,.15);border-radius:50%;transform:rotate(-15deg)}
+.streak-duo-hero::after{content:"✷";position:absolute;right:35px;top:3px;color:rgba(255,255,255,.24);font-size:88px;line-height:1;transform:rotate(15deg);pointer-events:none;}
+.streak-duo-hero-number{position:relative;z-index:1;font:850 clamp(34px,8vw,50px)/1 'Sora',sans-serif;letter-spacing:-.055em;text-shadow:0 2px 0 rgba(174,91,0,.16);}
+.streak-duo-hero-label{position:relative;z-index:1;margin-top:3px;font-size:14px;font-weight:800;}
+.streak-duo-calendar-title{margin:0 14px 10px;color:var(--white);font:800 13px/1.2 'Sora',sans-serif;}
+.streak-duo-message{margin-top:11px;display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:13px;background:rgba(255,255,255,.92);color:#4a4135;max-width:320px;box-shadow:0 2px 0 rgba(188,102,0,.08)}
+.streak-duo-message-icon{width:30px;height:30px;display:grid;place-items:center;border-radius:10px;background:#fff4cc;color:#e28d00;font-size:16px;flex:0 0 30px;}
+.streak-duo-message-text{font-size:11px;font-weight:700;line-height:1.3;}
+.streak-calendar-stats{margin:0 12px 10px;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;}
+.streak-calendar-stat{padding:8px 6px;border-radius:11px;text-align:center;}
+.streak-calendar-stat span{font-size:8px;letter-spacing:0;}
+.streak-calendar-stat strong{font:800 11px/1.25 'Sora',sans-serif;}
 .streak-calendar-stat-main strong{color:#ec9400;}
-.streak-calendar-shell{margin:0 14px;border-radius:19px;background:var(--panel-solid);border-color:var(--line-strong);box-shadow:0 4px 15px rgba(0,0,0,.04);}
-.streak-calendar-toolbar{grid-template-columns:40px minmax(0,1fr) 40px;padding:12px 13px 8px;gap:6px;border-bottom:0;}
-.streak-calendar-month-wrap strong{font:800 14px/1.2 'Sora',sans-serif;}
-.streak-calendar-nav{width:36px;height:36px;border-radius:50%;background:transparent;border:0;font-size:22px;font-weight:800;color:var(--muted);}
+.streak-calendar-shell{margin:0 12px;border-radius:16px;background:var(--panel-solid);border-color:var(--line-strong);box-shadow:0 3px 12px rgba(0,0,0,.04);overflow:hidden;}
+.streak-calendar-toolbar{grid-template-columns:34px minmax(0,1fr) 34px;padding:10px 10px 6px;gap:4px;border-bottom:1px solid color-mix(in srgb,var(--line) 85%,transparent);}
+.streak-calendar-month-wrap strong{font:800 13px/1.2 'Sora',sans-serif;}
+.streak-calendar-nav{width:30px;height:30px;border-radius:50%;background:transparent;border:0;font-size:18px;font-weight:800;color:var(--muted);}
 .streak-calendar-nav:hover:not(:disabled){background:color-mix(in srgb,var(--white) 8%,transparent);border:0;color:var(--white);}
-.streak-calendar-today{font-size:10px;padding:5px 8px;}
-.streak-calendar-weekdays{padding:7px 14px 4px;gap:2px;}
-.streak-calendar-weekdays span{font:750 11px/1.2 'Inter',sans-serif;letter-spacing:0;text-transform:capitalize;}
-.streak-calendar-grid{gap:2px;padding:7px 14px 16px;}
-.streak-calendar-day{width:min(100%,46px);height:auto;aspect-ratio:1;margin:auto;padding:1px;border-radius:50%!important;display:grid;place-items:center;transform:none;background:transparent;}
-.streak-calendar-day-number{font:800 clamp(10px,2.6vw,14px)/1 'Inter',sans-serif;}
+.streak-calendar-today{font-size:9px;padding:4px 7px;}
+.streak-calendar-weekdays{padding:6px 10px 3px;gap:0;}
+.streak-calendar-weekdays span{font:750 10px/1.2 'Inter',sans-serif;letter-spacing:0;text-transform:capitalize;text-align:center;}
+.streak-calendar-grid{gap:0;padding:2px 10px 10px;}
+.streak-calendar-day{width:100%;height:auto;aspect-ratio:1.02;margin:0;padding:0;border-radius:10px!important;display:grid;place-items:center;transform:none;background:transparent;border:0!important;box-shadow:none!important;position:relative;}
+.streak-calendar-day-number{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font:800 clamp(10px,2.4vw,13px)/1 'Inter',sans-serif;transition:transform .16s ease,background-color .16s ease,color .16s ease,box-shadow .16s ease;}
 .streak-calendar-day-mark{display:none;}
-.streak-calendar-day.checked{background:linear-gradient(150deg,#ffd75b,#ff9d00)!important;color:#713b00!important;border-color:rgba(255,161,0,.14)!important;box-shadow:inset 0 -3px 0 rgba(172,92,0,.13),0 3px 8px rgba(236,145,0,.15)!important;}
-.streak-calendar-day.checked .streak-calendar-day-number{color:inherit;}
-.streak-calendar-day.frozen{background:#d9ecff!important;color:#356fbc!important;}
+.streak-calendar-day.checked{background:rgba(255,173,24,.08)!important;color:inherit!important;}
+.streak-calendar-day.checked .streak-calendar-day-number{background:linear-gradient(150deg,#ffd75b,#ff9d00)!important;color:#713b00!important;box-shadow:inset 0 -2px 0 rgba(172,92,0,.13),0 2px 6px rgba(236,145,0,.14)!important;}
+.streak-calendar-day.frozen{background:rgba(112,181,255,.08)!important;color:inherit!important;}
+.streak-calendar-day.frozen .streak-calendar-day-number{background:#d9ecff!important;color:#356fbc!important;}
 .streak-calendar-day.missed{color:var(--muted);opacity:.75;}
-.streak-calendar-day.future{opacity:.33;}
+.streak-calendar-day.future{opacity:.38;}
 .streak-calendar-day.outside{visibility:hidden;pointer-events:none;}
-.streak-calendar-day.selected{outline:2px solid #f5a309!important;outline-offset:2px;box-shadow:0 0 0 3px color-mix(in srgb,#ffb92a 16%,transparent)!important;}
-.streak-calendar-day.today::after{width:5px;height:5px;bottom:1px;background:#e39b00;box-shadow:none;}
+.streak-calendar-day.selected{background:rgba(245,163,9,.10)!important;}
+.streak-calendar-day.selected .streak-calendar-day-number{outline:2px solid #f5a309!important;outline-offset:1px;box-shadow:0 0 0 3px color-mix(in srgb,#ffb92a 16%,transparent)!important;}
+.streak-calendar-day.today::after{width:4px;height:4px;bottom:4px;background:#e39b00;box-shadow:none;}
 .streak-calendar-day.checked.today::after{background:#7c4100;}
-.streak-calendar-day:hover:not(.outside):not(.future){transform:scale(1.08);border-color:transparent;background:rgba(239,163,20,.12);}
-.streak-calendar-day.checked:hover:not(.outside):not(.future){background:linear-gradient(150deg,#ffdb62,#ff9f06)!important;}
-.streak-calendar-detail{margin:13px 14px 0;border-radius:15px;padding:12px;}
-.streak-calendar-detail-icon{border-radius:12px;background:#fff3d1;color:#d58b00;}
-.streak-calendar-detail-copy strong{font-size:12px;}
-.streak-calendar-detail-copy span{font-size:10px;}
-.streak-calendar-legend{margin:12px 17px 18px;font-size:10px;}
-.streak-legend-dot{border-radius:50%;width:9px;height:9px;}
+.streak-calendar-day:hover:not(.outside):not(.future){transform:none;background:rgba(239,163,20,.09);}
+.streak-calendar-day:hover:not(.outside):not(.future) .streak-calendar-day-number{transform:scale(1.05);}
+.streak-calendar-day.checked:hover:not(.outside):not(.future) .streak-calendar-day-number{background:linear-gradient(150deg,#ffdb62,#ff9f06)!important;}
+.streak-calendar-detail{margin:10px 12px 0;border-radius:13px;padding:10px 11px;}
+.streak-calendar-detail-icon{border-radius:10px;background:#fff3d1;color:#d58b00;}
+.streak-calendar-detail-copy strong{font-size:11px;}
+.streak-calendar-detail-copy span{font-size:9px;}
+.streak-calendar-legend{margin:10px 14px 14px;font-size:9px;}
+.streak-legend-dot{border-radius:50%;width:8px;height:8px;}
 .streak-legend-dot.checked{background:#ffa500;}
 html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;}
-@media(max-width:600px){.streak-calendar-modal{padding:0!important}.streak-calendar-head{padding:19px 17px 13px}.streak-duo-hero{margin:0 11px 14px;padding:25px 19px 16px}.streak-duo-calendar-title{margin:0 17px 11px}.streak-calendar-stats{margin:0 11px 12px}.streak-calendar-shell{margin:0 11px}.streak-calendar-day{width:min(100%,42px)}.streak-calendar-detail{margin:12px 11px 0}.streak-calendar-legend{margin:12px 13px 17px;}}
-@media(prefers-reduced-motion:reduce){.streak-calendar-day{transition:none;}}
+@media(max-width:600px){.streak-calendar-modal{padding:0!important}.streak-calendar-head{padding:16px 15px 11px}.streak-duo-hero{margin:0 10px 11px;padding:19px 16px 13px}.streak-duo-calendar-title{margin:0 12px 9px}.streak-calendar-stats{margin:0 10px 9px}.streak-calendar-shell{margin:0 10px}.streak-calendar-day-number{width:24px;height:24px;font-size:11px}.streak-calendar-detail{margin:10px 10px 0}.streak-calendar-legend{margin:10px 12px 14px;}}
+@media(prefers-reduced-motion:reduce){.streak-calendar-day,.streak-calendar-day-number{transition:none;}}
+
+/* LUMIN refined streak calendar: compact, calm, theme-integrated */
+#streakCalendarBackdrop .streak-calendar-modal{width:min(465px,calc(100vw - 22px));border-radius:20px!important;overflow:auto;max-height:min(90dvh,740px);}
+#streakCalendarBackdrop .streak-calendar-head{padding:17px 18px 12px!important;}
+#streakCalendarBackdrop .streak-calendar-head .modal-title{font-size:17px!important;}
+#streakCalendarBackdrop .streak-calendar-head .modal-sub{font-size:10px!important;}
+#streakCalendarBackdrop .streak-duo-hero{display:flex;align-items:center;gap:10px;margin:0 12px 10px!important;padding:11px 14px!important;min-height:0;border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line))!important;border-radius:13px!important;background:linear-gradient(110deg,color-mix(in srgb,var(--accent) 10%,var(--panel-solid)),var(--panel-solid))!important;color:var(--white)!important;box-shadow:none!important;}
+#streakCalendarBackdrop .streak-duo-hero::before,#streakCalendarBackdrop .streak-duo-hero::after{display:none!important;}
+#streakCalendarBackdrop .streak-duo-sun{font-size:19px!important;color:var(--accent-soft)!important;line-height:1;position:static!important;transform:none!important;flex-shrink:0;}
+#streakCalendarBackdrop .streak-duo-hero-number{font:800 25px/1 'Sora',sans-serif!important;letter-spacing:-.04em;text-shadow:none!important;color:var(--white)!important;}
+#streakCalendarBackdrop .streak-duo-hero-label{font-size:11px!important;font-weight:700;margin:0!important;color:var(--muted)!important;white-space:nowrap;}
+#streakCalendarBackdrop .streak-duo-message{margin:0 0 0 auto!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;max-width:170px;min-width:0;font-size:10px!important;color:var(--muted)!important;line-height:1.35;}
+#streakCalendarBackdrop .streak-duo-message .streak-duo-flag{display:none!important;}
+#streakCalendarBackdrop .streak-duo-calendar-title{display:none!important;}
+#streakCalendarBackdrop .streak-calendar-stats{margin:0 12px 9px!important;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px!important;}
+#streakCalendarBackdrop .streak-calendar-stat{min-width:0;padding:8px 4px!important;border-radius:10px!important;background:color-mix(in srgb,var(--panel-raised) 54%,var(--panel-solid))!important;box-shadow:none!important;}
+#streakCalendarBackdrop .streak-calendar-stat span{font-size:9px!important;}
+#streakCalendarBackdrop .streak-calendar-stat strong{font-size:11px!important;white-space:nowrap;}
+#streakCalendarBackdrop .streak-calendar-shell{margin:0 12px!important;padding:0!important;border:1px solid var(--line)!important;border-radius:13px!important;background:var(--panel-solid)!important;box-shadow:none!important;overflow:hidden;}
+#streakCalendarBackdrop .streak-calendar-toolbar{padding:8px 11px 6px!important;grid-template-columns:29px minmax(0,1fr) 29px!important;border-bottom:1px solid var(--line)!important;gap:5px!important;}
+#streakCalendarBackdrop .streak-calendar-month-wrap strong{font-size:12px!important;}
+#streakCalendarBackdrop .streak-calendar-today{font-size:9px!important;padding:3px 7px!important;}
+#streakCalendarBackdrop .streak-calendar-nav{width:28px!important;height:28px!important;min-height:28px!important;min-width:28px!important;font-size:16px!important;border-radius:9px!important;}
+#streakCalendarBackdrop .streak-calendar-weekdays{padding:8px 10px 2px!important;gap:0!important;}
+#streakCalendarBackdrop .streak-calendar-weekdays span{font-size:9px!important;}
+#streakCalendarBackdrop .streak-calendar-grid{padding:3px 10px 10px!important;gap:2px 0!important;}
+#streakCalendarBackdrop .streak-calendar-day{min-height:0!important;aspect-ratio:1.25!important;width:100%!important;max-width:none!important;height:auto!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:9px!important;box-shadow:none!important;transform:none!important;isolation:isolate;}
+#streakCalendarBackdrop .streak-calendar-day::before{display:none!important;}
+#streakCalendarBackdrop .streak-calendar-day-number{display:grid!important;place-items:center;width:28px!important;height:28px!important;margin:auto;border-radius:50%!important;font-size:11px!important;font-weight:650!important;color:var(--muted)!important;background:transparent!important;box-shadow:none!important;outline:0!important;transform:none!important;}
+#streakCalendarBackdrop .streak-calendar-day.checked .streak-calendar-day-number{background:color-mix(in srgb,var(--accent) 23%,var(--panel-solid))!important;color:var(--white)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 25%,transparent)!important;}
+#streakCalendarBackdrop .streak-calendar-day.frozen .streak-calendar-day-number{background:color-mix(in srgb,#7eafd9 20%,var(--panel-solid))!important;color:var(--white)!important;}
+#streakCalendarBackdrop .streak-calendar-day.selected .streak-calendar-day-number{outline:2px solid var(--accent-soft)!important;outline-offset:2px!important;}
+#streakCalendarBackdrop .streak-calendar-day.today::after{width:3px!important;height:3px!important;bottom:2px!important;background:var(--accent-soft)!important;box-shadow:none!important;}
+#streakCalendarBackdrop .streak-calendar-day:hover:not(.outside):not(.future){background:color-mix(in srgb,var(--accent) 7%,transparent)!important;transform:none!important;box-shadow:none!important;}
+#streakCalendarBackdrop .streak-calendar-day:hover .streak-calendar-day-number{transform:none!important;}
+#streakCalendarBackdrop .streak-calendar-detail{margin:9px 12px 0!important;padding:9px 11px!important;border-radius:12px!important;}
+#streakCalendarBackdrop .streak-calendar-detail-icon{border-radius:10px!important;}
+#streakCalendarBackdrop .streak-calendar-legend{margin:9px 14px 13px!important;font-size:9px!important;gap:9px!important;}
+#streakCalendarBackdrop .streak-legend-dot.checked{background:var(--accent)!important;}
+@media(max-width:480px){#streakCalendarBackdrop .streak-duo-message{max-width:120px;font-size:9px!important;}#streakCalendarBackdrop .streak-calendar-head{padding:14px 14px 10px!important;}#streakCalendarBackdrop .streak-calendar-day-number{width:26px!important;height:26px!important;}}
 </style>
-<script>document.documentElement.dataset.theme="default";document.documentElement.dataset.appearance="dark";</script>
+<script>
+/* Apply the most recently chosen palette before the interface is painted. */
+try {
+  let saved = JSON.parse(localStorage.getItem("lumin-ui-preferences") || "null");
+  if (!saved) {
+    const lastUser = JSON.parse(localStorage.getItem("lumin-last-cloud-user") || "null");
+    const userCache = lastUser && lastUser.uid ? localStorage.getItem("tracker-data:user:" + lastUser.uid) : null;
+    const olderSave = JSON.parse(userCache || localStorage.getItem("tracker-data:local") || localStorage.getItem("tracker-data") || "null");
+    if (olderSave) saved = {theme:olderSave.theme,appearance:olderSave.appearanceMode};
+    if (saved) localStorage.setItem("lumin-ui-preferences",JSON.stringify(saved));
+  }
+  const valid = ["default","cream","sage","slate","midnight","graphite","sunset","ocean","neon","hyperdrive","ultra","rainbow","custom"];
+  document.documentElement.dataset.theme = saved && valid.includes(saved.theme) ? saved.theme : "default";
+  const mode = saved && ["dark","light","system"].includes(saved.appearance) ? saved.appearance : "dark";
+  document.documentElement.dataset.appearancePreference = mode;
+  document.documentElement.dataset.appearance = mode === "system" ? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : mode;
+} catch (_) { document.documentElement.dataset.theme="default";document.documentElement.dataset.appearance="dark"; }
+</script>
+<style>
+/* LUMIN: quieter layout and unified saved appearance on all entry points */
+.auth-gate {
+  color:var(--white) !important;
+  background:linear-gradient(155deg,var(--bg1),var(--bg2)) !important;
+}
+.auth-gate .auth-card {
+  color:var(--white) !important;
+  background:var(--panel-solid) !important;
+  border:1px solid var(--line-strong) !important;
+  box-shadow:0 20px 54px rgba(0,0,0,.17) !important;
+  border-radius:20px !important;
+}
+.auth-gate .brand-mark,.auth-gate .auth-kicker {color:var(--accent) !important;}
+.auth-gate .brand-word,.auth-gate .auth-title {color:var(--white) !important;}
+.auth-gate .brand-tag,.auth-gate .auth-copy {color:var(--muted) !important;}
+.auth-gate input {color:var(--white) !important;background:var(--panel-raised) !important;border-color:var(--line-strong) !important;}
+.auth-gate input::placeholder {color:var(--muted) !important;}
+.auth-gate input:focus {border-color:var(--accent) !important;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent) !important;}
+.auth-gate .btn-primary {color:var(--bg1) !important;background:var(--accent) !important;border-color:var(--accent) !important;box-shadow:none !important;}
+.auth-gate .btn-primary:hover {background:var(--accent-soft) !important;}
+.auth-gate .btn-ghost {color:var(--white) !important;background:var(--panel-raised) !important;border-color:var(--line-strong) !important;}
+.auth-gate .auth-2fa-note {color:var(--muted) !important;background:var(--panel-raised) !important;border-color:var(--line) !important;}
+.auth-gate .auth-2fa-note svg {color:var(--accent) !important;}
+.auth-gate .auth-divider::before,.auth-gate .auth-divider::after {background:var(--line) !important;}
+html body .app-loading-screen {
+  background:linear-gradient(155deg,var(--bg1),var(--bg2)) !important;
+  color:var(--white) !important;
+}
+html body .app-loading-screen .app-loading-card {
+  color:var(--white) !important;
+  background:var(--panel-solid) !important;
+  border-color:var(--line-strong) !important;
+  box-shadow:0 20px 54px rgba(0,0,0,.16) !important;
+}
+html body .app-loading-screen .app-loading-brand,
+html body .app-loading-screen .app-loading-title {color:var(--white) !important;}
+html body .app-loading-screen .app-loading-detail {color:var(--muted) !important;}
+/* Less noise: consistent cards, quieter dividers, more intentional spacing. */
+.app-view .panel,.settings-card,.home-mini-widget,.chip {
+  box-shadow:0 3px 15px rgba(0,0,0,.035) !important;
+}
+.app-view .panel,.settings-card {border-color:var(--line) !important;}
+.settings-card {padding:clamp(14px,1.5vw,20px) !important;}
+.home-secondary-widgets {gap:12px !important;}
+.app-view .panel-label,.settings-card .panel-label {letter-spacing:.025em !important;}
+@media(max-width:600px){.home-secondary-widgets{grid-template-columns:1fr !important;gap:9px !important}.auth-gate .auth-card{padding:20px !important}}
+</style>
 </head>
 <body>
 <canvas id="hyperdriveMatrixCanvas" class="hyperdrive-matrix-canvas" aria-hidden="true"></canvas>
@@ -11006,8 +11171,9 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
   const ULTRA_PRICE = "A$4.99";
   let planState = {plan:"free", since:""};
   let ultraMatchTheme = true;
-  let currentTheme = "default";
-  let appearanceMode = "dark"; // dark | light | system
+  const startupAppearance = (()=>{ try { return JSON.parse(localStorage.getItem("lumin-ui-preferences")||"null")||{}; } catch (_) { return {}; } })();
+  let currentTheme = THEMES[startupAppearance.theme] ? startupAppearance.theme : "default";
+  let appearanceMode = ["dark","light","system"].includes(startupAppearance.appearance) ? startupAppearance.appearance : "dark"; // dark | light | system
   let hyperdriveRainEnabled = true;
   let customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
   let customThemeDraft = null;
@@ -11794,6 +11960,7 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
         if(!["dark","light","system"].includes(mode) || mode===appearanceMode) return;
         appearanceMode=mode;
         applyTheme(currentTheme);
+        rememberUiAppearance();
         buildAppearanceModeControl();
         buildBlades();
         await persist();
@@ -11878,6 +12045,10 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
     root.style.setProperty("--priority-inverse-ink",inverseInk);
   }
 
+  function rememberUiAppearance(){
+    try {localStorage.setItem("lumin-ui-preferences",JSON.stringify({theme:currentTheme,appearance:appearanceMode}));} catch (_) {}
+  }
+
   function applyTheme(key){
     const theme = THEMES[key] || THEMES.default;
     currentTheme = THEMES[key] ? key : "default";
@@ -11932,6 +12103,8 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
 
   /* Legacy animated priority rainbow disabled: the priority card now uses theme-coloured inverse gradients. */
   // startPriorityRainbow();
+  // Restore the locally saved appearance before authentication/cloud reads finish.
+  applyTheme(currentTheme);
 
   function buildThemePicker(container){
     const descriptions={
@@ -12009,6 +12182,7 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
           return;
         }
         applyTheme(key);
+        rememberUiAppearance();
         buildBlades();
         await persist();
       });
@@ -13010,8 +13184,8 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
     checkInDates = null;
     streakFrozenDates = null;
     streakFreezeLastCheck = "";
-    currentTheme = "default";
-    appearanceMode = "dark";
+    currentTheme = THEMES[startupAppearance.theme] ? startupAppearance.theme : "default";
+    appearanceMode = ["dark","light","system"].includes(startupAppearance.appearance) ? startupAppearance.appearance : "dark";
     hyperdriveRainEnabled = true;
     ultraMatchTheme = true;
     customTheme = {mode:"gradient", colors:["#6c8ef5","#c47cff"], angle:135};
@@ -14057,6 +14231,7 @@ html[data-appearance="light"] .streak-duo-message{background:#fff;color:#3c3c43;
 
   function finishLoadedState(){
     applyTheme(currentTheme);
+    rememberUiAppearance();
     applyHyperdriveRain();
     applyFocusMode();
     buildThemePicker($("themePickerMain"));
