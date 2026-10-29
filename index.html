@@ -4778,9 +4778,9 @@
 
 
   /* ================================================================
-     HYPERDRIVE LOGIN
-     The auth gate always uses the HYPERDRIVE identity, even when the
-     signed-in account later restores another saved theme.
+     THEME-AWARE LOGIN
+     Login inherits the saved theme variables from the root, just like
+     the loading and main application screens.
      ================================================================ */
   @keyframes authHyperdriveMatrixFall{
     from{transform:translate3d(0,-16%,0);}
@@ -4788,28 +4788,14 @@
   }
 
   .auth-gate{
-    --bg1:#010304;
-    --bg2:#040a0b;
-    --panel:rgba(255,255,255,.035);
-    --panel-solid:#081113;
-    --panel-raised:#101b1e;
-    --accent:#20eee9;
-    --accent-soft:#77fffb;
-    --accent2:#45ef72;
-    --positive:#62f08e;
-    --white:#f3fffe;
-    --muted:#7f9b9d;
-    --line:rgba(82,255,239,.09);
-    --line-strong:rgba(82,255,239,.19);
-
+    /* Inherit --bg1, --accent, --panel-solid and the rest of the active palette. */
     isolation:isolate;
     overflow:hidden;
     color:var(--white);
     background:
-      radial-gradient(ellipse 760px 510px at 10% -3%,rgba(31,242,235,.15),transparent 61%),
-      radial-gradient(ellipse 700px 540px at 103% 86%,rgba(77,241,115,.10),transparent 58%),
-      radial-gradient(ellipse 560px 420px at 74% 108%,rgba(174,52,255,.09),transparent 60%),
-      linear-gradient(180deg,#010304 0%,#040a0b 47%,#020607 100%);
+      radial-gradient(ellipse 760px 510px at 10% -3%,color-mix(in srgb,var(--accent) 8%,transparent),transparent 61%),
+      radial-gradient(ellipse 700px 540px at 103% 86%,color-mix(in srgb,var(--accent2) 7%,transparent),transparent 58%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));
   }
 
   .auth-gate::before{
@@ -4830,11 +4816,11 @@
     overflow:hidden;
     pointer-events:none;
     z-index:-2;
-    color:rgba(66,255,231,.13);
+    color:color-mix(in srgb,var(--accent) 15%,transparent);
     font:500 11px/2.2 'JetBrains Mono',monospace;
     letter-spacing:10px;
     word-spacing:13px;
-    text-shadow:0 0 8px rgba(34,238,226,.13);
+    text-shadow:0 0 8px color-mix(in srgb,var(--accent) 15%,transparent);
     opacity:.19;
     animation:authHyperdriveMatrixFall 34s linear infinite;
     will-change:transform;
@@ -4849,8 +4835,8 @@
     pointer-events:none;
     z-index:-1;
     background:
-      linear-gradient(rgba(31,242,235,.022) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(31,242,235,.022) 1px,transparent 1px);
+      linear-gradient(color-mix(in srgb,var(--accent) 2%,transparent) 1px,transparent 1px),
+      linear-gradient(90deg,color-mix(in srgb,var(--accent) 2%,transparent) 1px,transparent 1px);
     background-size:42px 42px;
     opacity:.45;
   }
