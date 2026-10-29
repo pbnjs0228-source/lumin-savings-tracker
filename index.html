@@ -7674,6 +7674,20 @@ html .home-priority-island{
   .streak-calendar-day-number{width:25px !important;height:25px !important;font-size:11px !important;}
 }
 
+
+/* Forecast: compact, precise date picker and Ultra gate */
+.forecast-date-control{width:min(300px,100%);display:flex;flex-direction:column;gap:7px;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--panel-solid)}
+.forecast-date-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;color:var(--muted)}
+.forecast-date-top strong{color:var(--white);font-size:11px}
+.forecast-date-control input[type=date]{width:100%;padding:9px 10px;border-radius:10px;background:var(--panel-raised);color:var(--white);border:1px solid var(--line-strong);color-scheme:normal}
+html[data-appearance=dark] .forecast-date-control input[type=date]{color-scheme:dark}
+.forecast-date-control input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.forecast-date-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:10px}
+.forecast-pro-gate{text-align:center;padding:clamp(28px,5vw,55px) 20px;max-width:660px;margin:12px auto}
+.forecast-pro-mark{color:var(--accent-soft);font-size:11px;letter-spacing:1.5px;font-weight:800}
+.forecast-pro-gate h3{color:var(--white);font-size:clamp(18px,3vw,25px);margin:12px 0 8px}
+.forecast-pro-gate p{color:var(--muted);font-size:13px;line-height:1.6;max-width:420px;margin:0 auto 20px}
+@media(max-width:600px){.forecast-date-control{width:100%}.forecast-pro-gate{padding:30px 16px}}
 </style>
 
 <style id="lumin-final-mobile-layout-fix">
@@ -9787,11 +9801,15 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     <div id="forecastTabPanel" class="app-view hidden feature-page" role="region" aria-label="Forecast">
       <div class="feature-page-head">
         <div><div class="dashboard-section-eyebrow">Look ahead</div><h2>Forecast</h2><p>Predicts your balance from the shifts, regular pay and subscriptions on your calendar.</p></div>
-        <div class="segmented forecast-horizon" id="forecastHorizon" aria-label="Forecast length">
-          <button type="button" data-days="7">7d</button><button type="button" data-days="14">14d</button><button type="button" data-days="30">30d</button><button type="button" data-days="60">60d</button><button type="button" data-days="90">90d</button>
+        <div class="forecast-date-control" id="forecastHorizon">
+          <div class="forecast-date-top"><label for="forecastEndDate">Forecast until</label><strong id="forecastHorizonLabel">30 days ahead</strong></div>
+          <input type="date" id="forecastEndDate" aria-label="Forecast end date" />
+          <input type="range" id="forecastDaysSlider" min="1" max="365" value="30" step="1" aria-label="Days to forecast" />
+          <div class="forecast-date-scale"><span>Tomorrow</span><span>1 year</span></div>
         </div>
       </div>
-      <div class="forecast-cards" id="forecastCards"></div>
+      <div id="forecastProGate" class="panel forecast-pro-gate hidden"><div class="forecast-pro-mark">✦ LUMIN ULTRA</div><h3>Forecast your financial future</h3><p>Unlock a custom forecast date, projected balances, upcoming payments and goal estimates with Ultra.</p><button class="btn btn-primary" type="button" id="forecastUpgradeBtn">Explore Ultra</button></div>
+      <div id="forecastProContent"><div class="forecast-cards" id="forecastCards"></div>
       <section class="panel forecast-chart-panel">
         <div class="forecast-chart-head">
           <div class="panel-label"><span class="dash"></span>Projected balance</div>
@@ -9806,7 +9824,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
         <div id="forecastTimeline" class="forecast-timeline"></div>
         <button type="button" class="btn btn-ghost forecast-more hidden" id="forecastMoreBtn">Show everything</button>
       </section>
-      <p class="forecast-note">Estimates only. “From your calendar” counts planned shifts, regular pay and subscriptions, minus your typical everyday spending from the last 4 weeks. “At your recent pace” assumes you keep earning and spending like you have lately.</p>
+      <p class="forecast-note">Forecasts are estimates, not guaranteed balances. Planned shifts use your current hourly rate; regular pay and subscriptions follow their recorded schedules. Unscheduled spending and income use your available recent history. Check for overlapping pay and shift entries, missing expenses, and future changes to your pay or bills.</p></div>
     </div>
 
     <div id="calendarTabPanel" class="app-view hidden feature-page" role="region" aria-label="Calendar">
@@ -15930,6 +15948,10 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
         kicker.textContent="Goal limit reached";
         title.textContent="You've used all 5 free goals";
         lead.textContent="Upgrade to Ultra to add unlimited goals. Your existing goals are untouched.";
+      }else if(reason==="forecast"){
+        kicker.textContent="Ultra forecast";
+        title.textContent="Plan ahead with Forecast";
+        lead.textContent="Choose any day up to a year ahead and explore estimated balances, bills and upcoming savings milestones with LUMIN Ultra.";
       }else if(reason==="theme"){
         kicker.textContent="Ultra theme";
         title.textContent="Unlock the crystal theme";
@@ -16058,9 +16080,34 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   // ================================================================
   let forecastDays = 30;
   let forecastShowAll = false;
+  const FORECAST_MAX_DAYS=365;
+  function forecastClampDays(n){return Math.min(FORECAST_MAX_DAYS,Math.max(1,Math.round(Number(n)||30)));}
+  function forecastDaysFromDate(value){
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(value||"")) return null;
+    const today=todayStr(), start=new Date(today+"T12:00:00"), end=new Date(value+"T12:00:00");
+    if(!Number.isFinite(end.getTime())||dateStr(end)!==value) return null;
+    const days=Math.round((end-start)/86400000);
+    return days>=1 && days<=FORECAST_MAX_DAYS ? days : null;
+  }
+  function refreshForecastDateControl(){
+    const slider=$("forecastDaysSlider"), date=$("forecastEndDate"), label=$("forecastHorizonLabel");
+    if(!slider||!date) return;
+    forecastDays=forecastClampDays(forecastDays);
+    slider.value=String(forecastDays);
+    date.min=addDaysKey(todayStr(),1);
+    date.max=addDaysKey(todayStr(),FORECAST_MAX_DAYS);
+    date.value=addDaysKey(todayStr(),forecastDays);
+    if(label) label.textContent=forecastDays+" day"+(forecastDays===1?"":"s")+" ahead";
+  }
+  function updateForecastHorizon(days){
+    forecastDays=forecastClampDays(days);
+    try{localStorage.setItem("lumin-forecast-days",String(forecastDays));}catch(_){}
+    renderForecast();
+  }
+
   try{
     const savedDays = Number(localStorage.getItem("lumin-forecast-days"));
-    if([7,14,30,60,90].includes(savedDays)) forecastDays = savedDays;
+    if(Number.isFinite(savedDays) && savedDays>=1 && savedDays<=FORECAST_MAX_DAYS) forecastDays = savedDays;
   }catch(_){}
 
   function forecastAdvanceSub(key,freq){
@@ -16249,7 +16296,12 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
 
   function renderForecast(){
     const cardsEl=$("forecastCards"); if(!cardsEl||!wallet) return;
-    document.querySelectorAll("#forecastHorizon button").forEach(btn=>btn.classList.toggle("active",Number(btn.dataset.days)===forecastDays));
+    const entitled=isUltra();
+    $("forecastProGate")?.classList.toggle("hidden",entitled);
+    $("forecastProContent")?.classList.toggle("hidden",!entitled);
+    $("forecastHorizon")?.classList.toggle("hidden",!entitled);
+    if(!entitled) return;
+    refreshForecastDateControl();
     const fc=buildForecast(forecastDays);
     const end=fc.balA[fc.days], delta=end-fc.start;
     const dip=fc.balA[fc.minIdx];
@@ -16315,12 +16367,14 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     },{threshold:0.01}).observe(wrap);
   })();
 
-  $("forecastHorizon").addEventListener("click",e=>{
-    const btn=e.target.closest("button[data-days]"); if(!btn) return;
-    forecastDays=Number(btn.dataset.days);
-    try{ localStorage.setItem("lumin-forecast-days",String(forecastDays)); }catch(_){}
-    renderForecast();
+  $("forecastDaysSlider").addEventListener("input",e=>{if(isUltra()) updateForecastHorizon(e.target.value);});
+  $("forecastEndDate").addEventListener("change",e=>{
+    if(!isUltra()) return;
+    const days=forecastDaysFromDate(e.target.value);
+    if(days===null){refreshForecastDateControl();return;}
+    updateForecastHorizon(days);
   });
+  $("forecastUpgradeBtn").addEventListener("click",()=>openUpgradeModal("forecast"));
   $("forecastMoreBtn").addEventListener("click",()=>{ forecastShowAll=!forecastShowAll; renderForecast(); });
   let forecastLastWidth=0, forecastResizeTimer=null;
   window.addEventListener("resize",()=>{
