@@ -7687,7 +7687,80 @@ html[data-appearance=dark] .forecast-date-control input[type=date]{color-scheme:
 .forecast-pro-mark{color:var(--accent-soft);font-size:11px;letter-spacing:1.5px;font-weight:800}
 .forecast-pro-gate h3{color:var(--white);font-size:clamp(18px,3vw,25px);margin:12px 0 8px}
 .forecast-pro-gate p{color:var(--muted);font-size:13px;line-height:1.6;max-width:420px;margin:0 auto 20px}
+#forecastTabPanel{position:relative;}
+#forecastTabPanel.forecast-locked .feature-page-head,
+#forecastTabPanel.forecast-locked #forecastProContent{
+  position:relative;
+}
+#forecastTabPanel.forecast-locked #forecastHorizon,
+#forecastTabPanel.forecast-locked #forecastProContent{
+  filter:blur(10px);
+  opacity:.62;
+  pointer-events:none;
+  user-select:none;
+}
+#forecastTabPanel.forecast-locked::after{
+  content:"";
+  position:absolute;
+  inset:92px 0 0 0;
+  background:linear-gradient(180deg,rgba(10,10,14,.08),rgba(10,10,14,.18));
+  pointer-events:none;
+  z-index:4;
+}
+html[data-appearance="light"] #forecastTabPanel.forecast-locked::after{
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.16));
+}
+#forecastTabPanel #forecastProGate{
+  pointer-events:auto;
+}
+#forecastTabPanel.forecast-locked #forecastProGate{
+  display:block;
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(470px,calc(100vw - 72px));
+  margin:0;
+  z-index:30;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  background:color-mix(in srgb,var(--panel-solid) 88%,transparent);
+  border-color:color-mix(in srgb,var(--ux-b) 34%,var(--line-strong));
+  box-shadow:0 24px 50px rgba(0,0,0,.24);
+}
+#forecastTabPanel.forecast-locked #forecastProGate h3{margin-top:10px;}
+#forecastTabPanel.forecast-locked #forecastProGate p{margin-bottom:16px;}
+#forecastTabPanel.forecast-locked #forecastProContent{
+  min-height:320px;
+  padding-bottom:8px;
+}
+@media(max-width:700px){
+  #forecastTabPanel.forecast-locked #forecastProGate{width:min(430px,calc(100vw - 22px));}
+  #forecastTabPanel.forecast-locked::after{inset:86px 0 0 0;}
+}
+@media(max-width:600px){
+  #forecastTabPanel.forecast-locked #forecastProGate{width:min(430px,calc(100vw - 18px));}
+}
+
 @media(max-width:600px){.forecast-date-control{width:100%}.forecast-pro-gate{padding:30px 16px}}
+
+/* Savings Pockets, consistent with the main LUMIN cards */
+.pockets-panel{margin:16px 0;padding:18px;border-radius:18px;}
+.pockets-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+.pockets-head p{font-size:12px;line-height:1.5;color:var(--muted);margin:5px 0 0;max-width:440px;}
+.pockets-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0;}
+.pockets-summary>div{padding:12px;background:var(--panel-solid);border:1px solid var(--line);border-radius:13px;display:flex;flex-direction:column;gap:5px;}
+.pockets-summary span{font-size:11px;color:var(--muted);}.pockets-summary strong{font-size:17px;color:var(--white);font-variant-numeric:tabular-nums;}
+.pockets-summary .pocket-warning{color:#ee8d85;}
+.pockets-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:10px;}
+.pocket-card{background:var(--panel-solid);border:1px solid var(--line);border-radius:14px;padding:13px;min-width:0;}
+.pocket-card-main{display:flex;align-items:center;gap:10px;}.pocket-card-main>div:nth-child(2){min-width:0;flex:1;}.pocket-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;color:var(--accent-soft);background:color-mix(in srgb,var(--accent) 11%,transparent);}
+.pocket-card-main strong,.pocket-card-main small{display:block;overflow-wrap:anywhere}.pocket-card-main strong{color:var(--white);font-size:13px}.pocket-card-main small{color:var(--muted);font-size:10px;margin-top:2px}.pocket-card-main b{color:var(--white);font-size:14px;white-space:nowrap;}
+.pocket-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:12px}.pocket-actions input{min-width:75px;width:90px;flex:1;padding:7px 8px;font-size:12px;}.pocket-actions .btn{font-size:11px;padding:7px 9px;min-height:32px;}
+.pockets-editor{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:13px;max-width:420px}.pockets-editor-actions{display:flex;gap:8px;margin-top:10px;}.pockets-feedback{font-size:11px;color:var(--muted);margin-top:8px;}.pockets-feedback:empty{display:none}.pockets-empty{font-size:12px;color:var(--muted)}
+.activity-subscriptions-card{margin:16px 0;max-width:100%;}
+@media(max-width:620px){.pockets-summary{grid-template-columns:1fr 1fr}.pockets-summary>div:first-child{grid-column:1/-1}.pockets-panel{padding:13px}}
+
 </style>
 
 <style id="lumin-final-mobile-layout-fix">
@@ -8553,7 +8626,9 @@ input:focus,select:focus,textarea:focus{
   --ux-on:#14072a;
   --ux-glow:color-mix(in srgb,var(--ux-b) 55%,transparent);
 }
-html[data-ultra-match="true"]{--ux-a:var(--accent-soft);--ux-b:var(--accent);--ux-c:var(--accent2);}
+/* Only paid Ultra members can recolour Ultra branding to match their theme. */
+html[data-plan="ultra"][data-ultra-match="true"]{--ux-a:var(--accent-soft);--ux-b:var(--accent);--ux-c:var(--accent2);}
+html:not([data-plan="ultra"]){--ux-a:#dcb8ff;--ux-b:#b266ff;--ux-c:#7a8cff;}
 html[data-appearance="light"]{
   --ux-grad:linear-gradient(135deg,var(--ux-b),color-mix(in srgb,var(--ux-b) 55%,var(--ux-c)));
   --ux-on:#ffffff;
@@ -8621,7 +8696,58 @@ html[data-appearance="light"] .ultra-modal{
   color:var(--ux-muted);background:color-mix(in srgb,var(--ux-ink) 6%,transparent);border:1px solid var(--ux-line);font-size:14px;
 }
 .ultra-step.hidden{display:none !important;}
-.ultra-hero{text-align:center;padding:6px 8px 4px;}
+.ultra-hero{text-align:center;padding:4px 4px 2px;}
+.ultra-brand-lockup{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:10px;}
+.ultra-logo-lockup{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:18px;
+  border:1px solid var(--ux-line);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ux-ink) 4%,transparent),color-mix(in srgb,var(--ux-b) 8%,transparent));
+  box-shadow:0 10px 24px -16px var(--ux-glow), inset 0 1px 0 rgba(255,255,255,.12);
+}
+.ultra-logo-mark{
+  width:56px;height:56px;border-radius:18px;display:grid;place-items:center;flex:0 0 56px;
+  color:var(--ux-on);background:var(--ux-grad);
+  box-shadow:0 14px 28px -16px var(--ux-glow), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.ultra-logo-copy{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:center;}
+.ultra-wordmark{font:800 18px/1 'Sora','Inter',sans-serif;letter-spacing:.08em;color:var(--ux-ink);}
+.ultra-logo-pill{
+  padding:6px 10px;border-radius:999px;
+  font:800 10px/1 'Inter',sans-serif;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ux-on);background:var(--ux-grad);
+  box-shadow:0 10px 20px -14px var(--ux-glow), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.ultra-kicker{margin-top:4px;}
+.ultra-highlight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0 8px;}
+.ultra-highlight{
+  text-align:left;padding:12px 13px;border-radius:16px;border:1px solid var(--ux-line);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ux-ink) 4%,transparent),color-mix(in srgb,var(--ux-b) 7%,transparent));
+}
+.ultra-highlight strong{display:block;font:700 13px/1.3 'Sora','Inter',sans-serif;color:var(--ux-ink);margin-bottom:4px;}
+.ultra-highlight span{display:block;font-size:12px;line-height:1.45;color:var(--ux-muted);}
+.ultra-compare{margin:16px 0 8px;border-radius:18px;}
+.ultra-compare-row{grid-template-columns:1.5fr .7fr 1fr;padding:13px 14px;}
+.ultra-feature-check{color:var(--ux-a);font-weight:700;}
+.ultra-price{margin:18px 0 6px;}
+.ultra-pay-feature-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+  margin:0 0 16px;
+}
+.ultra-pay-feature{
+  padding:10px 12px;border-radius:14px;border:1px solid var(--ux-line);
+  background:color-mix(in srgb,var(--ux-ink) 4%,transparent);
+  font-size:12.5px;line-height:1.45;color:var(--ux-muted);
+}
+.ultra-pay-feature b{display:block;margin-bottom:3px;color:var(--ux-ink);font-size:12px;letter-spacing:.01em;}
+.ultra-pay-title{margin-top:2px !important;margin-bottom:8px !important;}
+.ultra-pay-sub{margin:0 0 14px;color:var(--ux-muted);font-size:13.5px;line-height:1.55;}
+@media (max-width:640px){
+  .ultra-logo-lockup{padding:10px 12px;gap:10px;border-radius:16px;}
+  .ultra-logo-mark{width:50px;height:50px;border-radius:16px;flex-basis:50px;}
+  .ultra-wordmark{font-size:16px;}
+  .ultra-highlight-grid,.ultra-pay-feature-list{grid-template-columns:1fr;}
+}
 .ultra-gem{
   width:68px;height:68px;margin:0 auto 14px;display:grid;place-items:center;border-radius:20px;color:var(--ux-on);
   background:var(--ux-grad);
@@ -9183,6 +9309,496 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
 .home-secondary-widgets {gap:12px !important;}
 .app-view .panel-label,.settings-card .panel-label {letter-spacing:.025em !important;}
 @media(max-width:600px){.home-secondary-widgets{grid-template-columns:1fr !important;gap:9px !important}.auth-gate .auth-card{padding:20px !important}}
+</style>
+<style id="lumin-ultra-fullpage-clean">
+/* LUMIN Ultra, focused full-page upgrade flow (2026 redesign). */
+#ultraBackdrop.modal-backdrop:not(.hidden){
+  inset:0!important;display:block!important;padding:0!important;
+  background:var(--bg1)!important;backdrop-filter:none!important;
+  overflow:hidden!important;z-index:250!important;
+}
+#ultraBackdrop > .ultra-modal{
+  position:relative!important;inset:auto!important;
+  width:100%!important;max-width:none!important;
+  height:100dvh!important;max-height:100dvh!important;
+  min-height:100dvh!important;overflow-y:auto!important;
+  border:0!important;border-radius:0!important;
+  padding:clamp(52px,7vh,80px) max(22px,calc((100vw - 790px)/2)) 64px!important;
+  background:var(--bg1)!important;color:var(--white)!important;
+  box-shadow:none!important;animation:none!important;
+  --ux-ink:var(--white);--ux-muted:var(--muted);
+  --ux-line:var(--line-strong);
+}
+#ultraBackdrop > .ultra-modal::before{display:none!important;}
+#ultraBackdrop .ultra-step{max-width:790px;margin:0 auto;}
+#ultraBackdrop .ultra-step#ultraStepPay,
+#ultraBackdrop .ultra-step#ultraStepDone,
+#ultraBackdrop .ultra-step#ultraStepManage,
+#ultraBackdrop .ultra-step#ultraStepProcessing{max-width:590px;}
+#ultraBackdrop .ultra-close{
+  position:fixed!important;right:clamp(16px,4vw,48px)!important;top:clamp(14px,3vh,30px)!important;
+  width:40px!important;height:40px!important;border-radius:12px!important;
+  color:var(--muted)!important;background:var(--panel-solid)!important;
+  border:1px solid var(--line)!important;z-index:10;
+}
+#ultraBackdrop .ultra-close:hover{background:var(--panel-raised)!important;color:var(--white)!important;}
+#ultraBackdrop .ultra-hero{text-align:left!important;padding:0!important;margin-bottom:27px;}
+#ultraBackdrop .ultra-brand-lockup{align-items:flex-start;margin-bottom:25px;}
+#ultraBackdrop .ultra-logo-lockup{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+#ultraBackdrop .ultra-logo-mark{width:48px;height:48px;flex-basis:48px;border-radius:14px;box-shadow:none!important;}
+#ultraBackdrop .ultra-logo-copy{justify-content:flex-start;}
+#ultraBackdrop .ultra-wordmark{font-size:19px;}
+#ultraBackdrop .ultra-logo-pill{box-shadow:none!important;background:#7c3aed!important;color:white!important;}
+#ultraBackdrop .ultra-kicker{font-size:11px;letter-spacing:.1em;color:var(--muted)!important;}
+#ultraBackdrop .ultra-hero h2{margin:10px 0 9px!important;font:750 clamp(29px,4vw,44px)/1.12 'Sora','Inter',sans-serif!important;letter-spacing:-.045em!important;max-width:650px;}
+#ultraBackdrop .ultra-hero p{font-size:15px!important;max-width:560px;line-height:1.65!important;}
+#ultraBackdrop .ultra-simple-content{display:grid;gap:22px;}
+#ultraBackdrop .ultra-section-heading{font:750 13px 'Sora','Inter',sans-serif;color:var(--white);}
+#ultraBackdrop .ultra-simple-benefits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+#ultraBackdrop .ultra-simple-benefit{
+  display:flex;align-items:flex-start;gap:13px;min-height:102px;padding:17px;
+  background:var(--panel-solid);border:1px solid var(--line);border-radius:17px;
+}
+#ultraBackdrop .ultra-benefit-icon{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:10px;background:rgba(124,58,237,.12);color:#a78bfa;font-size:18px;font-weight:700;}
+#ultraBackdrop .ultra-simple-benefit strong{display:block;font-size:13px;color:var(--white);margin:0 0 5px;line-height:1.3;}
+#ultraBackdrop .ultra-simple-benefit span:last-child{display:block;font-size:12px;line-height:1.5;color:var(--muted);}
+#ultraBackdrop .ultra-simple-plan{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:20px;border:1px solid color-mix(in srgb,#8b5cf6 35%,var(--line));
+  border-radius:17px;background:var(--panel-solid);
+}
+#ultraBackdrop .ultra-plan-name{font-weight:750;font-size:14px;color:var(--white);}
+#ultraBackdrop .ultra-plan-description{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45;}
+#ultraBackdrop .ultra-plan-amount{font:750 22px 'Sora','Inter',sans-serif;color:var(--white);white-space:nowrap;}
+#ultraBackdrop .ultra-plan-amount small{font:500 12px 'Inter',sans-serif;color:var(--muted);}
+#ultraBackdrop .ultra-demo-pill{font:700 9px 'Inter',sans-serif;letter-spacing:.05em;padding:4px 7px;margin-left:6px;border:1px solid var(--line-strong);border-radius:7px;color:var(--muted);}
+#ultraBackdrop .ultra-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px;}
+#ultraBackdrop .ultra-actions .btn{width:auto!important;min-width:165px;min-height:44px!important;border-radius:12px!important;font-size:13px!important;box-shadow:none!important;}
+#ultraBackdrop .ultra-actions .ultra-cta,
+#ultraBackdrop #ultraPayBtn{background:#7c3aed!important;color:white!important;box-shadow:none!important;border:1px solid #7c3aed!important;}
+#ultraBackdrop .ultra-actions .ultra-cta:hover,
+#ultraBackdrop #ultraPayBtn:hover{background:#6d28d9!important;}
+#ultraBackdrop .ultra-actions .btn-ghost{background:transparent!important;color:var(--white)!important;border:1px solid var(--line-strong)!important;}
+#ultraBackdrop .ultra-pay-summary{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0;padding:16px;border:1px solid var(--line);border-radius:13px;background:var(--panel-solid);font-size:13px;}
+#ultraBackdrop .ultra-pay-summary strong{color:var(--white)}
+#ultraBackdrop .ultra-pay-summary span{color:var(--muted)}
+#ultraBackdrop .ultra-pay-title{font-size:27px!important;}
+#ultraBackdrop .ultra-card-preview{box-shadow:none!important;}
+#ultraBackdrop .ultra-demo-note{border-radius:12px;}
+#ultraBackdrop .ultra-pay-feature-list{display:none!important;}
+@media(max-width:650px){
+  #ultraBackdrop > .ultra-modal{padding:72px 18px 40px!important;}
+  #ultraBackdrop .ultra-simple-benefits{grid-template-columns:1fr;gap:9px;}
+  #ultraBackdrop .ultra-simple-benefit{min-height:0;padding:13px;}
+  #ultraBackdrop .ultra-actions{display:grid;}
+  #ultraBackdrop .ultra-actions .btn{width:100%!important;}
+  #ultraBackdrop .ultra-simple-plan{align-items:flex-start;}
+  #ultraBackdrop .ultra-brand-lockup{margin-bottom:18px;}
+}
+<style id="lumin-ultra-premium-experience">
+/* Progressive, restrained motion. Premium is depth and detail, not neon glow. */
+#ultraBackdrop > .ultra-modal{
+  --ux-premium:#9064ee;
+  --ux-premium-soft:#c9b6ff;
+  background:radial-gradient(ellipse 72% 38% at 90% 0%,rgba(119,72,204,.10),transparent 75%),var(--bg1)!important;
+  scrollbar-width:thin;
+}
+#ultraBackdrop .ultra-step#ultraStepPitch{max-width:880px;}
+#ultraBackdrop .ultra-hero{margin-bottom:22px;}
+#ultraBackdrop .ultra-hero h2{
+  font-size:clamp(38px,5.1vw,65px)!important;
+  max-width:780px;letter-spacing:-.058em!important;
+  line-height:1.04!important;
+}
+#ultraBackdrop .ultra-hero p{font-size:clamp(14px,1.7vw,17px)!important;}
+#ultraBackdrop .ultra-logo-mark{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1);}
+#ultraBackdrop .ultra-logo-mark::after{
+  content:"";position:absolute;inset:-50%;background:linear-gradient(105deg,transparent 43%,rgba(255,255,255,.5) 50%,transparent 57%);
+  transform:translateX(-115%) rotate(8deg);animation:ultraSheen 7s 1.8s infinite;
+}
+#ultraBackdrop .ultra-logo-lockup:hover .ultra-logo-mark{transform:rotate(-5deg) scale(1.05);}
+#ultraBackdrop .ultra-logo-pill{background:linear-gradient(115deg,#6f43db,#9668f4)!important;}
+#ultraBackdrop .ultra-premium-showcase{
+  min-height:220px;height:clamp(220px,27vw,285px);margin:0 0 26px;
+  position:relative;isolation:isolate;overflow:hidden;border-radius:23px;
+  background:linear-gradient(124deg,#171126 0%,#221838 43%,#382153 100%);
+  border:1px solid rgba(205,179,255,.22);
+  box-shadow:0 22px 52px -37px rgba(50,23,100,.6),inset 0 1px 0 rgba(255,255,255,.10);
+}
+#ultraBackdrop .ultra-showcase-grid{
+  position:absolute;inset:0;opacity:.35;
+  background-image:linear-gradient(rgba(207,187,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(207,187,255,.12) 1px,transparent 1px);
+  background-size:38px 38px;mask-image:linear-gradient(90deg,transparent 8%,#000 100%);
+}
+#ultraBackdrop .ultra-showcase-orbit{
+  position:absolute;width:350px;height:350px;right:9%;top:50%;margin-top:-175px;
+  border:1px solid rgba(211,184,255,.22);border-radius:50%;animation:ultraOrbit 28s linear infinite;
+}
+#ultraBackdrop .ultra-showcase-orbit::after{
+  content:"";position:absolute;width:7px;height:7px;top:9%;left:20%;border-radius:50%;background:#d3baff;
+  box-shadow:0 0 0 6px rgba(192,160,255,.08);
+}
+#ultraBackdrop .ultra-showcase-orbit.orbit-two{width:245px;height:245px;margin-top:-122px;right:15%;animation-duration:19s;animation-direction:reverse;}
+#ultraBackdrop .ultra-showcase-symbol{
+  position:absolute;width:128px;height:128px;right:21%;top:50%;margin-top:-64px;
+  display:grid;place-items:center;border-radius:36px;transform:rotate(-9deg);
+  color:#f5edff;background:linear-gradient(145deg,#a17af1,#6835cb);
+  border:1px solid rgba(255,255,255,.38);
+  box-shadow:12px 21px 42px rgba(13,8,32,.4),inset 0 2px 0 rgba(255,255,255,.24);
+  animation:ultraFloat 5.5s ease-in-out infinite;
+}
+#ultraBackdrop .ultra-showcase-symbol svg{width:70px;height:70px;filter:drop-shadow(0 3px 3px rgba(29,11,57,.25));}
+#ultraBackdrop .ultra-showcase-caption{position:absolute;left:30px;bottom:28px;display:flex;flex-direction:column;gap:7px;color:#fff;}
+#ultraBackdrop .ultra-showcase-caption span{font:700 10px 'Inter',sans-serif;letter-spacing:.18em;color:#bfa5ee;}
+#ultraBackdrop .ultra-showcase-caption strong{font:700 clamp(19px,3vw,27px) 'Sora',sans-serif;letter-spacing:-.045em;}
+#ultraBackdrop .ultra-showcase-index{position:absolute;top:23px;right:27px;color:#bda5e8;font:600 10px 'JetBrains Mono',monospace;letter-spacing:.1em;}
+#ultraBackdrop .ultra-simple-content{gap:18px;}
+#ultraBackdrop .ultra-simple-benefit{transition:transform .25s ease,border-color .25s ease,background-color .25s ease;}
+#ultraBackdrop .ultra-simple-benefit:hover{transform:translateY(-3px);border-color:rgba(166,126,246,.5);background:color-mix(in srgb,var(--panel-solid) 88%,#8b5cf6);}
+#ultraBackdrop .ultra-benefit-icon{transition:transform .28s ease;color:#c8acff;background:rgba(124,58,237,.14);}
+#ultraBackdrop .ultra-simple-benefit:hover .ultra-benefit-icon{transform:scale(1.1) rotate(-8deg);}
+#ultraBackdrop .ultra-simple-plan{position:relative;overflow:hidden;transition:border-color .25s ease,transform .25s ease;}
+#ultraBackdrop .ultra-simple-plan:hover{border-color:#9e78f1;transform:translateY(-2px);}
+#ultraBackdrop .ultra-actions .ultra-cta{background:linear-gradient(110deg,#7650da,#9666ed)!important;border-color:#8960e8!important;transition:transform .25s ease,filter .25s ease,box-shadow .25s ease!important;}
+#ultraBackdrop .ultra-actions .ultra-cta:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 13px 25px -16px rgba(123,79,220,.7)!important;}
+#ultraBackdrop .ultra-actions .ultra-cta:active{transform:translateY(0) scale(.985);}
+#ultraBackdrop .ultra-step:not(.hidden) > *{animation:ultraEnter .7s cubic-bezier(.2,.8,.2,1) both;}
+#ultraBackdrop #ultraStepPitch .ultra-premium-showcase{animation-delay:.10s;}
+#ultraBackdrop #ultraStepPitch .ultra-simple-content{animation-delay:.20s;}
+#ultraBackdrop #ultraStepPitch .ultra-actions{animation-delay:.30s;}
+#ultraBackdrop #ultraStepPay .ultra-card-preview{animation-delay:.14s;}
+#ultraBackdrop #ultraStepPay form{animation-delay:.23s;}
+@keyframes ultraEnter{from{opacity:0;transform:translateY(19px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ultraFloat{0%,100%{transform:translateY(0) rotate(-9deg)}50%{transform:translateY(-10px) rotate(-5deg)}}
+@keyframes ultraOrbit{to{transform:rotate(360deg)}}
+@keyframes ultraSheen{0%,68%,100%{transform:translateX(-115%) rotate(8deg)}80%{transform:translateX(115%) rotate(8deg)}}
+@media(max-width:650px){
+  #ultraBackdrop .ultra-premium-showcase{height:206px;min-height:206px;border-radius:18px;margin-bottom:22px;}
+  #ultraBackdrop .ultra-showcase-symbol{right:17%;width:95px;height:95px;margin-top:-55px;border-radius:26px;}
+  #ultraBackdrop .ultra-showcase-symbol svg{width:54px;height:54px;}
+  #ultraBackdrop .ultra-showcase-orbit{right:-20%;}
+  #ultraBackdrop .ultra-showcase-orbit.orbit-two{right:-6%;}
+  #ultraBackdrop .ultra-showcase-caption{left:17px;bottom:18px;}
+  #ultraBackdrop .ultra-showcase-caption strong{font-size:18px;}
+  #ultraBackdrop .ultra-showcase-index{top:14px;right:16px;}
+  #ultraBackdrop .ultra-hero h2{font-size:clamp(33px,10vw,46px)!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #ultraBackdrop *,#ultraBackdrop *::before,#ultraBackdrop *::after{animation:none!important;transition:none!important;}
+}
+</style>
+</style>
+
+<style id="lumin-editorial-premium-redesign">
+/* LUMIN | 2026 restrained finance-product visual system.
+   Keep theme variables, data-driven components, and app behaviour intact. */
+:root{
+ --lui-radius:14px;--lui-small:10px;--lui-focus:color-mix(in srgb,var(--accent) 26%,transparent);
+ --lui-stroke:color-mix(in srgb,var(--white) 11%,transparent);
+ --lui-surface:var(--panel-solid);--lui-raised:var(--panel-raised);
+ --lui-shadow:0 2px 10px rgba(0,0,0,.035);
+}
+html[data-appearance="light"]{--lui-stroke:rgba(25,30,40,.10);--lui-shadow:0 3px 15px rgba(20,25,35,.035);}
+html{scroll-behavior:smooth;}
+body{
+ font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif!important;
+ font-size:14px;line-height:1.5;letter-spacing:-.012em;
+ background:var(--bg1)!important;
+ color:var(--white);
+}
+body::before,body::after{opacity:.12!important;filter:none!important;}
+/* No animated rainbow/gloss layers on general surfaces. */
+.panel,.settings-card,.dashboard-card,.dashboard-widget,.stat-card,.game-strip,.chip,.budget-card,.record-card,.calendar-main-card,.calendar-day-card,.feature-form-card,.wallet-card,.home-mini-widget,.home-priority-island,.modal:not(.ultra-modal),.item-card:not(.priority),.item-add-card,.forecast-card,.forecast-chart-panel,.forecast-timeline-panel,.forecast-goal,.budget-list-card{
+ border-radius:var(--lui-radius)!important;
+ border:1px solid var(--lui-stroke)!important;
+ background:var(--lui-surface)!important;
+ box-shadow:var(--lui-shadow)!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.panel::before,.panel::after,.settings-card::before,.settings-card::after,.game-strip::before,.game-strip::after,.chip::before,.chip::after,.home-mini-widget::after,.dashboard-chart-first::before,.item-card:not(.priority)::before{opacity:0!important;pointer-events:none!important;}
+.panel:hover,.settings-card:hover,.dashboard-card:hover,.stat-card:hover,.game-strip:hover,.chip:hover,.item-card:not(.priority):hover{transform:none!important;filter:none!important;box-shadow:var(--lui-shadow)!important;border-color:var(--line-strong)!important;}
+.panel,.settings-card,.dashboard-card,.stat-card,.item-card,.budget-card,.chip,.record-card{animation:none!important;}
+/* Typography: remove neon gradients and uppercase micro-label overload. */
+h1,h2,h3,h4,.title,.settings-title,.calendar-month-title,.feature-page-head h2{font-family:Inter,system-ui,sans-serif!important;font-weight:680!important;letter-spacing:-.045em!important;}
+h1.title{font-size:clamp(25px,3vw,34px)!important;line-height:1.18!important;}
+h1.title span,.figure-value,.chip-value,.range-summary-value,.projection-time,.game-total-xp{background:none!important;-webkit-text-fill-color:currentColor!important;filter:none!important;text-shadow:none!important;}
+.feature-page-head h2{font-size:clamp(24px,2.2vw,30px)!important;line-height:1.15!important;}
+.feature-page-head p,.settings-card-desc,.calendar-month-sub{font-size:13px!important;line-height:1.55!important;}
+.panel-label,.dashboard-section-eyebrow,.settings-card-title,.forecast-card-label,.chip-label{
+ letter-spacing:.045em!important;text-transform:none!important;font-size:11px!important;font-weight:650!important;
+}
+.panel-label .dash,.settings-card-title .dash{width:6px!important;height:6px!important;border-radius:50%!important;}
+/* Navigation: low-contrast shell with distinctly selected route, no ornamental glow. */
+html body #mainScreen>.app-sidebar{
+ background:var(--panel-solid)!important;
+ border:1px solid var(--lui-stroke)!important;
+ box-shadow:none!important;
+ border-radius:16px!important;
+ backdrop-filter:none!important;
+}
+html body #mainScreen>.app-sidebar .app-nav-btn{
+ border:1px solid transparent!important;border-radius:10px!important;
+ background:transparent!important;box-shadow:none!important;
+ color:var(--muted)!important;transform:none!important;
+ transition:color .16s ease,background-color .16s ease,border-color .16s ease!important;
+}
+html body #mainScreen>.app-sidebar .app-nav-btn.active{
+ color:var(--white)!important;
+ background:var(--panel-raised)!important;
+ border-color:var(--lui-stroke)!important;
+ box-shadow:none!important;
+}
+html body #mainScreen>.app-sidebar .app-nav-btn:hover{color:var(--white)!important;background:color-mix(in srgb,var(--white) 5%,transparent)!important;}
+html body #mainScreen>.app-sidebar .app-nav-btn svg{filter:none!important;color:currentColor!important;}
+.sidebar-brand-icon{box-shadow:none!important;filter:none!important;border-radius:11px!important;}
+/* Common controls and inputs. */
+.btn,.btn-primary,.btn-secondary,.btn-ghost,.btn-icon,.segmented button,.calendar-event-actions button,.calendar-month-actions button,.swatch.theme-option{
+ border-radius:10px!important;box-shadow:none!important;
+ font-family:Inter,system-ui,sans-serif!important;font-weight:630!important;
+ transition:background-color .16s ease,border-color .16s ease,color .16s ease!important;
+}
+.btn::before,.btn::after,.btn-primary::before,.btn-primary::after{animation:none!important;display:none!important;}
+.btn:hover,.btn:active,.btn-primary:hover,.btn-primary:active,.btn-secondary:hover,.btn-ghost:hover,.swatch.theme-option:hover{transform:none!important;filter:none!important;}
+.btn-primary{background:var(--accent)!important;border:1px solid transparent!important;color:var(--bg1)!important;}
+.btn-primary:hover{background:var(--accent-soft)!important;}
+.btn-secondary,.btn-ghost{background:var(--panel-raised)!important;border:1px solid var(--lui-stroke)!important;color:var(--white)!important;}
+.field input,.field textarea,.field select,input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),select,textarea{
+ border-radius:10px!important;box-shadow:none!important;
+}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{
+ outline:2px solid var(--accent)!important;outline-offset:3px!important;
+}
+/* Compact but breathable dashboard. */
+.dashboard-hero-grid,.home-secondary-widgets,.settings-grid,.budget-layout,.calendar-layout{gap:14px!important;}
+.dashboard-chart-first{padding:clamp(16px,2vw,25px)!important;}
+.panel,.settings-card,.feature-form-card,.budget-list-card,.calendar-main-card,.calendar-day-card{padding:clamp(15px,1.8vw,22px)!important;}
+.chip{padding:13px 15px!important;}
+.chip-value,.figure-value{font-weight:700!important;letter-spacing:-.035em!important;}
+.home-mini-widget{padding:16px!important;}
+.home-mini-head{margin-bottom:10px!important;}
+/* Keep useful streak tracking while dropping arcade visual effects. */
+.game-strip{padding:16px!important;}
+.game-level-orb,.game-streak,.game-checkin-btn,.game-xp-track,.game-xp-fill,.game-freeze-btn,.mission-inline-progress-track{filter:none!important;text-shadow:none!important;box-shadow:none!important;}
+.game-level-orb::before,.game-level-orb::after,.game-strip .game-streak::before{display:none!important;}
+.game-xp-fill{background:var(--accent)!important;}
+.game-streak-value,.game-total-xp{font-family:Inter,system-ui,sans-serif!important;font-weight:700!important;}
+/* Goal cards retain user-defined priority colouring, but no gratuitous visual noise. */
+.item-card{border-radius:14px!important;}
+.item-card:not(.priority) {padding:15px!important;}
+.item-card:not(.priority) .item-priority-badge{box-shadow:none!important;}
+.item-card.priority:not(.purchased){box-shadow:var(--lui-shadow)!important;}
+.item-card.priority:not(.purchased):hover{box-shadow:var(--lui-shadow)!important;transform:none!important;}
+.item-actions{transition:opacity .16s ease!important;}
+/* Calendar and streak popups. */
+.calendar-grid,.streak-calendar-shell{border-radius:11px!important;box-shadow:none!important;}
+.calendar-day:hover{transform:none!important;}
+.streak-calendar-modal{border-radius:18px!important;}
+.streak-duo-hero{box-shadow:none!important;}
+.streak-duo-hero::before,.streak-duo-hero::after{display:none!important;}
+.streak-calendar-day:not(.checked):not(.frozen):hover{transform:none!important;}
+/* Settings and theme selection. */
+.settings-card{padding:20px!important;}
+.settings-theme-picker{gap:9px!important;}
+.swatch.theme-option{min-height:74px!important;padding:11px!important;}
+.swatch.theme-option:hover{transform:none!important;border-color:var(--line-strong)!important;}
+.theme-preview{border-radius:10px!important;}
+/* Subscriptions, pockets, transactions: shared visual rhythm. */
+.pocket-card,.pockets-card,.subscription-card,.transaction-card,.calendar-event-row,.budget-card,.record-card,.forecast-date-control{
+ border-radius:12px!important;box-shadow:none!important;
+}
+/* Ultra stays distinguished through typography and quiet purple accents, not glows. */
+#ultraBackdrop>.ultra-modal{background:var(--bg1)!important;box-shadow:none!important;}
+#ultraBackdrop .ultra-logo-lockup,#ultraBackdrop .ultra-highlight,#ultraBackdrop .ultra-pricing-card,#ultraBackdrop .ultra-compare{
+ box-shadow:none!important;border-radius:14px!important;
+}
+#ultraBackdrop .ultra-logo-mark,#ultraBackdrop .ultra-gem{box-shadow:none!important;}
+#ultraBackdrop .ultra-cta{box-shadow:none!important;}
+#ultraBackdrop .ultra-orbit,#ultraBackdrop .ultra-orbital-ring,#ultraBackdrop .ultra-showcase::before,#ultraBackdrop .ultra-showcase::after{opacity:.25!important;}
+/* Soft entrance motion only, reduce the videogame-like movement. */
+@keyframes luminEditorialEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.app-view:not(.hidden)>.feature-page-head{animation:luminEditorialEnter .25s ease-out both;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}}
+@media(max-width:700px){
+ .dashboard-hero-grid,.home-secondary-widgets,.settings-grid,.budget-layout,.calendar-layout{gap:10px!important;}
+ .panel,.settings-card,.feature-form-card,.budget-list-card,.calendar-main-card,.calendar-day-card{padding:14px!important;}
+ .feature-page-head h2{font-size:25px!important;}
+ .game-strip{padding:13px!important;}
+ .chip{padding:11px 12px!important;}
+}
+</style>
+<style id="lumin-ultra-preview-only">
+.ultra-product-intro{text-align:center;margin:0 auto 80px;max-width:740px}
+.ultra-product-overline,.ultra-preview-index,.ultra-purchase-heading>span{display:block;font-size:11px;letter-spacing:.14em;font-weight:750;color:var(--ux-b);margin-bottom:14px}
+.ultra-product-intro h3{font-size:clamp(30px,4.5vw,54px)!important;letter-spacing:-.065em!important;font-weight:700!important;line-height:1.12!important;margin:0 0 16px!important}
+.ultra-product-intro p{font-size:16px!important;line-height:1.65!important;color:var(--muted);margin:0 auto 20px!important;max-width:540px}
+.ultra-discover-link{font-size:13px;font-weight:650;color:var(--white);text-decoration:none;border-bottom:1px solid var(--ux-b);padding-bottom:6px}
+.ultra-product-preview{max-width:1140px;margin:0 auto 30px;padding:clamp(26px,4vw,64px);min-height:465px;border:1px solid var(--line-strong);border-radius:26px;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,6vw,76px);align-items:center;background:var(--panel-solid);overflow:hidden}
+.ultra-feature-goals{background:var(--panel)}
+.ultra-feature-perks{margin-bottom:72px}
+.ultra-preview-copy h3{font-size:clamp(30px,3.5vw,50px)!important;line-height:1.09!important;letter-spacing:-.06em!important;font-weight:700!important;margin:0 0 20px!important;max-width:490px}
+.ultra-preview-copy p{font-size:15px!important;color:var(--muted)!important;line-height:1.75!important;max-width:420px!important}
+.ultra-feature-footnote{font-size:12px;font-weight:630;color:var(--ux-b);margin-top:26px}
+.ultra-preview-device{background:var(--bg1);border:1px solid var(--line-strong);box-shadow:0 22px 70px rgba(0,0,0,.09);border-radius:18px;padding:24px;min-width:0;max-width:580px;width:100%;margin:0 auto;color:var(--white)}
+.ultra-device-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:30px;font-weight:700;font-size:14px}
+.ultra-device-chip{border:1px solid var(--line-strong);border-radius:9px;padding:7px 9px;font-size:11px;font-weight:550;color:var(--muted)}
+.ultra-device-label{font-size:12px;color:var(--muted);font-weight:600}
+.ultra-device-amount{font-size:clamp(32px,3vw,43px);font-weight:730;letter-spacing:-.06em;margin:4px 0}
+.ultra-device-growth{font-size:12px;color:#3eaa83;font-weight:650}
+.ultra-preview-chart{width:100%;height:auto;display:block;margin:22px 0 0;overflow:visible}
+.ultra-chart-ticks{display:flex;justify-content:space-between;gap:6px;color:var(--muted);font-size:10px}
+.ultra-preview-goal-row{display:flex;align-items:center;gap:13px;padding:14px 0;border-top:1px solid var(--line-strong)}
+.ultra-goal-emoji{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--ux-b) 10%,var(--panel-solid));font-size:19px}
+.ultra-goal-info{flex:1;min-width:0;display:grid;gap:5px}
+.ultra-goal-info strong{font-size:13px;font-weight:650}
+.ultra-goal-info small{font-size:11px;color:var(--muted)}
+.ultra-preview-goal-row>b{font-size:12px;font-weight:700}
+.ultra-goal-track{height:5px;border-radius:20px;background:color-mix(in srgb,var(--white) 10%,transparent);overflow:hidden;margin-top:4px}
+.ultra-goal-track i{display:block;height:100%;background:var(--ux-b);border-radius:20px}
+.ultra-preview-add{margin-top:8px;text-align:center;border:1px dashed var(--line-strong);border-radius:11px;padding:13px;font-size:12px;color:var(--muted)}
+.ultra-perks-device{text-align:center;max-width:430px;padding:44px 30px}
+.ultra-perk-emblem{font-size:38px;color:var(--ux-b);margin:0 auto 16px}
+.ultra-perks-device>strong{display:block;font-size:24px;letter-spacing:-.04em}
+.ultra-perks-device>p{color:var(--muted);font-size:13px;margin:8px 0 23px!important}
+.ultra-freeze-symbols{display:flex;justify-content:center;gap:9px}
+.ultra-freeze-symbols span{display:grid;place-items:center;width:50px;height:50px;background:color-mix(in srgb,var(--ux-b) 10%,var(--panel-solid));border:1px solid var(--line-strong);border-radius:12px;color:var(--ux-b);font-size:19px}
+.ultra-theme-preview{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:32px;border-top:1px solid var(--line-strong);padding-top:20px;font-size:12px;color:var(--muted)}
+.ultra-theme-swatches{display:flex;gap:6px}.ultra-theme-swatches i{width:16px;height:16px;border-radius:50%;background:#b266ff}.ultra-theme-swatches i:nth-child(2){background:#7568cb}.ultra-theme-swatches i:nth-child(3){background:#dcb8ff}
+
+/* Feature screenshots/illustrations only: retain the original LUMIN application and Ultra layouts. */
+#ultraBackdrop .ultra-previews-heading{text-align:center;margin:30px auto 22px;max-width:600px;}
+#ultraBackdrop .ultra-previews-heading>span{display:block;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ux-a);font-weight:750;margin-bottom:10px;}
+#ultraBackdrop .ultra-previews-heading h3{font:700 clamp(24px,3vw,34px)/1.15 'Sora','Inter',sans-serif;letter-spacing:-.045em;color:var(--ux-ink);margin:0 0 9px;}
+#ultraBackdrop .ultra-previews-heading p{font-size:13px;color:var(--ux-muted);line-height:1.5;}
+#ultraBackdrop .ultra-product-preview{min-height:320px;padding:clamp(18px,3vw,38px);margin:0 auto 18px;background:color-mix(in srgb,var(--ux-b) 4%,var(--ux-surface2));border-color:var(--ux-line);}
+#ultraBackdrop .ultra-preview-copy h3{font-size:clamp(22px,2.6vw,33px)!important;color:var(--ux-ink)!important;}
+#ultraBackdrop .ultra-preview-copy p{font-size:13.5px!important;color:var(--ux-muted)!important;}
+#ultraBackdrop .ultra-preview-index{color:var(--ux-a);}
+#ultraBackdrop .ultra-preview-device,#ultraBackdrop .ultra-goals-device,#ultraBackdrop .ultra-perks-device{background:var(--ux-surface2);border-color:var(--ux-line);color:var(--ux-ink);}
+@media(max-width:780px){#ultraBackdrop .ultra-product-preview{grid-template-columns:1fr;min-height:0;gap:20px;padding:20px;border-radius:16px;}}
+
+</style>
+
+<style id="lumin-ultra-purple-fixed-cta">
+/* Keep the existing site unchanged. Free users get a recognisably violet Ultra page. */
+html:not([data-plan="ultra"]) #ultraBackdrop > .ultra-modal{
+  --ux-a:#dcb8ff;--ux-b:#b266ff;--ux-c:#7a8cff;
+  --ux-ink:#f7f1ff;--ux-muted:#bdb1d3;--ux-line:rgba(185,145,255,.24);
+  --ux-surface:#221631;--ux-surface2:#160e23;
+  background:linear-gradient(155deg,#241637 0%,#171021 43%,#130d1d 100%)!important;
+  color:#f7f1ff!important;
+}
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-hero h2,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-product-intro h3,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-preview-copy h3{color:#f7f1ff!important;}
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-product-preview,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-simple-benefit,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-simple-plan{
+  background:#261a35!important;border-color:rgba(185,145,255,.22)!important;
+}
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-logo-pill,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-actions .ultra-cta,
+html:not([data-plan="ultra"]) #ultraBackdrop #ultraPayBtn{
+  background:#a475f1!important;border-color:#a475f1!important;color:#190d29!important;
+}
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-simple-benefit strong,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-plan-name,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-plan-amount{color:#f7f1ff!important;}
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-simple-benefit span:last-child,
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-plan-description{color:#bdb1d3!important;}
+html:not([data-plan="ultra"]) #ultraBackdrop .ultra-close{
+  background:#2d203d!important;color:#eee1ff!important;border-color:rgba(185,145,255,.24)!important;
+}
+/* Only the preview/pitch step uses a viewport-fixed action dock. */
+#ultraBackdrop #ultraStepPitch:not(.hidden){padding-bottom:125px!important;}
+#ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions{
+  position:fixed!important;bottom:0!important;left:0!important;right:0!important;
+  margin:0!important;padding:15px max(18px,calc((100vw - 790px)/2)) calc(15px + env(safe-area-inset-bottom,0px))!important;
+  display:flex!important;justify-content:center!important;align-items:center!important;gap:12px!important;
+  background:var(--bg1);border-top:1px solid var(--line-strong);
+  z-index:12!important;box-sizing:border-box;
+  animation:none!important;transform:none!important;
+}
+html:not([data-plan="ultra"]) #ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions{
+  background:#1b1229!important;border-top-color:rgba(185,145,255,.25)!important;
+}
+#ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions #ultraUpgradeBtn{
+  flex:1 1 340px!important;width:auto!important;max-width:590px!important;min-height:52px!important;
+}
+#ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions #ultraNotNowBtn{
+  flex:0 0 auto!important;width:auto!important;min-width:110px!important;
+}
+@media(max-width:650px){
+ #ultraBackdrop #ultraStepPitch:not(.hidden){padding-bottom:125px!important;}
+ #ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions{
+   padding:12px 15px calc(12px + env(safe-area-inset-bottom,0px))!important;
+   display:flex!important;gap:9px!important;
+ }
+ #ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions #ultraUpgradeBtn{min-width:0!important;flex:1!important;}
+ #ultraBackdrop #ultraStepPitch:not(.hidden) > .ultra-actions #ultraNotNowBtn{min-width:86px!important;flex:0 0 auto!important;}
+}
+</style>
+<style id="lumin-android-one-finger-scroll-fix">
+
+/* Samsung / Android single-finger scrolling repair.
+   One scroll container for Ultra instead of a viewport-height inner scroller
+   nested in a fixed, overflow-hidden backdrop. The fixed CTA stays visible. */
+#ultraBackdrop.modal-backdrop:not(.hidden){
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  touch-action:pan-y pinch-zoom!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+}
+#ultraBackdrop > .ultra-modal{
+  height:auto!important;
+  min-height:100dvh!important;
+  max-height:none!important;
+  overflow:visible!important;
+  overscroll-behavior:auto!important;
+  touch-action:pan-y pinch-zoom!important;
+  -webkit-overflow-scrolling:auto;
+}
+#ultraBackdrop #ultraStepPitch:not(.hidden){
+  padding-bottom:calc(125px + env(safe-area-inset-bottom,0px))!important;
+}
+#ultraBackdrop .ultra-product-preview,
+#ultraBackdrop .ultra-preview-device,
+#ultraBackdrop .ultra-goals-device,
+#ultraBackdrop .ultra-perks-device{
+  touch-action:pan-y pinch-zoom!important;
+}
+/* Avoid globally disabling ordinary page swipes. */
+@media (pointer:coarse){
+  html,body,#mainScreen{touch-action:auto;}
+}
+</style>
+<style id="lumin-global-android-scroll-repair">
+/* All app pages should follow the document's single vertical scroll chain. */
+@media (pointer:coarse){
+  html{overflow-y:auto!important;touch-action:pan-y pinch-zoom!important;}
+  body{overflow-y:visible!important;touch-action:pan-y pinch-zoom!important;}
+  #mainScreen, .wrap.content, .app-view, .feature-page,
+  #dashboardTabPanel, #goalsTabPanel, #activityTabPanel,
+  #budgetsTabPanel, #calendarTabPanel, #settingsTabPanel,
+  #forecastTabPanel{
+    touch-action:pan-y pinch-zoom!important;
+    overscroll-behavior-y:auto!important;
+  }
+  /* These remain real swipe-able controls where appropriate. */
+  input[type="range"],.crop-stage{touch-action:none!important;}
+  .goal-cluster,.calendar-legend,.theme-picker,.calendar-repeat-days{
+    touch-action:pan-x pan-y pinch-zoom!important;
+  }
+}
+/* No fixed-body positioning for dialog scroll locks. */
+html.lumin-modal-open{overflow:hidden!important;overscroll-behavior:contain;}
+html.lumin-modal-open body{position:static!important;top:auto!important;left:auto!important;right:auto!important;}
+/* Allow modal contents to scroll with a single finger. */
+html.lumin-modal-open .modal-backdrop:not(.hidden),
+html.lumin-modal-open .modal:not(.hidden),
+html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!important;}
 </style>
 </head>
 <body>
@@ -9808,7 +10424,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
           <div class="forecast-date-scale"><span>Tomorrow</span><span>1 year</span></div>
         </div>
       </div>
-      <div id="forecastProGate" class="panel forecast-pro-gate hidden"><div class="forecast-pro-mark">✦ LUMIN ULTRA</div><h3>Forecast your financial future</h3><p>Unlock a custom forecast date, projected balances, upcoming payments and goal estimates with Ultra.</p><button class="btn btn-primary" type="button" id="forecastUpgradeBtn">Explore Ultra</button></div>
+      <div id="forecastProGate" class="panel forecast-pro-gate hidden"><div class="forecast-pro-mark">✦ LUMIN ULTRA</div><h3>Unlock the full forecast</h3><p>You can preview your real forecast here. Upgrade to Ultra to remove the blur, use the date controls, and interact with projected balances, upcoming payments, and goal estimates.</p><button class="btn btn-primary" type="button" id="forecastUpgradeBtn">Upgrade to Ultra</button></div>
       <div id="forecastProContent"><div class="forecast-cards" id="forecastCards"></div>
       <section class="panel forecast-chart-panel">
         <div class="forecast-chart-head">
@@ -10209,21 +10825,73 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
 
       <div class="ultra-step" id="ultraStepPitch">
         <div class="ultra-hero">
-          <div class="ultra-gem" aria-hidden="true">
-            <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M24 4 41 17 24 44 7 17Z"/><path d="M7 17h34M24 4 17 17l7 27 7-27-7-13"/></svg>
+          <div class="ultra-brand-lockup">
+            <div class="ultra-logo-lockup" aria-label="LUMIN Ultra logo">
+              <div class="ultra-logo-mark" aria-hidden="true">
+                <svg viewBox="0 0 64 64" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 18v28h28" opacity=".92"/>
+                  <path d="M22 42 42 22"/>
+                  <path d="M44 14l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" fill="currentColor" stroke="none" opacity=".95"/>
+                  <path d="M16 46h32" opacity=".45"/>
+                </svg>
+              </div>
+              <div class="ultra-logo-copy">
+                <span class="ultra-wordmark">LUMIN</span>
+                <span class="ultra-logo-pill">ULTRA</span>
+              </div>
+            </div>
           </div>
           <div class="ultra-kicker" id="ultraKicker">LUMIN Ultra</div>
-          <h2 id="ultraTitle">Go further with Ultra</h2>
-          <p id="ultraLead">Unlimited goals and an exclusive crystal theme.</p>
+          <h2 id="ultraTitle">Make more of your money.</h2>
+          <p id="ultraLead">Advanced planning tools and extra flexibility, all in one place.</p>
         </div>
-        <div class="ultra-compare" role="table" aria-label="Plan comparison">
-          <div class="ultra-compare-row head" role="row"><span></span><span>Free</span><span class="ultra-col">Ultra</span></div>
-          <div class="ultra-compare-row" role="row"><span>Active goals</span><span>5</span><span class="ultra-col">Unlimited</span></div>
-          <div class="ultra-compare-row" role="row"><span>Streak freezes</span><span>2</span><span class="ultra-col">Up to 4</span></div>
-          <div class="ultra-compare-row" role="row"><span>Ultra crystal theme</span><span>—</span><span class="ultra-col">✓</span></div>
-          <div class="ultra-compare-row" role="row"><span>Everything else in LUMIN</span><span>✓</span><span class="ultra-col">✓</span></div>
+        <div class="ultra-premium-showcase" aria-hidden="true">
+          <div class="ultra-showcase-grid"></div>
+          <div class="ultra-showcase-orbit orbit-one"></div>
+          <div class="ultra-showcase-orbit orbit-two"></div>
+          <div class="ultra-showcase-symbol"><svg viewBox="0 0 100 100" fill="none"><path d="M27 19V75H76" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 64L73 27" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M71 10L75 20L85 24L75 28L71 38L67 28L57 24L67 20Z" fill="currentColor"/></svg></div>
+          <div class="ultra-showcase-caption"><span>YOUR NEXT LEVEL</span><strong>More clarity. More control.</strong></div>
+          <div class="ultra-showcase-index">01 / ULTRA</div>
         </div>
-        <div class="ultra-price"><strong>A$4.99</strong><span>per month · demo pricing, no real charge</span></div>
+        <div class="ultra-previews-heading"><span>Inside Ultra</span><h3>See what you unlock</h3><p>A closer look at the features included in Ultra. Preview figures are illustrative.</p></div>
+        <div class="ultra-product-preview ultra-feature-forecast" id="ultraPreviewForecast">
+          <div class="ultra-preview-copy"><span class="ultra-preview-index">01 / PLAN AHEAD</span><h3>Your financial future, mapped out.</h3><p>Move forward in time and see how shifts, planned income, bills and your spending patterns could change your balance.</p><div class="ultra-feature-footnote">Interactive forecast · Up to 365 days</div></div>
+          <div class="ultra-preview-device" aria-label="Illustrative preview of the Forecast interface">
+            <div class="ultra-device-header"><span>Forecast overview</span><span class="ultra-device-chip">Next 90 days</span></div>
+            <div class="ultra-device-label">Projected balance</div>
+            <div class="ultra-device-amount">$3,840.50</div>
+            <div class="ultra-device-growth">↗ +$1,240.50 estimated</div>
+            <svg class="ultra-preview-chart" viewBox="0 0 420 158" role="img" aria-label="Example upward balance projection"><defs><linearGradient id="ultraChartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b72e6" stop-opacity=".24"/><stop offset="1" stop-color="#8b72e6" stop-opacity="0"/></linearGradient></defs><path d="M0 140H420 M0 95H420 M0 50H420" stroke="currentColor" stroke-opacity=".11" stroke-dasharray="3 5"/><path d="M0 127 C32 126 44 112 70 119 S116 91 142 96 S188 73 210 80 S251 61 280 59 S320 53 349 31 S389 21 420 12 V158 H0Z" fill="url(#ultraChartFill)"/><path d="M0 127 C32 126 44 112 70 119 S116 91 142 96 S188 73 210 80 S251 61 280 59 S320 53 349 31 S389 21 420 12" stroke="#8b72e6" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="420" cy="12" r="5" fill="#8b72e6" stroke="#fff" stroke-width="2"/></svg>
+            <div class="ultra-chart-ticks"><span>Today</span><span>30 days</span><span>60 days</span><span>90 days</span></div>
+          </div>
+        </div>
+        <div class="ultra-product-preview ultra-feature-goals">
+          <div class="ultra-preview-copy"><span class="ultra-preview-index">02 / SAVE WITHOUT LIMITS</span><h3>Every plan deserves a place.</h3><p>Keep unlimited savings goals, whether it's something small next month or a bigger purchase you're working towards.</p><div class="ultra-feature-footnote">Unlimited active savings goals</div></div>
+          <div class="ultra-preview-device ultra-goal-device" aria-label="Illustrative preview of savings goals">
+            <div class="ultra-device-header"><span>Your goals</span><span class="ultra-device-chip">All goals</span></div>
+            <div class="ultra-preview-goal-row"><span class="ultra-goal-emoji">⌘</span><div class="ultra-goal-info"><strong>New computer</strong><small>$1,480 of $2,200</small><div class="ultra-goal-track"><i style="width:67%"></i></div></div><b>67%</b></div>
+            <div class="ultra-preview-goal-row"><span class="ultra-goal-emoji">✈</span><div class="ultra-goal-info"><strong>Weekend away</strong><small>$320 of $800</small><div class="ultra-goal-track"><i style="width:40%"></i></div></div><b>40%</b></div>
+            <div class="ultra-preview-goal-row"><span class="ultra-goal-emoji">◈</span><div class="ultra-goal-info"><strong>Emergency savings</strong><small>$750 of $1,000</small><div class="ultra-goal-track"><i style="width:75%"></i></div></div><b>75%</b></div>
+            <div class="ultra-preview-add">+ Add another goal</div>
+          </div>
+        </div>
+        <div class="ultra-product-preview ultra-feature-perks">
+          <div class="ultra-preview-copy"><span class="ultra-preview-index">03 / THE EXTRA DETAILS</span><h3>More room for momentum.</h3><p>Keep up to four streak freezes and make LUMIN your own with the exclusive Ultra theme and custom-matched branding.</p><div class="ultra-feature-footnote">Extra streak protection · Exclusive appearance</div></div>
+          <div class="ultra-preview-device ultra-perks-device" aria-label="Illustrative preview of Ultra appearance and streak freezes"><div class="ultra-perk-emblem">✳</div><strong>Stay on track.</strong><p>Four freezes when you need a break.</p><div class="ultra-freeze-symbols"><span>❄</span><span>❄</span><span>❄</span><span>❄</span></div><div class="ultra-theme-preview"><span>Ultra appearance</span><div class="ultra-theme-swatches"><i></i><i></i><i></i></div></div></div>
+        </div>
+        <div class="ultra-simple-content">
+          <div class="ultra-section-heading">Included with Ultra</div>
+          <div class="ultra-simple-benefits">
+            <div class="ultra-simple-benefit"><span class="ultra-benefit-icon">↗</span><div><strong>Advanced Forecast</strong><span>Explore estimated balances and choose dates up to one year ahead.</span></div></div>
+            <div class="ultra-simple-benefit"><span class="ultra-benefit-icon">◎</span><div><strong>Unlimited savings goals</strong><span>Track as many goals as you need.</span></div></div>
+            <div class="ultra-simple-benefit"><span class="ultra-benefit-icon">◇</span><div><strong>More streak protection</strong><span>Store up to four streak freezes.</span></div></div>
+            <div class="ultra-simple-benefit"><span class="ultra-benefit-icon">✦</span><div><strong>Premium appearance</strong><span>Unlock the Ultra crystal theme and matching branding.</span></div></div>
+          </div>
+          <div class="ultra-simple-plan">
+            <div><div class="ultra-plan-name">Ultra monthly <span class="ultra-demo-pill">DEMO</span></div><div class="ultra-plan-description">A demonstration subscription. No real payment is taken.</div></div>
+            <div class="ultra-plan-amount">A$4.99 <small>/ month</small></div>
+          </div>
+        </div>
         <div class="ultra-actions">
           <button type="button" class="btn btn-primary ultra-cta" id="ultraUpgradeBtn">Upgrade to Ultra</button>
           <button type="button" class="btn btn-ghost" id="ultraNotNowBtn">Not now</button>
@@ -10232,8 +10900,23 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
 
       <div class="ultra-step hidden" id="ultraStepPay">
         <button type="button" class="ultra-back" id="ultraBackBtn">← Back</button>
+        <div class="ultra-brand-lockup" style="margin-bottom:10px;">
+          <div class="ultra-logo-lockup" aria-hidden="true">
+            <div class="ultra-logo-mark">
+              <svg viewBox="0 0 64 64" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 18v28h28" opacity=".92"/>
+                <path d="M22 42 42 22"/>
+                <path d="M44 14l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5Z" fill="currentColor" stroke="none" opacity=".95"/>
+                <path d="M16 46h32" opacity=".45"/>
+              </svg>
+            </div>
+            <div class="ultra-logo-copy"><span class="ultra-wordmark">LUMIN</span><span class="ultra-logo-pill">ULTRA</span></div>
+          </div>
+        </div>
         <h2 class="ultra-pay-title">Payment details</h2>
+        <p class="ultra-pay-sub">Review your Ultra subscription before continuing.</p>
         <div class="ultra-demo-note"><b>Demo only.</b> No payment is taken, and card details are never stored or sent anywhere.</div>
+        <div class="ultra-pay-summary"><strong>Ultra monthly</strong><span>A$4.99 / month · Demo checkout</span></div>
         <div class="ultra-card-preview" aria-hidden="true">
           <div class="ultra-card-top"><span class="ultra-card-chip"></span><span class="ultra-card-brand" id="ultraCardBrand">CARD</span></div>
           <div class="ultra-card-number" id="ultraCardNumber">•••• •••• •••• ••••</div>
@@ -10271,7 +10954,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
         </div>
         <div class="ultra-kicker">Payment successful (demo)</div>
         <h2>Welcome to Ultra</h2>
-        <p class="ultra-muted">Unlimited goals, the crystal theme and up to 4 streak freezes are unlocked, plus 2 bonus freezes to get you started.</p>
+        <p class="ultra-muted">Forecast, custom forecast dates, unlimited goals, the crystal theme, theme-matched Ultra branding, and up to 4 streak freezes are now unlocked, plus 2 bonus freezes to get you started.</p>
         <div class="ultra-actions">
           <button type="button" class="btn btn-primary ultra-cta" id="ultraTryThemeBtn">Try the Ultra theme</button>
           <button type="button" class="btn btn-ghost" id="ultraDoneBtn">Done</button>
@@ -11170,7 +11853,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   let streakFreezeLastCheck = "";
   let streakCalendarCursor = new Date(new Date().getFullYear(),new Date().getMonth(),1);
   let streakCalendarSelectedDate = "";
-  const ULTRA_ALLOWLIST = ["peyton.bailey@pgs.vic.edu.au", "skibiditoilet@gmail.com"];
+  const ULTRA_ALLOWLIST = ["peyton.bailey@pgs.vic.edu.au"];
   const FREE_GOAL_LIMIT = 5;
   const ULTRA_PRICE = "A$4.99";
   let planState = {plan:"free", since:""};
@@ -11196,6 +11879,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   let budgets = [];
   let calendarEvents = [];
   let subscriptions = [];
+  let savingsPockets = [];
   let notificationsEnabled = false;
   let notificationLeadMinutes = 30;
   let notificationPreset = "normal";
@@ -13207,6 +13891,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     budgets = [];
     calendarEvents = [];
     subscriptions = [];
+    savingsPockets = [];
     notificationsEnabled = false;
     notificationLeadMinutes = 30;
     notificationPreset = "normal";
@@ -13257,6 +13942,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
     budgets = Array.isArray(parsed.budgets) ? parsed.budgets.filter(b=>b&&typeof b==="object").map(b=>({id:String(b.id||uid()),name:String(b.name||"Budget").trim().slice(0,40)||"Budget",limit:Math.max(.01,Number(b.limit)||0),period:b.period==="weekly"?"weekly":"monthly"})).filter(b=>b.limit>0) : [];
     calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>{const rawId=String(ev.id||uid());return {id:rawId,seriesId:String(ev.seriesId||rawId).replace(/-r\d+$/, ""),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged,recurrence:ev.recurrence&&typeof ev.recurrence==="object"?ev.recurrence:{type:"none"}}}) : [];
+    savingsPockets = Array.isArray(parsed.savingsPockets) ? parsed.savingsPockets.filter(p=>p&&typeof p==="object").slice(0,60).map(p=>({id:String(p.id||uid()),name:String(p.name||"Pocket").slice(0,40),amount:Math.max(0,Math.round(Number(p.amount||0)*100)/100),icon:String(p.icon||"◈").slice(0,3)})) : [];
     subscriptions = Array.isArray(parsed.subscriptions) ? parsed.subscriptions.filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x.nextDate||"")).map(x=>({id:String(x.id||uid()),name:String(x.name||"Subscription").trim().slice(0,50)||"Subscription",amount:Math.max(.01,Number(x.amount)||0),frequency:["weekly","monthly","yearly"].includes(x.frequency)?x.frequency:"monthly",nextDate:x.nextDate,category:String(x.category||"").slice(0,30),notify:x.notify!==false,active:x.active!==false,lastPaid:x.lastPaid||""})).filter(x=>x.amount>0) : [];
     notificationsEnabled = parsed.notificationsEnabled===true;
     notificationLeadMinutes = [15,30,60,120].includes(Number(parsed.notificationLeadMinutes)) ? Number(parsed.notificationLeadMinutes) : 30;
@@ -14311,6 +14997,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
       budgets,
       calendarEvents,
       subscriptions,
+      savingsPockets,
       notificationsEnabled,
       notificationLeadMinutes,
       notificationPreset,
@@ -15867,7 +16554,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   }
 
   function applyUltraMatch(){
-    document.documentElement.dataset.ultraMatch = ultraMatchTheme ? "true" : "false";
+    document.documentElement.dataset.ultraMatch = (document.documentElement.dataset.plan === "ultra" && ultraMatchTheme) ? "true" : "false";
     const t=$("ultraMatchToggle"), s=$("ultraMatchStatus"), row=$("ultraMatchRow");
     if(t) t.setAttribute("aria-checked",ultraMatchTheme?"true":"false");
     if(s) s.textContent = ultraMatchTheme
@@ -15955,11 +16642,11 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
       }else if(reason==="theme"){
         kicker.textContent="Ultra theme";
         title.textContent="Unlock the crystal theme";
-        lead.textContent="The Ultra theme is a purple, crystalline take on HyperDrive, included with Ultra.";
+        lead.textContent="Get the crystal Ultra theme plus theme-matched Ultra branding, included with Ultra.";
       }else{
         kicker.textContent="LUMIN Ultra";
-        title.textContent="Go further with Ultra";
-        lead.textContent="Unlimited goals and an exclusive crystal theme.";
+        title.textContent="Make more of your money.";
+        lead.textContent="Advanced planning tools and extra flexibility, all in one place.";
       }
     }
     $("ultraBackdrop").classList.remove("hidden");
@@ -16297,10 +16984,10 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   function renderForecast(){
     const cardsEl=$("forecastCards"); if(!cardsEl||!wallet) return;
     const entitled=isUltra();
+    $("forecastTabPanel")?.classList.toggle("forecast-locked",!entitled);
     $("forecastProGate")?.classList.toggle("hidden",entitled);
-    $("forecastProContent")?.classList.toggle("hidden",!entitled);
-    $("forecastHorizon")?.classList.toggle("hidden",!entitled);
-    if(!entitled) return;
+    $("forecastProContent")?.classList.remove("hidden");
+    $("forecastHorizon")?.classList.remove("hidden");
     refreshForecastDateControl();
     const fc=buildForecast(forecastDays);
     const end=fc.balA[fc.days], delta=end-fc.start;
@@ -16367,9 +17054,9 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     },{threshold:0.01}).observe(wrap);
   })();
 
-  $("forecastDaysSlider").addEventListener("input",e=>{if(isUltra()) updateForecastHorizon(e.target.value);});
+  $("forecastDaysSlider").addEventListener("input",e=>{ if(!isUltra()){ openUpgradeModal("forecast"); refreshForecastDateControl(); return; } updateForecastHorizon(e.target.value); });
   $("forecastEndDate").addEventListener("change",e=>{
-    if(!isUltra()) return;
+    if(!isUltra()){ openUpgradeModal("forecast"); refreshForecastDateControl(); return; }
     const days=forecastDaysFromDate(e.target.value);
     if(days===null){refreshForecastDateControl();return;}
     updateForecastHorizon(days);
@@ -16441,20 +17128,24 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   // Prevents the page behind the modal from scrolling while it's open (the modal
   // itself is position:fixed, so without this the background could scroll out
   // from under it, leaving the page in an unexpected scroll position on close).
+  // Prevent scroll behind dialogs without position:fixed on <body>.
+  // Fixed-body locking can leave Samsung Internet unable to pan the main page.
   let scrollLockY = 0;
   function lockBodyScroll(){
-    scrollLockY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollLockY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
+    if(document.documentElement.classList.contains("lumin-modal-open")) return;
+    scrollLockY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.documentElement.classList.add("lumin-modal-open");
   }
   function unlockBodyScroll(){
+    document.documentElement.classList.remove("lumin-modal-open");
+    // Clear any inline styles left by earlier versions of the modal lock.
     document.body.style.position = "";
     document.body.style.top = "";
     document.body.style.left = "";
     document.body.style.right = "";
-    window.scrollTo(0, scrollLockY);
+    if(Math.abs((window.scrollY || 0) - scrollLockY) > 2){
+      window.scrollTo({top:scrollLockY,behavior:"instant"});
+    }
   }
   $("addItemBtn").addEventListener("click", ()=> openItemModal(null));
   $("itemCancelBtn").addEventListener("click", closeItemModal);
@@ -17962,7 +18653,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
   async function deleteCalendarEventById(id,{closeDetail=false,allInstances=false}={}){
     const ev=calendarEventById(id);
     if(!ev)return;
-    if(ev.source==="subscription"){ showOfflineToast("Subscription payments are managed below the calendar."); return; }
+    if(ev.source==="subscription"){ showOfflineToast("Subscription payments are managed on the Activity page."); return; }
     const seriesId=ev.seriesId||ev.id;
     const related=calendarEvents.filter(item=>(item.seriesId||item.id)===seriesId);
     const isRecurring=related.length>1 || (ev.recurrence&&ev.recurrence.type&&ev.recurrence.type!=="none");
@@ -18906,12 +19597,73 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     }
   };
 
+  function ensurePocketsUI(){
+    const activity=$("activityTabPanel");
+    if(!activity || $("luminPockets")) return;
+    const section=document.createElement("section");
+    section.id="luminPockets";
+    section.className="panel pockets-panel";
+    section.innerHTML=`<div class="pockets-head"><div><div class="panel-label"><span class="dash"></span>Savings pockets</div><p>Organise your existing wallet balance. Pockets are virtual allocations, not separate accounts.</p></div><button class="btn btn-secondary" type="button" id="pocketAdd">+ New pocket</button></div>
+      <div class="pockets-summary" id="pocketsSummary"></div><div class="pockets-list" id="pocketsList"></div>
+      <div class="pockets-editor hidden" id="pocketsEditor"><label class="field">Pocket name<input id="pocketName" maxlength="40" placeholder="e.g. Emergency fund" /></label><div class="pockets-editor-actions"><button class="btn btn-primary" type="button" id="pocketCreate">Create pocket</button><button class="btn btn-ghost" type="button" id="pocketCancel">Cancel</button></div></div>
+      <div class="pockets-feedback" id="pocketsFeedback" role="status" aria-live="polite"></div>`;
+    const subs=activity.querySelector(".activity-subscriptions-card");
+    activity.insertBefore(section,subs||null);
+    $("pocketAdd").addEventListener("click",()=>$("pocketsEditor").classList.remove("hidden"));
+    $("pocketCancel").addEventListener("click",()=>$("pocketsEditor").classList.add("hidden"));
+    $("pocketCreate").addEventListener("click",async()=>{
+      const name=$("pocketName").value.trim();if(!name){pocketFeedback("Enter a pocket name.");return;}
+      if(savingsPockets.length>=60){pocketFeedback("Maximum 60 pockets.");return;}
+      savingsPockets.push({id:uid(),name:name.slice(0,40),amount:0,icon:"◈"});
+      $("pocketName").value="";$("pocketsEditor").classList.add("hidden");
+      await persist();renderPockets();
+    });
+    $("pocketsList").addEventListener("click",async e=>{
+      const action=e.target.closest("[data-pocket-action]");if(!action)return;
+      const pocket=savingsPockets.find(p=>p.id===action.dataset.id);if(!pocket)return;
+      const type=action.dataset.pocketAction;
+      if(type==="delete"){
+        if(!confirm(`Delete “${pocket.name}”? Its allocated money will return to Unallocated, not be spent.`))return;
+        savingsPockets=savingsPockets.filter(p=>p.id!==pocket.id);await persist();renderPockets();return;
+      }
+      const row=action.closest(".pocket-card");
+      const input=row?.querySelector("[data-pocket-amount]");
+      const value=Number(input?.value);
+      if(!Number.isFinite(value)||value<=0){pocketFeedback("Enter a positive amount.");return;}
+      const cents=Math.round(value*100);
+      const current=Math.round(pocket.amount*100);
+      const available=Math.round(pocketsUnallocated()*100);
+      if(type==="add" && cents>available){pocketFeedback("Not enough unallocated money. Your pockets must stay within the wallet balance.");return;}
+      if(type==="release" && cents>current){pocketFeedback("You can't release more than this pocket holds.");return;}
+      pocket.amount=Math.max(0,(current+(type==="add"?cents:-cents))/100);
+      await persist();renderPockets();
+    });
+  }
+  function pocketsUnallocated(){
+    return Math.round(((wallet?computeGlobalStats().saved:0)-savingsPockets.reduce((sum,p)=>sum+Number(p.amount||0),0))*100)/100;
+  }
+  function pocketFeedback(message){const el=$("pocketsFeedback");if(el)el.textContent=message;}
+  function renderPockets(){
+    if(!$("luminPockets"))return;
+    const allocated=savingsPockets.reduce((sum,p)=>sum+Number(p.amount||0),0);
+    const unallocated=pocketsUnallocated();
+    $("pocketsSummary").innerHTML=`<div><span>Wallet balance</span><strong>${fmtMoney(wallet?computeGlobalStats().saved:0)}</strong></div><div><span>Allocated</span><strong>${fmtMoney(allocated)}</strong></div><div><span>Unallocated</span><strong class="${unallocated<0?'pocket-warning':''}">${fmtMoney(unallocated)}</strong></div>`;
+    $("pocketsList").innerHTML=savingsPockets.length?savingsPockets.map(p=>`<div class="pocket-card"><div class="pocket-card-main"><div class="pocket-icon">◈</div><div><strong>${escapeHtml(p.name)}</strong><small>Allocated savings</small></div><b>${fmtMoney(p.amount)}</b></div><div class="pocket-actions"><input type="number" min="0.01" step="0.01" placeholder="Amount" aria-label="Amount for ${escapeHtml(p.name)}" data-pocket-amount /><button type="button" class="btn btn-secondary" data-pocket-action="add" data-id="${escapeHtml(p.id)}">Allocate</button><button type="button" class="btn btn-ghost" data-pocket-action="release" data-id="${escapeHtml(p.id)}">Release</button><button type="button" class="btn btn-danger-ghost" data-pocket-action="delete" data-id="${escapeHtml(p.id)}" aria-label="Delete ${escapeHtml(p.name)}">×</button></div></div>`).join(""):'<p class="pockets-empty">No pockets yet. Create one to organise your savings.</p>';
+    pocketFeedback(unallocated<0?"Your wallet balance is below your current allocations. Release some money from pockets to rebalance.":"");
+  }
+
   function organizeAppViews(){
     if(appViewsOrganized) return;
     const goals=document.querySelector(".goal-cluster");
     const money=document.querySelector(".money-cluster");
     if(goals) $("goalsTabPanel").appendChild(goals);
     if(money) $("activityTabPanel").appendChild(money);
+    const subscriptionCard=$("subscriptionForm")?.closest(".feature-form-card");
+    if(subscriptionCard){
+      subscriptionCard.classList.add("activity-subscriptions-card");
+      $("activityTabPanel").appendChild(subscriptionCard);
+    }
+    ensurePocketsUI();
     appViewsOrganized=true;
   }
 
@@ -18992,6 +19744,7 @@ html body .app-loading-screen .app-loading-detail {color:var(--muted) !important
     renderGameStrip();
     renderBudgets();
     renderCalendar();
+    renderPockets();
     renderNotificationSettings();
     renderHomeWeeklyWidget();
     renderSettingsWeeklyRecap();
