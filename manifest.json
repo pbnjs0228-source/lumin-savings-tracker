@@ -1,11 +1,11 @@
 {
   "id": "./",
-  "name": "LUMIN — Savings Tracker",
+  "name": "LUMIN \u2014 Savings Tracker",
   "short_name": "LUMIN",
   "description": "Your savings, goals, subscriptions and forecasts in one place.",
   "start_url": "./",
   "scope": "./",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#12111a",
   "theme_color": "#12111a",
   "icons": [
@@ -21,5 +21,9 @@
       "type": "image/png",
       "purpose": "any"
     }
+  ],
+  "display_override": [
+    "fullscreen",
+    "standalone"
   ]
 }

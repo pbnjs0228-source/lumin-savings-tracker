@@ -1,5 +1,5 @@
 /* LUMIN standalone install and offline shell */
-const CACHE_NAME = "lumin-shell-2026-11-04";
+const CACHE_NAME = "lumin-shell-2026-11-05-fullscreen";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192x192.png", "./icon-512x512.png"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).catch(() => {}));
