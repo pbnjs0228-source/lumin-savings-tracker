@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="description" content="LUMIN is a private cloud-synced savings tracker for goals, work hours and deadlines." />
 <title>LUMIN — Savings Tracker</title>
 <meta name="theme-color" content="#12111a" />
+<meta name="color-scheme" content="dark light" />
 <meta name="application-name" content="LUMIN" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -9799,6 +9800,57 @@ html.lumin-modal-open body{position:static!important;top:auto!important;left:aut
 html.lumin-modal-open .modal-backdrop:not(.hidden),
 html.lumin-modal-open .modal:not(.hidden),
 html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!important;}
+</style>
+
+<style id="lumin-mobile-scroll-root-correction-v2">
+/* Samsung Internet / installed Android PWA: use ONE document scroller.
+   Prior responsive rules used overflow-x:hidden on html AND body, which
+   implicitly changes overflow-y:visible to auto and can trap finger pans
+   in an inner scrolling box. 'clip' does not create a scroll container. */
+@media screen and (max-width: 900px) {
+  html {
+    overflow-x:clip !important;
+    overflow-y:auto !important;
+    height:auto !important;
+    min-height:100% !important;
+    overscroll-behavior-y:auto !important;
+    touch-action:auto !important;
+  }
+  body {
+    overflow-x:clip !important;
+    overflow-y:visible !important;
+    height:auto !important;
+    min-height:100dvh !important;
+    position:static !important;
+    overscroll-behavior-y:auto !important;
+    touch-action:auto !important;
+    -webkit-overflow-scrolling:touch;
+  }
+  /* Content is panned vertically with a single finger. Keeping pan-y
+     removes accidental pinch-to-zoom on empty page areas. Individual
+     sliders/croppers keep their own gesture handling. */
+  #mainScreen,
+  #mainScreen > .app-view,
+  #mainScreen > .header-row,
+  .wrap.content {
+    overflow:visible;
+    touch-action:pan-y !important;
+  }
+  #mainScreen > .app-sidebar {touch-action:manipulation !important;}
+  #mainScreen .app-sidebar .app-nav-list,
+  #mainScreen .app-sidebar .app-nav-btn {touch-action:manipulation !important;}
+  .goal-cluster,.calendar-legend,.theme-picker,.calendar-repeat-days {
+    touch-action:pan-x pan-y !important;
+  }
+  input[type="range"],.crop-stage {touch-action:none !important;}
+  /* Keep the intentional scroll containers for open full-page dialogs. */
+  .modal-backdrop:not(.hidden),.quick-add-backdrop:not(.hidden) {
+    touch-action:pan-y !important;
+  }
+  html.lumin-modal-open {
+    overflow-y:hidden !important;
+  }
+}
 </style>
 </head>
 <body>
