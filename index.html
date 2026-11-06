@@ -9852,6 +9852,55 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     overflow-y:hidden !important;
   }
 }
+
+/* Goal-linked pockets */
+.pocket-goal-help{display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.45}
+.pocket-goal-link{margin-top:13px}.pocket-goal-link>label{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}
+.pocket-goal-select{display:flex;gap:7px;align-items:center}.pocket-goal-select select{flex:1;min-width:0;padding:9px 10px;border:1px solid var(--line-strong);background:var(--panel-raised);color:var(--white);border-radius:9px;font:inherit;font-size:12px}
+.pocket-goal-select button{flex-shrink:0;font-size:11px;min-height:36px;padding:7px 10px}
+.pocket-linked-progress{margin-top:12px}.pocket-linked-progress>div:first-child{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:6px}.pocket-linked-progress strong{font-weight:650;color:var(--white)}
+.pocket-linked-track{height:6px;border-radius:20px;overflow:hidden;background:var(--line-strong)}.pocket-linked-track i{height:100%;display:block;background:var(--accent);border-radius:20px}
+.item-pocket-note{font-size:10px;color:var(--muted);margin:0 0 7px;line-height:1.35;overflow-wrap:anywhere}
+/* Tutorial: keep controls within the visible Samsung viewport, including soft keyboard and navigation area. */
+@media(max-width:720px){
+  #tutorialCard.tutorial-card{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    top:auto !important;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px)) !important;
+    width:auto !important;
+    max-width:none !important;
+    max-height:calc(100dvh - 28px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)) !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain;
+    touch-action:pan-y;
+    display:flex;
+    flex-direction:column;
+    transform:none !important;
+    animation:none !important;
+    transition:none !important;
+  }
+  #tutorialCard.tutorial-card.hidden{display:none !important;}
+  #tutorialCard .tutorial-actions{
+    flex:0 0 auto;
+    position:sticky;
+    bottom:0;
+    z-index:2;
+    padding:10px 12px 12px;
+    background:var(--panel-solid);
+    border-top:1px solid var(--line);
+  }
+  #tutorialCard .tutorial-nav-group{flex-shrink:0;}
+  #tutorialCard .tutorial-nav-group .btn{min-height:40px;min-width:62px;font-size:12px;}
+  #tutorialCard .tutorial-skip{min-height:40px;font-size:11px !important;}
+  #tutorialCard .tutorial-body-row{flex:0 1 auto;}
+  #tutorialCard .tutorial-tip{flex-shrink:1;}
+}
+@media(max-width:390px){
+ #tutorialCard .tutorial-nav-group .btn{min-width:54px;padding:7px 9px}
+ #tutorialCard .tutorial-actions{gap:5px}
+}
 </style>
 </head>
 <body>
@@ -11180,6 +11229,10 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
           <div class="input-prefix"><span>$</span><input type="number" step="0.01" min="0" placeholder="0.00" id="item-goal" required /></div>
         </label>
 
+        <label class="field">Linked Money Pocket (optional)
+          <select id="item-linked-pocket"><option value="">No linked pocket</option></select>
+          <small class="pocket-goal-help">When linked, this goal's progress uses the amount allocated to that pocket.</small>
+        </label>
         <div class="price-history-box hidden" id="itemPriceHistoryWrap">
           <div class="price-history-title">Price history</div>
           <div class="price-history-list" id="itemPriceHistoryList"></div>
@@ -13361,7 +13414,19 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     spotlight.style.height=Math.max(20,Math.min(window.innerHeight-12,rect.height+pad*2))+"px";
     spotlight.style.borderRadius=((parseFloat(getComputedStyle(target).borderRadius)||10)+pad)+"px";
 
-    if(window.innerWidth<=720) return;
+    if(window.innerWidth<=720){
+      const card=$("tutorialCard");
+      card.style.removeProperty("left");
+      card.style.removeProperty("top");
+      // Mobile viewport height reflects browser bars and on-screen keyboard.
+      const vv=window.visualViewport;
+      if(vv){
+        const bottomInset=Math.max(0, window.innerHeight-(vv.offsetTop+vv.height));
+        card.style.setProperty("bottom",`calc(${Math.round(bottomInset+12)}px + env(safe-area-inset-bottom, 0px))`,"important");
+        card.style.setProperty("max-height",`${Math.max(150,Math.round(vv.height-28))}px`,"important");
+      }
+      return;
+    }
 
     const card=$("tutorialCard");
     const cardW=Math.min(340,window.innerWidth-28);
@@ -13467,6 +13532,10 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     updateWorkspaceFit();
   });
   window.addEventListener("scroll",()=>{if(tutorialActive)positionTutorial();},{passive:true});
+  if(window.visualViewport){
+    window.visualViewport.addEventListener("resize",()=>{if(tutorialActive)positionTutorial();},{passive:true});
+    window.visualViewport.addEventListener("scroll",()=>{if(tutorialActive)positionTutorial();},{passive:true});
+  }
 
   // ---- storage + account/cloud sync ----
   let memoryStore = null;
@@ -13995,7 +14064,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     if(Array.isArray(parsed.celebratedMilestones)) celebratedMilestones = new Set(parsed.celebratedMilestones);
     budgets = Array.isArray(parsed.budgets) ? parsed.budgets.filter(b=>b&&typeof b==="object").map(b=>({id:String(b.id||uid()),name:String(b.name||"Budget").trim().slice(0,40)||"Budget",limit:Math.max(.01,Number(b.limit)||0),period:b.period==="weekly"?"weekly":"monthly"})).filter(b=>b.limit>0) : [];
     calendarEvents = Array.isArray(parsed.calendarEvents) ? parsed.calendarEvents.filter(ev=>ev&&/^\d{4}-\d{2}-\d{2}$/.test(ev.date||"")).map(ev=>{const rawId=String(ev.id||uid());return {id:rawId,seriesId:String(ev.seriesId||rawId).replace(/-r\d+$/, ""),type:["shift","busy","event"].includes(ev.type)?ev.type:"event",title:String(ev.title||"Event").trim().slice(0,60)||"Event",date:ev.date,start:/^\d{2}:\d{2}$/.test(ev.start||"")?ev.start:"09:00",end:/^\d{2}:\d{2}$/.test(ev.end||"")?ev.end:"10:00",notes:String(ev.notes||"").slice(0,180),notify:ev.notify!==false,logged:!!ev.logged,recurrence:ev.recurrence&&typeof ev.recurrence==="object"?ev.recurrence:{type:"none"}}}) : [];
-    savingsPockets = Array.isArray(parsed.savingsPockets) ? parsed.savingsPockets.filter(p=>p&&typeof p==="object").slice(0,60).map(p=>({id:String(p.id||uid()),name:String(p.name||"Pocket").slice(0,40),amount:Math.max(0,Math.round(Number(p.amount||0)*100)/100),icon:String(p.icon||"◈").slice(0,3)})) : [];
+    savingsPockets = Array.isArray(parsed.savingsPockets) ? parsed.savingsPockets.filter(p=>p&&typeof p==="object").slice(0,60).map(p=>({id:String(p.id||uid()),name:String(p.name||"Pocket").slice(0,40),amount:Math.max(0,Math.round(Number(p.amount||0)*100)/100),icon:String(p.icon||"◈").slice(0,3),goalId:String(p.goalId||"").slice(0,100)})) : [];
     subscriptions = Array.isArray(parsed.subscriptions) ? parsed.subscriptions.filter(x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x.nextDate||"")).map(x=>({id:String(x.id||uid()),name:String(x.name||"Subscription").trim().slice(0,50)||"Subscription",amount:Math.max(.01,Number(x.amount)||0),frequency:["weekly","monthly","yearly"].includes(x.frequency)?x.frequency:"monthly",nextDate:x.nextDate,category:String(x.category||"").slice(0,30),notify:x.notify!==false,active:x.active!==false,lastPaid:x.lastPaid||""})).filter(x=>x.amount>0) : [];
     notificationsEnabled = parsed.notificationsEnabled===true;
     notificationLeadMinutes = [15,30,60,120].includes(Number(parsed.notificationLeadMinutes)) ? Number(parsed.notificationLeadMinutes) : 30;
@@ -17136,6 +17205,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     $("itemSaveBtn").textContent = item ? "Save changes" : "Add item";
     $("item-name").value = item ? item.name : "";
     $("item-goal").value = item ? item.goal : "";
+    refreshGoalPocketPicker(item?.id||"");
     $("item-link").value = item ? (item.link||"") : "";
     $("item-deadline").value = item ? (item.deadline||"") : "";
     $("item-unreleased").checked = !!(item && item.unreleased);
@@ -17213,6 +17283,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     const unreleased = $("item-unreleased").checked;
     const releaseDate = unreleased ? ($("item-release-date").value || "") : "";
     const notes = $("item-notes").value.trim();
+    const selectedPocketId = $("item-linked-pocket").value;
 
     if(unreleased && !releaseDate){
       $("item-release-date").reportValidity();
@@ -17245,6 +17316,13 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
       if(makePriority){ priorityItemId = newItem.id; activeItemId = newItem.id; }
       else if(!activeItemId) activeItemId = newItem.id;
     }
+    const editedGoalId=editingItemId || items[items.length-1]?.id;
+    // The goal editor can attach or detach a pocket. Other links stay intact.
+    savingsPockets.forEach(p=>{if(p.goalId===editedGoalId && p.id!==selectedPocketId)p.goalId="";});
+    if(selectedPocketId){
+      const pocket=savingsPockets.find(p=>p.id===selectedPocketId);
+      if(pocket) setPocketGoalLink(pocket,editedGoalId);
+    }
     closeItemModal();
     await persist();
     render();
@@ -17257,6 +17335,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     render();
   }
   async function deleteItem(id){
+    savingsPockets.forEach(p=>{if(p.goalId===id)p.goalId="";});
     items = items.filter(i=>i.id!==id);
     if(priorityItemId===id) priorityItemId = null;
     if(activeItemId===id){
@@ -17499,6 +17578,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
   }
 
   function computeItemProgress(item, saved){
+    saved=goalAvailableSavings(item,saved);
     const rate = (wallet && wallet.hourlyRate) || 0;
     const goal = item ? item.goal : 0;
     const progress = goal>0 ? saved/goal : 0;
@@ -18071,6 +18151,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
         ${priorityBadge}
         <div class="item-name">${escapeHtml(item.name || "Untitled")}</div>
         <div class="item-goal">${fmtMoney(item.goal,0)}</div>
+        ${linkedPocketForGoal(item.id)?`<div class="item-pocket-note">◈ ${escapeHtml(linkedPocketForGoal(item.id).name)} · ${fmtMoney(linkedPocketForGoal(item.id).amount)} allocated</div>`:''}
         ${item.unreleased && item.releaseDate && item.releaseDate>=todayStr() && !purchased ? `<div class="item-release-badge">Releases ${formatDeadlineShort(item.releaseDate)}</div>` : ""}
         ${item.deadline && !purchased ? `<div class="item-deadline">Due ${formatDeadlineShort(item.deadline)}</div>` : ""}
         <div class="item-bar-track"><div class="item-bar-fill ${progressClass}" style="width:${purchased?100:Math.round(pct*100)}%"></div></div>
@@ -18118,7 +18199,8 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     const item = items.find(i=>i.id===activeItemId);
     if(!item || item.purchasedAt) return;
     const stats = computeGlobalStats();
-    const remaining = Math.max(0,(Number(item.goal)||0)-stats.saved);
+    const linkedPocket=linkedPocketForGoal(item.id);
+    const remaining = Math.max(0,(Number(item.goal)||0)-goalAvailableSavings(item,stats.saved));
     if(remaining>0){
       alert("This goal isn't fully funded yet.");
       return;
@@ -18126,6 +18208,12 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     const price = Math.max(0,Number(item.goal)||0);
     if(!confirm(`Mark "${item.name||"this goal"}" as purchased for ${fmtMoney(price)}? This will subtract it from your saved balance.`)) return;
 
+    // Purchased funds leave the wallet; clear the earmarked pocket allocation.
+    // Any surplus from that pocket becomes unallocated rather than lost.
+    if(linkedPocket){
+      linkedPocket.amount=Math.max(0,Math.round((Number(linkedPocket.amount||0)-price)*100)/100);
+      linkedPocket.goalId="";
+    }
     item.purchasedAt = todayStr();
     item.purchasedPrice = price;
     expenses.push({
@@ -19650,6 +19738,32 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     }
   };
 
+  function linkedPocketForGoal(goalId){
+    return savingsPockets.find(p=>p.goalId===goalId) || null;
+  }
+  function goalAvailableSavings(item,walletSavings){
+    const linked=item && linkedPocketForGoal(item.id);
+    return linked ? Math.max(0,Number(linked.amount)||0) : walletSavings;
+  }
+  function setPocketGoalLink(pocket, goalId){
+    const next=String(goalId||"");
+    // One pocket per goal. Relinking clears any earlier pocket for that goal.
+    if(next) savingsPockets.forEach(other=>{
+      if(other.id!==pocket.id && other.goalId===next) other.goalId="";
+    });
+    pocket.goalId=next;
+  }
+  function refreshGoalPocketPicker(selectedGoalId=""){
+    const picker=$("item-linked-pocket");if(!picker)return;
+    const options=savingsPockets.map(p=>{
+      const linked=p.goalId && p.goalId!==selectedGoalId
+        ? items.find(i=>i.id===p.goalId)?.name||"another goal" : "";
+      return `<option value="${escapeHtml(p.id)}">${escapeHtml(p.name)}${linked?" (linked to "+escapeHtml(linked)+")":""}</option>`;
+    });
+    picker.innerHTML='<option value="">No linked pocket</option>'+options.join("");
+    picker.value=(linkedPocketForGoal(selectedGoalId)||{}).id||"";
+  }
+
   function ensurePocketsUI(){
     const activity=$("activityTabPanel");
     if(!activity || $("luminPockets")) return;
@@ -19667,7 +19781,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     $("pocketCreate").addEventListener("click",async()=>{
       const name=$("pocketName").value.trim();if(!name){pocketFeedback("Enter a pocket name.");return;}
       if(savingsPockets.length>=60){pocketFeedback("Maximum 60 pockets.");return;}
-      savingsPockets.push({id:uid(),name:name.slice(0,40),amount:0,icon:"◈"});
+      savingsPockets.push({id:uid(),name:name.slice(0,40),amount:0,icon:"◈",goalId:""});
       $("pocketName").value="";$("pocketsEditor").classList.add("hidden");
       await persist();renderPockets();
     });
@@ -19675,6 +19789,15 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
       const action=e.target.closest("[data-pocket-action]");if(!action)return;
       const pocket=savingsPockets.find(p=>p.id===action.dataset.id);if(!pocket)return;
       const type=action.dataset.pocketAction;
+      if(type==="link"){
+        const row=action.closest(".pocket-card");
+        const goalId=row?.querySelector("[data-pocket-goal]")?.value||"";
+        if(goalId && !items.some(i=>i.id===goalId && !i.purchasedAt)){
+          pocketFeedback("That goal is no longer available.");renderPockets();return;
+        }
+        setPocketGoalLink(pocket,goalId);
+        await persist();render();return;
+      }
       if(type==="delete"){
         if(!confirm(`Delete “${pocket.name}”? Its allocated money will return to Unallocated, not be spent.`))return;
         savingsPockets=savingsPockets.filter(p=>p.id!==pocket.id);await persist();renderPockets();return;
@@ -19689,7 +19812,7 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
       if(type==="add" && cents>available){pocketFeedback("Not enough unallocated money. Your pockets must stay within the wallet balance.");return;}
       if(type==="release" && cents>current){pocketFeedback("You can't release more than this pocket holds.");return;}
       pocket.amount=Math.max(0,(current+(type==="add"?cents:-cents))/100);
-      await persist();renderPockets();
+      await persist();render();
     });
   }
   function pocketsUnallocated(){
@@ -19701,7 +19824,16 @@ html.lumin-modal-open #ultraBackdrop:not(.hidden){touch-action:pan-y pinch-zoom!
     const allocated=savingsPockets.reduce((sum,p)=>sum+Number(p.amount||0),0);
     const unallocated=pocketsUnallocated();
     $("pocketsSummary").innerHTML=`<div><span>Wallet balance</span><strong>${fmtMoney(wallet?computeGlobalStats().saved:0)}</strong></div><div><span>Allocated</span><strong>${fmtMoney(allocated)}</strong></div><div><span>Unallocated</span><strong class="${unallocated<0?'pocket-warning':''}">${fmtMoney(unallocated)}</strong></div>`;
-    $("pocketsList").innerHTML=savingsPockets.length?savingsPockets.map(p=>`<div class="pocket-card"><div class="pocket-card-main"><div class="pocket-icon">◈</div><div><strong>${escapeHtml(p.name)}</strong><small>Allocated savings</small></div><b>${fmtMoney(p.amount)}</b></div><div class="pocket-actions"><input type="number" min="0.01" step="0.01" placeholder="Amount" aria-label="Amount for ${escapeHtml(p.name)}" data-pocket-amount /><button type="button" class="btn btn-secondary" data-pocket-action="add" data-id="${escapeHtml(p.id)}">Allocate</button><button type="button" class="btn btn-ghost" data-pocket-action="release" data-id="${escapeHtml(p.id)}">Release</button><button type="button" class="btn btn-danger-ghost" data-pocket-action="delete" data-id="${escapeHtml(p.id)}" aria-label="Delete ${escapeHtml(p.name)}">×</button></div></div>`).join(""):'<p class="pockets-empty">No pockets yet. Create one to organise your savings.</p>';
+    $("pocketsList").innerHTML=savingsPockets.length?savingsPockets.map(p=>{
+      const goal=items.find(i=>i.id===p.goalId && !i.purchasedAt);
+      const goalAmount=Math.max(0,Number(goal?.goal)||0);
+      const pct=goalAmount>0?Math.min(100,Math.round(Number(p.amount||0)/goalAmount*100)):0;
+      const goals=items.filter(i=>!i.purchasedAt).map(i=>`<option value="${escapeHtml(i.id)}" ${i.id===p.goalId?'selected':''}>${escapeHtml(i.name||"Unnamed goal")}</option>`).join("");
+      return `<div class="pocket-card"><div class="pocket-card-main"><div class="pocket-icon">◈</div><div><strong>${escapeHtml(p.name)}</strong><small>${goal?'Linked to '+escapeHtml(goal.name):'Allocated savings'}</small></div><b>${fmtMoney(p.amount)}</b></div>
+        <div class="pocket-goal-link"><label for="pocket-goal-${escapeHtml(p.id)}">Linked goal</label><div class="pocket-goal-select"><select id="pocket-goal-${escapeHtml(p.id)}" data-pocket-goal aria-label="Linked goal for ${escapeHtml(p.name)}"><option value="">No linked goal</option>${goals}</select><button class="btn btn-secondary" type="button" data-pocket-action="link" data-id="${escapeHtml(p.id)}">Save link</button></div></div>
+        ${goal && goalAmount>0?`<div class="pocket-linked-progress"><div><span>Goal progress</span><strong>${pct}% · ${fmtMoney(p.amount)} / ${fmtMoney(goalAmount)}</strong></div><div class="pocket-linked-track"><i style="width:${pct}%"></i></div></div>`:''}
+        <div class="pocket-actions"><input type="number" min="0.01" step="0.01" placeholder="Amount" aria-label="Amount for ${escapeHtml(p.name)}" data-pocket-amount /><button type="button" class="btn btn-secondary" data-pocket-action="add" data-id="${escapeHtml(p.id)}">Allocate</button><button type="button" class="btn btn-ghost" data-pocket-action="release" data-id="${escapeHtml(p.id)}">Release</button><button type="button" class="btn btn-danger-ghost" data-pocket-action="delete" data-id="${escapeHtml(p.id)}" aria-label="Delete ${escapeHtml(p.name)}">×</button></div></div>`;
+    }).join(""):'<p class="pockets-empty">No pockets yet. Create one to organise your savings.</p>';
     pocketFeedback(unallocated<0?"Your wallet balance is below your current allocations. Release some money from pockets to rebalance.":"");
   }
 
